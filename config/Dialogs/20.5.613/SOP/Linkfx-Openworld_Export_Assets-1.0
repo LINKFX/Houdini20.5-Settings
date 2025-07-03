@@ -1,0 +1,61 @@
+// Magic: 1d666499
+// Automatically generated PSI dialog (PSI version 20.5.613)
+// Thu Jun 19 16:26:08 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+unreal_instance.gad = NULL { }
+
+basedir.gad = 
+{
+ LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+ { WIDTH(0.18) }
+
+ basedir.label = PARM_LABEL("Base Folder", "basedir") WIDTH(1.5);
+
+ PARM_FIELD (pathstring, "basedir") LABELREF(basedir.label)
+	VALUE(basedir.val) HSTRETCH;
+
+    basedir.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+ ACTION_ICONBUTTON "BUTTONS_chooser_file" VALUE(basedir.plus) LOOKFLAT
+    HELP("Open floating file chooser") UI_FLAT_ICON_BTN_SIZE_SMALL;
+
+ { WIDTH(0.1) }
+}
+
+cookoutputnode.gad = ROW
+{
+    JUSTIFY(left, center)
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.1) }
+
+    PARM_BUTTON("cookoutputnode", "Save in Background")
+	push VALUE(cookoutputnode.val);
+
+    { WIDTH(0.1) }
+}
+active.gad = NULL { }
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    unreal_instance.gad; 
+    basedir.gad; 
+    cookoutputnode.gad; 
+    active.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

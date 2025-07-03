@@ -1,0 +1,531 @@
+// Magic: b9c25f33
+// Automatically generated PSI dialog (PSI version 20.5.584)
+// Wed May 28 15:45:53 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+
+generate_uvs.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    generate_uvs.label = PARM_LABEL_SIMPLE("UV Generation", "generate_uvs") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    generate_uvs.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+pattern_rotation.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ pattern_rotation.label = PARM_LABEL("Pattern Rotation", "pattern_rotation") WIDTH(1.5);
+ PARM(float, 1, "pattern_rotation", none, none) RANGE(0,10)
+	 LABELREF(pattern_rotation.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+border_thickness.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ border_thickness.label = PARM_LABEL("Border Thickness", "border_thickness") WIDTH(1.5);
+ PARM(float, 1, "border_thickness", none, none) RANGE(0,1)
+	 LABELREF(border_thickness.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+g_seed.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ g_seed.label = PARM_LABEL("Global Seed", "g_seed") WIDTH(1.5);
+ PARM(float, 1, "g_seed", none, none) RANGE(0,10)
+	 LABELREF(g_seed.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+extrusion_depth.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ extrusion_depth.label = PARM_LABEL("Thickness", "extrusion_depth") WIDTH(1.5);
+ PARM(float, 1, "extrusion_depth", none, none) RANGE(-1,1)
+	 LABELREF(extrusion_depth.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+panel_deletion_chance.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ panel_deletion_chance.label = PARM_LABEL("Panel Deletion Chance", "panel_deletion_chance") WIDTH(1.5);
+ PARM(float, 1, "panel_deletion_chance", none, none) RANGE(0,100)
+	 LABELREF(panel_deletion_chance.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+deletion_seed.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ deletion_seed.label = PARM_LABEL("Deletion Seed", "deletion_seed") WIDTH(1.5);
+ PARM(float, 1, "deletion_seed", none, none) RANGE(0,10)
+	 LABELREF(deletion_seed.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+sepparm.gad = 
+
+{
+    LAYOUT(vertical) HSTRETCH HMARGIN(0.18, 0.1)
+    NO_MARGIN_SPACING_SCALE
+
+    { HEIGHT(0.1) }
+    SEPARATOR;
+    { HEIGHT(0.1) }
+}
+
+enable_vertex_colors.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("enable_vertex_colors", "Random Vertex Colors") toggle VALUE(enable_vertex_colors.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+seed.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ seed.label = PARM_LABEL("Seed", "seed") WIDTH(1.5);
+ PARM(integer, 1, "seed", none, none) RANGE(1,10000)
+	LOCK_RANGE_MIN LABELREF(seed.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+ramp.si_rampedit = COLOR_RAMP VALUE(ramp.ramp_val)
+			LAYOUT(horizontal)  HSTRETCH;
+
+ramp.multiramp = 
+{
+    LAYOUT(vertical) STRETCH
+    HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+    ROW
+    {
+	JUSTIFY(left,center) SPACING(0.1) VMARGIN(0.02) HSTRETCH
+
+	COL
+	{
+	    JUSTIFY(right,center) WIDTH(1.5)
+	    LABEL "Point No.";
+	}
+
+	ramp.pointno.gad
+	    = INT_SLIDER_FIELD VALUE(ramp.pointno.val) HSTRETCH;
+    }
+}
+
+ramp.buttons.gad = COL
+{
+    VSTRETCH
+
+    ICON_BUTTON_STRIP
+    {
+	LAYOUT(horizontal) INITSIZE(20p, 20p) 
+
+	ACTION_ICONBUTTON "BUTTONS_delete"
+		HELP("Remove Point") VALUE(ramp.delpoint.val);
+	ACTION_ICONBUTTON "BUTTONS_add"
+		HELP("Add Point") VALUE(ramp.addpoint.val);
+    }
+
+    { VSTRETCH }
+
+    ramp.toggleparms.gad
+      = ACTION_ICONBUTTON "BUTTONS_show_controls"
+	HELP("Hide Controls", "h.pane.parms.toggle_ramp_parms")
+	VALUE(ramp.toggle.val)
+	LOOKFLAT UI_FLAT_ICON_BTN_SIZE_TINY;
+}
+
+ramp.parm =
+{
+    LAYOUT(vertical) HSTRETCH JUSTIFY(left, center)
+
+    ramp.ramp.gad = ROW
+    {
+	MARGIN(0.02) SPACING(0.02) JUSTIFY(left, top) HSTRETCH
+
+	ramp.buttons.gad VSTRETCH;
+
+	ramp.si_rampedit HSTRETCH;
+    }
+}
+
+ramp.gad =
+{
+    LAYOUT(vertical) MARGIN(2p) HSTRETCH
+    HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+    {
+	LAYOUT(horizontal) HSTRETCH
+
+	PARM_LABEL_SIMPLE("Vertex Colors", "ramp");
+
+	{ HSTRETCH }
+	ramp.interp
+	    = ACTION_MENU_ICONBUTTON ramp.interp_icon.val
+                HELP("Set Interpolation on All Points") UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+	ACTION_ICONBUTTON "BUTTONS_ramp_flip_x" VALUE(ramp.reverse.val)
+		LOOKFLAT HELP("Reverse Domain") UI_FLAT_ICON_BTN_SIZE_SMALL;
+	ACTION_ICONBUTTON "BUTTONS_ramp_flip_y" VALUE(ramp.complement.val)
+		LOOKFLAT HELP("Complement Ramp") UI_FLAT_ICON_BTN_SIZE_SMALL;
+	ramp.presets
+	    = ACTION_MENU_ICONBUTTON "BUTTONS_gear"
+		LOOKFLAT HELP("Presets") UI_FLAT_ICON_BTN_SIZE_SMALL;
+
+    }
+
+    {
+	LAYOUT(vertical) MARGIN(2p) SPACING(0.02) HSTRETCH
+
+	ramp.parm;
+
+	SWITCHER tight
+	{
+	    LAYOUT(overlap) VALUE(ramp.hideparms.val) HSTRETCH
+	    ramp.multiramp;
+	    {}
+	}
+    }
+}
+
+irregularity.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ irregularity.label = PARM_LABEL("Irregularity", "irregularity") WIDTH(1.5);
+ PARM(float, 1, "irregularity", none, none) RANGE(0,1)
+	 LABELREF(irregularity.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+min_lot_size.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ min_lot_size.label = PARM_LABEL("Minimum Lot Size", "min_lot_size") WIDTH(1.5);
+ PARM(float, 1, "min_lot_size", none, none) RANGE(0,1)
+	 LABELREF(min_lot_size.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+vertical_bias.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ vertical_bias.label = PARM_LABEL("Vertical Bias", "vertical_bias") WIDTH(1.5);
+ PARM(float, 1, "vertical_bias", none, none) RANGE(-10,10)
+	 LABELREF(vertical_bias.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+alignment.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    alignment.label = PARM_LABEL_SIMPLE("Alignment", "alignment") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    alignment.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+cluster_lots.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("cluster_lots", "Cluster Lots") toggle VALUE(cluster_lots.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+number_of_clusters.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ number_of_clusters.label = PARM_LABEL("Number of Clusters", "number_of_clusters") WIDTH(1.5);
+ PARM(integer, 1, "number_of_clusters", none, none) RANGE(1,200)
+	LOCK_RANGE_MIN LABELREF(number_of_clusters.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+vertical_packing.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ vertical_packing.label = PARM_LABEL("Vertical Packing", "vertical_packing") WIDTH(1.5);
+ PARM(float, 1, "vertical_packing", none, none) RANGE(0,10)
+	 LABELREF(vertical_packing.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+spacing.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ spacing.label = PARM_LABEL("Spacing", "spacing") WIDTH(1.5);
+ PARM(float, 1, "spacing", none, none) RANGE(0,10)
+	 LABELREF(spacing.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+spacing_variation.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ spacing_variation.label = PARM_LABEL("Spacing Variation", "spacing_variation") WIDTH(1.5);
+ PARM(float, 1, "spacing_variation", none, none) RANGE(0,10)
+	 LABELREF(spacing_variation.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+notch_percentage.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ notch_percentage.label = PARM_LABEL("Percentage", "notch_percentage") WIDTH(1.5);
+ PARM(float, 1, "notch_percentage", none, none) RANGE(0,100)
+	 LABELREF(notch_percentage.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+thickness.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ thickness.label = PARM_LABEL("Thickness", "thickness") WIDTH(1.5);
+ PARM(float, 1, "thickness", none, none) RANGE(0,10)
+	 LABELREF(thickness.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+deviation.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ deviation.label = PARM_LABEL("Deviation", "deviation") WIDTH(1.5);
+ PARM(float, 1, "deviation", none, none) RANGE(-1,1)
+	 LABELREF(deviation.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+length.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ length.label = PARM_LABEL("Length", "length") WIDTH(1.5);
+ PARM(float, 1, "length", none, none) RANGE(0,1)
+	 LABELREF(length.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+notches_seed.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ notches_seed.label = PARM_LABEL("Notches Seed", "notches_seed") WIDTH(1.5);
+ PARM(float, 1, "notches_seed", none, none) RANGE(0,10)
+	 LABELREF(notches_seed.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+corner_bevels_chance.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ corner_bevels_chance.label = PARM_LABEL("Corner Bevels Chance", "corner_bevels_chance") WIDTH(1.5);
+ PARM(float, 1, "corner_bevels_chance", none, none) RANGE(0,100)
+	 LABELREF(corner_bevels_chance.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+corner_bevels_depth.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ corner_bevels_depth.label = PARM_LABEL("Corner Bevels Depth", "corner_bevels_depth") WIDTH(1.5);
+ PARM(float, 1, "corner_bevels_depth", none, none) RANGE(0,100)
+	 LABELREF(corner_bevels_depth.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+fd_cornerbevels.gad = 
+
+GROUP simple "Corner Bevels" flat 
+{ 
+    VALUE(fd_cornerbevels.gad.val) LAYOUT(vertical) HSTRETCH 
+	    corner_bevels_chance.gad;		
+	    corner_bevels_depth.gad;		
+} 
+
+fd_notches.gad = 
+
+GROUP simple "Notches" flat 
+{ 
+    VALUE(fd_notches.gad.val) LAYOUT(vertical) HSTRETCH 
+	    notch_percentage.gad;		
+	    thickness.gad;		
+	    deviation.gad;		
+	    length.gad;		
+	    notches_seed.gad;		
+} 
+
+fd_padding.gad = 
+
+GROUP simple "Padding" flat 
+{ 
+    VALUE(fd_padding.gad.val) LAYOUT(vertical) HSTRETCH 
+	    spacing.gad;		
+	    spacing_variation.gad;		
+} 
+
+fd_lotdivision.gad = 
+
+GROUP simple "Lot Division" flat 
+{ 
+    VALUE(fd_lotdivision.gad.val) LAYOUT(vertical) HSTRETCH 
+	    irregularity.gad;		
+	    min_lot_size.gad;		
+	    vertical_bias.gad;		
+	    alignment.gad;		
+	    cluster_lots.gad;		
+	    number_of_clusters.gad;		
+	    vertical_packing.gad;		
+} 
+
+fd_globalsettings.gad = 
+
+GROUP simple "Global Settings" flat 
+{ 
+    VALUE(fd_globalsettings.gad.val) LAYOUT(vertical) HSTRETCH 
+	    generate_uvs.gad;		
+	    pattern_rotation.gad;		
+	    border_thickness.gad;		
+	    g_seed.gad;		
+	    extrusion_depth.gad;		
+	    panel_deletion_chance.gad;		
+	    deletion_seed.gad;		
+	    sepparm.gad;		
+	    enable_vertex_colors.gad;		
+	    seed.gad;		
+	    ramp.gad;		
+} 
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    fd_globalsettings.gad; 
+    fd_lotdivision.gad; 
+    fd_padding.gad; 
+    fd_notches.gad; 
+    fd_cornerbevels.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

@@ -1,0 +1,227 @@
+// Magic: 80a10a96
+// Automatically generated PSI dialog (PSI version 20.5.584)
+// Fri May 30 12:03:59 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+
+group.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    group.label = PARM_LABEL("Group", "group") WIDTH(1.5);
+    PARM_FIELD(string, "group") VALUE(group.val) 
+	LABELREF(group.label) HSTRETCH;
+
+    group.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    ACTION_ICONBUTTON "BUTTONS_reselect" VALUE(group.script_action)
+	HELP("Select geometry from an available viewport.")
+	UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+    { WIDTH(0.1) }
+}
+
+grouptype.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    grouptype.label = PARM_LABEL_SIMPLE("Group Type", "grouptype") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    grouptype.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+negate.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("negate", "Invert Selection") toggle VALUE(negate.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+depth.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+depth.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ {  }
+
+ depth.label = PARM_LABEL("Depth", "depth") WIDTH(1.5);
+ PARM(float, 1, "depth", none, none) RANGE(0,10)
+	 LABELREF(depth.label) HSTRETCH;
+
+  {  }
+}
+
+extrusionmode.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) 
+    {  }
+
+    extrusionmode.label = PARM_LABEL_SIMPLE("Extrusion Mode", "extrusionmode") ;
+    { WIDTH(0.09) }
+
+    extrusionmode.menu;
+
+    {  }
+
+    {  }
+}
+}	// Template join.bot
+
+both_directions.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+both_directions.gad = ROW
+{
+    
+    {  }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("both_directions", "Both Directions") toggle VALUE(both_directions.val);
+
+    {  }
+
+    {  }
+}
+
+dissolve_middle_edge.gad = ROW
+{
+    HSTRETCH
+    {  }
+
+    PARM_BUTTON("dissolve_middle_edge", "Dissolve Middle Edge") toggle VALUE(dissolve_middle_edge.val);
+
+    { HSTRETCH }
+
+    {  }
+}
+}	// Template join.bot
+
+reduce_back.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+reduce_back.gad = ROW
+{
+    
+    {  }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("reduce_back", "Reduce Back Side") toggle VALUE(reduce_back.val);
+
+    {  }
+
+    {  }
+}
+
+reduction_percentage.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ {  }
+
+ reduction_percentage.label = PARM_LABEL("Percentage", "reduction_percentage") ;
+ PARM(float, 1, "reduction_percentage", none, none) RANGE(0,100)
+	 LABELREF(reduction_percentage.label) HSTRETCH;
+
+  {  }
+}
+}	// Template join.bot
+
+
+type.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    type.label = PARM_LABEL_SIMPLE("Add Normals to", "type") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    type.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+cuspangle.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ cuspangle.label = PARM_LABEL("Cusp Angle", "cuspangle") WIDTH(1.5);
+ PARM(float, 1, "cuspangle", none, none) RANGE(0,180)
+	LOCK_RANGE LABELREF(cuspangle.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+fd_normals.gad = 
+GROUP collapsible "Normals" flat   
+{
+    VALUE(fd_normals.gad.val) LAYOUT(vertical) HSTRETCH
+	    type.gad;		
+	    cuspangle.gad;		
+} 
+
+fd_thicken.gad = 
+
+GROUP simple "Thicken" flat 
+{ 
+    VALUE(fd_thicken.gad.val) LAYOUT(vertical) HSTRETCH 
+	    depth.row.join;		
+	    both_directions.row.join;		
+	    reduce_back.row.join;		
+} 
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    group.gad; 
+    grouptype.gad; 
+    negate.gad; 
+    fd_thicken.gad; 
+    fd_normals.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

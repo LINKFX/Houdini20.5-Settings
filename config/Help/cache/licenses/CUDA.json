@@ -1,0 +1,1 @@
+{"type": "root", "attrs": {"index": "no"}, "body": [{"level": 0, "type": "title", "indent": 0, "text": ["CUDA"], "extent": [0, 9]}, {"lang": null, "type": "pre", "indent": 0, "text": ["\n\nThis software contains source code provided by NVIDIA Corporation.\n\n"], "extent": [21, 98]}], "title": ["CUDA"]}

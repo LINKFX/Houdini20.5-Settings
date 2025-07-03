@@ -1,0 +1,37 @@
+// Magic: 23e742cd
+// Automatically generated PSI dialog (PSI version 20.5.613)
+// Fri Jun  6 18:46:00 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+
+translatestep.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ translatestep.label = PARM_LABEL("Translate Step", "translatestep") WIDTH(1.5);
+ PARM(float, 1, "translatestep", none, none) RANGE(0.001,5)
+	LOCK_RANGE_MIN LABELREF(translatestep.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    translatestep.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

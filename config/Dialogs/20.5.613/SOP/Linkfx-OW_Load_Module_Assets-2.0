@@ -1,0 +1,306 @@
+// Magic: 8374537f
+// Automatically generated PSI dialog (PSI version 20.5.613)
+// Thu Jun  5 12:51:15 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+
+env_path.gad = 
+{
+ LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+ { WIDTH(0.18) }
+
+ env_path.label = PARM_LABEL("Environments Path", "env_path") WIDTH(1.5);
+
+ PARM_FIELD (pathstring, "env_path") LABELREF(env_path.label)
+	VALUE(env_path.val) HSTRETCH;
+
+    env_path.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+ ACTION_ICONBUTTON "BUTTONS_chooser_file" VALUE(env_path.plus) LOOKFLAT
+    HELP("Open floating file chooser") UI_FLAT_ICON_BTN_SIZE_SMALL;
+
+ { WIDTH(0.1) }
+}
+
+csv_file.gad = 
+{
+ LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+ { WIDTH(0.18) }
+
+ csv_file.label = PARM_LABEL("CSV File", "csv_file") WIDTH(1.5);
+
+ PARM_FIELD (pathstring, "csv_file") LABELREF(csv_file.label)
+	VALUE(csv_file.val) HSTRETCH;
+
+    csv_file.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+ ACTION_ICONBUTTON "BUTTONS_chooser_file" VALUE(csv_file.plus) LOOKFLAT
+    HELP("Open floating file chooser") UI_FLAT_ICON_BTN_SIZE_SMALL;
+
+ { WIDTH(0.1) }
+}
+
+autofillattribs.gad = ROW
+{
+    JUSTIFY(left, center)
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.1) }
+
+    PARM_BUTTON("autofillattribs", "Fill Attribute Info from Header")
+	push VALUE(autofillattribs.val);
+
+    { WIDTH(0.1) }
+}
+type_name.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+type_name.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) 
+    {  }
+
+    type_name.label = PARM_LABEL_SIMPLE("Type", "type_name") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    type_name.menu;
+
+    {  }
+
+    {  }
+}
+
+building_type_name.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) 
+    {  }
+
+    building_type_name.label = PARM_LABEL_SIMPLE("Building Type", "building_type_name") ;
+    { WIDTH(0.09) }
+
+    building_type_name.menu;
+
+    {  }
+
+    {  }
+}
+}	// Template join.bot
+
+
+file_type.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    file_type.label = PARM_LABEL_SIMPLE("File Type", "file_type") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    file_type.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+refresh_assets.gad = ROW
+{
+    JUSTIFY(left, center)
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.1) }
+
+    PARM_BUTTON("refresh_assets", "Refresh Assets")
+	push VALUE(refresh_assets.val);
+
+    { WIDTH(0.1) }
+}
+preview.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+preview.gad = ROW
+{
+    
+    {  }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("preview", "Preview") toggle VALUE(preview.val);
+
+    {  }
+
+    {  }
+}
+
+display_name.gad = ROW
+{
+    HSTRETCH
+    {  }
+
+    PARM_BUTTON("display_name", "Display Name") toggle VALUE(display_name.val);
+
+    { HSTRETCH }
+
+    {  }
+}
+}	// Template join.bot
+
+
+sepparm.gad = 
+
+{
+    LAYOUT(vertical) HSTRETCH HMARGIN(0.18, 0.1)
+    NO_MARGIN_SPACING_SCALE
+
+    { HEIGHT(0.1) }
+    SEPARATOR;
+    { HEIGHT(0.1) }
+}
+
+asset.parm =
+{
+    LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+
+    PARM_LABEL_SIMPLE("Asset List", "asset") WIDTH(1.5);
+    { WIDTH(0.1) }
+
+    ROW
+    {
+	HSTRETCH(0.5) JUSTIFY(left, center) VALUE(asset.val)
+
+        asset.field = PARM_FIELD (integer, "asset")
+				VALUE(asset.val) HSTRETCH(0.5)
+				 PREF_WIDTH(0.5);
+
+        ROW
+        {
+	     LOOK(lightline) VMARGIN(1p)
+
+   	     INCREMENT_ICONBUTTON VALUE(asset.more.val)	
+	    	HELP("Add Another Instance") SIZE(0.2, 0.24);
+	     DECREMENT_ICONBUTTON VALUE(asset.less.val)	
+	        HELP("Remove Last Instance") SIZE(0.2, 0.24);
+
+	}
+
+	ACTION_BUTTON "Clear" VALUE(asset.clear.val);
+    }
+
+    { HSTRETCH }
+}
+
+asset.multilist = 
+{
+    LAYOUT(vertical) HSTRETCH MARGIN(0.05)
+}
+
+asset.gad =
+{
+    LAYOUT(vertical) HSTRETCH
+    HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+    SWITCHER tight
+    {
+	LAYOUT(overlap!)
+        VALUE(asset.multilist_hide_buttons.val)
+	{
+	    LAYOUT(vertical) HSTRETCH
+	    asset.parm;
+	    {LOOK(none) HEIGHT(0.02)}
+	}
+	{
+	}
+    }
+    asset.multilist;
+}
+
+type_path.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    type_path.label = PARM_LABEL("Type Path", "type_path") WIDTH(1.5);
+    PARM_FIELD(string, "type_path") VALUE(type_path.val) 
+	LABELREF(type_path.label) HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+building_type_path.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    building_type_path.label = PARM_LABEL("Building Type Path", "building_type_path") WIDTH(1.5);
+    PARM_FIELD(string, "building_type_path") VALUE(building_type_path.val) 
+	LABELREF(building_type_path.label) HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+full_path.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    full_path.label = PARM_LABEL("Full Path", "full_path") WIDTH(1.5);
+    PARM_FIELD(string, "full_path") VALUE(full_path.val) 
+	LABELREF(full_path.label) HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+folder0.gad = 
+{
+    LAYOUT(vertical) HSTRETCH
+
+    TABDIALOG2 flat "folder0.gad"
+    { 
+	VALUE(folder0.gad.val) STRETCH(1,0)
+    } 
+}
+
+preview_folder.gad = 
+
+GROUP simple "Preview" flat 
+{ 
+    VALUE(preview_folder.gad.val) LAYOUT(vertical) HSTRETCH 
+	    preview.row.join;		
+} 
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    env_path.gad; 
+    csv_file.gad; 
+    autofillattribs.gad; 
+    type_name.row.join; 
+    file_type.gad; 
+    refresh_assets.gad; 
+    preview_folder.gad; 
+    sepparm.gad; 
+    asset.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

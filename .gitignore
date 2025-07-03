@@ -1,14 +1,32 @@
-#只包含
+# 1. 忽略所有
 *
+
+# 2. 允许这些文件或目录
 !.git
 !.gitattributes
 !.gitignore
+
+!HDR/
+!HDR/**
+
 !config/
+!config/**
+
 !desktop/
+!desktop/**
+
 !logo/
+!logo/**
+
 !otls/
+!otls/**
+
 !packages/
+!packages/**
+
 !presets/
+!presets/**
+
 !desktops.pref
 !display.pref
 !display_options.def

@@ -1,0 +1,122 @@
+// Magic: cd9e5378
+// Automatically generated PSI dialog (PSI version 20.5.613)
+// Wed Jun  4 16:06:20 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+
+iExtractMode.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    iExtractMode.label = PARM_LABEL_SIMPLE("Mode", "iExtractMode") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    iExtractMode.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+mTraceAxis.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    mTraceAxis.label = PARM_LABEL_SIMPLE("Trace Axis", "mTraceAxis") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    mTraceAxis.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+campath.gad = 
+{
+ LAYOUT(horizontal) HSTRETCH JUSTIFY(left,center)
+ { WIDTH(0.18) }
+
+ campath.label = PARM_LABEL("Camera", "campath") WIDTH(1.5);
+ PARM_FIELD(pathstring, "campath") VALUE(campath.val) 
+	LABELREF(campath.label) HSTRETCH;
+
+ ACTION_ICONBUTTON "BUTTONS_jump" VALUE(campath.jump)
+    HELP("Jump to operator\nCtrl+LMB: Open parameters popup dialog")
+    UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+ ACTION_ICONBUTTON "BUTTONS_chooser_node" VALUE(campath.plus)
+    HELP("Open floating operator chooser") UI_FLAT_ICON_BTN_SIZE_SMALL 
+    LOOKFLAT;
+
+ { WIDTH(0.1) }
+}
+
+removeoutsidesilhouette.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("removeoutsidesilhouette", "Remove Outside of Silhouette") toggle VALUE(removeoutsidesilhouette.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+bResample.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("bResample", "Resample") toggle VALUE(bResample.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+length.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ length.label = PARM_LABEL("Resample Length", "length") WIDTH(1.5);
+ PARM(float, 1, "length", none, none) RANGE(0,5)
+	LOCK_RANGE_MIN LABELREF(length.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    iExtractMode.gad; 
+    mTraceAxis.gad; 
+    campath.gad; 
+    removeoutsidesilhouette.gad; 
+    bResample.gad; 
+    length.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

@@ -1,0 +1,203 @@
+// Magic: ba857c8d
+// Automatically generated PSI dialog (PSI version 20.5.550)
+// Tue Jun  3 14:57:51 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+
+enableorientguide.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("enableorientguide", "Enable Orient Guide") toggle VALUE(enableorientguide.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+orientguidedensity.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ orientguidedensity.label = PARM_LABEL("Orient Guide Density Scale", "orientguidedensity") WIDTH(1.5);
+ PARM(float, 1, "orientguidedensity", none, none) RANGE(0,2)
+	 LABELREF(orientguidedensity.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+orientguidescale.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ orientguidescale.label = PARM_LABEL("Orient Guide Gnomon Scale", "orientguidescale") WIDTH(1.5);
+ PARM(float, 1, "orientguidescale", none, none) RANGE(0,2)
+	 LABELREF(orientguidescale.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+orient_angle_step_size.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ orient_angle_step_size.label = PARM_LABEL("Orient Ring Step Size", "orient_angle_step_size") WIDTH(1.5);
+ PARM(float, 1, "orient_angle_step_size", none, none) RANGE(0,90)
+	 LABELREF(orient_angle_step_size.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+point_size.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ point_size.label = PARM_LABEL("Point Pick Radius", "point_size") WIDTH(1.5);
+ PARM(float, 1, "point_size", none, none) RANGE(0,30)
+	 LABELREF(point_size.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+show_preview_curve.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("show_preview_curve", "Show Preview and Ghosted Curve Guides") toggle VALUE(show_preview_curve.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+allow_selecting_segments.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("allow_selecting_segments", "Allow Selecting and Dragging Curve Segments") toggle VALUE(allow_selecting_segments.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+show_tangent_handles_on_all_selected.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("show_tangent_handles_on_all_selected", "Show Tangent Handles on All Selected Points") toggle VALUE(show_tangent_handles_on_all_selected.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+show_hover_labels.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("show_hover_labels", "Show Hover Labels") toggle VALUE(show_hover_labels.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+relative_segment_align.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("relative_segment_align", "Use Relative Angle with Previous Segment to Align in Draw Mode") toggle VALUE(relative_segment_align.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+separator11.gad = 
+
+{
+    LAYOUT(vertical) HSTRETCH HMARGIN(0.18, 0.1)
+    NO_MARGIN_SPACING_SCALE
+
+    { HEIGHT(0.1) }
+    SEPARATOR;
+    { HEIGHT(0.1) }
+}
+
+picking_mode.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    picking_mode.label = PARM_LABEL_SIMPLE("Picking Mode", "picking_mode") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    picking_mode.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    enableorientguide.gad; 
+    orientguidedensity.gad; 
+    orientguidescale.gad; 
+    orient_angle_step_size.gad; 
+    point_size.gad; 
+    show_preview_curve.gad; 
+    allow_selecting_segments.gad; 
+    show_tangent_handles_on_all_selected.gad; 
+    show_hover_labels.gad; 
+    relative_segment_align.gad; 
+    separator11.gad; 
+    picking_mode.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

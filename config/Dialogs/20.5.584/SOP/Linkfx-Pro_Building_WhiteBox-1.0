@@ -1,0 +1,145 @@
+// Magic: 24879e2f
+// Automatically generated PSI dialog (PSI version 20.5.584)
+// Wed May 28 15:39:47 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+
+environment.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    environment.label = PARM_LABEL_SIMPLE("Environment", "environment") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    environment.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+to0.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    to0.label = PARM_LABEL("Left Front", "to0") WIDTH(1.5);
+    PARM_FIELD(string, "to0") VALUE(to0.val) 
+	LABELREF(to0.label) HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+to1.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    to1.label = PARM_LABEL("Left Back", "to1") WIDTH(1.5);
+    PARM_FIELD(string, "to1") VALUE(to1.val) 
+	LABELREF(to1.label) HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+to2.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    to2.label = PARM_LABEL("Right Front", "to2") WIDTH(1.5);
+    PARM_FIELD(string, "to2") VALUE(to2.val) 
+	LABELREF(to2.label) HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+to3.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    to3.label = PARM_LABEL("Right Front", "to3") WIDTH(1.5);
+    PARM_FIELD(string, "to3") VALUE(to3.val) 
+	LABELREF(to3.label) HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+module_name.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    module_name.label = PARM_LABEL("Door", "module_name") WIDTH(1.5);
+    PARM_FIELD(string, "module_name") VALUE(module_name.val) 
+	LABELREF(module_name.label) HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+folder2.gad = 
+
+GROUP simple "Door" flat 
+{ 
+    VALUE(folder2.gad.val) LAYOUT(vertical) HSTRETCH 
+	    module_name.gad;		
+} 
+
+folder1.gad = 
+
+GROUP simple "Corners Name" flat 
+{ 
+    VALUE(folder1.gad.val) LAYOUT(vertical) HSTRETCH 
+	    to0.gad;		
+	    to1.gad;		
+	    to2.gad;		
+	    to3.gad;		
+} 
+
+folder0.gad = 
+{
+    LAYOUT(vertical) HSTRETCH
+
+    TABDIALOG2 flat "folder0.gad"
+    { 
+	VALUE(folder0.gad.val) STRETCH(1,0)
+
+	TAB "Module Name"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    folder1.gad;		
+	    folder2.gad;		
+
+	    { STRETCH(1,1) }
+	}
+    } 
+}
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    environment.gad; 
+    folder0.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

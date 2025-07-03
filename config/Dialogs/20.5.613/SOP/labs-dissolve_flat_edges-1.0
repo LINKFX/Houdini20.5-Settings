@@ -1,0 +1,156 @@
+// Magic: 1d9dc526
+// Automatically generated PSI dialog (PSI version 20.5.613)
+// Thu Jun  5 16:16:32 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+
+basegroup.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    basegroup.label = PARM_LABEL("Group", "basegroup") WIDTH(1.5);
+    PARM_FIELD(string, "basegroup") VALUE(basegroup.val) 
+	LABELREF(basegroup.label) HSTRETCH;
+
+    basegroup.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    ACTION_ICONBUTTON "BUTTONS_reselect" VALUE(basegroup.script_action)
+	HELP("Select geometry from an available viewport.\nShift-click to turn on Select Groups.")
+	UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+    { WIDTH(0.1) }
+}
+
+maxedgeangle.gad = ROW
+{
+   HSTRETCH
+   { WIDTH(0.18) }
+
+   maxedgeangle.label = PARM_LABEL( "Max Edge Angle", "maxedgeangle" ) WIDTH(1.5);
+   PARM(float, 1, "maxedgeangle", none, none) RANGE(0, 10)
+	LABELREF( maxedgeangle.label ) HSTRETCH;
+
+   { WIDTH(0.1) }
+}
+
+coltol.gad = ROW
+{
+   HSTRETCH
+   { WIDTH(0.18) }
+
+   coltol.label = PARM_LABEL( "Collinearity Tolerance", "coltol" ) WIDTH(1.5);
+   PARM(float, 1, "coltol", none, none) RANGE(0, 180)
+	LABELREF( coltol.label ) HSTRETCH;
+
+   { WIDTH(0.1) }
+}
+removeinline.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+removeinline.gad = ROW
+{
+    
+    {  }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("removeinline", "Remove Inline Points") toggle VALUE(removeinline.val);
+
+    {  }
+
+    {  }
+}
+
+inlinedist.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ {  }
+
+ PARM(float, 1, "inlinedist", none, none) RANGE(0,10)
+	 HSTRETCH;
+
+  {  }
+}
+}	// Template join.bot
+
+useattribute.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+useattribute.gad = ROW
+{
+    
+    {  }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("useattribute", "Preserve Attribute Boundary") toggle VALUE(useattribute.val);
+
+    {  }
+
+    {  }
+}
+
+attrib.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    {  }
+
+    PARM_FIELD(string, "attrib") VALUE(attrib.val) HSTRETCH;
+
+    attrib.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    {  }
+}
+}	// Template join.bot
+
+
+fd_inlinepoints.gad = 
+
+GROUP simple "Inline Points" flat 
+{ 
+    VALUE(fd_inlinepoints.gad.val) LAYOUT(vertical) HSTRETCH 
+	    removeinline.row.join;		
+	    useattribute.row.join;		
+} 
+
+fd_flatedges.gad = 
+
+GROUP simple "Flat Edges" flat 
+{ 
+    VALUE(fd_flatedges.gad.val) LAYOUT(vertical) HSTRETCH 
+	    maxedgeangle.gad;		
+	    coltol.gad;		
+} 
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    basegroup.gad; 
+    fd_flatedges.gad; 
+    fd_inlinepoints.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

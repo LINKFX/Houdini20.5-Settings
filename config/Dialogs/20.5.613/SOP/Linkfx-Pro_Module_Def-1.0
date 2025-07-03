@@ -1,0 +1,358 @@
+// Magic: 42b0ef5a
+// Automatically generated PSI dialog (PSI version 20.5.613)
+// Thu Jul  3 17:08:34 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+north_west.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+north_west.gad = ROW
+{
+    
+    {  }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("north_west", "North West") toggle VALUE(north_west.val);
+
+    {  }
+
+    {  }
+}
+newparameter.gad = NULL { }
+
+north.gad = ROW
+{
+    
+    {  }
+
+    PARM_BUTTON("north", "North") toggle VALUE(north.val);
+
+    {  }
+
+    {  }
+}
+newparameter2.gad = NULL { }
+
+north_east.gad = ROW
+{
+    
+    {  }
+
+    PARM_BUTTON("north_east", "North East") toggle VALUE(north_east.val);
+
+    {  }
+
+    {  }
+}
+newparameter3.gad = NULL { }
+}	// Template join.bot
+
+west.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+west.gad = ROW
+{
+    
+    {  }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("west", "West") toggle VALUE(west.val);
+
+    {  }
+
+    {  }
+}
+newparameter4.gad = NULL { }
+
+onoff.gad = ROW
+{
+    
+    {  }
+
+    PARM_BUTTON("onoff", "All Control") toggle VALUE(onoff.val);
+
+    {  }
+
+    {  }
+}
+
+east.gad = ROW
+{
+    
+    {  }
+
+    PARM_BUTTON("east", "East") toggle VALUE(east.val);
+
+    {  }
+
+    {  }
+}
+newparameter5.gad = NULL { }
+}	// Template join.bot
+
+south_west.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+south_west.gad = ROW
+{
+    
+    {  }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("south_west", "South West") toggle VALUE(south_west.val);
+
+    {  }
+
+    {  }
+}
+newparameter6.gad = NULL { }
+
+south.gad = ROW
+{
+    
+    {  }
+
+    PARM_BUTTON("south", "South") toggle VALUE(south.val);
+
+    {  }
+
+    {  }
+}
+newparameter7.gad = NULL { }
+
+south_east.gad = ROW
+{
+    
+    {  }
+
+    PARM_BUTTON("south_east", "South East") toggle VALUE(south_east.val);
+
+    {  }
+
+    {  }
+}
+newparameter8.gad = NULL { }
+}	// Template join.bot
+
+ds.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+ds.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ {  }
+
+ ds.label = PARM_LABEL("Depth Scale", "ds") WIDTH(1.5);
+ PARM(float, 1, "ds", none, none) RANGE(0,2)
+	LOCK_RANGE_MIN LABELREF(ds.label) HSTRETCH;
+
+  {  }
+}
+
+ws.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ {  }
+
+ ws.label = PARM_LABEL("Width Scale", "ws") ;
+ PARM(float, 1, "ws", none, none) RANGE(0,2)
+	LOCK_RANGE_MIN LABELREF(ws.label) HSTRETCH;
+
+  {  }
+}
+}	// Template join.bot
+
+
+hs.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ hs.label = PARM_LABEL("High Scale", "hs") WIDTH(1.5);
+ PARM(float, 1, "hs", none, none) RANGE(0,2)
+	LOCK_RANGE_MIN LABELREF(hs.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+sepparm.gad = 
+
+{
+    LAYOUT(vertical) HSTRETCH HMARGIN(0.18, 0.1)
+    NO_MARGIN_SPACING_SCALE
+
+    { HEIGHT(0.1) }
+    SEPARATOR;
+    { HEIGHT(0.1) }
+}
+
+preview_guide.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("preview_guide", "Align and Distribute") toggle VALUE(preview_guide.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+only_modules.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("only_modules", "Only Modules") toggle VALUE(only_modules.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+category_name.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    category_name.label = PARM_LABEL("Category Name", "category_name") WIDTH(1.5);
+    PARM_FIELD(string, "category_name") VALUE(category_name.val) 
+	LABELREF(category_name.label) HSTRETCH;
+
+    category_name.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    { WIDTH(0.1) }
+}
+
+name1.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    name1.label = PARM_LABEL("Module Name", "name1") WIDTH(1.5);
+    PARM_FIELD(string, "name1") VALUE(name1.val) 
+	LABELREF(name1.label) HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+variations.parm =
+{
+    LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+
+    PARM_LABEL_SIMPLE("Variations", "variations") WIDTH(1.5);
+    { WIDTH(0.1) }
+
+    ROW
+    {
+	HSTRETCH(0.5) JUSTIFY(left, center) VALUE(variations.val)
+
+        variations.field = PARM_FIELD (integer, "variations")
+				VALUE(variations.val) HSTRETCH(0.5)
+				 PREF_WIDTH(0.5);
+
+        ROW
+        {
+	     LOOK(lightline) VMARGIN(1p)
+
+   	     INCREMENT_ICONBUTTON VALUE(variations.more.val)	
+	    	HELP("Add Another Instance") SIZE(0.2, 0.24);
+	     DECREMENT_ICONBUTTON VALUE(variations.less.val)	
+	        HELP("Remove Last Instance") SIZE(0.2, 0.24);
+
+	}
+
+	ACTION_BUTTON "Clear" VALUE(variations.clear.val);
+    }
+
+    { HSTRETCH }
+}
+
+variations.multilist = 
+{
+    LAYOUT(vertical) HSTRETCH MARGIN(0.05)
+}
+
+variations.gad =
+{
+    LAYOUT(vertical) HSTRETCH
+    HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+    SWITCHER tight
+    {
+	LAYOUT(overlap!)
+        VALUE(variations.multilist_hide_buttons.val)
+	{
+	    LAYOUT(vertical) HSTRETCH
+	    variations.parm;
+	    {LOOK(none) HEIGHT(0.02)}
+	}
+	{
+	}
+    }
+    variations.multilist;
+}
+
+folder0.gad = 
+GROUP collapsible "Custom Size" flat   
+{
+    VALUE(folder0.gad.val) LAYOUT(vertical) HSTRETCH
+	    ds.row.join;		
+	    hs.gad;		
+} 
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    north_west.row.join; 
+    west.row.join; 
+    south_west.row.join; 
+    folder0.gad; 
+    sepparm.gad; 
+    preview_guide.gad; 
+    only_modules.gad; 
+    category_name.gad; 
+    name1.gad; 
+    variations.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

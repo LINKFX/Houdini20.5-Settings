@@ -1,0 +1,1 @@
+{"type": "root", "attrs": {"type": "example"}, "body": [{"type": "title", "indent": 0, "text": ["LineDirection"]}, {"type": "para", "indent": 0, "text": ["This example demonstrates how to generate a line using the Line SOP."], "extent": [0, 69]}], "examplefor": "/nodes/sop/line", "examplefile": "/examples/nodes/sop/line/LineDirection.otl"}

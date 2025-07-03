@@ -1,0 +1,163 @@
+// Magic: e45530ea
+// Automatically generated PSI dialog (PSI version 20.5.613)
+// Wed Jun  4 16:06:20 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+
+mode.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    mode.label = PARM_LABEL_SIMPLE("Mode", "mode") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    mode.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+bKeeplargest.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("bKeeplargest", "Extract Largest Piece") toggle VALUE(bKeeplargest.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+threshold.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ threshold.label = PARM_LABEL("Threshold", "threshold") WIDTH(1.5);
+ PARM(float, 1, "threshold", none, none) RANGE(0,100)
+	 LABELREF(threshold.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+negate.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("negate", "Invert Result") toggle VALUE(negate.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+bCalculatePieceAttr.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("bCalculatePieceAttr", "Calculate Piece Attribute") toggle VALUE(bCalculatePieceAttr.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+sPieceAttr.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    sPieceAttr.label = PARM_LABEL("Piece Attribute", "sPieceAttr") WIDTH(1.5);
+    PARM_FIELD(string, "sPieceAttr") VALUE(sPieceAttr.val) 
+	LABELREF(sPieceAttr.label) HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+groupnodelete.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("groupnodelete", "Group instead of Delete") toggle VALUE(groupnodelete.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+groupname.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    groupname.label = PARM_LABEL("Group Name", "groupname") WIDTH(1.5);
+    PARM_FIELD(string, "groupname") VALUE(groupname.val) 
+	LABELREF(groupname.label) HSTRETCH;
+
+    groupname.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    { WIDTH(0.1) }
+}
+
+fd_advanced.gad = 
+
+GROUP simple "Advanced" flat 
+{ 
+    VALUE(fd_advanced.gad.val) LAYOUT(vertical) HSTRETCH 
+	    bCalculatePieceAttr.gad;		
+	    sPieceAttr.gad;		
+} 
+
+fd_general.gad = 
+
+GROUP simple "General" flat 
+{ 
+    VALUE(fd_general.gad.val) LAYOUT(vertical) HSTRETCH 
+	    mode.gad;		
+	    bKeeplargest.gad;		
+	    threshold.gad;		
+	    negate.gad;		
+} 
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    fd_general.gad; 
+    fd_advanced.gad; 
+    groupnodelete.gad; 
+    groupname.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

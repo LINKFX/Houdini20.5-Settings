@@ -1,0 +1,82 @@
+// Magic: 6cd129b0
+// Automatically generated PSI dialog (PSI version 20.5.613)
+// Wed Jul  2 10:26:07 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+name.gad = NULL { }
+
+axis_order.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    axis_order.label = PARM_LABEL_SIMPLE("Axis Order", "axis_order") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    axis_order.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+trans.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ trans.label = PARM_LABEL("Translate", "trans") WIDTH(1.5);
+ PARM(float, 1, "trans", none, none) RANGE(-10,10)
+	 LABELREF(trans.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+rot.gad = ROW
+{
+   HSTRETCH
+   { WIDTH(0.18) }
+
+   rot.label = PARM_LABEL( "Rotate", "rot" ) WIDTH(1.5);
+   PARM(float, 1, "rot", none, none) RANGE(0, 360)
+	LABELREF( rot.label ) HSTRETCH;
+
+   { WIDTH(0.1) }
+}
+
+scale.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ scale.label = PARM_LABEL("Scale", "scale") WIDTH(1.5);
+ PARM(float, 1, "scale", none, none) RANGE(-5,5)
+	 LABELREF(scale.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    name.gad; 
+    axis_order.gad; 
+    trans.gad; 
+    rot.gad; 
+    scale.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

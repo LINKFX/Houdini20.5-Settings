@@ -1,0 +1,55 @@
+// Magic: 3ca5a656
+// Automatically generated PSI dialog (PSI version 20.5.584)
+// Wed May 28 10:33:18 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+attribute.gad = NULL { }
+
+fgint.gad = 
+{
+
+ fgint.label = PARM_LABEL("Value to Draw", "fgint");
+ PARM(integer, 1, "fgint", none, field) RANGE(0,10)
+	 LABELREF(fgint.label) HSTRETCH;
+
+  {  }
+}
+stroke_operation.gad = NULL { }
+stroke_shape.gad = NULL { }
+fgcolor.gad = NULL { }
+bgcolor.gad = NULL { }
+fgfloat.gad = NULL { }
+bgfloat.gad = NULL { }
+bgint.gad = NULL { }
+stroke_connectivity.gad = NULL { }
+stroke_frontface.gad = NULL { }
+stroke_visibility.gad = NULL { }
+
+# warning cpp warning: "GenV3/subdialog.top.ui":11 Macro "PARMSPACING" redefined.  Using later definition
+# warning cpp warning: "GenV3/subdialog.top.ui":12 Macro "LAYOUTDIR" redefined.  Using later definition
+# warning cpp warning: "GenV3/subdialog.top.ui":13 Macro "DO_JUSTIFY" redefined.  Using later definition
+dialog_norm.gad = 
+{
+    LAYOUT(horizontal) SPACING(0.05) HSTRETCH JUSTIFY(left, center) UNSCALABLE
+    attribute.gad; 
+    fgint.gad; 
+    stroke_operation.gad; 
+    stroke_shape.gad; 
+    fgcolor.gad; 
+    bgcolor.gad; 
+    fgfloat.gad; 
+    bgfloat.gad; 
+    bgint.gad; 
+    stroke_connectivity.gad; 
+    stroke_frontface.gad; 
+    stroke_visibility.gad; 
+} 
+// dialog.bot.ui
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) VALUE(open.val_) HSTRETCH
+
+    dialog_norm.gad;
+}

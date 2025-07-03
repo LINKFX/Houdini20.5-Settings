@@ -1,0 +1,892 @@
+// Magic: ac840546
+// Automatically generated PSI dialog (PSI version 20.5.613)
+// Tue Jul  1 11:25:59 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+
+shape.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    shape.label = PARM_LABEL_SIMPLE("Shape", "shape") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    shape.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+startype.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    startype.label = PARM_LABEL_SIMPLE("Star Type", "startype") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    startype.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+useradius.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("useradius", "Set by Radius") toggle VALUE(useradius.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+equilateral.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("equilateral", "Equal Sides") toggle VALUE(equilateral.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+sides.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ sides.label = PARM_LABEL("Sides", "sides") WIDTH(1.5);
+ PARM(integer, 1, "sides", none, none) RANGE(3,32)
+	LOCK_RANGE_MIN LABELREF(sides.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+top.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ top.label = PARM_LABEL("Top", "top") WIDTH(1.5);
+ PARM(float, 1, "top", none, none) RANGE(0,10)
+	 LABELREF(top.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+base.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ base.label = PARM_LABEL("Base", "base") WIDTH(1.5);
+ PARM(float, 1, "base", none, none) RANGE(0,5)
+	 LABELREF(base.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+height.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ height.label = PARM_LABEL("Height", "height") WIDTH(1.5);
+ PARM(float, 1, "height", none, none) RANGE(0,10)
+	 LABELREF(height.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+radius.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ radius.label = PARM_LABEL("Radius", "radius") WIDTH(1.5);
+ PARM(float, 1, "radius", none, none) RANGE(0.001,10)
+	 LABELREF(radius.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+radiusmiddle.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ radiusmiddle.label = PARM_LABEL("Middle Radius", "radiusmiddle") WIDTH(1.5);
+ PARM(float, 1, "radiusmiddle", none, none) RANGE(0.001,10)
+	 LABELREF(radiusmiddle.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+radiusinner.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ radiusinner.label = PARM_LABEL("Inner Radius", "radiusinner") WIDTH(1.5);
+ PARM(float, 1, "radiusinner", none, none) RANGE(0.001,10)
+	 LABELREF(radiusinner.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+shear.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ shear.label = PARM_LABEL("Shear", "shear") WIDTH(1.5);
+ PARM(float, 1, "shear", none, none) RANGE(-10,10)
+	 LABELREF(shear.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+sepparm3.gad = 
+
+{
+    LAYOUT(vertical) HSTRETCH HMARGIN(0.18, 0.1)
+    NO_MARGIN_SPACING_SCALE
+
+    { HEIGHT(0.1) }
+    SEPARATOR;
+    { HEIGHT(0.1) }
+}
+
+orientation.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    orientation.label = PARM_LABEL_SIMPLE("Orientation", "orientation") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    orientation.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+translate.gad = ROW
+{
+   HSTRETCH
+   { WIDTH(0.18) }
+
+   translate.label = PARM_LABEL("Translate", "translate") WIDTH(1.5);
+   PARM(float, 3, "translate", none, none, "X,Y,Z")
+	RANGE(-1,1)  LABELREF(translate.label)
+	HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+rotate.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ rotate.label = PARM_LABEL("Rotate", "rotate") WIDTH(1.5);
+ PARM(float, 1, "rotate", none, none) RANGE(0,360)
+	 LABELREF(rotate.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+reversepointorder.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("reversepointorder", "Reverse Point Order") toggle VALUE(reversepointorder.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+sepparm.gad = 
+
+{
+    LAYOUT(vertical) HSTRETCH HMARGIN(0.18, 0.1)
+    NO_MARGIN_SPACING_SCALE
+
+    { HEIGHT(0.1) }
+    SEPARATOR;
+    { HEIGHT(0.1) }
+}
+
+sidesegments.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ sidesegments.label = PARM_LABEL("Side Segments", "sidesegments") WIDTH(1.5);
+ PARM(integer, 1, "sidesegments", none, none) RANGE(1,10)
+	LOCK_RANGE_MIN LABELREF(sidesegments.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+fillshape.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("fillshape", "Fill Shape") toggle VALUE(fillshape.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+adduvs.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("adduvs", "Add UVs") toggle VALUE(adduvs.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+roundcorners.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("roundcorners", "Round Corners") toggle VALUE(roundcorners.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+rounddistance.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ rounddistance.label = PARM_LABEL("Distance", "rounddistance") WIDTH(1.5);
+ PARM(float, 1, "rounddistance", none, none) RANGE(0.001,1)
+	 LABELREF(rounddistance.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+rounddivisions.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ rounddivisions.label = PARM_LABEL("Divisions", "rounddivisions") WIDTH(1.5);
+ PARM(integer, 1, "rounddivisions", none, none) RANGE(1,10)
+	LOCK_RANGE_MIN LABELREF(rounddivisions.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+sepparm5.gad = 
+
+{
+    LAYOUT(vertical) HSTRETCH HMARGIN(0.18, 0.1)
+    NO_MARGIN_SPACING_SCALE
+
+    { HEIGHT(0.1) }
+    SEPARATOR;
+    { HEIGHT(0.1) }
+}
+
+roundcornersconcave.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("roundcornersconcave", "Round Concave Corners") toggle VALUE(roundcornersconcave.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+rounddistanceconcave.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ rounddistanceconcave.label = PARM_LABEL("Distance", "rounddistanceconcave") WIDTH(1.5);
+ PARM(float, 1, "rounddistanceconcave", none, none) RANGE(0.001,1)
+	 LABELREF(rounddistanceconcave.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+rounddivisionsconcave.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ rounddivisionsconcave.label = PARM_LABEL("Divisions", "rounddivisionsconcave") WIDTH(1.5);
+ PARM(integer, 1, "rounddivisionsconcave", none, none) RANGE(1,10)
+	LOCK_RANGE_MIN LABELREF(rounddivisionsconcave.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+sepparm6.gad = 
+
+{
+    LAYOUT(vertical) HSTRETCH HMARGIN(0.18, 0.1)
+    NO_MARGIN_SPACING_SCALE
+
+    { HEIGHT(0.1) }
+    SEPARATOR;
+    { HEIGHT(0.1) }
+}
+
+roundcornersconvex.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("roundcornersconvex", "Round Convex Corners") toggle VALUE(roundcornersconvex.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+rounddistanceconvex.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ rounddistanceconvex.label = PARM_LABEL("Distance", "rounddistanceconvex") WIDTH(1.5);
+ PARM(float, 1, "rounddistanceconvex", none, none) RANGE(0.001,1)
+	 LABELREF(rounddistanceconvex.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+rounddivisionsconvex.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ rounddivisionsconvex.label = PARM_LABEL("Divisions", "rounddivisionsconvex") WIDTH(1.5);
+ PARM(integer, 1, "rounddivisionsconvex", none, none) RANGE(1,10)
+	LOCK_RANGE_MIN LABELREF(rounddivisionsconvex.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+cuthole.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("cuthole", "Cut Hole") toggle VALUE(cuthole.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+holeshape.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    holeshape.label = PARM_LABEL_SIMPLE("Shape", "holeshape") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    holeshape.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+holepath.gad = 
+{
+ LAYOUT(horizontal) HSTRETCH JUSTIFY(left,center)
+ { WIDTH(0.18) }
+
+ holepath.label = PARM_LABEL("Path", "holepath") WIDTH(1.5);
+ PARM_FIELD(pathstring, "holepath") VALUE(holepath.val) 
+	LABELREF(holepath.label) HSTRETCH;
+
+ ACTION_ICONBUTTON "BUTTONS_jump" VALUE(holepath.jump)
+    HELP("Jump to operator\nCtrl+LMB: Open parameters popup dialog")
+    UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+ ACTION_ICONBUTTON "BUTTONS_chooser_node" VALUE(holepath.plus)
+    HELP("Open floating operator chooser") UI_FLAT_ICON_BTN_SIZE_SMALL 
+    LOOKFLAT;
+
+ { WIDTH(0.1) }
+}
+
+holesides.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ holesides.label = PARM_LABEL("Sides", "holesides") WIDTH(1.5);
+ PARM(integer, 1, "holesides", none, none) RANGE(3,32)
+	LOCK_RANGE_MIN LABELREF(holesides.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+holerelativescale.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ holerelativescale.label = PARM_LABEL("Relative Scale", "holerelativescale") WIDTH(1.5);
+ PARM(float, 1, "holerelativescale", none, none) RANGE(0,1)
+	LOCK_RANGE LABELREF(holerelativescale.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+holerotate.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ holerotate.label = PARM_LABEL("Rotate", "holerotate") WIDTH(1.5);
+ PARM(float, 1, "holerotate", none, none) RANGE(0,360)
+	 LABELREF(holerotate.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+outcornerspoints.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+outcornerspoints.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+outcornerspoints.gad = PARM_BUTTON("outcornerspoints", "") toggle VALUE(outcornerspoints.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+cornerspoints.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    {  }
+
+    cornerspoints.label = PARM_LABEL("Corners", "cornerspoints") WIDTH(1.32);
+    PARM_FIELD(string, "cornerspoints") VALUE(cornerspoints.val) 
+	LABELREF(cornerspoints.label) HSTRETCH;
+
+    {  }
+}
+}	
+}	// Template join.bot
+
+outconcavecornerspoints.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+outconcavecornerspoints.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+outconcavecornerspoints.gad = PARM_BUTTON("outconcavecornerspoints", "") toggle VALUE(outconcavecornerspoints.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+concavecornerspoints.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    {  }
+
+    concavecornerspoints.label = PARM_LABEL("Concave Corners", "concavecornerspoints") WIDTH(1.32);
+    PARM_FIELD(string, "concavecornerspoints") VALUE(concavecornerspoints.val) 
+	LABELREF(concavecornerspoints.label) HSTRETCH;
+
+    {  }
+}
+}	
+}	// Template join.bot
+
+outconvexcornerspoints.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+outconvexcornerspoints.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+outconvexcornerspoints.gad = PARM_BUTTON("outconvexcornerspoints", "") toggle VALUE(outconvexcornerspoints.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+convexcornerspoints.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    {  }
+
+    convexcornerspoints.label = PARM_LABEL("Convex Corners", "convexcornerspoints") WIDTH(1.32);
+    PARM_FIELD(string, "convexcornerspoints") VALUE(convexcornerspoints.val) 
+	LABELREF(convexcornerspoints.label) HSTRETCH;
+
+    {  }
+}
+}	
+}	// Template join.bot
+
+outholepoints.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+outholepoints.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+outholepoints.gad = PARM_BUTTON("outholepoints", "") toggle VALUE(outholepoints.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+holepoints.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    {  }
+
+    holepoints.label = PARM_LABEL("Hole Points", "holepoints") WIDTH(1.32);
+    PARM_FIELD(string, "holepoints") VALUE(holepoints.val) 
+	LABELREF(holepoints.label) HSTRETCH;
+
+    {  }
+}
+}	
+}	// Template join.bot
+
+outflatedges.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+outflatedges.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+outflatedges.gad = PARM_BUTTON("outflatedges", "") toggle VALUE(outflatedges.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+flatedges.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    {  }
+
+    flatedges.label = PARM_LABEL("Flat Edges", "flatedges") WIDTH(1.32);
+    PARM_FIELD(string, "flatedges") VALUE(flatedges.val) 
+	LABELREF(flatedges.label) HSTRETCH;
+
+    {  }
+}
+}	
+}	// Template join.bot
+
+outcornersedges.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+outcornersedges.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+outcornersedges.gad = PARM_BUTTON("outcornersedges", "") toggle VALUE(outcornersedges.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+cornersedges.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    {  }
+
+    cornersedges.label = PARM_LABEL("Corners", "cornersedges") WIDTH(1.32);
+    PARM_FIELD(string, "cornersedges") VALUE(cornersedges.val) 
+	LABELREF(cornersedges.label) HSTRETCH;
+
+    {  }
+}
+}	
+}	// Template join.bot
+
+outconcavecornersedges.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+outconcavecornersedges.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+outconcavecornersedges.gad = PARM_BUTTON("outconcavecornersedges", "") toggle VALUE(outconcavecornersedges.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+concavecornersedges.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    {  }
+
+    concavecornersedges.label = PARM_LABEL("Concave Corners", "concavecornersedges") WIDTH(1.32);
+    PARM_FIELD(string, "concavecornersedges") VALUE(concavecornersedges.val) 
+	LABELREF(concavecornersedges.label) HSTRETCH;
+
+    {  }
+}
+}	
+}	// Template join.bot
+
+outconvexcornersedges.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+outconvexcornersedges.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+outconvexcornersedges.gad = PARM_BUTTON("outconvexcornersedges", "") toggle VALUE(outconvexcornersedges.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+convexcornersedges.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    {  }
+
+    convexcornersedges.label = PARM_LABEL("Convex Corners", "convexcornersedges") WIDTH(1.32);
+    PARM_FIELD(string, "convexcornersedges") VALUE(convexcornersedges.val) 
+	LABELREF(convexcornersedges.label) HSTRETCH;
+
+    {  }
+}
+}	
+}	// Template join.bot
+
+outholeedges.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+outholeedges.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+outholeedges.gad = PARM_BUTTON("outholeedges", "") toggle VALUE(outholeedges.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+holeedges.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    {  }
+
+    holeedges.label = PARM_LABEL("Hole Edges", "holeedges") WIDTH(1.32);
+    PARM_FIELD(string, "holeedges") VALUE(holeedges.val) 
+	LABELREF(holeedges.label) HSTRETCH;
+
+    {  }
+}
+}	
+}	// Template join.bot
+
+
+fd_edgegroups.gad = 
+
+GROUP simple "Edge Groups" flat 
+{ 
+    VALUE(fd_edgegroups.gad.val) LAYOUT(vertical) HSTRETCH 
+	    outflatedges.row.join;		
+	    outcornersedges.row.join;		
+	    outconcavecornersedges.row.join;		
+	    outconvexcornersedges.row.join;		
+	    outholeedges.row.join;		
+} 
+
+fd_pointgroups.gad = 
+
+GROUP simple "Point Groups" flat 
+{ 
+    VALUE(fd_pointgroups.gad.val) LAYOUT(vertical) HSTRETCH 
+	    outcornerspoints.row.join;		
+	    outconcavecornerspoints.row.join;		
+	    outconvexcornerspoints.row.join;		
+	    outholepoints.row.join;		
+} 
+
+fd_output.gad = 
+GROUP collapsible "Output Groups" flat   
+{
+    VALUE(fd_output.gad.val) LAYOUT(vertical) HSTRETCH
+	    fd_pointgroups.gad;		
+	    fd_edgegroups.gad;		
+} 
+
+fd_hole.gad = 
+GROUP collapsible "Hole" flat   
+{
+    VALUE(fd_hole.gad.val) LAYOUT(vertical) HSTRETCH
+	    cuthole.gad;		
+	    holeshape.gad;		
+	    holepath.gad;		
+	    holesides.gad;		
+	    holerelativescale.gad;		
+	    holerotate.gad;		
+} 
+
+fd_convexcorners.gad = 
+
+{
+    VALUE(fd_convexcorners.gad.val) LAYOUT(vertical) HSTRETCH SPACING(0.02)
+	    sepparm6.gad;		
+	    roundcornersconvex.gad;		
+	    rounddistanceconvex.gad;		
+	    rounddivisionsconvex.gad;		
+} 
+
+fd_concavecorners.gad = 
+
+{
+    VALUE(fd_concavecorners.gad.val) LAYOUT(vertical) HSTRETCH SPACING(0.02)
+	    sepparm5.gad;		
+	    roundcornersconcave.gad;		
+	    rounddistanceconcave.gad;		
+	    rounddivisionsconcave.gad;		
+} 
+
+fd_corners.gad = 
+GROUP collapsible "Corners" flat   
+{
+    VALUE(fd_corners.gad.val) LAYOUT(vertical) HSTRETCH
+	    roundcorners.gad;		
+	    rounddistance.gad;		
+	    rounddivisions.gad;		
+	    fd_concavecorners.gad;		
+	    fd_convexcorners.gad;		
+} 
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    shape.gad; 
+    startype.gad; 
+    useradius.gad; 
+    equilateral.gad; 
+    sides.gad; 
+    top.gad; 
+    base.gad; 
+    height.gad; 
+    radius.gad; 
+    radiusmiddle.gad; 
+    radiusinner.gad; 
+    shear.gad; 
+    sepparm3.gad; 
+    orientation.gad; 
+    translate.gad; 
+    rotate.gad; 
+    reversepointorder.gad; 
+    sepparm.gad; 
+    sidesegments.gad; 
+    fillshape.gad; 
+    adduvs.gad; 
+    fd_corners.gad; 
+    fd_hole.gad; 
+    fd_output.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

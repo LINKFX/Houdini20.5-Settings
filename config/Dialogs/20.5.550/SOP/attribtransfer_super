@@ -1,0 +1,575 @@
+// Magic: 7ee63d5f
+// Automatically generated PSI dialog (PSI version 20.5.550)
+// Tue Jun  3 14:59:45 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+
+group.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    group.label = PARM_LABEL("Group", "group") WIDTH(1.5);
+    PARM_FIELD(string, "group") VALUE(group.val) 
+	LABELREF(group.label) HSTRETCH;
+
+    group.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    ACTION_ICONBUTTON "BUTTONS_reselect" VALUE(group.script_action)
+	HELP("Select geometry from an available viewport.")
+	UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+    { WIDTH(0.1) }
+}
+
+grouptype.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    grouptype.label = PARM_LABEL_SIMPLE("Group Type", "grouptype") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    grouptype.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+class.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    class.label = PARM_LABEL_SIMPLE("Run Over", "class") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    class.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+snippet.gad = ROW
+{
+
+    LAYOUT(overlap) HSTRETCH JUSTIFY(right, top)
+    HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+    {
+	LAYOUT(horizontal) JUSTIFY(right, top)
+
+    ACTION_ICONBUTTON "BUTTONS_create_parm_from_ch" VALUE(snippet.script_action)
+	HELP("Creates spare parameters for each unique call of ch() ")
+	UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+    snippet.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    }
+
+    {
+	LAYOUT(vertical) HSTRETCH JUSTIFY(left, top)
+
+	snippet.label = PARM_LABEL("VEXpression Lift", "snippet");
+	{ HEIGHT(0.06) }
+
+        snippet.field = MULTILINE_PARM_FIELD ("snippet")
+	    LABELREF(snippet.label)
+	    VALUE(snippet.val)
+	    SYNTAX("VEX")
+	    LINES(8,30)
+	    HSTRETCH;
+    }
+
+}
+
+sepparm.gad = 
+
+{
+    LAYOUT(vertical) HSTRETCH HMARGIN(0.18, 0.1)
+    NO_MARGIN_SPACING_SCALE
+
+    { HEIGHT(0.1) }
+    SEPARATOR;
+    { HEIGHT(0.1) }
+}
+
+group2.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    group2.label = PARM_LABEL("Group", "group2") WIDTH(1.5);
+    PARM_FIELD(string, "group2") VALUE(group2.val) 
+	LABELREF(group2.label) HSTRETCH;
+
+    group2.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    ACTION_ICONBUTTON "BUTTONS_reselect" VALUE(group2.script_action)
+	HELP("Select geometry from an available viewport.")
+	UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+    { WIDTH(0.1) }
+}
+
+snippet2.gad = ROW
+{
+
+    LAYOUT(overlap) HSTRETCH JUSTIFY(right, top)
+    HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+    {
+	LAYOUT(horizontal) JUSTIFY(right, top)
+
+    ACTION_ICONBUTTON "BUTTONS_create_parm_from_ch" VALUE(snippet2.script_action)
+	HELP("Creates spare parameters for each unique call of ch() ")
+	UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+    snippet2.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    }
+
+    {
+	LAYOUT(vertical) HSTRETCH JUSTIFY(left, top)
+
+	snippet2.label = PARM_LABEL("VEXpression Right", "snippet2");
+	{ HEIGHT(0.06) }
+
+        snippet2.field = MULTILINE_PARM_FIELD ("snippet2")
+	    LABELREF(snippet2.label)
+	    VALUE(snippet2.val)
+	    SYNTAX("VEX")
+	    LINES(8,30)
+	    HSTRETCH;
+    }
+
+}
+sepparm2.gad = NULL { }
+
+srcgroups.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    srcgroups.label = PARM_LABEL("Source Group", "srcgroups") WIDTH(1.5);
+    PARM_FIELD(string, "srcgroups") VALUE(srcgroups.val) 
+	LABELREF(srcgroups.label) HSTRETCH;
+
+    srcgroups.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    ACTION_ICONBUTTON "BUTTONS_reselect" VALUE(srcgroups.script_action)
+	HELP("Select geometry from an available viewport.\nShift-click to turn on Select Groups.")
+	UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+    { WIDTH(0.1) }
+}
+
+srcgrouptype.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    srcgrouptype.label = PARM_LABEL_SIMPLE("Source Group Type", "srcgrouptype") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    srcgrouptype.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+dstgroups.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    dstgroups.label = PARM_LABEL("Destination Group", "dstgroups") WIDTH(1.5);
+    PARM_FIELD(string, "dstgroups") VALUE(dstgroups.val) 
+	LABELREF(dstgroups.label) HSTRETCH;
+
+    dstgroups.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    ACTION_ICONBUTTON "BUTTONS_reselect" VALUE(dstgroups.script_action)
+	HELP("Select geometry from an available viewport.\nShift-click to turn on Select Groups.")
+	UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+    { WIDTH(0.1) }
+}
+
+dstgrouptype.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    dstgrouptype.label = PARM_LABEL_SIMPLE("Destination Group Type", "dstgrouptype") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    dstgrouptype.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+detailattribs.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+detailattribs.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+detailattribs.gad = PARM_BUTTON("detailattribs", "") toggle VALUE(detailattribs.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+detailattriblist.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    {  }
+
+    detailattriblist.label = PARM_LABEL("Detail", "detailattriblist") WIDTH(1.32);
+    PARM_FIELD(string, "detailattriblist") VALUE(detailattriblist.val) 
+	LABELREF(detailattriblist.label) HSTRETCH;
+
+    detailattriblist.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    {  }
+}
+}	
+}	// Template join.bot
+
+primitiveattribs.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+primitiveattribs.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+primitiveattribs.gad = PARM_BUTTON("primitiveattribs", "") toggle VALUE(primitiveattribs.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+primattriblist.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    {  }
+
+    primattriblist.label = PARM_LABEL("Primitives", "primattriblist") WIDTH(1.32);
+    PARM_FIELD(string, "primattriblist") VALUE(primattriblist.val) 
+	LABELREF(primattriblist.label) HSTRETCH;
+
+    primattriblist.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    {  }
+}
+}	
+}	// Template join.bot
+
+pointattribs.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+pointattribs.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+pointattribs.gad = PARM_BUTTON("pointattribs", "") toggle VALUE(pointattribs.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+pointattriblist.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    {  }
+
+    pointattriblist.label = PARM_LABEL("Points", "pointattriblist") WIDTH(1.32);
+    PARM_FIELD(string, "pointattriblist") VALUE(pointattriblist.val) 
+	LABELREF(pointattriblist.label) HSTRETCH;
+
+    pointattriblist.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    {  }
+}
+}	
+}	// Template join.bot
+
+vertexattribs.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+vertexattribs.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+vertexattribs.gad = PARM_BUTTON("vertexattribs", "") toggle VALUE(vertexattribs.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+vertexattriblist.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    {  }
+
+    vertexattriblist.label = PARM_LABEL("Vertices", "vertexattriblist") WIDTH(1.32);
+    PARM_FIELD(string, "vertexattriblist") VALUE(vertexattriblist.val) 
+	LABELREF(vertexattriblist.label) HSTRETCH;
+
+    vertexattriblist.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    {  }
+}
+}	
+}	// Template join.bot
+
+
+copyvariable.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("copyvariable", "Copy Local Variables") toggle VALUE(copyvariable.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+matchpattrib.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("matchpattrib", "Match P Attribute") toggle VALUE(matchpattrib.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+kernel.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    kernel.label = PARM_LABEL_SIMPLE("Kernel Function", "kernel") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    kernel.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+kernelradius.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ kernelradius.label = PARM_LABEL("Kernel Radius", "kernelradius") WIDTH(1.5);
+ PARM(float, 1, "kernelradius", none, none) RANGE(0.1,10)
+	 LABELREF(kernelradius.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+maxsamplecount.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ maxsamplecount.label = PARM_LABEL("Max Sample Count", "maxsamplecount") WIDTH(1.5);
+ PARM(integer, 1, "maxsamplecount", none, none) RANGE(1,10)
+	LOCK_RANGE_MIN LABELREF(maxsamplecount.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+threshold.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+threshold.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+threshold.gad = PARM_BUTTON("threshold", "") toggle VALUE(threshold.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+thresholddist.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ {  }
+
+ thresholddist.label = PARM_LABEL("Distance Threshold", "thresholddist") WIDTH(1.32);
+ PARM(float, 1, "thresholddist", none, none) RANGE(0,10)
+	 LABELREF(thresholddist.label) HSTRETCH;
+
+  {  }
+}
+}	
+}	// Template join.bot
+
+
+blendwidth.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ blendwidth.label = PARM_LABEL("Blend Width", "blendwidth") WIDTH(1.5);
+ PARM(float, 1, "blendwidth", none, none) RANGE(0,10)
+	 LABELREF(blendwidth.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+uniformbias.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ uniformbias.label = PARM_LABEL("Uniform Bias", "uniformbias") WIDTH(1.5);
+ PARM(float, 1, "uniformbias", none, none) RANGE(0,1)
+	 LABELREF(uniformbias.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+cardswitcher3.gad = 
+{
+    LAYOUT(vertical) HSTRETCH
+
+    TABDIALOG2 flat "cardswitcher3.gad"
+    { 
+	VALUE(cardswitcher3.gad.val) STRETCH(1,0)
+
+	TAB "Attributes"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    detailattribs.row.join;		
+	    primitiveattribs.row.join;		
+	    pointattribs.row.join;		
+	    vertexattribs.row.join;		
+	    copyvariable.gad;		
+	    matchpattrib.gad;		
+
+	    { STRETCH(1,1) }
+	}
+
+	TAB "Conditions"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    kernel.gad;		
+	    kernelradius.gad;		
+	    maxsamplecount.gad;		
+	    threshold.row.join;		
+	    blendwidth.gad;		
+	    uniformbias.gad;		
+
+	    { STRETCH(1,1) }
+	}
+    } 
+}
+
+folder0_1.gad = 
+{
+    LAYOUT(vertical) HSTRETCH
+
+    TABDIALOG2 flat "folder0_1.gad"
+    { 
+	VALUE(folder0_1.gad.val) STRETCH(1,0)
+
+	TAB "Transfer"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    srcgroups.gad;		
+	    srcgrouptype.gad;		
+	    dstgroups.gad;		
+	    dstgrouptype.gad;		
+	    cardswitcher3.gad;		
+
+	    { STRETCH(1,1) }
+	}
+    } 
+}
+
+folder0.gad = 
+{
+    LAYOUT(vertical) HSTRETCH
+
+    TABDIALOG2 flat "folder0.gad"
+    { 
+	VALUE(folder0.gad.val) STRETCH(1,0)
+
+	TAB "Vex"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    group.gad;		
+	    grouptype.gad;		
+	    class.gad;		
+	    snippet.gad;		
+	    sepparm.gad;		
+	    group2.gad;		
+	    snippet2.gad;		
+
+	    { STRETCH(1,1) }
+	}
+    } 
+}
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    folder0.gad; 
+    sepparm2.gad; 
+    folder0_1.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

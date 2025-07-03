@@ -1,0 +1,1438 @@
+// Magic: b76841f9
+// Automatically generated PSI dialog (PSI version 20.5.613)
+// Wed Jun  4 16:06:38 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+loadfromdisk.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+loadfromdisk.gad = ROW
+{
+    
+    {  }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("loadfromdisk", "Load from Disk         ") toggle VALUE(loadfromdisk.val);
+
+    {  }
+
+    {  }
+}
+
+reload.gad = ROW
+{
+    JUSTIFY(left, center)
+    {  }
+
+    PARM_BUTTON("reload", "Reload Geometry")
+	push VALUE(reload.val);
+
+    {  }
+}
+}	// Template join.bot
+
+filemethod.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+filemethod.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) 
+    {  }
+
+    filemethod.label = PARM_LABEL_SIMPLE("File Path", "filemethod") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    filemethod.menu;
+
+    {  }
+
+    {  }
+}
+
+timedependent.gad = ROW
+{
+    
+    {  }
+
+    PARM_BUTTON("timedependent", "Time Dependent Cache") toggle VALUE(timedependent.val);
+
+    {  }
+
+    {  }
+}
+}	// Template join.bot
+
+
+hardenname.gad = ROW
+{
+    JUSTIFY(left, center)
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.1) }
+
+    PARM_BUTTON("hardenname", "Harden Name")
+	push VALUE(hardenname.val);
+
+    { WIDTH(0.1) }
+}
+basename.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+basename.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    {  }
+
+    basename.label = PARM_LABEL("Base Name", "basename") WIDTH(1.5);
+    PARM_FIELD(string, "basename") VALUE(basename.val) 
+	LABELREF(basename.label) HSTRETCH;
+
+    basename.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    {  }
+}
+
+filetype.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) 
+    {  }
+
+    filetype.menu;
+
+    {  }
+
+    {  }
+}
+}	// Template join.bot
+
+file.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+file.gad = 
+{
+ LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+ {  }
+
+ file.label = PARM_LABEL("Geometry File", "file") WIDTH(1.5);
+
+ PARM_FIELD (pathstring, "file") LABELREF(file.label)
+	VALUE(file.val) HSTRETCH;
+
+    file.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+ ACTION_ICONBUTTON "BUTTONS_chooser_file" VALUE(file.plus) LOOKFLAT
+    HELP("Open floating file chooser") UI_FLAT_ICON_BTN_SIZE_SMALL;
+
+ {  }
+}
+
+openfiledir.gad = ROW
+{
+    JUSTIFY(left, center)
+    {  }
+
+    PARM_BUTTON("openfiledir", "", "BUTTONS_folder")
+	push VALUE(openfiledir.val) UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+    {  }
+}
+}	// Template join.bot
+
+basedir.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+basedir.gad = 
+{
+ LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+ {  }
+
+ basedir.label = PARM_LABEL("Base Folder", "basedir") WIDTH(1.5);
+
+ PARM_FIELD (pathstring, "basedir") LABELREF(basedir.label)
+	VALUE(basedir.val) HSTRETCH;
+
+    basedir.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+ ACTION_ICONBUTTON "BUTTONS_chooser_file" VALUE(basedir.plus) LOOKFLAT
+    HELP("Open floating file chooser") UI_FLAT_ICON_BTN_SIZE_SMALL;
+
+ {  }
+}
+
+openbasedir.gad = ROW
+{
+    JUSTIFY(left, center)
+    {  }
+
+    PARM_BUTTON("openbasedir", "", "BUTTONS_folder")
+	push VALUE(openbasedir.val) UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+    {  }
+}
+}	// Template join.bot
+
+enableversion.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+enableversion.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+enableversion.gad = PARM_BUTTON("enableversion", "") toggle VALUE(enableversion.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+version.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ {  }
+
+ version.label = PARM_LABEL("Version", "version") WIDTH(1.32);
+ PARM(integer, 1, "version", none, none) RANGE(1,25)
+	LOCK_RANGE_MIN LABELREF(version.label) HSTRETCH;
+
+  {  }
+}
+}	
+
+versiondown.gad = ROW
+{
+    JUSTIFY(left, center)
+    {  }
+
+    PARM_BUTTON("versiondown", "", "BUTTONS_minus")
+	push VALUE(versiondown.val) UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+    {  }
+}
+
+versionup.gad = ROW
+{
+    JUSTIFY(left, center)
+    {  }
+
+    PARM_BUTTON("versionup", "", "BUTTONS_add")
+	push VALUE(versionup.val) UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+    {  }
+}
+
+cleanversion.gad = ROW
+{
+    JUSTIFY(left, center)
+    {  }
+
+    PARM_BUTTON("cleanversion", "", "BUTTONS_clear")
+	push VALUE(cleanversion.val) UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+    {  }
+}
+}	// Template join.bot
+
+
+sepparm4.gad = 
+
+{
+
+    LAYOUT(vertical) HSTRETCH
+
+    { HEIGHT(0.070590) }
+}
+
+frame.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ frame.label = PARM_LABEL("Frame", "frame") WIDTH(1.5);
+ PARM(float, 1, "frame", none, none) RANGE(1,240)
+	 LABELREF(frame.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+framestr.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    framestr.label = PARM_LABEL("Frame String", "framestr") WIDTH(1.5);
+    PARM_FIELD(string, "framestr") VALUE(framestr.val) 
+	LABELREF(framestr.label) HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+versionstr.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    versionstr.label = PARM_LABEL("Version String", "versionstr") WIDTH(1.5);
+    PARM_FIELD(string, "versionstr") VALUE(versionstr.val) 
+	LABELREF(versionstr.label) HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+sepparm8.gad = 
+
+{
+
+    LAYOUT(vertical) HSTRETCH
+
+    { HEIGHT(0.070590) }
+}
+
+cachedir.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    cachedir.label = PARM_LABEL("Cache Folder", "cachedir") WIDTH(1.5);
+    PARM_FIELD(string, "cachedir") VALUE(cachedir.val) 
+	LABELREF(cachedir.label) HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+cachename.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    cachename.label = PARM_LABEL("Cache Name", "cachename") WIDTH(1.5);
+    PARM_FIELD(string, "cachename") VALUE(cachename.val) 
+	LABELREF(cachename.label) HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+descriptivelabel.gad = 
+{
+ LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+ { WIDTH(0.18) }
+
+ descriptivelabel.label = PARM_LABEL("Descriptive Label", "descriptivelabel") WIDTH(1.5);
+
+ PARM_FIELD (pathstring, "descriptivelabel") LABELREF(descriptivelabel.label)
+	VALUE(descriptivelabel.val) HSTRETCH;
+
+    descriptivelabel.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+ ACTION_ICONBUTTON "BUTTONS_chooser_file" VALUE(descriptivelabel.plus) LOOKFLAT
+    HELP("Open floating file chooser") UI_FLAT_ICON_BTN_SIZE_SMALL;
+
+ { WIDTH(0.1) }
+}
+
+sopoutput.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    sopoutput.label = PARM_LABEL("Output File", "sopoutput") WIDTH(1.5);
+    PARM_FIELD(string, "sopoutput") VALUE(sopoutput.val) 
+	LABELREF(sopoutput.label) HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+execute.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+execute.gad = ROW
+{
+    JUSTIFY(left, center)
+    {  }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.1) }
+
+    PARM_BUTTON("execute", "Save to Disk")
+	push VALUE(execute.val);
+
+    {  }
+}
+
+cookoutputnode.gad = ROW
+{
+    JUSTIFY(left, center)
+    {  }
+
+    PARM_BUTTON("cookoutputnode", "Save to Disk in Background")
+	push VALUE(cookoutputnode.val);
+
+    {  }
+}
+
+dirtyall.gad = ROW
+{
+    JUSTIFY(left, center)
+    {  }
+
+    PARM_BUTTON("dirtyall", "Cancel Cook")
+	push VALUE(dirtyall.val);
+
+    {  }
+}
+}	// Template join.bot
+
+
+executebackground.gad = ROW
+{
+    JUSTIFY(left, center)
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.1) }
+
+    PARM_BUTTON("executebackground", "Save to Disk in Background")
+	push VALUE(executebackground.val);
+
+    { WIDTH(0.1) }
+}
+trange.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+trange.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) 
+    {  }
+
+    trange.label = PARM_LABEL_SIMPLE("Evaluate As", "trange") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    trange.menu;
+
+    {  }
+
+    {  }
+}
+
+cachesim.gad = ROW
+{
+    
+    {  }
+
+    PARM_BUTTON("cachesim", "Simulation") toggle VALUE(cachesim.val);
+
+    {  }
+
+    {  }
+}
+}	// Template join.bot
+
+f.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+f.gad = ROW
+{
+   HSTRETCH
+   {  }
+
+   f.label = PARM_LABEL("Start/End/Inc", "f") WIDTH(1.5);
+   PARM(float, 3, "f", none, none, "#1,#2,#3")
+	RANGE(0,10)  LABELREF(f.label)
+	HSTRETCH;
+
+    {  }
+}
+
+fmenu.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center)
+    {  }
+
+    fmenu.menu LOOK(menuiconbutton) SIZE(0.26, 0.26);
+
+}
+}	// Template join.bot
+
+
+substeps.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ substeps.label = PARM_LABEL("Substeps", "substeps") WIDTH(1.5);
+ PARM(integer, 1, "substeps", none, none) RANGE(1,10)
+	LOCK_RANGE_MIN LABELREF(substeps.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+useframeoverride.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+useframeoverride.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+useframeoverride.gad = PARM_BUTTON("useframeoverride", "") toggle VALUE(useframeoverride.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+frameoverride.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ {  }
+
+ frameoverride.label = PARM_LABEL("Override Frame", "frameoverride") WIDTH(1.32);
+ PARM(float, 1, "frameoverride", none, SNAP) RANGE(1,240)
+	 LABELREF(frameoverride.label) HSTRETCH;
+
+  {  }
+}
+}	
+}	// Template join.bot
+
+doclampfirst.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+doclampfirst.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+doclampfirst.gad = PARM_BUTTON("doclampfirst", "") toggle VALUE(doclampfirst.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+clampfirst.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ {  }
+
+ clampfirst.label = PARM_LABEL("Clamp First Frame", "clampfirst") WIDTH(1.32);
+ PARM(float, 1, "clampfirst", none, SNAP) RANGE(1,240)
+	 LABELREF(clampfirst.label) HSTRETCH;
+
+  {  }
+}
+}	
+}	// Template join.bot
+
+doclamplast.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+doclamplast.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+doclamplast.gad = PARM_BUTTON("doclamplast", "") toggle VALUE(doclamplast.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+clamplast.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ {  }
+
+ clamplast.label = PARM_LABEL("Clamp Last Frame", "clamplast") WIDTH(1.32);
+ PARM(float, 1, "clamplast", none, SNAP) RANGE(1,240)
+	 LABELREF(clamplast.label) HSTRETCH;
+
+  {  }
+}
+}	
+}	// Template join.bot
+
+
+sepparm3.gad = 
+
+{
+
+    LAYOUT(vertical) HSTRETCH
+
+    { HEIGHT(0.070590) }
+}
+
+loadtype.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    loadtype.label = PARM_LABEL_SIMPLE("Load", "loadtype") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    loadtype.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+packedviewedit.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    packedviewedit.label = PARM_LABEL_SIMPLE("Display Packed As", "packedviewedit") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    packedviewedit.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+viewportlod.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    viewportlod.label = PARM_LABEL_SIMPLE("Display As", "viewportlod") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    viewportlod.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+packexpanded.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("packexpanded", "Pack Using Expanded/Absolute File Path") toggle VALUE(packexpanded.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+delayload.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("delayload", "Delay Load Geometry") toggle VALUE(delayload.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+index.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ index.label = PARM_LABEL("Sequence Index", "index") WIDTH(1.5);
+ PARM(float, 1, "index", none, none) RANGE(0,10)
+	 LABELREF(index.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+wrap.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    wrap.label = PARM_LABEL_SIMPLE("Wrap Mode", "wrap") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    wrap.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+targettopnetwork.gad = NULL { }
+
+topscheduler.gad = 
+{
+ LAYOUT(horizontal) HSTRETCH JUSTIFY(left,center)
+ { WIDTH(0.18) }
+
+ topscheduler.label = PARM_LABEL("Custom TOP Scheduler", "topscheduler") WIDTH(1.5);
+ PARM_FIELD(pathstring, "topscheduler") VALUE(topscheduler.val) 
+	LABELREF(topscheduler.label) HSTRETCH;
+
+ ACTION_ICONBUTTON "BUTTONS_jump" VALUE(topscheduler.jump)
+    HELP("Jump to operator\nCtrl+LMB: Open parameters popup dialog")
+    UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+ ACTION_ICONBUTTON "BUTTONS_chooser_node" VALUE(topscheduler.plus)
+    HELP("Open floating operator chooser") UI_FLAT_ICON_BTN_SIZE_SMALL 
+    LOOKFLAT;
+
+ { WIDTH(0.1) }
+}
+
+maxprocsmenu.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    maxprocsmenu.label = PARM_LABEL_SIMPLE("Total Slots", "maxprocsmenu") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    maxprocsmenu.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+deleteattributes.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    deleteattributes.label = PARM_LABEL("Delete Attributes", "deleteattributes") WIDTH(1.5);
+    PARM_FIELD(string, "deleteattributes") VALUE(deleteattributes.val) 
+	LABELREF(deleteattributes.label) HSTRETCH;
+
+    deleteattributes.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    { WIDTH(0.1) }
+}
+
+deletegroups.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    deletegroups.label = PARM_LABEL("Delete Groups", "deletegroups") WIDTH(1.5);
+    PARM_FIELD(string, "deletegroups") VALUE(deletegroups.val) 
+	LABELREF(deletegroups.label) HSTRETCH;
+
+    deletegroups.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    { WIDTH(0.1) }
+}
+
+numcasts.parm =
+{
+    LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+
+    PARM_LABEL_SIMPLE("Number of Casts", "numcasts") WIDTH(1.5);
+    { WIDTH(0.1) }
+
+    ROW
+    {
+	HSTRETCH(0.5) JUSTIFY(left, center) VALUE(numcasts.val)
+
+        numcasts.field = PARM_FIELD (integer, "numcasts")
+				VALUE(numcasts.val) HSTRETCH(0.5)
+				 PREF_WIDTH(0.5);
+
+        ROW
+        {
+	     LOOK(lightline) VMARGIN(1p)
+
+   	     INCREMENT_ICONBUTTON VALUE(numcasts.more.val)	
+	    	HELP("Add Another Instance") SIZE(0.2, 0.24);
+	     DECREMENT_ICONBUTTON VALUE(numcasts.less.val)	
+	        HELP("Remove Last Instance") SIZE(0.2, 0.24);
+
+	}
+
+	ACTION_BUTTON "Clear" VALUE(numcasts.clear.val);
+    }
+
+    { HSTRETCH }
+}
+
+numcasts.multilist = 
+{
+    LAYOUT(vertical) HSTRETCH MARGIN(0.05)
+}
+
+numcasts.gad =
+{
+    LAYOUT(vertical) HSTRETCH
+    HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+    SWITCHER tight
+    {
+	LAYOUT(overlap!)
+        VALUE(numcasts.multilist_hide_buttons.val)
+	{
+	    LAYOUT(vertical) HSTRETCH
+	    numcasts.parm;
+	    {LOOK(none) HEIGHT(0.02)}
+	}
+	{
+	}
+    }
+    numcasts.multilist;
+}
+
+loadfromdiskonsave.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("loadfromdiskonsave", "Enable Load from Disk on Save") toggle VALUE(loadfromdiskonsave.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+hardenbasename.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("hardenbasename", "Harden Base Name on Save") toggle VALUE(hardenbasename.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+hardenbasedir.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("hardenbasedir", "Harden Base Dir on Save") toggle VALUE(hardenbasedir.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+hardenfile.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("hardenfile", "Harden File on Save") toggle VALUE(hardenfile.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+sepparm.gad = 
+
+{
+
+    LAYOUT(vertical) HSTRETCH
+
+    { HEIGHT(0.070590) }
+}
+
+mkpath.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("mkpath", "Create Intermediate Directories") toggle VALUE(mkpath.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+initsim.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("initsim", "Initialize Simulation OPs") toggle VALUE(initsim.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+alfprogress.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("alfprogress", "Alfred Style Progress") toggle VALUE(alfprogress.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+savebackground.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("savebackground", "Save in Background") toggle VALUE(savebackground.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+saveretry.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ saveretry.label = PARM_LABEL("Save Retries", "saveretry") WIDTH(1.5);
+ PARM(integer, 1, "saveretry", none, none) RANGE(0,5)
+	LOCK_RANGE_MIN LABELREF(saveretry.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+sepparm2.gad = 
+
+{
+
+    LAYOUT(vertical) HSTRETCH
+
+    { HEIGHT(0.070590) }
+}
+
+take.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    take.label = PARM_LABEL_SIMPLE("Render With Take", "take") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    take.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+missingframe.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    missingframe.label = PARM_LABEL_SIMPLE("Missing Frame", "missingframe") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    missingframe.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+loadretry.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ loadretry.label = PARM_LABEL("Load Retries", "loadretry") WIDTH(1.5);
+ PARM(integer, 1, "loadretry", none, none) RANGE(0,5)
+	LOCK_RANGE_MIN LABELREF(loadretry.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+cachesize.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ cachesize.label = PARM_LABEL("Cache Frames", "cachesize") WIDTH(1.5);
+ PARM(integer, 1, "cachesize", none, none) RANGE(0,10)
+	LOCK_RANGE_MIN LABELREF(cachesize.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+prefetch.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("prefetch", "Pre-fetch Geometry") toggle VALUE(prefetch.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+tprerender.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+tprerender.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+tprerender.gad = PARM_BUTTON("tprerender", "") toggle VALUE(tprerender.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+prerender.gad = 
+{
+ LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+ {  }
+
+ prerender.label = PARM_LABEL("Pre-Render Script", "prerender") WIDTH(1.32);
+
+ PARM_FIELD (pathstring, "prerender") LABELREF(prerender.label)
+	VALUE(prerender.val) HSTRETCH;
+
+    prerender.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+ ACTION_ICONBUTTON "BUTTONS_chooser_file" VALUE(prerender.plus) LOOKFLAT
+    HELP("Open floating file chooser") UI_FLAT_ICON_BTN_SIZE_SMALL;
+
+ {  }
+}
+}	
+
+lprerender.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) 
+    {  }
+
+    lprerender.menu;
+
+    {  }
+
+    {  }
+}
+}	// Template join.bot
+
+tpreframe.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+tpreframe.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+tpreframe.gad = PARM_BUTTON("tpreframe", "") toggle VALUE(tpreframe.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+preframe.gad = 
+{
+ LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+ {  }
+
+ preframe.label = PARM_LABEL("Pre-Frame Script", "preframe") WIDTH(1.32);
+
+ PARM_FIELD (pathstring, "preframe") LABELREF(preframe.label)
+	VALUE(preframe.val) HSTRETCH;
+
+    preframe.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+ ACTION_ICONBUTTON "BUTTONS_chooser_file" VALUE(preframe.plus) LOOKFLAT
+    HELP("Open floating file chooser") UI_FLAT_ICON_BTN_SIZE_SMALL;
+
+ {  }
+}
+}	
+
+lpreframe.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) 
+    {  }
+
+    lpreframe.menu;
+
+    {  }
+
+    {  }
+}
+}	// Template join.bot
+
+tpostframe.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+tpostframe.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+tpostframe.gad = PARM_BUTTON("tpostframe", "") toggle VALUE(tpostframe.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+postframe.gad = 
+{
+ LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+ {  }
+
+ postframe.label = PARM_LABEL("Post-Frame Script", "postframe") WIDTH(1.32);
+
+ PARM_FIELD (pathstring, "postframe") LABELREF(postframe.label)
+	VALUE(postframe.val) HSTRETCH;
+
+    postframe.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+ ACTION_ICONBUTTON "BUTTONS_chooser_file" VALUE(postframe.plus) LOOKFLAT
+    HELP("Open floating file chooser") UI_FLAT_ICON_BTN_SIZE_SMALL;
+
+ {  }
+}
+}	
+
+lpostframe.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) 
+    {  }
+
+    lpostframe.menu;
+
+    {  }
+
+    {  }
+}
+}	// Template join.bot
+
+tpostwrite.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+tpostwrite.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+tpostwrite.gad = PARM_BUTTON("tpostwrite", "") toggle VALUE(tpostwrite.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+postwrite.gad = 
+{
+ LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+ {  }
+
+ postwrite.label = PARM_LABEL("Post-Write Script", "postwrite") WIDTH(1.32);
+
+ PARM_FIELD (pathstring, "postwrite") LABELREF(postwrite.label)
+	VALUE(postwrite.val) HSTRETCH;
+
+    postwrite.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+ ACTION_ICONBUTTON "BUTTONS_chooser_file" VALUE(postwrite.plus) LOOKFLAT
+    HELP("Open floating file chooser") UI_FLAT_ICON_BTN_SIZE_SMALL;
+
+ {  }
+}
+}	
+
+lpostwrite.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) 
+    {  }
+
+    lpostwrite.menu;
+
+    {  }
+
+    {  }
+}
+}	// Template join.bot
+
+tpostrender.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+tpostrender.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+tpostrender.gad = PARM_BUTTON("tpostrender", "") toggle VALUE(tpostrender.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+postrender.gad = 
+{
+ LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+ {  }
+
+ postrender.label = PARM_LABEL("Post-Render Script", "postrender") WIDTH(1.32);
+
+ PARM_FIELD (pathstring, "postrender") LABELREF(postrender.label)
+	VALUE(postrender.val) HSTRETCH;
+
+    postrender.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+ ACTION_ICONBUTTON "BUTTONS_chooser_file" VALUE(postrender.plus) LOOKFLAT
+    HELP("Open floating file chooser") UI_FLAT_ICON_BTN_SIZE_SMALL;
+
+ {  }
+}
+}	
+
+lpostrender.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) 
+    {  }
+
+    lpostrender.menu;
+
+    {  }
+
+    {  }
+}
+}	// Template join.bot
+
+
+folder6.gad = 
+GROUP collapsible "Scripts" flat   
+{
+    VALUE(folder6.gad.val) LAYOUT(vertical) HSTRETCH
+	    tprerender.row.join;		
+	    tpreframe.row.join;		
+	    tpostframe.row.join;		
+	    tpostwrite.row.join;		
+	    tpostrender.row.join;		
+} 
+
+folder8.gad = 
+GROUP collapsible "Load" flat   
+{
+    VALUE(folder8.gad.val) LAYOUT(vertical) HSTRETCH
+	    missingframe.gad;		
+	    loadretry.gad;		
+	    cachesize.gad;		
+	    prefetch.gad;		
+} 
+
+folder7.gad = 
+GROUP collapsible "Save" flat   
+{
+    VALUE(folder7.gad.val) LAYOUT(vertical) HSTRETCH
+	    loadfromdiskonsave.gad;		
+	    hardenbasename.gad;		
+	    hardenbasedir.gad;		
+	    hardenfile.gad;		
+	    sepparm.gad;		
+	    mkpath.gad;		
+	    initsim.gad;		
+	    alfprogress.gad;		
+	    savebackground.gad;		
+	    saveretry.gad;		
+	    sepparm2.gad;		
+	    take.gad;		
+} 
+
+folder1_2.gad = 
+GROUP collapsible "Load" flat  PARMREF(loadtype.gad) 
+{
+    VALUE(folder1_2.gad.val) LAYOUT(vertical) HSTRETCH
+	    doclampfirst.row.join;		
+	    doclamplast.row.join;		
+	    sepparm3.gad;		
+	    loadtype.gad;		
+	    packedviewedit.gad;		
+	    viewportlod.gad;		
+	    packexpanded.gad;		
+	    delayload.gad;		
+	    index.gad;		
+	    wrap.gad;		
+} 
+
+folder2.gad = 
+GROUP collapsible "Sequence" flat   
+{
+    VALUE(folder2.gad.val) LAYOUT(vertical) HSTRETCH
+	    trange.row.join;		
+	    f.row.join;		
+	    substeps.gad;		
+	    useframeoverride.row.join;		
+} 
+
+folder3.gad = 
+GROUP collapsible "Cache" flat   
+{
+    VALUE(folder3.gad.val) LAYOUT(vertical) HSTRETCH
+	    execute.row.join;		
+	    executebackground.gad;		
+} 
+
+folder1.gad = 
+{
+    LAYOUT(vertical) HSTRETCH
+
+    TABDIALOG2 flat "folder1.gad"
+    { 
+	VALUE(folder1.gad.val) STRETCH(1,0)
+
+	TAB "Caching"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    folder3.gad;		
+	    folder2.gad;		
+	    folder1_2.gad;		
+
+	    { STRETCH(1,1) }
+	}
+
+	TAB "Scheduling"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    targettopnetwork.gad;		
+	    topscheduler.gad;		
+	    maxprocsmenu.gad;		
+
+	    { STRETCH(1,1) }
+	}
+
+	TAB "Save Filters"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    deleteattributes.gad;		
+	    deletegroups.gad;		
+	    numcasts.gad;		
+
+	    { STRETCH(1,1) }
+	}
+
+	TAB "Advanced"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    folder7.gad;		
+	    folder8.gad;		
+	    folder6.gad;		
+
+	    { STRETCH(1,1) }
+	}
+    } 
+}
+
+folder9.gad = 
+GROUP collapsible "Path" flat  PARMREF(sopoutput.gad) 
+{
+    VALUE(folder9.gad.val) LAYOUT(vertical) HSTRETCH
+	    frame.gad;		
+	    framestr.gad;		
+	    versionstr.gad;		
+	    sepparm8.gad;		
+	    cachedir.gad;		
+	    cachename.gad;		
+	    descriptivelabel.gad;		
+	    sopoutput.gad;		
+} 
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    loadfromdisk.row.join; 
+    filemethod.row.join; 
+    hardenname.gad; 
+    basename.row.join; 
+    file.row.join; 
+    basedir.row.join; 
+    enableversion.row.join; 
+    sepparm4.gad; 
+    folder9.gad; 
+    folder1.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

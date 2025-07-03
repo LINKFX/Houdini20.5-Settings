@@ -1,0 +1,505 @@
+// Magic: a6650bd1
+// Automatically generated PSI dialog (PSI version 20.5.613)
+// Wed Jun  4 16:06:31 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+name1.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+name1.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    {  }
+
+    name1.label = PARM_LABEL("Module Name", "name1") WIDTH(1.5);
+    PARM_FIELD(string, "name1") VALUE(name1.val) 
+	LABELREF(name1.label) HSTRETCH;
+
+    {  }
+}
+
+weight.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ {  }
+
+ weight.label = PARM_LABEL("Weight", "weight") ;
+ PARM(float, 1, "weight", none, none) RANGE(0,5)
+	 LABELREF(weight.label) HSTRETCH;
+
+  {  }
+}
+}	// Template join.bot
+
+
+FillDimensions.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("FillDimensions", "Auto fill Dimensions") toggle VALUE(FillDimensions.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+f2ModuleDimensions.gad = ROW
+{
+   HSTRETCH
+   { WIDTH(0.18) }
+
+   f2ModuleDimensions.label = PARM_LABEL("Module Dimensions", "f2ModuleDimensions") WIDTH(1.5);
+   PARM(float, 2, "f2ModuleDimensions", none, none, "#1,#2")
+	RANGE(0,10)  LABELREF(f2ModuleDimensions.label)
+	HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+priority.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ priority.label = PARM_LABEL("Priority", "priority") WIDTH(1.5);
+ PARM(integer, 1, "priority", none, none) RANGE(0,10)
+	 LABELREF(priority.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+variations.parm =
+{
+    LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+
+    PARM_LABEL_SIMPLE("Variations", "variations") WIDTH(1.5);
+    { WIDTH(0.1) }
+
+    ROW
+    {
+	HSTRETCH(0.5) JUSTIFY(left, center) VALUE(variations.val)
+
+        variations.field = PARM_FIELD (integer, "variations")
+				VALUE(variations.val) HSTRETCH(0.5)
+				 PREF_WIDTH(0.5);
+
+        ROW
+        {
+	     LOOK(lightline) VMARGIN(1p)
+
+   	     INCREMENT_ICONBUTTON VALUE(variations.more.val)	
+	    	HELP("Add Another Instance") SIZE(0.2, 0.24);
+	     DECREMENT_ICONBUTTON VALUE(variations.less.val)	
+	        HELP("Remove Last Instance") SIZE(0.2, 0.24);
+
+	}
+
+	ACTION_BUTTON "Clear" VALUE(variations.clear.val);
+    }
+
+    { HSTRETCH }
+}
+
+variations.multilist = 
+{
+    LAYOUT(vertical) HSTRETCH MARGIN(0.05)
+}
+
+variations.gad =
+{
+    LAYOUT(vertical) HSTRETCH
+    HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+    SWITCHER tight
+    {
+	LAYOUT(overlap!)
+        VALUE(variations.multilist_hide_buttons.val)
+	{
+	    LAYOUT(vertical) HSTRETCH
+	    variations.parm;
+	    {LOOK(none) HEIGHT(0.02)}
+	}
+	{
+	}
+    }
+    variations.multilist;
+}
+name2.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+name2.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    {  }
+
+    name2.label = PARM_LABEL("Module Name", "name2") WIDTH(1.5);
+    PARM_FIELD(string, "name2") VALUE(name2.val) 
+	LABELREF(name2.label) HSTRETCH;
+
+    {  }
+}
+
+weight2.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ {  }
+
+ weight2.label = PARM_LABEL("Weight", "weight2") ;
+ PARM(float, 1, "weight2", none, none) RANGE(0,5)
+	 LABELREF(weight2.label) HSTRETCH;
+
+  {  }
+}
+}	// Template join.bot
+
+hasexpandedform2.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+hasexpandedform2.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+
+hasexpandedform2.gad = PARM_BUTTON("hasexpandedform2", "") toggle VALUE(hasexpandedform2.val) RETAIN_SIZE_WHEN_HIDDEN;
+
+expanded2.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    {  }
+
+    expanded2.label = PARM_LABEL("Expanded Form", "expanded2") WIDTH(1.32);
+    PARM_FIELD(string, "expanded2") VALUE(expanded2.val) 
+	LABELREF(expanded2.label) HSTRETCH;
+
+    {  }
+}
+}	
+}	// Template join.bot
+
+
+corners.gad = ROW
+{
+   HSTRETCH
+   { WIDTH(0.18) }
+
+   corners.label = PARM_LABEL("Corners", "corners") WIDTH(1.5);
+   PARM(string, 2, "corners", none, none, "#1,#2")
+	RANGE(0,1)  LABELREF(corners.label)
+	HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+f2ModuleDimensions3.gad = ROW
+{
+   HSTRETCH
+   { WIDTH(0.18) }
+
+   f2ModuleDimensions3.label = PARM_LABEL("Module Dimensions", "f2ModuleDimensions3") WIDTH(1.5);
+   PARM(float, 2, "f2ModuleDimensions3", none, none, "#1,#2")
+	RANGE(0,10)  LABELREF(f2ModuleDimensions3.label)
+	HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+priority2.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ priority2.label = PARM_LABEL("Priority", "priority2") WIDTH(1.5);
+ PARM(integer, 1, "priority2", none, none) RANGE(0,10)
+	 LABELREF(priority2.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+variations2.parm =
+{
+    LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+
+    PARM_LABEL_SIMPLE("Variations", "variations2") WIDTH(1.5);
+    { WIDTH(0.1) }
+
+    ROW
+    {
+	HSTRETCH(0.5) JUSTIFY(left, center) VALUE(variations2.val)
+
+        variations2.field = PARM_FIELD (integer, "variations2")
+				VALUE(variations2.val) HSTRETCH(0.5)
+				 PREF_WIDTH(0.5);
+
+        ROW
+        {
+	     LOOK(lightline) VMARGIN(1p)
+
+   	     INCREMENT_ICONBUTTON VALUE(variations2.more.val)	
+	    	HELP("Add Another Instance") SIZE(0.2, 0.24);
+	     DECREMENT_ICONBUTTON VALUE(variations2.less.val)	
+	        HELP("Remove Last Instance") SIZE(0.2, 0.24);
+
+	}
+
+	ACTION_BUTTON "Clear" VALUE(variations2.clear.val);
+    }
+
+    { HSTRETCH }
+}
+
+variations2.multilist = 
+{
+    LAYOUT(vertical) HSTRETCH MARGIN(0.05)
+}
+
+variations2.gad =
+{
+    LAYOUT(vertical) HSTRETCH
+    HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+    SWITCHER tight
+    {
+	LAYOUT(overlap!)
+        VALUE(variations2.multilist_hide_buttons.val)
+	{
+	    LAYOUT(vertical) HSTRETCH
+	    variations2.parm;
+	    {LOOK(none) HEIGHT(0.02)}
+	}
+	{
+	}
+    }
+    variations2.multilist;
+}
+
+sepparm.gad = 
+
+{
+    LAYOUT(vertical) HSTRETCH HMARGIN(0.18, 0.1)
+    NO_MARGIN_SPACING_SCALE
+
+    { HEIGHT(0.1) }
+    SEPARATOR;
+    { HEIGHT(0.1) }
+}
+
+lb_syntax.gad =
+{
+    LAYOUT(vertical) SPACING(1p) HSTRETCH VMARGIN(0.05, 0)
+    HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+    {
+        LAYOUT(horizontal) HSTRETCH
+        { WIDTH(1.5) }
+        { WIDTH(0.08) }
+        LABEL VALUE(lb_syntax.val[0]) HSTRETCH;
+    }
+    { HEIGHT(0.05) }
+}
+
+action.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    action.label = PARM_LABEL_SIMPLE("Action", "action") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    action.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+bUseInternalBBox.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("bUseInternalBBox", "Use Embedded Boundingbox") toggle VALUE(bUseInternalBBox.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+t.gad = ROW
+{
+   HSTRETCH
+   { WIDTH(0.18) }
+
+   t.label = PARM_LABEL("Center", "t") WIDTH(1.5);
+   PARM(float, 3, "t", none, none, "X,Y,Z")
+	RANGE(-1,1)  LABELREF(t.label)
+	HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+size.gad = ROW
+{
+   HSTRETCH
+   { WIDTH(0.18) }
+
+   size.label = PARM_LABEL("Size", "size") WIDTH(1.5);
+   PARM(float, 3, "size", none, none, "X,Y,Z")
+	RANGE(-1,1)  LABELREF(size.label)
+	HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+scale.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ scale.label = PARM_LABEL("Uniform Scale", "scale") WIDTH(1.5);
+ PARM(float, 1, "scale", none, none) RANGE(0,10)
+	 LABELREF(scale.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+r.gad = ROW
+{
+   HSTRETCH
+   { WIDTH(0.18) }
+
+   r.label = PARM_LABEL("Rotate", "r") WIDTH(1.5);
+   PARM(float, 3, "r", none, none, "X,Y,Z")
+	RANGE(0,360)  LABELREF(r.label)
+	HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+string1.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    string1.label = PARM_LABEL("Module Name", "string1") WIDTH(1.5);
+    PARM_FIELD(string, "string1") VALUE(string1.val) 
+	LABELREF(string1.label) HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+folder1.gad = 
+
+GROUP simple "Bounds Properties" flat 
+{ 
+    VALUE(folder1.gad.val) LAYOUT(vertical) HSTRETCH 
+	    t.gad;		
+	    size.gad;		
+	    scale.gad;		
+	    r.gad;		
+} 
+
+folder0.gad = 
+{
+    LAYOUT(vertical) HSTRETCH
+
+    { LOOK(none) SIZE(0, 0.05) }	
+
+    TABDIALOG radio
+    { 
+	VALUE(folder0.gad.val) STRETCH(1,0)
+
+	TAB "Building Module"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    name1.row.join;		
+	    FillDimensions.gad;		
+	    f2ModuleDimensions.gad;		
+	    priority.gad;		
+	    variations.gad;		
+
+	    { STRETCH(1,1) }
+	}
+
+	TAB "Floor Description"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    name2.row.join;		
+	    hasexpandedform2.row.join;		
+	    corners.gad;		
+	    f2ModuleDimensions3.gad;		
+	    priority2.gad;		
+	    variations2.gad;		
+	    sepparm.gad;		
+	    lb_syntax.gad;		
+
+	    { STRETCH(1,1) }
+	}
+
+	TAB "Handplaced Override"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    action.gad;		
+	    bUseInternalBBox.gad;		
+	    folder1.gad;		
+
+	    { STRETCH(1,1) }
+	}
+
+	TAB "Volumetric Override"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    string1.gad;		
+
+	    { STRETCH(1,1) }
+	}
+    } 
+}
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    folder0.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

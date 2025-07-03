@@ -1,0 +1,1 @@
+{"type": "root", "attrs": {"type": "example"}, "body": [{"type": "title", "indent": 0, "text": ["GroupCopyBox"]}, {"type": "para", "indent": 0, "text": ["This example demonstrates how to group geometry based on a group from another network."], "extent": [0, 87]}], "examplefor": "/nodes/sop/groupcopy", "examplefile": "/examples/nodes/sop/groupcopy/GroupCopyBox.otl"}

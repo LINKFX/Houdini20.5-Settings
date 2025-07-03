@@ -1,0 +1,110 @@
+// Magic: 7df4d833
+// Automatically generated PSI dialog (PSI version 20.5.613)
+// Wed Jul  2 14:47:41 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+
+category_name.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    category_name.label = PARM_LABEL("Category Name", "category_name") WIDTH(1.5);
+    PARM_FIELD(string, "category_name") VALUE(category_name.val) 
+	LABELREF(category_name.label) HSTRETCH;
+
+    category_name.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    { WIDTH(0.1) }
+}
+
+name1.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    name1.label = PARM_LABEL("Module Name", "name1") WIDTH(1.5);
+    PARM_FIELD(string, "name1") VALUE(name1.val) 
+	LABELREF(name1.label) HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+variations.parm =
+{
+    LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+
+    PARM_LABEL_SIMPLE("Variations", "variations") WIDTH(1.5);
+    { WIDTH(0.1) }
+
+    ROW
+    {
+	HSTRETCH(0.5) JUSTIFY(left, center) VALUE(variations.val)
+
+        variations.field = PARM_FIELD (integer, "variations")
+				VALUE(variations.val) HSTRETCH(0.5)
+				 PREF_WIDTH(0.5);
+
+        ROW
+        {
+	     LOOK(lightline) VMARGIN(1p)
+
+   	     INCREMENT_ICONBUTTON VALUE(variations.more.val)	
+	    	HELP("Add Another Instance") SIZE(0.2, 0.24);
+	     DECREMENT_ICONBUTTON VALUE(variations.less.val)	
+	        HELP("Remove Last Instance") SIZE(0.2, 0.24);
+
+	}
+
+	ACTION_BUTTON "Clear" VALUE(variations.clear.val);
+    }
+
+    { HSTRETCH }
+}
+
+variations.multilist = 
+{
+    LAYOUT(vertical) HSTRETCH MARGIN(0.05)
+}
+
+variations.gad =
+{
+    LAYOUT(vertical) HSTRETCH
+    HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+    SWITCHER tight
+    {
+	LAYOUT(overlap!)
+        VALUE(variations.multilist_hide_buttons.val)
+	{
+	    LAYOUT(vertical) HSTRETCH
+	    variations.parm;
+	    {LOOK(none) HEIGHT(0.02)}
+	}
+	{
+	}
+    }
+    variations.multilist;
+}
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    category_name.gad; 
+    name1.gad; 
+    variations.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

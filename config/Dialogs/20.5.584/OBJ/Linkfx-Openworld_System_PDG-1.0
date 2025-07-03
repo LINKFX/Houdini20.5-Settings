@@ -1,0 +1,117 @@
+// Magic: 9b4c9e5
+// Automatically generated PSI dialog (PSI version 20.5.584)
+// Tue Jun  3 14:01:43 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+xOrd.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+xOrd.gad = NULL { }
+rOrd.gad = NULL { }
+}	// Template join.bot
+
+t.gad = NULL { }
+r.gad = NULL { }
+s.gad = NULL { }
+p.gad = NULL { }
+pr.gad = NULL { }
+scale.gad = NULL { }
+pre_xform.gad = NULL { }
+keeppos.gad = NULL { }
+childcomp.gad = NULL { }
+constraints_on.gad = NULL { }
+constraints_path.gad = NULL { }
+lookatpath.gad = NULL { }
+lookupobjpath.gad = NULL { }
+lookup.gad = NULL { }
+pathobjpath.gad = NULL { }
+roll.gad = NULL { }
+pos.gad = NULL { }
+uparmtype.gad = NULL { }
+pathorient.gad = NULL { }
+up.gad = NULL { }
+bank.gad = NULL { }
+label1.gad = NULL { }
+label2.gad = NULL { }
+label3.gad = NULL { }
+label4.gad = NULL { }
+tdisplay.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+tdisplay.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+tdisplay.gad = NULL { }
+display.gad = NULL { }
+}	
+}	// Template join.bot
+
+outputobj.gad = NULL { }
+visibleobjects.gad = NULL { }
+picking.gad = NULL { }
+pickscript.gad = NULL { }
+caching.gad = NULL { }
+use_dcolor.gad = NULL { }
+dcolor.gad = NULL { }
+
+floatrange2x.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ floatrange2x.label = PARM_LABEL("Min Scale", "floatrange2x") WIDTH(1.5);
+ PARM(float, 1, "floatrange2x", none, none) RANGE(0.1,5)
+	LOCK_RANGE LABELREF(floatrange2x.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+floatrange2y.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ floatrange2y.label = PARM_LABEL("Max Scale", "floatrange2y") WIDTH(1.5);
+ PARM(float, 1, "floatrange2y", none, none) RANGE(0.1,5)
+	LOCK_RANGE LABELREF(floatrange2y.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+stdswitcher3.gad = 
+{
+    LAYOUT(vertical) HSTRETCH
+
+    TABDIALOG2 flat "stdswitcher3.gad"
+    { 
+	VALUE(stdswitcher3.gad.val) STRETCH(1,0)
+    } 
+}
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    floatrange2x.gad; 
+    floatrange2y.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

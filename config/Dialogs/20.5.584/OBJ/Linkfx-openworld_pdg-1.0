@@ -1,0 +1,285 @@
+// Magic: 3d86f49
+// Automatically generated PSI dialog (PSI version 20.5.584)
+// Tue Jun  3 11:06:24 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+xOrd.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+xOrd.gad = NULL { }
+rOrd.gad = NULL { }
+}	// Template join.bot
+
+t.gad = NULL { }
+r.gad = NULL { }
+s.gad = NULL { }
+p.gad = NULL { }
+pr.gad = NULL { }
+scale.gad = NULL { }
+pre_xform.gad = NULL { }
+keeppos.gad = NULL { }
+childcomp.gad = NULL { }
+constraints_on.gad = NULL { }
+constraints_path.gad = NULL { }
+lookatpath.gad = NULL { }
+lookupobjpath.gad = NULL { }
+lookup.gad = NULL { }
+pathobjpath.gad = NULL { }
+roll.gad = NULL { }
+pos.gad = NULL { }
+uparmtype.gad = NULL { }
+pathorient.gad = NULL { }
+up.gad = NULL { }
+bank.gad = NULL { }
+label1.gad = NULL { }
+label2.gad = NULL { }
+label3.gad = NULL { }
+label4.gad = NULL { }
+tdisplay.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+tdisplay.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0, 0) NO_MARGIN_SPACING_SCALE
+tdisplay.gad = NULL { }
+display.gad = NULL { }
+}	
+}	// Template join.bot
+
+outputobj.gad = NULL { }
+visibleobjects.gad = NULL { }
+picking.gad = NULL { }
+pickscript.gad = NULL { }
+caching.gad = NULL { }
+use_dcolor.gad = NULL { }
+dcolor.gad = NULL { }
+
+hdap_sizex.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ hdap_sizex.label = PARM_LABEL("Size", "hdap_sizex") WIDTH(1.5);
+ PARM(float, 1, "hdap_sizex", none, none) RANGE(-1,1)
+	 LABELREF(hdap_sizex.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+hdap_gridsamples.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ hdap_gridsamples.label = PARM_LABEL("Grid Samples", "hdap_gridsamples") WIDTH(1.5);
+ PARM(integer, 1, "hdap_gridsamples", none, none) RANGE(1,2048)
+	LOCK_RANGE_MIN LABELREF(hdap_gridsamples.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+hdap_enable_terrain_base_cache.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("hdap_enable_terrain_base_cache", "Enable") toggle VALUE(hdap_enable_terrain_base_cache.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+hdap_output_path_off.gad = 
+{
+ LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+ { WIDTH(0.18) }
+
+ hdap_output_path_off.label = PARM_LABEL("Output File", "hdap_output_path_off") WIDTH(1.5);
+
+ PARM_FIELD (pathstring, "hdap_output_path_off") LABELREF(hdap_output_path_off.label)
+	VALUE(hdap_output_path_off.val) HSTRETCH;
+
+    hdap_output_path_off.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+ ACTION_ICONBUTTON "BUTTONS_chooser_file" VALUE(hdap_output_path_off.plus) LOOKFLAT
+    HELP("Open floating file chooser") UI_FLAT_ICON_BTN_SIZE_SMALL;
+
+ { WIDTH(0.1) }
+}
+
+hdap_tilecount.gad = ROW
+{
+   HSTRETCH
+   { WIDTH(0.18) }
+
+   hdap_tilecount.label = PARM_LABEL("Tile Count", "hdap_tilecount") WIDTH(1.5);
+   PARM(integer, 2, "hdap_tilecount", none, none, "X,Y")
+	RANGE(1,10) LOCK_RANGE_MIN LABELREF(hdap_tilecount.label)
+	HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+hdap_extracttile.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("hdap_extracttile", "Extract Single Tile") toggle VALUE(hdap_extracttile.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+hdap_maketileattribute.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("hdap_maketileattribute", "Custom Tile Number") toggle VALUE(hdap_maketileattribute.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+hdap_proxies.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("hdap_proxies", "Proxies") toggle VALUE(hdap_proxies.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+hdap_levelpath.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    hdap_levelpath.label = PARM_LABEL("Level Path", "hdap_levelpath") WIDTH(1.5);
+    PARM_FIELD(string, "hdap_levelpath") VALUE(hdap_levelpath.val) 
+	LABELREF(hdap_levelpath.label) HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+hdap_materialpath.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    hdap_materialpath.label = PARM_LABEL("Material Path", "hdap_materialpath") WIDTH(1.5);
+    PARM_FIELD(string, "hdap_materialpath") VALUE(hdap_materialpath.val) 
+	LABELREF(hdap_materialpath.label) HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+hdap_folder2_1.gad = 
+
+GROUP simple "Terrain settings" flat 
+{ 
+    VALUE(hdap_folder2_1.gad.val) LAYOUT(vertical) HSTRETCH 
+	    hdap_materialpath.gad;		
+} 
+
+hdap_folder2.gad = 
+
+GROUP simple "World Composition" flat 
+{ 
+    VALUE(hdap_folder2.gad.val) LAYOUT(vertical) HSTRETCH 
+	    hdap_maketileattribute.gad;		
+	    hdap_proxies.gad;		
+	    hdap_levelpath.gad;		
+} 
+
+hdap_cache.gad = 
+
+GROUP simple "Cache" flat 
+{ 
+    VALUE(hdap_cache.gad.val) LAYOUT(vertical) HSTRETCH 
+	    hdap_enable_terrain_base_cache.gad;		
+	    hdap_output_path_off.gad;		
+} 
+
+stdswitcher3.gad = 
+{
+    LAYOUT(vertical) HSTRETCH
+
+    TABDIALOG2 flat "stdswitcher3.gad"
+    { 
+	VALUE(stdswitcher3.gad.val) STRETCH(1,0)
+
+	TAB "Terrain Base"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    hdap_sizex.gad;		
+	    hdap_gridsamples.gad;		
+	    hdap_cache.gad;		
+
+	    { STRETCH(1,1) }
+	}
+
+	TAB "Tile"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    hdap_tilecount.gad;		
+	    hdap_extracttile.gad;		
+	    hdap_folder2.gad;		
+	    hdap_folder2_1.gad;		
+
+	    { STRETCH(1,1) }
+	}
+    } 
+}
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    stdswitcher3.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

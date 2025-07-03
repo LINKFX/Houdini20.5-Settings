@@ -1,0 +1,148 @@
+// Magic: 1324e49
+// Automatically generated PSI dialog (PSI version 20.5.613)
+// Fri Jun  6 15:25:07 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+
+mode.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    PARM_LABEL_SIMPLE("Mode", "mode") WIDTH(1.5);
+    { WIDTH(0.1) }
+
+    mode.buttonstrip;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+tweak.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    tweak.buttonstrip;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+slide_modes.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    slide_modes.label = PARM_LABEL_SIMPLE("Slide Mode", "slide_modes") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    slide_modes.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+components.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    PARM_LABEL_SIMPLE("Components", "components") WIDTH(1.5);
+    { WIDTH(0.1) }
+
+    components.buttonstrip;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+lmb.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    lmb.label = PARM_LABEL_SIMPLE("Left Mouse", "lmb") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    lmb.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+mmb.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    mmb.label = PARM_LABEL_SIMPLE("Middle Mouse", "mmb") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    mmb.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+handlereset.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("handlereset", "Reset Handle on Each New Operation") toggle VALUE(handlereset.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+handlehide.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("handlehide", "Hide Handle on Immediate Selection Drag") toggle VALUE(handlehide.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    mode.gad; 
+    tweak.gad; 
+    slide_modes.gad; 
+    components.gad; 
+    lmb.gad; 
+    mmb.gad; 
+    handlereset.gad; 
+    handlehide.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

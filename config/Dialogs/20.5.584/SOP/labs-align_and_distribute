@@ -1,0 +1,275 @@
+// Magic: 6c4baf8d
+// Automatically generated PSI dialog (PSI version 20.5.584)
+// Wed May 28 11:29:31 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+split_by.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+split_by.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) 
+    {  }
+
+    split_by.label = PARM_LABEL_SIMPLE("Split By ", "split_by") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    split_by.menu;
+
+    {  }
+
+    {  }
+}
+
+attribname.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    {  }
+
+    attribname.label = PARM_LABEL("Attribute Name", "attribname") ;
+    PARM_FIELD(string, "attribname") VALUE(attribname.val) 
+	LABELREF(attribname.label) HSTRETCH;
+
+    attribname.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    {  }
+}
+}	// Template join.bot
+
+
+sort_by.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    sort_by.label = PARM_LABEL_SIMPLE("Sort By", "sort_by") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    sort_by.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+bbox_relative.gad = NULL { }
+
+offset.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ offset.label = PARM_LABEL("Padding", "offset") WIDTH(1.5);
+ PARM(float, 1, "offset", none, none) RANGE(0,10)
+	 LABELREF(offset.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+sepparm.gad = 
+
+{
+    LAYOUT(vertical) HSTRETCH HMARGIN(0.18, 0.1)
+    NO_MARGIN_SPACING_SCALE
+
+    { HEIGHT(0.1) }
+    SEPARATOR;
+    { HEIGHT(0.1) }
+}
+axis_align.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+axis_align.gad = ROW
+{
+    
+    {  }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("axis_align", "Axis Align") toggle VALUE(axis_align.val);
+
+    {  }
+
+    {  }
+}
+
+x.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) 
+    {  }
+
+    x.label = PARM_LABEL_SIMPLE("X", "x") ;
+    { WIDTH(0.09) }
+
+    x.menu;
+
+    {  }
+
+    {  }
+}
+
+y.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) 
+    {  }
+
+    y.label = PARM_LABEL_SIMPLE("Y", "y") ;
+    { WIDTH(0.09) }
+
+    y.menu;
+
+    {  }
+
+    {  }
+}
+
+z.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) 
+    {  }
+
+    z.label = PARM_LABEL_SIMPLE("Z", "z") ;
+    { WIDTH(0.09) }
+
+    z.menu;
+
+    {  }
+
+    {  }
+}
+}	// Template join.bot
+
+
+mAlignMode.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    mAlignMode.label = PARM_LABEL_SIMPLE("Mode", "mAlignMode") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    mAlignMode.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+axis.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+axis.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) 
+    {  }
+
+    axis.label = PARM_LABEL_SIMPLE("Axis", "axis") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    axis.menu;
+
+    {  }
+
+    {  }
+}
+
+alignment.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) 
+    {  }
+
+    alignment.label = PARM_LABEL_SIMPLE("Alignment", "alignment") ;
+    { WIDTH(0.09) }
+
+    alignment.menu;
+
+    {  }
+
+    {  }
+}
+}	// Template join.bot
+
+
+orient.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    orient.label = PARM_LABEL_SIMPLE("Axis", "orient") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    orient.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+fd_grid.gad = 
+
+GROUP simple "Grid" flat 
+{ 
+    VALUE(fd_grid.gad.val) LAYOUT(vertical) HSTRETCH 
+	    orient.gad;		
+} 
+
+fd_linear.gad = 
+
+GROUP simple "Linear" flat 
+{ 
+    VALUE(fd_linear.gad.val) LAYOUT(vertical) HSTRETCH 
+	    axis.row.join;		
+} 
+
+fd_alignment.gad = 
+
+GROUP simple "Alignment" flat 
+{ 
+    VALUE(fd_alignment.gad.val) LAYOUT(vertical) HSTRETCH 
+	    mAlignMode.gad;		
+	    fd_linear.gad;		
+	    fd_grid.gad;		
+} 
+
+folder1.gad = 
+
+GROUP simple "Pieces" flat 
+{ 
+    VALUE(folder1.gad.val) LAYOUT(vertical) HSTRETCH 
+	    split_by.row.join;		
+	    sort_by.gad;		
+	    bbox_relative.gad;		
+	    offset.gad;		
+	    sepparm.gad;		
+	    axis_align.row.join;		
+} 
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    folder1.gad; 
+    fd_alignment.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

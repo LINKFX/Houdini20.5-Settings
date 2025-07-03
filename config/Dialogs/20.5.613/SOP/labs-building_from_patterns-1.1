@@ -1,0 +1,365 @@
+// Magic: cdb90629
+// Automatically generated PSI dialog (PSI version 20.5.613)
+// Wed Jun  4 16:07:04 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+
+btn_random_fill.gad = ROW
+{
+    JUSTIFY(left, center)
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.1) }
+
+    PARM_BUTTON("btn_random_fill", "Random Fill Patterns")
+	push VALUE(btn_random_fill.val);
+
+    { WIDTH(0.1) }
+}
+btn_showfloors.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+btn_showfloors.gad = ROW
+{
+    JUSTIFY(left, center)
+    {  }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.1) }
+
+    PARM_BUTTON("btn_showfloors", "Show Floors")
+	push VALUE(btn_showfloors.val);
+
+    {  }
+}
+
+floor_names.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    {  }
+
+    PARM_FIELD(string, "floor_names") VALUE(floor_names.val) HSTRETCH;
+
+    {  }
+}
+}	// Template join.bot
+
+
+styles.parm =
+{
+    LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+
+    PARM_LABEL_SIMPLE("Add Building Styles", "styles") WIDTH(1.5);
+    { WIDTH(0.1) }
+
+    ROW
+    {
+	HSTRETCH(0.5) JUSTIFY(left, center) VALUE(styles.val)
+
+        styles.field = PARM_FIELD (integer, "styles")
+				VALUE(styles.val) HSTRETCH(0.5)
+				 PREF_WIDTH(0.5);
+
+        ROW
+        {
+	     LOOK(lightline) VMARGIN(1p)
+
+   	     INCREMENT_ICONBUTTON VALUE(styles.more.val)	
+	    	HELP("Add Another Instance") SIZE(0.2, 0.24);
+	     DECREMENT_ICONBUTTON VALUE(styles.less.val)	
+	        HELP("Remove Last Instance") SIZE(0.2, 0.24);
+
+	}
+
+	ACTION_BUTTON "Clear" VALUE(styles.clear.val);
+    }
+
+    { HSTRETCH }
+}
+
+styles.multilist = 
+{
+    LAYOUT(vertical) HSTRETCH MARGIN(0.05)
+}
+
+styles.gad =
+{
+    LAYOUT(vertical) HSTRETCH
+    HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+    SWITCHER tight
+    {
+	LAYOUT(overlap!)
+        VALUE(styles.multilist_hide_buttons.val)
+	{
+	    LAYOUT(vertical) HSTRETCH
+	    styles.parm;
+	    {LOOK(none) HEIGHT(0.02)}
+	}
+	{
+	}
+    }
+    styles.multilist;
+}
+
+lb_syntax.gad =
+{
+    LAYOUT(vertical) SPACING(1p) HSTRETCH VMARGIN(0.05, 0)
+    HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+    {
+        LAYOUT(horizontal) HSTRETCH
+        { WIDTH(1.5) }
+        { WIDTH(0.08) }
+        LABEL VALUE(lb_syntax.val[0]) HSTRETCH;
+    }
+    { HEIGHT(0.05) }
+}
+
+pack_modules.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("pack_modules", "Pack and Instance Geometry") toggle VALUE(pack_modules.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+floorseed.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ floorseed.label = PARM_LABEL("Floor Seed", "floorseed") WIDTH(1.5);
+ PARM(integer, 1, "floorseed", none, none) RANGE(1,10000)
+	LOCK_RANGE_MIN LABELREF(floorseed.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+offsetfloorseed.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("offsetfloorseed", "Offset Floor Seed on Different Sides") toggle VALUE(offsetfloorseed.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+moduleseed.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ moduleseed.label = PARM_LABEL("Module Seed", "moduleseed") WIDTH(1.5);
+ PARM(integer, 1, "moduleseed", none, none) RANGE(1,10000)
+	LOCK_RANGE_MIN LABELREF(moduleseed.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+offsetmoduleseed.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("offsetmoduleseed", "Offset Module Seed on Different Sides") toggle VALUE(offsetmoduleseed.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+height_scale.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("height_scale", "Force Height Scaling") toggle VALUE(height_scale.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+override_maxdist.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ override_maxdist.label = PARM_LABEL("Override Radius", "override_maxdist") WIDTH(1.5);
+ PARM(float, 1, "override_maxdist", none, none) RANGE(1,30)
+	 LABELREF(override_maxdist.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+get_instance.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("get_instance", "Get Instances from Patterns") toggle VALUE(get_instance.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+engine.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    engine.label = PARM_LABEL_SIMPLE("Game Engine", "engine") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    engine.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+input.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("input", "Output Orient Attribute for Rotations") toggle VALUE(input.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+set_middle.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    set_middle.label = PARM_LABEL_SIMPLE("Module Pivot Location", "set_middle") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    set_middle.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+folder1_1.gad = 
+
+GROUP simple "Point Cloud Output" flat 
+{ 
+    VALUE(folder1_1.gad.val) LAYOUT(vertical) HSTRETCH 
+	    get_instance.gad;		
+	    engine.gad;		
+	    input.gad;		
+	    set_middle.gad;		
+} 
+
+fd_overwrite.gad = 
+
+GROUP simple "Floor Overwrite" flat 
+{ 
+    VALUE(fd_overwrite.gad.val) LAYOUT(vertical) HSTRETCH 
+	    height_scale.gad;		
+	    override_maxdist.gad;		
+} 
+
+fd_rand.gad = 
+
+GROUP simple "Random Variations" flat 
+{ 
+    VALUE(fd_rand.gad.val) LAYOUT(vertical) HSTRETCH 
+	    floorseed.gad;		
+	    offsetfloorseed.gad;		
+	    moduleseed.gad;		
+	    offsetmoduleseed.gad;		
+} 
+
+fd_general.gad = 
+{
+    LAYOUT(vertical) HSTRETCH
+
+    TABDIALOG2 flat "fd_general.gad"
+    { 
+	VALUE(fd_general.gad.val) STRETCH(1,0)
+
+	TAB "Patterns"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    styles.gad;		
+	    lb_syntax.gad;		
+
+	    { STRETCH(1,1) }
+	}
+
+	TAB "Settings"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    pack_modules.gad;		
+	    fd_rand.gad;		
+	    fd_overwrite.gad;		
+	    folder1_1.gad;		
+
+	    { STRETCH(1,1) }
+	}
+    } 
+}
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    btn_random_fill.gad; 
+    btn_showfloors.row.join; 
+    fd_general.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

@@ -1,0 +1,121 @@
+// Magic: 31dd5395
+// Automatically generated PSI dialog (PSI version 20.5.584)
+// Thu May 29 18:01:22 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+
+group.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    group.label = PARM_LABEL("Group", "group") WIDTH(1.5);
+    PARM_FIELD(string, "group") VALUE(group.val) 
+	LABELREF(group.label) HSTRETCH;
+
+    group.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    ACTION_ICONBUTTON "BUTTONS_reselect" VALUE(group.script_action)
+	HELP("Select geometry from an available viewport.")
+	UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+    { WIDTH(0.1) }
+}
+
+Remove_Mode.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    Remove_Mode.label = PARM_LABEL_SIMPLE("Remove Mode", "Remove_Mode") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    Remove_Mode.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+cmp.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    cmp.label = PARM_LABEL_SIMPLE("Test", "cmp") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    cmp.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+threshold.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ threshold.label = PARM_LABEL("Threshold", "threshold") WIDTH(1.5);
+ PARM(float, 1, "threshold", none, none) RANGE(-1,1)
+	 LABELREF(threshold.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+ptdel.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    ptdel.label = PARM_LABEL("Point Attributes", "ptdel") WIDTH(1.5);
+    PARM_FIELD(string, "ptdel") VALUE(ptdel.val) 
+	LABELREF(ptdel.label) HSTRETCH;
+
+    ptdel.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    { WIDTH(0.1) }
+}
+
+primdel.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    primdel.label = PARM_LABEL("Primitive Attributes", "primdel") WIDTH(1.5);
+    PARM_FIELD(string, "primdel") VALUE(primdel.val) 
+	LABELREF(primdel.label) HSTRETCH;
+
+    primdel.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    { WIDTH(0.1) }
+}
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    group.gad; 
+    Remove_Mode.gad; 
+    cmp.gad; 
+    threshold.gad; 
+    ptdel.gad; 
+    primdel.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}
