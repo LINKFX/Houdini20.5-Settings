@@ -27,6 +27,7 @@
 !presets/
 !presets/**
 
+
 !desktops.pref
 !display.pref
 !display_options.def
@@ -46,3 +47,13 @@
 !ui.pref
 !VEXpressions.txt
 !Visualizers
+
+!hcommon.pref
+!hcomposite.pref
+!hud.pref
+!opencl.pref
+!pdgservices.json
+!ui.pref
+!wingeo.pref
+!palette
+!font.cache
