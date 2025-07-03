@@ -1,0 +1,16 @@
+allowviewportonlypayloads := 1;
+autosetassetresolvercontext := 0;
+defaultcamerasprimpath := "/cameras";
+defaultcollectionsprimpath := "/collections";
+defaultcollectionsprimtype := "";
+defaultlightsprimpath := "/lights";
+defaultmetersperunit := 0;
+defaultnewprimpath := "/$OS";
+defaulttransformsuffix := "$OS";
+defaultupaxis := "";
+loadpayloadsbydefault := 1;
+panesfollowcurrentnode := 1;
+panesshowpostlayers := 1;
+panesshowviewportstage := 0;
+pathparametercompletion := 1;
+showresolvedpaths := 0;

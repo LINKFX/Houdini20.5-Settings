@@ -1,0 +1,14 @@
+h.pane.wsheet.opmenu.create_output_bindings	"Create Output Bindings"	"Create exported parameter VOPs for all unconnected outputs"	 Ctrl+Shift+B
+h.paste	Paste	"Paste Selection"	 Ctrl+V
+HCONTEXT	h.pane.gview.state.sop.capturelayerpaint	"capturelayerpaint Operation"	"These keys apply to the capturelayerpaint operation."
+h.pane.gview.state.sop.capturelayerpaint.select	Select	"Select group"	 G
+h.pane.wsheet.tool:pasteNode	"Paste Node"	"Shelf Tool: Paste Node"	 Alt+V
+h.pane.wsheet.tool:copyNode	"Copy Node"	"Shelf Tool: Copy Node"	 Alt+C
+h.pane.wsheet.opmenu.create_parms	"Create Input Parameters"	"Create parameter VOPs for all unconnected inputs"	 Ctrl+Shift+P
+h.pane.parms.unlock_parm	"Unlock Parameter"	"Unlock parameter"	 Alt+U
+h.pane.parms.lock_parm	"Lock Parameter"	"Lock parameter"	 Alt+L
+h.tool:out_sop	OUT_sop	"Shelf Tool: OUT_sop"	 Alt+T
+h.pane.wsheet.opmenu.synchronize	"Match Current Definition"	"Synchronize the selected node with its type definition"	 Ctrl+M
+h.pane.wsheet.opmenu.unsynchronize	"Allow Editing of Contents"	"Unsynchronize the selected node with its type definition"	 Alt+Ctrl+A
+h.tool:Merge	Merge	"Shelf Tool: Merge"	 M
+h.copy	Copy	"Copy selection"	 Ctrl+C
