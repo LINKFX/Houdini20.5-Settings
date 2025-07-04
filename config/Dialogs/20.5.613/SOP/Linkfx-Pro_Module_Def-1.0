@@ -1,6 +1,6 @@
-// Magic: 42b0ef5a
+// Magic: 4f27f33a
 // Automatically generated PSI dialog (PSI version 20.5.613)
-// Thu Jul  3 17:08:34 2025
+// Fri Jul  4 10:10:15 2025
 
 
 f_tmp = FLOAT_FIELD;	// dialog.top.ui
@@ -31,7 +31,7 @@ north.gad = ROW
     
     {  }
 
-    PARM_BUTTON("north", "North") toggle VALUE(north.val);
+    PARM_BUTTON("north", "North(-X)") toggle VALUE(north.val);
 
     {  }
 
@@ -67,7 +67,7 @@ west.gad = ROW
     { WIDTH(1.5) }
     { WIDTH(0.08) }
 
-    PARM_BUTTON("west", "West") toggle VALUE(west.val);
+    PARM_BUTTON("west", "West(+Z)") toggle VALUE(west.val);
 
     {  }
 
@@ -92,7 +92,7 @@ east.gad = ROW
     
     {  }
 
-    PARM_BUTTON("east", "East") toggle VALUE(east.val);
+    PARM_BUTTON("east", "East(-Z)") toggle VALUE(east.val);
 
     {  }
 
@@ -128,7 +128,7 @@ south.gad = ROW
     
     {  }
 
-    PARM_BUTTON("south", "South") toggle VALUE(south.val);
+    PARM_BUTTON("south", "South(+X)") toggle VALUE(south.val);
 
     {  }
 

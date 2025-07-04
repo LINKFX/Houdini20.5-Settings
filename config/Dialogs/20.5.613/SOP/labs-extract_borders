@@ -1,0 +1,71 @@
+// Magic: 84a0f4ce
+// Automatically generated PSI dialog (PSI version 20.5.613)
+// Fri Jul  4 11:36:17 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+
+as_curves.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("as_curves", "As Curves") toggle VALUE(as_curves.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+uv_borders.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("uv_borders", "UV Borders") toggle VALUE(uv_borders.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+split_vertices.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("split_vertices", "Split All Points") toggle VALUE(split_vertices.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    as_curves.gad; 
+    uv_borders.gad; 
+    split_vertices.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

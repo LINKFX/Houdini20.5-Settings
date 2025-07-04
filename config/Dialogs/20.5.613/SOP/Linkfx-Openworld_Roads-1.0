@@ -1,0 +1,419 @@
+// Magic: d6ea4f78
+// Automatically generated PSI dialog (PSI version 20.5.613)
+// Fri Jul  4 18:28:34 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+
+startpts.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    startpts.label = PARM_LABEL("Start Points", "startpts") WIDTH(1.5);
+    PARM_FIELD(string, "startpts") VALUE(startpts.val) 
+	LABELREF(startpts.label) HSTRETCH;
+
+    startpts.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    ACTION_ICONBUTTON "BUTTONS_reselect" VALUE(startpts.script_action)
+	HELP("Select geometry from an available viewport.\nShift-click to turn on Select Groups.")
+	UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+    { WIDTH(0.1) }
+}
+
+endpts.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center)
+
+    { WIDTH(0.18) }
+
+    endpts.label = PARM_LABEL("End Points", "endpts") WIDTH(1.5);
+    PARM_FIELD(string, "endpts") VALUE(endpts.val) 
+	LABELREF(endpts.label) HSTRETCH;
+
+    endpts.menu SIZE(0.26, 0.26) LOOK(menuiconbutton);
+
+    ACTION_ICONBUTTON "BUTTONS_reselect" VALUE(endpts.script_action)
+	HELP("Select geometry from an available viewport.\nShift-click to turn on Select Groups.")
+	UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+    { WIDTH(0.1) }
+}
+enablemaxcost.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+enablemaxcost.gad = ROW
+{
+    
+    {  }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("enablemaxcost", "Enable Max Search Path Cost") toggle VALUE(enablemaxcost.val);
+
+    {  }
+
+    {  }
+}
+
+maxcost.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ {  }
+
+ maxcost.label = PARM_LABEL("Max Search Path Cost", "maxcost") ;
+ PARM(float, 1, "maxcost", none, none) RANGE(0,100)
+	LOCK_RANGE_MIN LABELREF(maxcost.label) HSTRETCH;
+
+  {  }
+}
+}	// Template join.bot
+
+
+distance_factor.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ distance_factor.label = PARM_LABEL("Distance Cost Scale", "distance_factor") WIDTH(1.5);
+ PARM(float, 1, "distance_factor", none, none) RANGE(0,1)
+	 LABELREF(distance_factor.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+cost.parm =
+{
+    LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+
+    PARM_LABEL_SIMPLE("Cost Factors", "cost") WIDTH(1.5);
+    { WIDTH(0.1) }
+
+    ROW
+    {
+	HSTRETCH(0.5) JUSTIFY(left, center) VALUE(cost.val)
+
+        cost.field = PARM_FIELD (integer, "cost")
+				VALUE(cost.val) HSTRETCH(0.5)
+				 PREF_WIDTH(0.5);
+
+        ROW
+        {
+	     LOOK(lightline) VMARGIN(1p)
+
+   	     INCREMENT_ICONBUTTON VALUE(cost.more.val)	
+	    	HELP("Add Another Instance") SIZE(0.2, 0.24);
+	     DECREMENT_ICONBUTTON VALUE(cost.less.val)	
+	        HELP("Remove Last Instance") SIZE(0.2, 0.24);
+
+	}
+
+	ACTION_BUTTON "Clear" VALUE(cost.clear.val);
+    }
+
+    { HSTRETCH }
+}
+
+cost.multilist = 
+{
+    LAYOUT(vertical) HSTRETCH MARGIN(0.05)
+}
+
+cost.gad =
+{
+    LAYOUT(vertical) HSTRETCH
+    HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+    SWITCHER tight
+    {
+	LAYOUT(overlap!)
+        VALUE(cost.multilist_hide_buttons.val)
+	{
+	    LAYOUT(vertical) HSTRETCH
+	    cost.parm;
+	    {LOOK(none) HEIGHT(0.02)}
+	}
+	{
+	}
+    }
+    cost.multilist;
+}
+tAdvectPaths.gad = NULL { }
+step_distance.gad = NULL { }
+steps.gad = NULL { }
+mode.gad = NULL { }
+lock.gad = NULL { }
+
+tModifyHeightfield.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("tModifyHeightfield", "Modify Heightfield") toggle VALUE(tModifyHeightfield.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+width.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ width.label = PARM_LABEL("Flatten Width", "width") WIDTH(1.5);
+ PARM(float, 1, "width", none, none) RANGE(0,1)
+	 LABELREF(width.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+radius.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ radius.label = PARM_LABEL("Blur Width", "radius") WIDTH(1.5);
+ PARM(float, 1, "radius", none, none) RANGE(0,100)
+	LOCK_RANGE_MIN LABELREF(radius.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+Offset.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ Offset.label = PARM_LABEL("Height Offset", "Offset") WIDTH(1.5);
+ PARM(float, 1, "Offset", none, none) RANGE(0,10)
+	 LABELREF(Offset.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+combine.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    combine.label = PARM_LABEL_SIMPLE("Combine Method", "combine") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    combine.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+dist.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ dist.label = PARM_LABEL("Mask Width", "dist") WIDTH(1.5);
+ PARM(float, 1, "dist", none, none) RANGE(0,1)
+	 LABELREF(dist.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+expr1.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+expr1.gad = ROW
+{
+    
+    {  }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("expr1", "Waypoint") toggle VALUE(expr1.val);
+
+    {  }
+
+    {  }
+}
+
+expr2.gad = ROW
+{
+    
+    {  }
+
+    PARM_BUTTON("expr2", "Line") toggle VALUE(expr2.val);
+
+    {  }
+
+    {  }
+}
+
+expr3.gad = ROW
+{
+    
+    {  }
+
+    PARM_BUTTON("expr3", "Sweep") toggle VALUE(expr3.val);
+
+    {  }
+
+    {  }
+}
+
+expr4.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    {  }
+
+    expr4.label = PARM_LABEL_SIMPLE("Terrain", "expr4") ;
+    { WIDTH(0.09) }
+
+    expr4.menu;
+
+    { HSTRETCH }
+
+    {  }
+}
+}	// Template join.bot
+
+
+folder6.gad = 
+
+GROUP simple "Masking" flat 
+{ 
+    VALUE(folder6.gad.val) LAYOUT(vertical) HSTRETCH 
+	    dist.gad;		
+} 
+
+folder7.gad = 
+
+GROUP simple "Deformation" flat 
+{ 
+    VALUE(folder7.gad.val) LAYOUT(vertical) HSTRETCH 
+	    width.gad;		
+	    radius.gad;		
+	    Offset.gad;		
+	    combine.gad;		
+} 
+
+folder1.gad = 
+
+GROUP simple "Heightfield" flat 
+{ 
+    VALUE(folder1.gad.val) LAYOUT(vertical) HSTRETCH 
+	    folder7.gad;		
+	    folder6.gad;		
+} 
+
+folder5.gad = 
+
+{
+    VALUE(folder5.gad.val) LAYOUT(vertical) HSTRETCH SPACING(0.02)
+} 
+
+folder0.gad = 
+
+GROUP simple "Postprocessing" flat 
+{ 
+    VALUE(folder0.gad.val) LAYOUT(vertical) HSTRETCH 
+} 
+
+folder4.gad = 
+
+GROUP simple "Settings" flat 
+{ 
+    VALUE(folder4.gad.val) LAYOUT(vertical) HSTRETCH 
+	    enablemaxcost.row.join;		
+	    distance_factor.gad;		
+	    cost.gad;		
+} 
+
+folder2.gad = 
+
+GROUP simple "Targets" flat 
+{ 
+    VALUE(folder2.gad.val) LAYOUT(vertical) HSTRETCH 
+	    startpts.gad;		
+	    endpts.gad;		
+} 
+
+folder3.gad = 
+{
+    LAYOUT(vertical) HSTRETCH
+
+    TABDIALOG2 flat "folder3.gad"
+    { 
+	VALUE(folder3.gad.val) STRETCH(1,0)
+
+	TAB "Pathfinding"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    folder2.gad;		
+	    folder4.gad;		
+
+	    { STRETCH(1,1) }
+	}
+
+	TAB "Outputs"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    tModifyHeightfield.gad;		
+	    folder1.gad;		
+
+	    { STRETCH(1,1) }
+	}
+
+	TAB "Preview Settings"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    expr1.row.join;		
+
+	    { STRETCH(1,1) }
+	}
+    } 
+}
+
+# warning cpp warning: "GenV3/subdialog.top.ui":5 Macro "PARMSPACING" redefined.  Using later definition
+# warning cpp warning: "GenV3/subdialog.top.ui":6 Macro "LAYOUTDIR" redefined.  Using later definition
+# warning cpp warning: "GenV3/subdialog.top.ui":7 Macro "DO_JUSTIFY" redefined.  Using later definition
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    folder3.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}
