@@ -38,7 +38,6 @@
 !*.keymap*.*
 !houdini.pref
 !hud.pref
-!jump.pref
 !LINKFX*.*
 !networkeditor.pref
 !nodethemes.json
