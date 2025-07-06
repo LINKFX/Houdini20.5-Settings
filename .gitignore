@@ -1,6 +1,6 @@
 # 1. 忽略所有
 *
-
+jump.pref
 # 2. 允许这些文件或目录
 !.git
 !.gitattributes
