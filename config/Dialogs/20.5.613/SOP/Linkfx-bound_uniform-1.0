@@ -1,0 +1,176 @@
+// Magic: 41144fa7
+// Automatically generated PSI dialog (PSI version 20.5.613)
+// Sun Jul  6 23:17:30 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+axis_x.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+axis_x.gad = ROW
+{
+    
+    {  }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("axis_x", "Axis X") toggle VALUE(axis_x.val);
+
+    {  }
+
+    {  }
+}
+
+axis_y.gad = ROW
+{
+    
+    {  }
+
+    PARM_BUTTON("axis_y", "Axis Y") toggle VALUE(axis_y.val);
+
+    {  }
+
+    {  }
+}
+
+axis_z.gad = ROW
+{
+    HSTRETCH
+    {  }
+
+    PARM_BUTTON("axis_z", "Axis Z") toggle VALUE(axis_z.val);
+
+    { HSTRETCH }
+
+    {  }
+}
+}	// Template join.bot
+
+axis_x2.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+axis_x2.gad = ROW
+{
+    
+    {  }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("axis_x2", "Axis X") toggle VALUE(axis_x2.val);
+
+    {  }
+
+    {  }
+}
+
+axis_y2.gad = ROW
+{
+    
+    {  }
+
+    PARM_BUTTON("axis_y2", "Axis Y") toggle VALUE(axis_y2.val);
+
+    {  }
+
+    {  }
+}
+
+axis_z2.gad = ROW
+{
+    HSTRETCH
+    {  }
+
+    PARM_BUTTON("axis_z2", "Axis Z") toggle VALUE(axis_z2.val);
+
+    { HSTRETCH }
+
+    {  }
+}
+}	// Template join.bot
+
+
+divrate.gad = ROW
+{
+   HSTRETCH
+   { WIDTH(0.18) }
+
+   divrate.label = PARM_LABEL("Axis Divisions", "divrate") WIDTH(1.5);
+   PARM(integer, 3, "divrate", none, none, "#1,#2,#3")
+	RANGE(1,50) LOCK_RANGE_MIN LABELREF(divrate.label)
+	HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+maxpad.gad = ROW
+{
+   HSTRETCH
+   { WIDTH(0.18) }
+
+   maxpad.label = PARM_LABEL("Upper Padding", "maxpad") WIDTH(1.5);
+   PARM(float, 3, "maxpad", none, none, "X,Y,Z")
+	RANGE(-1,1)  LABELREF(maxpad.label)
+	HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+minpad.gad = ROW
+{
+   HSTRETCH
+   { WIDTH(0.18) }
+
+   minpad.label = PARM_LABEL("Lower Padding", "minpad") WIDTH(1.5);
+   PARM(float, 3, "minpad", none, none, "X,Y,Z")
+	RANGE(-1,1)  LABELREF(minpad.label)
+	HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+match_axis.gad = 
+GROUP collapsible "Match Axis" flat   
+{
+    VALUE(match_axis.gad.val) LAYOUT(vertical) HSTRETCH
+	    axis_x2.row.join;		
+} 
+
+rf_axis.gad = 
+GROUP collapsible "Reference Axis" flat   
+{
+    VALUE(rf_axis.gad.val) LAYOUT(vertical) HSTRETCH
+	    axis_x.row.join;		
+} 
+
+# warning cpp warning: "GenV3/subdialog.top.ui":5 Macro "PARMSPACING" redefined.  Using later definition
+# warning cpp warning: "GenV3/subdialog.top.ui":6 Macro "LAYOUTDIR" redefined.  Using later definition
+# warning cpp warning: "GenV3/subdialog.top.ui":7 Macro "DO_JUSTIFY" redefined.  Using later definition
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    rf_axis.gad; 
+    match_axis.gad; 
+    divrate.gad; 
+    maxpad.gad; 
+    minpad.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

@@ -1,7 +1,7 @@
 {
 	"name":"Houdini",
 	"version":2,
-	"houdini.version":"20.5.584",
+	"houdini.version":"20.5.613",
 	"symbol":"",
 	"contexts":[
 		{
@@ -104,7 +104,7 @@
 				},
 				{
 					"action":"h.pane.wsheet.opmenu.synchronize",
-					"keys":["Alt+Ctrl+M"
+					"keys":["Alt+Ctrl+Q"
 					]
 				},
 				{
