@@ -1,1 +1,0 @@
-{"type": "root", "attrs": {"type": "example"}, "body": [{"type": "title", "indent": 0, "text": ["TerrainEdit"]}, {"type": "para", "indent": 0, "text": ["This example demonstrates how to create a terrain using the Edit SOP."], "extent": [0, 70]}], "examplefor": "/nodes/sop/edit", "examplefile": "/examples/nodes/sop/edit/TerrainEdit.otl"}

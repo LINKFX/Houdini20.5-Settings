@@ -1,1 +1,0 @@
-{"type": "root", "attrs": {"type": "example"}, "body": [{"type": "title", "indent": 0, "text": ["example_top_hdaprocessor"]}, {"type": "para", "indent": 0, "text": ["This example demonstrates how to use the HDA Processor TOP."], "extent": [0, 60]}], "examplefor": "/nodes/top/hdaprocessor", "examplefile": "/examples/nodes/top/hdaprocessor/example_top_hdaprocessor.hda"}
