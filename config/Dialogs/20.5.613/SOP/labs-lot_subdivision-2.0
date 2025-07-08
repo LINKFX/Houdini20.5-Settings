@@ -1,0 +1,167 @@
+// Magic: 138d75e7
+// Automatically generated PSI dialog (PSI version 20.5.613)
+// Tue Jul  8 09:48:06 2025
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+
+alignment.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    alignment.label = PARM_LABEL_SIMPLE("Alignment", "alignment") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    alignment.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+min_lot_size.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ min_lot_size.label = PARM_LABEL("Minimum Lot Size", "min_lot_size") WIDTH(1.5);
+ PARM(float, 1, "min_lot_size", none, none) RANGE(0.001,1)
+	 LABELREF(min_lot_size.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+iterations.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ iterations.label = PARM_LABEL("Iterations", "iterations") WIDTH(1.5);
+ PARM(integer, 1, "iterations", none, none) RANGE(1,10)
+	LOCK_RANGE_MIN LABELREF(iterations.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+shape_seed.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ shape_seed.label = PARM_LABEL("Random Seed", "shape_seed") WIDTH(1.5);
+ PARM(float, 1, "shape_seed", none, none) RANGE(0,10)
+	 LABELREF(shape_seed.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+irregularity.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ irregularity.label = PARM_LABEL("Irregularity", "irregularity") WIDTH(1.5);
+ PARM(float, 1, "irregularity", none, none) RANGE(0,1)
+	 LABELREF(irregularity.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+vertical_bias.gad = NULL { }
+vertical_packing.gad = NULL { }
+cluster_lots.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+cluster_lots.gad = ROW
+{
+    
+    {  }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("cluster_lots", "Cluster Lots") toggle VALUE(cluster_lots.val);
+
+    {  }
+
+    {  }
+}
+
+number_of_clusters.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ {  }
+
+ number_of_clusters.label = PARM_LABEL("Number of Clusters", "number_of_clusters") ;
+ PARM(integer, 1, "number_of_clusters", none, none) RANGE(1,200)
+	LOCK_RANGE_MIN LABELREF(number_of_clusters.label) HSTRETCH;
+
+  {  }
+}
+
+seed.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ {  }
+
+ seed.label = PARM_LABEL("Random Seed", "seed") ;
+ PARM(float, 1, "seed", none, none) RANGE(0,10)
+	 LABELREF(seed.label) HSTRETCH;
+
+  {  }
+}
+}	// Template join.bot
+
+
+fd_shapesettings.gad = 
+
+GROUP simple "Shape Settings" flat 
+{ 
+    VALUE(fd_shapesettings.gad.val) LAYOUT(vertical) HSTRETCH 
+	    irregularity.gad;		
+	    vertical_bias.gad;		
+	    vertical_packing.gad;		
+	    cluster_lots.row.join;		
+} 
+
+fd_basesettings.gad = 
+
+GROUP simple "Base Settings" flat 
+{ 
+    VALUE(fd_basesettings.gad.val) LAYOUT(vertical) HSTRETCH 
+	    alignment.gad;		
+	    min_lot_size.gad;		
+	    iterations.gad;		
+	    shape_seed.gad;		
+} 
+
+# warning cpp warning: "GenV3/subdialog.top.ui":5 Macro "PARMSPACING" redefined.  Using later definition
+# warning cpp warning: "GenV3/subdialog.top.ui":6 Macro "LAYOUTDIR" redefined.  Using later definition
+# warning cpp warning: "GenV3/subdialog.top.ui":7 Macro "DO_JUSTIFY" redefined.  Using later definition
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    fd_basesettings.gad; 
+    fd_shapesettings.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}
