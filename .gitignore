@@ -37,7 +37,7 @@ jump.pref
 !houdini.env.company
 !*.keymap*.*
 !houdini.pref
-!hud.pref
+# !hud.pref
 !LINKFX*.*
 !networkeditor.pref
 !nodethemes.json
@@ -49,10 +49,9 @@ jump.pref
 
 !hcommon.pref
 !hcomposite.pref
-!hud.pref
 !opencl.pref
 !pdgservices.json
 !ui.pref
-!wingeo.pref
+# !wingeo.pref
 !palette
 !font.cache

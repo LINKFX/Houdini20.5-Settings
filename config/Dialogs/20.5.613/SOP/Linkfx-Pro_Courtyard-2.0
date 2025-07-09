@@ -1,6 +1,6 @@
-// Magic: 1d728d1d
+// Magic: fd722a9a
 // Automatically generated PSI dialog (PSI version 20.5.613)
-// Wed Jul  9 16:42:19 2025
+// Thu Jul 10 01:57:28 2025
 
 
 f_tmp = FLOAT_FIELD;	// dialog.top.ui
@@ -42,7 +42,7 @@ blockOut_enable.gad = ROW
     { WIDTH(1.5) }
     { WIDTH(0.08) }
 
-    PARM_BUTTON("blockOut_enable", "可接入自定义白盒？") toggle VALUE(blockOut_enable.val);
+    PARM_BUTTON("blockOut_enable", "可接入规划白盒？") toggle VALUE(blockOut_enable.val);
 
     { HSTRETCH }
 
@@ -155,6 +155,17 @@ seed.gad =
   { WIDTH(0.1) }
 }
 
+sepparm.gad = 
+
+{
+    LAYOUT(vertical) HSTRETCH HMARGIN(0.18, 0.1)
+    NO_MARGIN_SPACING_SCALE
+
+    { HEIGHT(0.1) }
+    SEPARATOR;
+    { HEIGHT(0.1) }
+}
+
 courtyard_count.parm =
 {
     LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
@@ -241,6 +252,7 @@ folder0.gad =
 	    bias.gad;		
 	    pos_noise.gad;		
 	    seed.gad;		
+	    sepparm.gad;		
 	    courtyard_count.gad;		
 
 	    { STRETCH(1,1) }

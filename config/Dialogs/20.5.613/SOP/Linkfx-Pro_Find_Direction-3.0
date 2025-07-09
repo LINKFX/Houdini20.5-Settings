@@ -1,13 +1,29 @@
-// Magic: 3c21d345
+// Magic: 239a8d66
 // Automatically generated PSI dialog (PSI version 20.5.613)
-// Wed Jul  9 12:38:04 2025
+// Wed Jul  9 22:47:41 2025
 
 
 f_tmp = FLOAT_FIELD;	// dialog.top.ui
 
+category_name.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
+    { WIDTH(0.18) }
+
+    category_name.label = PARM_LABEL_SIMPLE("Category Name", "category_name") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    category_name.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
 dialog_norm.gad = 
 {
     LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    category_name.gad; 
 } 
 // dialog.bot.ui
 
