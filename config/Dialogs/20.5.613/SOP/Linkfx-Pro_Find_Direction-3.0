@@ -1,29 +1,13 @@
-// Magic: 976a1d8a
+// Magic: 3c21d345
 // Automatically generated PSI dialog (PSI version 20.5.613)
-// Tue Jul  8 02:13:59 2025
+// Wed Jul  9 12:38:04 2025
 
 
 f_tmp = FLOAT_FIELD;	// dialog.top.ui
 
-Calculation_mode.gad = 
-{
-    LAYOUT(horizontal) JUSTIFY(left, center) HSTRETCH
-    { WIDTH(0.18) }
-
-    Calculation_mode.label = PARM_LABEL_SIMPLE("Calculation Mode", "Calculation_mode") WIDTH(1.5);
-    { WIDTH(0.09) }
-
-    Calculation_mode.menu;
-
-    { HSTRETCH }
-
-    { WIDTH(0.1) }
-}
-
 dialog_norm.gad = 
 {
     LAYOUT(vertical) SPACING(0.02) HSTRETCH 
-    Calculation_mode.gad; 
 } 
 // dialog.bot.ui
 

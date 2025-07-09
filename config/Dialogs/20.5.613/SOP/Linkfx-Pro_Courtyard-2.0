@@ -1,6 +1,6 @@
-// Magic: 9e62e21
+// Magic: 1d728d1d
 // Automatically generated PSI dialog (PSI version 20.5.613)
-// Wed Jul  9 10:09:37 2025
+// Wed Jul  9 16:42:19 2025
 
 
 f_tmp = FLOAT_FIELD;	// dialog.top.ui
@@ -34,60 +34,224 @@ stashinput.gad = ROW
     { WIDTH(0.1) }
 }
 
-depth_1.gad = 
+blockOut_enable.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("blockOut_enable", "可接入自定义白盒？") toggle VALUE(blockOut_enable.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+insidewall_enable.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("insidewall_enable", "可接入自定义院内分隔墙？") toggle VALUE(insidewall_enable.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+pro_enable.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("pro_enable", "开启 程序化布局？") toggle VALUE(pro_enable.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+axis.row.join =		
+{
+
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+axis.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) 
+    {  }
+
+    axis.label = PARM_LABEL_SIMPLE("对齐方向", "axis") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    axis.menu;
+
+    {  }
+
+    {  }
+}
+
+alignment.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center) 
+    {  }
+
+    alignment.label = PARM_LABEL_SIMPLE("对齐模式", "alignment") ;
+    { WIDTH(0.09) }
+
+    alignment.menu;
+
+    {  }
+
+    {  }
+}
+}	// Template join.bot
+
+
+bias.gad = 
 {
 
  LAYOUT(horizontal) HSTRETCH
  { WIDTH(0.18) }
 
- depth_1.label = PARM_LABEL("Depth", "depth_1") WIDTH(1.5);
- PARM(integer, 1, "depth_1", none, none) RANGE(1,50)
-	LOCK_RANGE_MIN LABELREF(depth_1.label) HSTRETCH;
+ bias.label = PARM_LABEL("对齐到一侧 L/R", "bias") WIDTH(1.5);
+ PARM(float, 1, "bias", none, none) RANGE(0,1)
+	 LABELREF(bias.label) HSTRETCH;
 
   { WIDTH(0.1) }
 }
 
-width_1.gad = 
+pos_noise.gad = 
 {
 
  LAYOUT(horizontal) HSTRETCH
  { WIDTH(0.18) }
 
- width_1.label = PARM_LABEL("Width", "width_1") WIDTH(1.5);
- PARM(integer, 1, "width_1", none, none) RANGE(1,50)
-	LOCK_RANGE_MIN LABELREF(width_1.label) HSTRETCH;
+ pos_noise.label = PARM_LABEL("随机错落强度", "pos_noise") WIDTH(1.5);
+ PARM(float, 1, "pos_noise", none, none) RANGE(0,1)
+	 LABELREF(pos_noise.label) HSTRETCH;
 
   { WIDTH(0.1) }
 }
 
-clampminvalue.gad = 
+seed.gad = 
 {
 
  LAYOUT(horizontal) HSTRETCH
  { WIDTH(0.18) }
 
- clampminvalue.label = PARM_LABEL("Minimum", "clampminvalue") WIDTH(1.5);
- PARM(float, 1, "clampminvalue", none, none) RANGE(0,10)
-	 LABELREF(clampminvalue.label) HSTRETCH;
+ seed.label = PARM_LABEL("随机值", "seed") WIDTH(1.5);
+ PARM(integer, 1, "seed", none, none) RANGE(0,100000)
+	LOCK_RANGE_MIN LABELREF(seed.label) HSTRETCH;
 
   { WIDTH(0.1) }
 }
 
-firstCourtyard.gad = 
+courtyard_count.parm =
+{
+    LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+
+    PARM_LABEL_SIMPLE("院落数量", "courtyard_count") WIDTH(1.5);
+    { WIDTH(0.1) }
+
+    ROW
+    {
+	HSTRETCH(0.5) JUSTIFY(left, center) VALUE(courtyard_count.val)
+
+        courtyard_count.field = PARM_FIELD (integer, "courtyard_count")
+				VALUE(courtyard_count.val) HSTRETCH(0.5)
+				 PREF_WIDTH(0.5);
+
+        ROW
+        {
+	     LOOK(lightline) VMARGIN(1p)
+
+   	     INCREMENT_ICONBUTTON VALUE(courtyard_count.more.val)	
+	    	HELP("Add Another Instance") SIZE(0.2, 0.24);
+	     DECREMENT_ICONBUTTON VALUE(courtyard_count.less.val)	
+	        HELP("Remove Last Instance") SIZE(0.2, 0.24);
+
+	}
+
+	ACTION_BUTTON "Clear" VALUE(courtyard_count.clear.val);
+    }
+
+    { HSTRETCH }
+}
+
+courtyard_count.multilist = 
+{
+    LAYOUT(vertical) HSTRETCH MARGIN(0.05)
+}
+
+courtyard_count.gad =
+{
+    LAYOUT(vertical) HSTRETCH
+    HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+    SWITCHER tight
+    {
+	LAYOUT(overlap!)
+        VALUE(courtyard_count.multilist_hide_buttons.val)
+	{
+	    LAYOUT(vertical) HSTRETCH
+	    courtyard_count.parm;
+	    {LOOK(none) HEIGHT(0.02)}
+	}
+	{
+	}
+    }
+    courtyard_count.multilist;
+}
+
+insidewall_shape.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ insidewall_shape.label = PARM_LABEL("分隔墙燥波程度", "insidewall_shape") WIDTH(1.5);
+ PARM(float, 1, "insidewall_shape", none, none) RANGE(0,1)
+	 LABELREF(insidewall_shape.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+folder0.gad = 
 {
     LAYOUT(vertical) HSTRETCH
 
-    TABDIALOG2 flat "firstCourtyard.gad"
+    TABDIALOG2 flat "folder0.gad"
     { 
-	VALUE(firstCourtyard.gad.val) STRETCH(1,0)
+	VALUE(folder0.gad.val) STRETCH(1,0)
 
-	TAB "First Courtyard"
+	TAB "院落规划"
 	{
 	    LAYOUT(vertical) STRETCH
 
             HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
-	    depth_1.gad;		
-	    width_1.gad;		
+	    axis.row.join;		
+	    bias.gad;		
+	    pos_noise.gad;		
+	    seed.gad;		
+	    courtyard_count.gad;		
+
+	    { STRETCH(1,1) }
+	}
+
+	TAB "分隔墙"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    insidewall_shape.gad;		
 
 	    { STRETCH(1,1) }
 	}
@@ -99,8 +263,10 @@ dialog_norm.gad =
     LAYOUT(vertical) SPACING(0.02) HSTRETCH 
     mode.gad; 
     stashinput.gad; 
-    firstCourtyard.gad; 
-    clampminvalue.gad; 
+    blockOut_enable.gad; 
+    insidewall_enable.gad; 
+    pro_enable.gad; 
+    folder0.gad; 
 } 
 // dialog.bot.ui
 

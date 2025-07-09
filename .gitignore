@@ -9,8 +9,8 @@ jump.pref
 !HDR/
 !HDR/**
 
-!config/
-!config/**
+# !config/
+# !config/**
 
 !desktop/
 !desktop/**
