@@ -20,6 +20,7 @@ hud.value.g := 1;
 hud.value.r := 1;
 hud.viewerstatecache := 1;
 hud.viewerstatecache.objview := 1;
+hud.viewerstatecache.sopview := 1;
 hudh.background.a := 0.2;
 hudh.background.b := 0.2;
 hudh.background.g := 0.2;
