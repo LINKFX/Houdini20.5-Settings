@@ -1,6 +1,6 @@
-// Magic: b39cd9bc
+// Magic: 9e62e21
 // Automatically generated PSI dialog (PSI version 20.5.613)
-// Mon Jul  7 17:24:02 2025
+// Wed Jul  9 10:09:37 2025
 
 
 f_tmp = FLOAT_FIELD;	// dialog.top.ui
@@ -41,7 +41,7 @@ depth_1.gad =
  { WIDTH(0.18) }
 
  depth_1.label = PARM_LABEL("Depth", "depth_1") WIDTH(1.5);
- PARM(integer, 1, "depth_1", none, none) RANGE(1,10)
+ PARM(integer, 1, "depth_1", none, none) RANGE(1,50)
 	LOCK_RANGE_MIN LABELREF(depth_1.label) HSTRETCH;
 
   { WIDTH(0.1) }
@@ -54,7 +54,7 @@ width_1.gad =
  { WIDTH(0.18) }
 
  width_1.label = PARM_LABEL("Width", "width_1") WIDTH(1.5);
- PARM(integer, 1, "width_1", none, none) RANGE(1,10)
+ PARM(integer, 1, "width_1", none, none) RANGE(1,50)
 	LOCK_RANGE_MIN LABELREF(width_1.label) HSTRETCH;
 
   { WIDTH(0.1) }
