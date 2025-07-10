@@ -1,6 +1,6 @@
-// Magic: 6867ac0a
+// Magic: fa484b3a
 // Automatically generated PSI dialog (PSI version 20.5.613)
-// Thu Jul 10 16:58:57 2025
+// Fri Jul 11 02:57:34 2025
 
 
 f_tmp = FLOAT_FIELD;	// dialog.top.ui
@@ -34,6 +34,20 @@ stashinput.gad = ROW
     { WIDTH(0.1) }
 }
 
+refresh.gad = ROW
+{
+    JUSTIFY(left, center)
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.1) }
+
+    PARM_BUTTON("refresh", "刷新")
+	push VALUE(refresh.val);
+
+    { WIDTH(0.1) }
+}
+
 blockOut_enable.gad = ROW
 {
     HSTRETCH
@@ -42,7 +56,7 @@ blockOut_enable.gad = ROW
     { WIDTH(1.5) }
     { WIDTH(0.08) }
 
-    PARM_BUTTON("blockOut_enable", "可接入规划白盒？") toggle VALUE(blockOut_enable.val);
+    PARM_BUTTON("blockOut_enable", "可接入规划白盒 Box") toggle VALUE(blockOut_enable.val);
 
     { HSTRETCH }
 
@@ -57,7 +71,7 @@ insidewall_enable.gad = ROW
     { WIDTH(1.5) }
     { WIDTH(0.08) }
 
-    PARM_BUTTON("insidewall_enable", "可接入自定义院内分隔墙？") toggle VALUE(insidewall_enable.val);
+    PARM_BUTTON("insidewall_enable", "可接入自定义院内分隔墙 Curve") toggle VALUE(insidewall_enable.val);
 
     { HSTRETCH }
 
@@ -72,7 +86,7 @@ wall_door_enable.gad = ROW
     { WIDTH(1.5) }
     { WIDTH(0.08) }
 
-    PARM_BUTTON("wall_door_enable", "可接入自定义院门白盒？") toggle VALUE(wall_door_enable.val);
+    PARM_BUTTON("wall_door_enable", "可接入 自定义院门白盒BOX") toggle VALUE(wall_door_enable.val);
 
     { HSTRETCH }
 
@@ -87,7 +101,7 @@ pro_enable.gad = ROW
     { WIDTH(1.5) }
     { WIDTH(0.08) }
 
-    PARM_BUTTON("pro_enable", "开启 程序切分？") toggle VALUE(pro_enable.val);
+    PARM_BUTTON("pro_enable", "开启 整体程序切分") toggle VALUE(pro_enable.val);
 
     { HSTRETCH }
 
@@ -102,7 +116,7 @@ more_enable.gad = ROW
     { WIDTH(1.5) }
     { WIDTH(0.08) }
 
-    PARM_BUTTON("more_enable", "开启 多院落？") toggle VALUE(more_enable.val);
+    PARM_BUTTON("more_enable", "开启 多院落") toggle VALUE(more_enable.val);
 
     { HSTRETCH }
 
@@ -183,6 +197,21 @@ seed.gad =
 	LOCK_RANGE_MIN LABELREF(seed.label) HSTRETCH;
 
   { WIDTH(0.1) }
+}
+
+onoff.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("onoff", "程序切分 开启/关闭") toggle VALUE(onoff.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
 }
 
 sepparm.gad = 
@@ -321,13 +350,14 @@ folder0.gad =
 	    bias.gad;		
 	    pos_noise.gad;		
 	    seed.gad;		
+	    onoff.gad;		
 	    sepparm.gad;		
 	    courtyard_count.gad;		
 
 	    { STRETCH(1,1) }
 	}
 
-	TAB "程序切分"
+	TAB "整体程序切分"
 	{
 	    LAYOUT(vertical) STRETCH
 
@@ -339,7 +369,7 @@ folder0.gad =
 	    { STRETCH(1,1) }
 	}
 
-	TAB "分隔墙"
+	TAB "自定义院内分隔墙"
 	{
 	    LAYOUT(vertical) STRETCH
 
@@ -356,6 +386,7 @@ dialog_norm.gad =
     LAYOUT(vertical) SPACING(0.02) HSTRETCH 
     mode.gad; 
     stashinput.gad; 
+    refresh.gad; 
     blockOut_enable.gad; 
     insidewall_enable.gad; 
     wall_door_enable.gad; 
