@@ -1,6 +1,6 @@
-// Magic: 4f27f33a
+// Magic: 430f8846
 // Automatically generated PSI dialog (PSI version 20.5.613)
-// Fri Jul  4 10:10:15 2025
+// Thu Jul 10 15:32:29 2025
 
 
 f_tmp = FLOAT_FIELD;	// dialog.top.ui
@@ -253,19 +253,6 @@ category_name.gad = ROW
     { WIDTH(0.1) }
 }
 
-name1.gad = ROW
-{
-    HSTRETCH JUSTIFY(left, center)
-
-    { WIDTH(0.18) }
-
-    name1.label = PARM_LABEL("Module Name", "name1") WIDTH(1.5);
-    PARM_FIELD(string, "name1") VALUE(name1.val) 
-	LABELREF(name1.label) HSTRETCH;
-
-    { WIDTH(0.1) }
-}
-
 variations.parm =
 {
     LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
@@ -341,7 +328,6 @@ dialog_norm.gad =
     preview_guide.gad; 
     only_modules.gad; 
     category_name.gad; 
-    name1.gad; 
     variations.gad; 
 } 
 // dialog.bot.ui

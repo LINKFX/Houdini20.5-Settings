@@ -1,6 +1,6 @@
-// Magic: fd722a9a
+// Magic: 6867ac0a
 // Automatically generated PSI dialog (PSI version 20.5.613)
-// Thu Jul 10 01:57:28 2025
+// Thu Jul 10 16:58:57 2025
 
 
 f_tmp = FLOAT_FIELD;	// dialog.top.ui
@@ -64,6 +64,21 @@ insidewall_enable.gad = ROW
     { WIDTH(0.1) }
 }
 
+wall_door_enable.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("wall_door_enable", "可接入自定义院门白盒？") toggle VALUE(wall_door_enable.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
 pro_enable.gad = ROW
 {
     HSTRETCH
@@ -72,7 +87,22 @@ pro_enable.gad = ROW
     { WIDTH(1.5) }
     { WIDTH(0.08) }
 
-    PARM_BUTTON("pro_enable", "开启 程序化布局？") toggle VALUE(pro_enable.val);
+    PARM_BUTTON("pro_enable", "开启 程序切分？") toggle VALUE(pro_enable.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+more_enable.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("more_enable", "开启 多院落？") toggle VALUE(more_enable.val);
 
     { HSTRETCH }
 
@@ -222,6 +252,45 @@ courtyard_count.gad =
     courtyard_count.multilist;
 }
 
+iterations.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ iterations.label = PARM_LABEL("划分量", "iterations") WIDTH(1.5);
+ PARM(integer, 1, "iterations", none, none) RANGE(1,10)
+	LOCK_RANGE_MIN LABELREF(iterations.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+irregularity.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ irregularity.label = PARM_LABEL("不规则化", "irregularity") WIDTH(1.5);
+ PARM(float, 1, "irregularity", none, none) RANGE(0,1)
+	LOCK_RANGE LABELREF(irregularity.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+shape_seed.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ shape_seed.label = PARM_LABEL("随机", "shape_seed") WIDTH(1.5);
+ PARM(float, 1, "shape_seed", none, none) RANGE(0,10)
+	 LABELREF(shape_seed.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
 insidewall_shape.gad = 
 {
 
@@ -258,6 +327,18 @@ folder0.gad =
 	    { STRETCH(1,1) }
 	}
 
+	TAB "程序切分"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    iterations.gad;		
+	    irregularity.gad;		
+	    shape_seed.gad;		
+
+	    { STRETCH(1,1) }
+	}
+
 	TAB "分隔墙"
 	{
 	    LAYOUT(vertical) STRETCH
@@ -277,7 +358,9 @@ dialog_norm.gad =
     stashinput.gad; 
     blockOut_enable.gad; 
     insidewall_enable.gad; 
+    wall_door_enable.gad; 
     pro_enable.gad; 
+    more_enable.gad; 
     folder0.gad; 
 } 
 // dialog.bot.ui
