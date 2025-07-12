@@ -1,6 +1,6 @@
-// Magic: 21e7568d
+// Magic: a88b4af9
 // Automatically generated PSI dialog (PSI version 20.5.613)
-// Fri Jul 11 23:03:31 2025
+// Sun Jul 13 00:48:37 2025
 
 
 f_tmp = FLOAT_FIELD;	// dialog.top.ui
@@ -133,7 +133,7 @@ axis.gad =
     LAYOUT(horizontal) JUSTIFY(left, center) 
     {  }
 
-    axis.label = PARM_LABEL_SIMPLE("对齐方向", "axis") WIDTH(1.5);
+    axis.label = PARM_LABEL_SIMPLE("排列方向", "axis") WIDTH(1.5);
     { WIDTH(0.09) }
 
     axis.menu;
