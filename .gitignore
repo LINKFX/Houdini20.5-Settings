@@ -27,6 +27,8 @@ jump.pref
 !presets/
 !presets/**
 
+!mod/
+!mod/**
 
 !desktops.pref
 !display.pref

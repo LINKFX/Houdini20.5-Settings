@@ -1,6 +1,6 @@
-// Magic: c39f86e2
+// Magic: 21e7568d
 // Automatically generated PSI dialog (PSI version 20.5.613)
-// Fri Jul 11 17:37:06 2025
+// Fri Jul 11 23:03:31 2025
 
 
 f_tmp = FLOAT_FIELD;	// dialog.top.ui
@@ -391,6 +391,15 @@ folder0.gad =
 
             HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
 	    insidewall_shape.gad;		
+
+	    { STRETCH(1,1) }
+	}
+
+	TAB "Dev"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
 
 	    { STRETCH(1,1) }
 	}
