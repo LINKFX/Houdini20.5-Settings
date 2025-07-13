@@ -29,6 +29,7 @@ chops.maxtimeslice.val := 60;
 chops.mincooks.val := 0;
 confirm.overwrite_file.val := 0;
 confirm.top_cook_save.val := 0;
+confirm.unlock_node.val := 0;
 cop2.cineonlut.val := "";
 defaulthoming.val := 0;
 delayinactiveviewports.val := 0;
