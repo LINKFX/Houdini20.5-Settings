@@ -9,7 +9,7 @@
         lod ( 1 )
         hloffsetvariable ( 2 )
         hloffsetconstant ( 2 )
-        wirewidth ( 1 )
+        wirewidth ( 3 )
         particleDisplayType ( 0 )
         pointsize ( 3 )
         discsize ( 0.05 )
@@ -64,7 +64,7 @@
         reduceTex2D ( 1 )
         reduceTex3D ( 0 )
         use2DLimitsFor3DTex ( 0 )
-        useLighting ( 1 )
+        useLighting ( 0 )
         drawDiffuse ( 1 )
         drawAmbient ( 1 )
         drawEmission ( 1 )
@@ -91,7 +91,7 @@
         decorFontSize ( 3 )
         minHomeZoom ( 0.01 )
         colorAttribDomain ( 0 1 )
-        wireblend ( 0.5 )
+        wireblend ( 0.8 )
         markersize ( 3.5 )
         vectorscale ( 1 )
         instancingLimit ( 50 )
@@ -165,7 +165,7 @@
         primnmlsmode ( on )
         boundarymode ( none )
         uvboundarymode ( uv )
-        shadingmode ( shade )
+        shadingmode ( flat_wire )
     }
     SELECTED_SCENE_OBJECT_RENDERING_OPTIONS
     {
@@ -210,7 +210,7 @@
         primnmlsmode ( on )
         boundarymode ( none )
         uvboundarymode ( uv )
-        shadingmode ( shade )
+        shadingmode ( flat_wire )
     }
     GHOST_SCENE_OBJECT_RENDERING_OPTIONS
     {
@@ -255,11 +255,11 @@
         primnmlsmode ( on )
         boundarymode ( none )
         uvboundarymode ( uv )
-        shadingmode ( shade )
+        shadingmode ( flat_wire )
     }
     DISPLAY_MODEL_RENDERING_OPTIONS
     {
-        drawpointmarkers ( 1 )
+        drawpointmarkers ( 0 )
         drawpointnums ( 0 )
         drawpointnmls ( 0 )
         drawpointtxtnums ( 0 )
@@ -300,7 +300,7 @@
         primnmlsmode ( on )
         boundarymode ( none )
         uvboundarymode ( uv )
-        shadingmode ( shade )
+        shadingmode ( flat_wire )
     }
     CURRENT_MODEL_RENDERING_OPTIONS
     {
