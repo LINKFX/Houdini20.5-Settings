@@ -6,13 +6,24 @@ menubar      -1
 statusbar    -1
 radial menu set main
 root {
-    split 0.766406 H {
-        tabs 0 1 {
-            pane pane1 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/Pro_Courtyard1/ -T SOP -m sceneview
+    split 0.657422 H {
+        split 0.499202 H {
+            tabs 1 1 {
+                pane pane1 -a 0 -l 0 -H /obj/Procedural_Building_HDA_Dev_v1/Pro_Courtyard1/ -T SOP -m sceneview
+                pane panetab12 -a 0 -l 0 -H /obj/Procedural_Building_HDA_Dev_v1/Pro_Courtyard1/ -T SOP -m details
+            }
+            split 0.5 V R {
+                tabs 0 1 {
+                    pane panetab9 -a 0 -l 0 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m parmeditor
+                }
+                tabs 0 1 {
+                    pane panetab11 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/Pro_Courtyard1/ -T SOP -m parmeditor
+                }
+            }
         }
-        split 0.557239 V {
+        split 0.503236 V {
             tabs 0 1 {
-                pane panetab1 -a 0 -l 0 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m parmeditor
+                pane panetab1 -a 0 -l 10 -H /obj/Procedural_Building_HDA_Dev_v1/Pro_Courtyard1/ -T SOP -m parmeditor
             }
             tabs 0 1 {
                 pane panetab2 -a 0 -l 10 -H /obj/Procedural_Building_HDA_Dev_v1/Pro_Courtyard1/ -T SOP -m parmeditor
@@ -20,7 +31,7 @@ root {
         }
     }
 
-    panel panel1 -w 2939 407 1022 688 -X {
+    panel panel1 -w 2560 23 2560 1360 -X {
         split 0.183984 H L {
             split 0.5 V R {
                 tabs 0 1 {
@@ -46,15 +57,22 @@ root {
         }
     }
 
-    panel panel1 -w 5121 49 1891 1217 -X {
+    panel panel1 -w -2010 154 1891 1217 -X {
         split 0.183984 H L {
             tabs 0 1 {
                 pane panetab10 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/Pro_Courtyard1/ -T SOP -m parmeditor
             }
-            tabs 1 1 {
+            tabs 0 1 {
+                pane panetab5 -a 0 -l 0 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m sceneview
                 pane panetab8 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/Pro_Courtyard1/ -T SOP -m neteditor
                 pane FloatingPanel2 -a 0 -l 10 -H /obj/Procedural_Building_HDA_Dev_v1/Pro_Courtyard1/ -T SOP -m details
             }
+        }
+    }
+
+    panel panel1 -w 3355 142 638 680 -X {
+        tabs 0 1 {
+            pane FloatingPanel3 -a 0 -l 0 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m sceneview
         }
     }
 }
@@ -109,8 +127,6 @@ netcolumns -c delscript,comment -n COP panetab7
 netcolumns -c delscript,comment -n MGR panetab7
 netcolumns -c delscript,comment -n DIR panetab7
 netcolumns -c delscript,comment -n DATA panetab7
-geospreadsheet -c 0 -l horizontal -s 0.5 -m none -f 0 FloatingPanel2
-scenegraphtree -S 0.25 -m 2 -p "/collections /lights" -c  -i  -o  -x 1 -s 1 -M 0 -C primtype,descendants,kind,populated,loaded,activation,visibility,solo,selectability  FloatingPanel2
 parmeditor -T 0.25 -w 0 panetab10
 networkeditor -p '{\n	"taskgraphcollapsemode":"Off",\n	"backgroundimageediting":"0",\n	"gridxstep":"0.5",\n	"overviewmode":"2",\n	"workitemattrtocollapseby":"",\n	"showparmdialogmax":"1",\n	"showtaskgraphperf":"0",\n	"palettecolors":"",\n	"showtree":"0",\n	"taskgraphsortcriteria":"Automatic",\n	"showparmdialog":"0",\n	"showspareinputdep":"1",\n	"taskgraphperfstatname":"Cook Time",\n	"showmenu":"1",\n	"taskgraphsortdirection":"0",\n	"typesidebarsplit":"0.25",\n	"showdep":"1",\n	"showtasksmenu":"1",\n	"showcopsmenu":"1",\n	"treesplit":"0.25",\n	"palettemode":"0",\n	"gridmode":"2",\n	"showgrouplist":"0",\n	"gridystep":"0.5",\n	"showperfstats":"1",\n	"overviewbounds":"0.000000 0.000000 765.900000 387.300000",\n	"perfstatname":"Time",\n	"palettesize":"150 150",\n	"grouplistsplit":"0.75",\n	"showchilddep":"1",\n	"backgroundimagebrightness":"1.0",\n	"workitemcolorattribute":"",\n	"useworkitemcolorattribute":"1",\n	"showtypesidebar":"0"\n}\n' panetab8
 netcolumns -c display,xray,select,origin,capture,bone -n OBJ panetab8
@@ -131,3 +147,16 @@ netcolumns -c delscript,comment -n COP panetab8
 netcolumns -c delscript,comment -n MGR panetab8
 netcolumns -c delscript,comment -n DIR panetab8
 netcolumns -c delscript,comment -n DATA panetab8
+geospreadsheet -c 0 -l horizontal -s 0.5 -m none -f 0 FloatingPanel2
+scenegraphtree -S 0.25 -m 2 -p "/collections /lights" -c  -i  -o  -x 1 -s 1 -M 0 -C primtype,descendants,kind,populated,loaded,activation,visibility,solo,selectability  FloatingPanel2
+viewerstow -x open -b stow -l stow -m hide -c hide -d open ${DESKNAME}.panetab5.world
+vieweroption -a 2 ${DESKNAME}.panetab5.world
+viewlayout -d h 1 2 ${DESKNAME}.panetab5.world
+viewtype -t ortho_right ${DESKNAME}.panetab5.world.`vpname("${DESKNAME}.panetab5.world",4)`
+viewtype -t ortho_front ${DESKNAME}.panetab5.world.`vpname("${DESKNAME}.panetab5.world",3)`
+viewtype -t ortho_top ${DESKNAME}.panetab5.world.`vpname("${DESKNAME}.panetab5.world",1)`
+viewtype -t perspective ${DESKNAME}.panetab5.world.`vpname("${DESKNAME}.panetab5.world",2)`
+parmeditor -T 0.25 -w 0 panetab9
+parmeditor -T 0.25 -w 0 panetab11
+geospreadsheet -c 0 -l horizontal -s 0.5 -m none -f 0 panetab12
+scenegraphtree -S 0.25 -m 2 -p "/collections /lights" -c  -i  -o  -x 1 -s 1 -M 0 -C primtype,descendants,kind,populated,loaded,activation,visibility,solo,selectability  panetab12

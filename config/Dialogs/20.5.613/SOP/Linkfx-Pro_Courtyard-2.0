@@ -1,6 +1,6 @@
-// Magic: a88b4af9
+// Magic: 9fa27666
 // Automatically generated PSI dialog (PSI version 20.5.613)
-// Sun Jul 13 00:48:37 2025
+// Tue Jul 15 19:51:09 2025
 
 
 f_tmp = FLOAT_FIELD;	// dialog.top.ui
@@ -34,21 +34,7 @@ stashinput.gad = ROW
     { WIDTH(0.1) }
 }
 
-refresh.gad = ROW
-{
-    JUSTIFY(left, center)
-    { WIDTH(0.18) }
-
-    { WIDTH(1.5) }
-    { WIDTH(0.1) }
-
-    PARM_BUTTON("refresh", "刷新")
-	push VALUE(refresh.val);
-
-    { WIDTH(0.1) }
-}
-
-blockOut_enable.gad = ROW
+custom_blockOut_enable.gad = ROW
 {
     HSTRETCH
     { WIDTH(0.18) }
@@ -56,14 +42,14 @@ blockOut_enable.gad = ROW
     { WIDTH(1.5) }
     { WIDTH(0.08) }
 
-    PARM_BUTTON("blockOut_enable", "规划白盒  可接入Box") toggle VALUE(blockOut_enable.val);
+    PARM_BUTTON("custom_blockOut_enable", "自定义  庭院白盒  接入Box") toggle VALUE(custom_blockOut_enable.val);
 
     { HSTRETCH }
 
     { WIDTH(0.1) }
 }
 
-insidewall_enable.gad = ROW
+custom_split_ewall_enable.gad = ROW
 {
     HSTRETCH
     { WIDTH(0.18) }
@@ -71,7 +57,7 @@ insidewall_enable.gad = ROW
     { WIDTH(1.5) }
     { WIDTH(0.08) }
 
-    PARM_BUTTON("insidewall_enable", "院内分隔墙  可接入Curve") toggle VALUE(insidewall_enable.val);
+    PARM_BUTTON("custom_split_ewall_enable", "自定义  分隔墙  接入Curve") toggle VALUE(custom_split_ewall_enable.val);
 
     { HSTRETCH }
 
@@ -86,14 +72,14 @@ wall_door_enable.gad = ROW
     { WIDTH(1.5) }
     { WIDTH(0.08) }
 
-    PARM_BUTTON("wall_door_enable", "院门白盒  可接入BOX") toggle VALUE(wall_door_enable.val);
+    PARM_BUTTON("wall_door_enable", "自定义  院门白盒  可接入BOX") toggle VALUE(wall_door_enable.val);
 
     { HSTRETCH }
 
     { WIDTH(0.1) }
 }
 
-pro_enable.gad = ROW
+overall_division_enable.gad = ROW
 {
     HSTRETCH
     { WIDTH(0.18) }
@@ -101,7 +87,7 @@ pro_enable.gad = ROW
     { WIDTH(1.5) }
     { WIDTH(0.08) }
 
-    PARM_BUTTON("pro_enable", "开启  整体程序切分") toggle VALUE(pro_enable.val);
+    PARM_BUTTON("overall_division_enable", "整体程序切分") toggle VALUE(overall_division_enable.val);
 
     { HSTRETCH }
 
@@ -116,7 +102,22 @@ more_courtyard_enable.gad = ROW
     { WIDTH(1.5) }
     { WIDTH(0.08) }
 
-    PARM_BUTTON("more_courtyard_enable", "开启  多院落") toggle VALUE(more_courtyard_enable.val);
+    PARM_BUTTON("more_courtyard_enable", "多庭院/单庭院") toggle VALUE(more_courtyard_enable.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+auto_find_road_enable.gad = ROW
+{
+    HSTRETCH
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("auto_find_road_enable", "自动寻路") toggle VALUE(auto_find_road_enable.val);
 
     { HSTRETCH }
 
@@ -186,15 +187,15 @@ pos_noise.gad =
   { WIDTH(0.1) }
 }
 
-seed.gad = 
+offset_seed.gad = 
 {
 
  LAYOUT(horizontal) HSTRETCH
  { WIDTH(0.18) }
 
- seed.label = PARM_LABEL("随机值", "seed") WIDTH(1.5);
- PARM(integer, 1, "seed", none, none) RANGE(0,100000)
-	LOCK_RANGE_MIN LABELREF(seed.label) HSTRETCH;
+ offset_seed.label = PARM_LABEL("随机值", "offset_seed") WIDTH(1.5);
+ PARM(integer, 1, "offset_seed", none, none) RANGE(0,100000)
+	LOCK_RANGE_MIN LABELREF(offset_seed.label) HSTRETCH;
 
   { WIDTH(0.1) }
 }
@@ -207,7 +208,7 @@ wall_onoff.gad = ROW
     { WIDTH(1.5) }
     { WIDTH(0.08) }
 
-    PARM_BUTTON("wall_onoff", "创建墙体 开启/关闭") toggle VALUE(wall_onoff.val);
+    PARM_BUTTON("wall_onoff", "所有庭院 创建墙体 开启/关闭") toggle VALUE(wall_onoff.val);
 
     { HSTRETCH }
 
@@ -222,7 +223,7 @@ pro_clip_onoff.gad = ROW
     { WIDTH(1.5) }
     { WIDTH(0.08) }
 
-    PARM_BUTTON("pro_clip_onoff", "程序切分 开启/关闭") toggle VALUE(pro_clip_onoff.val);
+    PARM_BUTTON("pro_clip_onoff", "所有庭院 程序切分 开启/关闭") toggle VALUE(pro_clip_onoff.val);
 
     { HSTRETCH }
 
@@ -244,7 +245,7 @@ courtyard_count.parm =
 {
     LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
 
-    PARM_LABEL_SIMPLE("院落数量", "courtyard_count") WIDTH(1.5);
+    PARM_LABEL_SIMPLE("庭院数量", "courtyard_count") WIDTH(1.5);
     { WIDTH(0.1) }
 
     ROW
@@ -296,15 +297,101 @@ courtyard_count.gad =
     courtyard_count.multilist;
 }
 
+courtyard_blockout_input.gad = 
+{
+ LAYOUT(horizontal) HSTRETCH JUSTIFY(left,center)
+ { WIDTH(0.18) }
+
+ courtyard_blockout_input.label = PARM_LABEL("庭院白盒/World/Box", "courtyard_blockout_input") WIDTH(1.5);
+ PARM_FIELD(pathstring, "courtyard_blockout_input") VALUE(courtyard_blockout_input.val) 
+	LABELREF(courtyard_blockout_input.label) HSTRETCH;
+
+ ACTION_ICONBUTTON "BUTTONS_jump" VALUE(courtyard_blockout_input.jump)
+    HELP("Jump to operator\nCtrl+LMB: Open parameters popup dialog")
+    UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+ ACTION_ICONBUTTON "BUTTONS_chooser_node" VALUE(courtyard_blockout_input.plus)
+    HELP("Open floating operator chooser") UI_FLAT_ICON_BTN_SIZE_SMALL 
+    LOOKFLAT;
+
+ { WIDTH(0.1) }
+}
+
+insidewall_shape.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ insidewall_shape.label = PARM_LABEL("分隔墙燥波程度", "insidewall_shape") WIDTH(1.5);
+ PARM(float, 1, "insidewall_shape", none, none) RANGE(0,1)
+	LOCK_RANGE LABELREF(insidewall_shape.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+curve_input.gad = 
+{
+ LAYOUT(horizontal) HSTRETCH JUSTIFY(left,center)
+ { WIDTH(0.18) }
+
+ curve_input.label = PARM_LABEL("分隔墙/Curve", "curve_input") WIDTH(1.5);
+ PARM_FIELD(pathstring, "curve_input") VALUE(curve_input.val) 
+	LABELREF(curve_input.label) HSTRETCH;
+
+ ACTION_ICONBUTTON "BUTTONS_jump" VALUE(curve_input.jump)
+    HELP("Jump to operator\nCtrl+LMB: Open parameters popup dialog")
+    UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+ ACTION_ICONBUTTON "BUTTONS_chooser_node" VALUE(curve_input.plus)
+    HELP("Open floating operator chooser") UI_FLAT_ICON_BTN_SIZE_SMALL 
+    LOOKFLAT;
+
+ { WIDTH(0.1) }
+}
+
+courtyard_door_blockout_input.gad = 
+{
+ LAYOUT(horizontal) HSTRETCH JUSTIFY(left,center)
+ { WIDTH(0.18) }
+
+ courtyard_door_blockout_input.label = PARM_LABEL("院门白盒/World/Box", "courtyard_door_blockout_input") WIDTH(1.5);
+ PARM_FIELD(pathstring, "courtyard_door_blockout_input") VALUE(courtyard_door_blockout_input.val) 
+	LABELREF(courtyard_door_blockout_input.label) HSTRETCH;
+
+ ACTION_ICONBUTTON "BUTTONS_jump" VALUE(courtyard_door_blockout_input.jump)
+    HELP("Jump to operator\nCtrl+LMB: Open parameters popup dialog")
+    UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+ ACTION_ICONBUTTON "BUTTONS_chooser_node" VALUE(courtyard_door_blockout_input.plus)
+    HELP("Open floating operator chooser") UI_FLAT_ICON_BTN_SIZE_SMALL 
+    LOOKFLAT;
+
+ { WIDTH(0.1) }
+}
+
 iterations.gad = 
 {
 
  LAYOUT(horizontal) HSTRETCH
  { WIDTH(0.18) }
 
- iterations.label = PARM_LABEL("划分量", "iterations") WIDTH(1.5);
+ iterations.label = PARM_LABEL("切分数量", "iterations") WIDTH(1.5);
  PARM(integer, 1, "iterations", none, none) RANGE(1,10)
 	LOCK_RANGE_MIN LABELREF(iterations.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+min_lot_size.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ { WIDTH(0.18) }
+
+ min_lot_size.label = PARM_LABEL("切分尺寸钳制", "min_lot_size") WIDTH(1.5);
+ PARM(float, 1, "min_lot_size", none, none) RANGE(0.001,100)
+	LOCK_RANGE_MIN LABELREF(min_lot_size.label) HSTRETCH;
 
   { WIDTH(0.1) }
 }
@@ -334,18 +421,73 @@ shape_seed.gad =
 
   { WIDTH(0.1) }
 }
+cluster_lots.row.join =		
+{
 
-insidewall_shape.gad = 
+  LAYOUT(horizontal) HSTRETCH JUSTIFY(left, center)
+  HMARGIN(0.18, 0.1) NO_MARGIN_SPACING_SCALE
+
+cluster_lots.gad = ROW
+{
+    
+    {  }
+
+    { WIDTH(1.5) }
+    { WIDTH(0.08) }
+
+    PARM_BUTTON("cluster_lots", "按簇删减") toggle VALUE(cluster_lots.val);
+
+    {  }
+
+    {  }
+}
+
+number_of_clusters.gad = 
 {
 
  LAYOUT(horizontal) HSTRETCH
+ {  }
+
+ number_of_clusters.label = PARM_LABEL("簇数量", "number_of_clusters") ;
+ PARM(integer, 1, "number_of_clusters", none, none) RANGE(1,200)
+	LOCK_RANGE_MIN LABELREF(number_of_clusters.label) HSTRETCH;
+
+  {  }
+}
+
+seed.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH
+ {  }
+
+ seed.label = PARM_LABEL("簇形状随机", "seed") ;
+ PARM(float, 1, "seed", none, none) RANGE(0,1)
+	 LABELREF(seed.label) HSTRETCH;
+
+  {  }
+}
+}	// Template join.bot
+
+
+asset_input.gad = 
+{
+ LAYOUT(horizontal) HSTRETCH JUSTIFY(left,center)
  { WIDTH(0.18) }
 
- insidewall_shape.label = PARM_LABEL("分隔墙燥波程度", "insidewall_shape") WIDTH(1.5);
- PARM(float, 1, "insidewall_shape", none, none) RANGE(0,1)
-	 LABELREF(insidewall_shape.label) HSTRETCH;
+ asset_input.label = PARM_LABEL("Asset Input", "asset_input") WIDTH(1.5);
+ PARM_FIELD(pathstring, "asset_input") VALUE(asset_input.val) 
+	LABELREF(asset_input.label) HSTRETCH;
 
-  { WIDTH(0.1) }
+ ACTION_ICONBUTTON "BUTTONS_jump" VALUE(asset_input.jump)
+    HELP("Jump to operator\nCtrl+LMB: Open parameters popup dialog")
+    UI_FLAT_ICON_BTN_SIZE_SMALL LOOKFLAT;
+
+ ACTION_ICONBUTTON "BUTTONS_chooser_node" VALUE(asset_input.plus)
+    HELP("Open floating operator chooser") UI_FLAT_ICON_BTN_SIZE_SMALL 
+    LOOKFLAT;
+
+ { WIDTH(0.1) }
 }
 
 folder0.gad = 
@@ -356,7 +498,7 @@ folder0.gad =
     { 
 	VALUE(folder0.gad.val) STRETCH(1,0)
 
-	TAB "多院落程序化"
+	TAB "多庭院程序化"
 	{
 	    LAYOUT(vertical) STRETCH
 
@@ -364,11 +506,42 @@ folder0.gad =
 	    axis.row.join;		
 	    bias.gad;		
 	    pos_noise.gad;		
-	    seed.gad;		
+	    offset_seed.gad;		
 	    wall_onoff.gad;		
 	    pro_clip_onoff.gad;		
 	    sepparm.gad;		
 	    courtyard_count.gad;		
+
+	    { STRETCH(1,1) }
+	}
+
+	TAB "庭院白盒"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    courtyard_blockout_input.gad;		
+
+	    { STRETCH(1,1) }
+	}
+
+	TAB "分隔墙"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    insidewall_shape.gad;		
+	    curve_input.gad;		
+
+	    { STRETCH(1,1) }
+	}
+
+	TAB "院门白盒"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    courtyard_door_blockout_input.gad;		
 
 	    { STRETCH(1,1) }
 	}
@@ -379,18 +552,10 @@ folder0.gad =
 
             HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
 	    iterations.gad;		
+	    min_lot_size.gad;		
 	    irregularity.gad;		
 	    shape_seed.gad;		
-
-	    { STRETCH(1,1) }
-	}
-
-	TAB "自定义院内分隔墙"
-	{
-	    LAYOUT(vertical) STRETCH
-
-            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
-	    insidewall_shape.gad;		
+	    cluster_lots.row.join;		
 
 	    { STRETCH(1,1) }
 	}
@@ -400,6 +565,7 @@ folder0.gad =
 	    LAYOUT(vertical) STRETCH
 
             HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    asset_input.gad;		
 
 	    { STRETCH(1,1) }
 	}
@@ -411,12 +577,12 @@ dialog_norm.gad =
     LAYOUT(vertical) SPACING(0.02) HSTRETCH 
     mode.gad; 
     stashinput.gad; 
-    refresh.gad; 
-    blockOut_enable.gad; 
-    insidewall_enable.gad; 
+    custom_blockOut_enable.gad; 
+    custom_split_ewall_enable.gad; 
     wall_door_enable.gad; 
-    pro_enable.gad; 
+    overall_division_enable.gad; 
     more_courtyard_enable.gad; 
+    auto_find_road_enable.gad; 
     folder0.gad; 
 } 
 // dialog.bot.ui
