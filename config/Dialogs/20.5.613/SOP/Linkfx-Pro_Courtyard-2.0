@@ -1,6 +1,6 @@
-// Magic: 9fa27666
+// Magic: 530e43f8
 // Automatically generated PSI dialog (PSI version 20.5.613)
-// Tue Jul 15 19:51:09 2025
+// Thu Jul 17 11:39:07 2025
 
 
 f_tmp = FLOAT_FIELD;	// dialog.top.ui
@@ -208,7 +208,7 @@ wall_onoff.gad = ROW
     { WIDTH(1.5) }
     { WIDTH(0.08) }
 
-    PARM_BUTTON("wall_onoff", "所有庭院 创建墙体 开启/关闭") toggle VALUE(wall_onoff.val);
+    PARM_BUTTON("wall_onoff", "墙体创建 统一开启/关闭") toggle VALUE(wall_onoff.val);
 
     { HSTRETCH }
 
@@ -223,7 +223,7 @@ pro_clip_onoff.gad = ROW
     { WIDTH(1.5) }
     { WIDTH(0.08) }
 
-    PARM_BUTTON("pro_clip_onoff", "所有庭院 程序切分 开启/关闭") toggle VALUE(pro_clip_onoff.val);
+    PARM_BUTTON("pro_clip_onoff", "程序切分 统一开启/关闭") toggle VALUE(pro_clip_onoff.val);
 
     { HSTRETCH }
 
