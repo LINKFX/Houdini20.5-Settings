@@ -1,6 +1,6 @@
-// Magic: 530e43f8
+// Magic: cbf686c1
 // Automatically generated PSI dialog (PSI version 20.5.613)
-// Thu Jul 17 11:39:07 2025
+// Mon Jul 21 14:43:35 2025
 
 
 f_tmp = FLOAT_FIELD;	// dialog.top.ui
@@ -194,7 +194,7 @@ offset_seed.gad =
  { WIDTH(0.18) }
 
  offset_seed.label = PARM_LABEL("随机值", "offset_seed") WIDTH(1.5);
- PARM(integer, 1, "offset_seed", none, none) RANGE(0,100000)
+ PARM(integer, 1, "offset_seed", none, none) RANGE(0,100)
 	LOCK_RANGE_MIN LABELREF(offset_seed.label) HSTRETCH;
 
   { WIDTH(0.1) }
@@ -462,7 +462,7 @@ seed.gad =
  {  }
 
  seed.label = PARM_LABEL("簇形状随机", "seed") ;
- PARM(float, 1, "seed", none, none) RANGE(0,1)
+ PARM(float, 1, "seed", none, none) RANGE(0,1000)
 	 LABELREF(seed.label) HSTRETCH;
 
   {  }

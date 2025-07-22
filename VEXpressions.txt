@@ -659,6 +659,34 @@ attribwrangle/snippet
     s@end_points = strip(s@end_points);
 
 
+attribwrangle/snippet
+    LINKFX 五角星
+// 设置五角星的参数
+float radius = 1.0; // 五角星的外接圆半径
+int num_points = 10; // 五角星需要10个点（5个外顶点 + 5个内顶点）
+vector center = {0, 0, 0}; // 五角星的中心点
+
+// 计算五角星的顶点
+for (int i = 0; i < num_points; i++) {
+    float angle = i * (2 * PI / num_points); // 每个点的角度，360度/10
+    float r = (i % 2 == 0) ? radius : radius * 0.382; // 外顶点半径为1，内顶点半径为0.382（黄金分割比例）
+    vector pos;
+    pos.x = center.x + r * cos(angle);
+    pos.y = center.y + r * sin(angle);
+    pos.z = center.z;
+    
+    // 添加点
+    int pt = addpoint(0, pos);
+}
+
+// 创建五角星的多边形
+int poly = addprim(0, "poly");
+for (int i = 0; i < num_points; i++) {
+    addvertex(0, poly, i);
+}
+
+
+
 #
 # VEX Deform
 #
