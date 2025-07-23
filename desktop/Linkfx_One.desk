@@ -1,5 +1,5 @@
 fullscreen   -1
-playbarshown 1
+playbarshown 0
 playbar      -1
 shelf        -1
 menubar      -1
@@ -31,11 +31,11 @@ root {
                         pane panetab5 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
                     }
                     tabs 0 1 {
-                        pane panetab6 -a 0 -l 10 -H /obj/ -T OBJ -m parmeditor
+                        pane panetab6 -a 0 -l 10 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m parmeditor
                     }
                 }
                 tabs 1 1 {
-                    pane panetab2 -a 0 -l 10 -H /obj/ -T OBJ -m parmeditor
+                    pane panetab2 -a 0 -l 10 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m parmeditor
                     pane panetab7 -a 0 -l 0 -H /obj/ -T OBJ -m neteditor
                 }
             }
@@ -72,7 +72,7 @@ netcolumns -c delscript,comment -n MGR panetab8
 netcolumns -c delscript,comment -n DIR panetab8
 netcolumns -c delscript,comment -n DATA panetab8
 parmeditor -T 0.25 -w 0 panetab1
-networkeditor -p '{\n	"taskgraphcollapsemode":"Off",\n	"backgroundimageediting":"0",\n	"gridxstep":"0.5",\n	"overviewmode":"2",\n	"workitemattrtocollapseby":"",\n	"showparmdialogmax":"1",\n	"showtaskgraphperf":"0",\n	"palettecolors":"",\n	"showtree":"0",\n	"taskgraphsortcriteria":"Automatic",\n	"showparmdialog":"0",\n	"showspareinputdep":"1",\n	"taskgraphperfstatname":"Cook Time",\n	"showmenu":"1",\n	"taskgraphsortdirection":"0",\n	"typesidebarsplit":"0.25",\n	"showdep":"1",\n	"showtasksmenu":"1",\n	"showcopsmenu":"1",\n	"treesplit":"0.25",\n	"palettemode":"0",\n	"gridmode":"2",\n	"showgrouplist":"0",\n	"gridystep":"0.5",\n	"showperfstats":"1",\n	"overviewbounds":"0.000000 0.000000 316.015174 324.548172",\n	"perfstatname":"Time",\n	"palettesize":"150 150",\n	"grouplistsplit":"0.75",\n	"showchilddep":"1",\n	"backgroundimagebrightness":"1.0",\n	"workitemcolorattribute":"",\n	"useworkitemcolorattribute":"1",\n	"showtypesidebar":"0"\n}\n' panetab3
+networkeditor -p '{\n	"taskgraphcollapsemode":"Off",\n	"backgroundimageediting":"0",\n	"gridxstep":"0.5",\n	"overviewmode":"2",\n	"workitemattrtocollapseby":"",\n	"showparmdialogmax":"1",\n	"showtaskgraphperf":"0",\n	"palettecolors":"",\n	"showtree":"0",\n	"taskgraphsortcriteria":"Automatic",\n	"showparmdialog":"0",\n	"showspareinputdep":"1",\n	"taskgraphperfstatname":"Cook Time",\n	"showmenu":"1",\n	"taskgraphsortdirection":"0",\n	"typesidebarsplit":"0.25",\n	"showdep":"1",\n	"showtasksmenu":"1",\n	"showcopsmenu":"1",\n	"treesplit":"0.25",\n	"palettemode":"0",\n	"gridmode":"2",\n	"showgrouplist":"0",\n	"gridystep":"0.5",\n	"showperfstats":"1",\n	"overviewbounds":"0.000000 0.000000 175.531261 180.270932",\n	"perfstatname":"Time",\n	"palettesize":"150 150",\n	"grouplistsplit":"0.75",\n	"showchilddep":"1",\n	"backgroundimagebrightness":"1.0",\n	"workitemcolorattribute":"",\n	"useworkitemcolorattribute":"1",\n	"showtypesidebar":"0"\n}\n' panetab3
 netcolumns -c display,xray,select,origin,capture,bone -n OBJ panetab3
 netcolumns -c display,render,template,selectabletemplate,highlight,unload,bypass,lock -n SOP panetab3
 netcolumns -c delscript,comment -n CHOPNET panetab3
