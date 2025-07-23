@@ -1,0 +1,76 @@
+fullscreen   -1
+playbarshown 0
+playbar      -1
+shelf        -1
+menubar      -1
+statusbar    -1
+radial menu set main
+root {
+    split 0.808594 H {
+        split 0.1472 V {
+            tabs 0 1 {
+                pane FloatingPanel2 -a 0 -l 1 -H /obj/ -T OBJ -m sceneview
+            }
+            tabs 0 1 {
+                pane panetab5 -a 0 -l 1 -H /obj/ -T OBJ -m details
+            }
+        }
+        split 0.5 V {
+            tabs 0 1 {
+                pane panetab2 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
+            }
+            tabs 0 1 {
+                pane panetab6 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
+            }
+        }
+    }
+
+    panel panel1 -w 2560 23 2560 1360 -X {
+        split 0.18125 H L {
+            split 0.5 V {
+                tabs 0 1 {
+                    pane panetab3 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
+                }
+                tabs 0 1 {
+                    pane panetab4 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
+                }
+            }
+            tabs 0 1 {
+                pane panetab1 -a 0 -l 1 -H /obj/ -T OBJ -m neteditor
+            }
+        }
+    }
+}
+shelfdock -o 0 -l icon_and_text -G "0.37 0.50" add shelf_set_1 linkfx_tools
+viewerstow -x open -b stow -l stow -m hide -c hide -d open ${DESKNAME}.FloatingPanel2.world
+vieweroption -a 0 ${DESKNAME}.FloatingPanel2.world
+viewlayout -s 2 ${DESKNAME}.FloatingPanel2.world
+viewtype -t ortho_right ${DESKNAME}.FloatingPanel2.world.`vpname("${DESKNAME}.FloatingPanel2.world",4)`
+viewtype -t ortho_front ${DESKNAME}.FloatingPanel2.world.`vpname("${DESKNAME}.FloatingPanel2.world",3)`
+viewtype -t ortho_top ${DESKNAME}.FloatingPanel2.world.`vpname("${DESKNAME}.FloatingPanel2.world",1)`
+viewtype -t ortho_top ${DESKNAME}.FloatingPanel2.world.`vpname("${DESKNAME}.FloatingPanel2.world",2)`
+geospreadsheet -c 0 -l horizontal -s 0.5 -m none -f 0 panetab5
+scenegraphtree -S 0.25 -m 2 -p "/collections /lights" -c  -i  -o  -x 1 -s 1 -M 0 -C primtype,descendants,kind,populated,loaded,activation,visibility,solo,selectability  panetab5
+parmeditor -T 0.25 -w 0 panetab2
+parmeditor -T 0.25 -w 0 panetab6
+parmeditor -T 0.25 -w 0 panetab3
+parmeditor -T 0.25 -w 0 panetab4
+networkeditor -p '{\n	"taskgraphcollapsemode":"Off",\n	"backgroundimageediting":"0",\n	"gridxstep":"0.5",\n	"overviewmode":"2",\n	"workitemattrtocollapseby":"",\n	"showparmdialogmax":"1",\n	"showtaskgraphperf":"0",\n	"palettecolors":"",\n	"showtree":"0",\n	"taskgraphsortcriteria":"Automatic",\n	"showparmdialog":"0",\n	"showspareinputdep":"1",\n	"taskgraphperfstatname":"Cook Time",\n	"showmenu":"1",\n	"taskgraphsortdirection":"0",\n	"typesidebarsplit":"0.25",\n	"showdep":"1",\n	"showtasksmenu":"1",\n	"showcopsmenu":"1",\n	"treesplit":"0.25",\n	"palettemode":"0",\n	"gridmode":"2",\n	"showgrouplist":"0",\n	"gridystep":"0.5",\n	"showperfstats":"1",\n	"overviewbounds":"0.000000 0.000000 765.900000 387.300000",\n	"perfstatname":"Time",\n	"palettesize":"150 150",\n	"grouplistsplit":"0.75",\n	"showchilddep":"1",\n	"backgroundimagebrightness":"1.0",\n	"workitemcolorattribute":"",\n	"useworkitemcolorattribute":"1",\n	"showtypesidebar":"0"\n}\n' panetab1
+netcolumns -c display,xray,select,origin,capture,bone -n OBJ panetab1
+netcolumns -c display,render,template,selectabletemplate,highlight,unload,bypass,lock -n SOP panetab1
+netcolumns -c delscript,comment -n CHOPNET panetab1
+netcolumns -c display,export,audio,bypass,lock -n CHOP panetab1
+netcolumns -c startrender,bypass,lock -n ROP panetab1
+netcolumns -c delscript,comment -n SHOP panetab1
+netcolumns -c display,render,template,bypass -n COP2 panetab1
+netcolumns -c delscript,comment -n IMG panetab1
+netcolumns -c delscript,comment,input -n VOP panetab1
+netcolumns -c delscript,comment -n VOPNET panetab1
+netcolumns -c delscript,comment -n DOP panetab1
+netcolumns -c delscript,comment -n TOP panetab1
+netcolumns -c delscript,comment -n TOPNET panetab1
+netcolumns -c display,bypass,delscript,comment,input -n LOP panetab1
+netcolumns -c delscript,comment -n COP panetab1
+netcolumns -c delscript,comment -n MGR panetab1
+netcolumns -c delscript,comment -n DIR panetab1
+netcolumns -c delscript,comment -n DATA panetab1
