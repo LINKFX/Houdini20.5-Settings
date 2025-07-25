@@ -8,31 +8,32 @@ radial menu set main
 root {
     split 0.73125 H {
         tabs 0 1 {
-            pane FloatingPanel2 -a 0 -l 1 -H /obj/ -T OBJ -m sceneview
+            pane FloatingPanel2 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m sceneview
         }
         split 0.324434 V R {
             tabs 0 1 {
-                pane panetab2 -a 0 -l 0 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m parmeditor
+                pane panetab2 -a 0 -l 10 -H /obj/Procedural_Building_HDA_Dev_v1/Pro_Courtyard1/ -T SOP -m parmeditor
             }
             tabs 0 1 {
-                pane panetab1 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
+                pane panetab1 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m parmeditor
             }
         }
     }
 
-    panel panel1 -w 2560 23 2560 1360 -X {
+    panel panel1 -w 2560 23 2560 1369 -X {
         split 0.260938 H L {
             split 0.5 V {
                 tabs 0 1 {
-                    pane FloatingPanel -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
+                    pane FloatingPanel -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m parmeditor
                 }
                 tabs 0 1 {
-                    pane panetab4 -a 0 -l 10 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m parmeditor
+                    pane panetab4 -a 0 -l 10 -H /obj/Procedural_Building_HDA_Dev_v1/Pro_Courtyard1/ -T SOP -m parmeditor
                 }
             }
             split 0.5 H R {
-                tabs 0 1 {
-                    pane panetab6 -a 0 -l 1 -H /obj/ -T OBJ -m details
+                tabs 1 1 {
+                    pane panetab6 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m details
+                    pane panetab11 -a 0 -l 0 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m neteditor
                 }
                 tabs 0 1 {
                     pane panetab7 -a 0 -l 2 -H /obj/ -T OBJ -m neteditor
@@ -41,27 +42,27 @@ root {
         }
     }
 
-    panel panel1 -w 0 23 2560 1360 -X {
+    panel panel1 -w 0 23 2560 1369 -X {
         split 0.751562 H R {
             split 0.239326 H {
                 split 0.5 V {
                     tabs 0 1 {
-                        pane panetab5 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
+                        pane panetab5 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m parmeditor
                     }
                     tabs 0 1 {
-                        pane panetab10 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
+                        pane panetab10 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m parmeditor
                     }
                 }
                 tabs 0 1 {
-                    pane panetab3 -a 0 -l 1 -H /obj/ -T OBJ -m neteditor
+                    pane panetab3 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m neteditor
                 }
             }
             split 0.505478 V R {
                 tabs 0 1 {
-                    pane panetab9 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
+                    pane panetab9 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m parmeditor
                 }
                 tabs 0 1 {
-                    pane panetab8 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
+                    pane panetab8 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m parmeditor
                 }
             }
         }
@@ -102,7 +103,7 @@ netcolumns -c delscript,comment -n DIR panetab7
 netcolumns -c delscript,comment -n DATA panetab7
 parmeditor -T 0.25 -w 0 panetab5
 parmeditor -T 0.25 -w 0 panetab10
-networkeditor -p '{\n	"taskgraphcollapsemode":"Off",\n	"backgroundimageediting":"0",\n	"gridxstep":"0.5",\n	"overviewmode":"2",\n	"workitemattrtocollapseby":"",\n	"showparmdialogmax":"1",\n	"showtaskgraphperf":"0",\n	"palettecolors":"",\n	"showtree":"0",\n	"taskgraphsortcriteria":"Automatic",\n	"showparmdialog":"0",\n	"showspareinputdep":"1",\n	"taskgraphperfstatname":"Cook Time",\n	"showmenu":"1",\n	"taskgraphsortdirection":"0",\n	"typesidebarsplit":"0.25",\n	"showdep":"1",\n	"showtasksmenu":"1",\n	"showcopsmenu":"1",\n	"treesplit":"0.25",\n	"palettemode":"0",\n	"gridmode":"2",\n	"showgrouplist":"0",\n	"gridystep":"0.5",\n	"showperfstats":"1",\n	"overviewbounds":"0.000000 0.000000 580.500000 387.300000",\n	"perfstatname":"Time",\n	"palettesize":"150 150",\n	"grouplistsplit":"0.75",\n	"showchilddep":"1",\n	"backgroundimagebrightness":"1.0",\n	"workitemcolorattribute":"",\n	"useworkitemcolorattribute":"1",\n	"showtypesidebar":"0"\n}\n' panetab3
+networkeditor -p '{\n	"taskgraphcollapsemode":"Off",\n	"backgroundimageediting":"0",\n	"gridxstep":"0.5",\n	"overviewmode":"2",\n	"workitemattrtocollapseby":"",\n	"showparmdialogmax":"1",\n	"showtaskgraphperf":"0",\n	"palettecolors":"",\n	"showtree":"0",\n	"taskgraphsortcriteria":"Automatic",\n	"showparmdialog":"0",\n	"showspareinputdep":"1",\n	"taskgraphperfstatname":"Cook Time",\n	"showmenu":"1",\n	"taskgraphsortdirection":"0",\n	"typesidebarsplit":"0.25",\n	"showdep":"1",\n	"showtasksmenu":"1",\n	"showcopsmenu":"1",\n	"treesplit":"0.25",\n	"palettemode":"0",\n	"gridmode":"2",\n	"showgrouplist":"0",\n	"gridystep":"0.5",\n	"showperfstats":"1",\n	"overviewbounds":"0.000000 0.000000 435.300000 387.300000",\n	"perfstatname":"Time",\n	"palettesize":"150 150",\n	"grouplistsplit":"0.75",\n	"showchilddep":"1",\n	"backgroundimagebrightness":"1.0",\n	"workitemcolorattribute":"",\n	"useworkitemcolorattribute":"1",\n	"showtypesidebar":"0"\n}\n' panetab3
 netcolumns -c display,xray,select,origin,capture,bone -n OBJ panetab3
 netcolumns -c display,render,template,selectabletemplate,highlight,unload,bypass,lock -n SOP panetab3
 netcolumns -c delscript,comment -n CHOPNET panetab3
@@ -123,3 +124,22 @@ netcolumns -c delscript,comment -n DIR panetab3
 netcolumns -c delscript,comment -n DATA panetab3
 parmeditor -T 0.25 -w 0 panetab9
 parmeditor -T 0.25 -w 0 panetab8
+networkeditor -p '{\n	"taskgraphcollapsemode":"Off",\n	"backgroundimageediting":"0",\n	"gridxstep":"2.0",\n	"overviewmode":"2",\n	"workitemattrtocollapseby":"",\n	"showparmdialogmax":"1",\n	"showtaskgraphperf":"0",\n	"palettecolors":"",\n	"showtree":"0",\n	"taskgraphsortcriteria":"Automatic",\n	"showparmdialog":"0",\n	"showspareinputdep":"1",\n	"taskgraphperfstatname":"Cook Time",\n	"showmenu":"1",\n	"taskgraphsortdirection":"0",\n	"typesidebarsplit":"0.25",\n	"showdep":"0",\n	"showtasksmenu":"1",\n	"showcopsmenu":"1",\n	"treesplit":"0.25",\n	"palettemode":"0",\n	"gridmode":"0",\n	"showgrouplist":"0",\n	"gridystep":"1.0",\n	"showperfstats":"1",\n	"overviewbounds":"0.000000 0.000000 763.800000 387.300000",\n	"perfstatname":"Time",\n	"palettesize":"150 150",\n	"grouplistsplit":"0.75",\n	"showchilddep":"1",\n	"backgroundimagebrightness":"1.0",\n	"workitemcolorattribute":"",\n	"useworkitemcolorattribute":"0",\n	"showtypesidebar":"0"\n}\n' panetab11
+netcolumns -c display,xray,select,origin,capture,bone -n OBJ panetab11
+netcolumns -c display,render,template,selectabletemplate,highlight,unload,bypass,lock -n SOP panetab11
+netcolumns -c delscript,comment -n CHOPNET panetab11
+netcolumns -c display,export,audio,bypass,lock -n CHOP panetab11
+netcolumns -c startrender,bypass,lock -n ROP panetab11
+netcolumns -c delscript,comment -n SHOP panetab11
+netcolumns -c display,render,template,bypass -n COP2 panetab11
+netcolumns -c delscript,comment -n IMG panetab11
+netcolumns -c delscript,comment,input -n VOP panetab11
+netcolumns -c delscript,comment -n VOPNET panetab11
+netcolumns -c delscript,comment -n DOP panetab11
+netcolumns -c delscript,comment -n TOP panetab11
+netcolumns -c delscript,comment -n TOPNET panetab11
+netcolumns -c display,bypass,delscript,comment,input -n LOP panetab11
+netcolumns -c delscript,comment -n COP panetab11
+netcolumns -c delscript,comment -n MGR panetab11
+netcolumns -c delscript,comment -n DIR panetab11
+netcolumns -c delscript,comment -n DATA panetab11

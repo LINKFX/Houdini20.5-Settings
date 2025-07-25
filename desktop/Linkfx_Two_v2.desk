@@ -9,18 +9,18 @@ root {
     split 0.808594 H {
         split 0.1472 V {
             tabs 0 1 {
-                pane FloatingPanel2 -a 0 -l 1 -H /obj/ -T OBJ -m sceneview
+                pane FloatingPanel2 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m sceneview
             }
             tabs 0 1 {
-                pane panetab5 -a 0 -l 1 -H /obj/ -T OBJ -m details
+                pane panetab5 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m details
             }
         }
         split 0.5 V {
             tabs 0 1 {
-                pane panetab2 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
+                pane panetab2 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m parmeditor
             }
             tabs 0 1 {
-                pane panetab6 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
+                pane panetab6 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m parmeditor
             }
         }
     }
@@ -29,14 +29,14 @@ root {
         split 0.18125 H L {
             split 0.5 V {
                 tabs 0 1 {
-                    pane panetab3 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
+                    pane panetab3 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m parmeditor
                 }
                 tabs 0 1 {
-                    pane panetab4 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
+                    pane panetab4 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m parmeditor
                 }
             }
             tabs 0 1 {
-                pane panetab1 -a 0 -l 1 -H /obj/ -T OBJ -m neteditor
+                pane panetab1 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m neteditor
             }
         }
     }
