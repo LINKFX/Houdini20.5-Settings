@@ -1,18 +1,18 @@
 fullscreen   -1
-playbarshown 0
+playbarshown 1
 playbar      -1
 shelf        -1
 menubar      -1
 statusbar    -1
 radial menu set main
 root {
-    split 0.219531 H {
-        split 0.545455 V {
+    split 0.204297 H L {
+        split 0.545455 V R {
             tabs 0 1 {
-                pane panetab4 -a 0 -l 0 -H /obj/ -T OBJ -m parmeditor
+                pane panetab4 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
             }
             tabs 0 1 {
-                pane panetab3 -a 0 -l 0 -H /obj/ -T OBJ -m parmeditor
+                pane panetab3 -a 0 -l 10 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m parmeditor
             }
         }
         split 0.809194 H R {
@@ -25,8 +25,8 @@ root {
         }
     }
 
-    panel panel3 -w -2559 49 785 1360 {
-        split 0.991001 H R {
+    panel panel3 -w -2559 49 1324 1360 {
+        split 0.6723 H R {
             tabs 0 1 {
                 pane panetab8 -a 0 -l 0 -H /obj/ -T OBJ -m sceneview
             }
@@ -41,16 +41,37 @@ root {
         }
     }
 
-    panel panel2 -w 3392 408 638 680 -X {
+    panel panel2 -w 2560 57 2560 1360 {
         tabs 0 1 {
             pane FloatingPanel -a 0 -l 1 -H /obj/ -T OBJ -m details
+        }
+    }
+
+    panel panel1 -w -1233 44 1232 1360 {
+        split 0.597027 H {
+            split 0.249087 V R {
+                tabs 0 1 {
+                    pane FloatingPanel2 -a 0 -l 10 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m sceneview
+                }
+                tabs 0 1 {
+                    pane panetab10 -a 0 -l 0 -H /obj/ -T OBJ -m details
+                }
+            }
+            split 0.5 V {
+                tabs 0 1 {
+                    pane panetab6 -a 0 -l 0 -H /obj/ -T OBJ -m parmeditor
+                }
+                tabs 0 1 {
+                    pane panetab9 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
+                }
+            }
         }
     }
 }
 shelfdock -o 0 -l icon_and_text -G "0.50 0.50" add shelf_set_1 shelf_set_2
 parmeditor -T 0.25 -w 0 panetab4
 parmeditor -T 0.25 -w 0 panetab3
-networkeditor -p '{\n	"taskgraphcollapsemode":"Off",\n	"backgroundimageediting":"0",\n	"gridxstep":"0.5",\n	"overviewmode":"2",\n	"workitemattrtocollapseby":"",\n	"showparmdialogmax":"1",\n	"showtaskgraphperf":"0",\n	"palettecolors":"",\n	"obj:listmode":"0",\n	"showtree":"0",\n	"taskgraphsortcriteria":"Automatic",\n	"showparmdialog":"0",\n	"showtimedep":"0",\n	"showspareinputdep":"1",\n	"taskgraphperfstatname":"Cook Time",\n	"showmenu":"1",\n	"taskgraphsortdirection":"0",\n	"sop:listmode":"0",\n	"typesidebarsplit":"0.25",\n	"showdep":"1",\n	"showtasksmenu":"1",\n	"showcopsmenu":"1",\n	"treesplit":"0.25",\n	"palettemode":"0",\n	"gridmode":"2",\n	"showgrouplist":"0",\n	"gridystep":"0.5",\n	"showperfstats":"1",\n	"overviewbounds":"0.000000 0.000000 595.200000 366.000000",\n	"perfstatname":"Time",\n	"palettesize":"150 150",\n	"grouplistsplit":"0.75",\n	"showchilddep":"1",\n	"backgroundimagebrightness":"1.0",\n	"workitemcolorattribute":"",\n	"useworkitemcolorattribute":"1",\n	"showtypesidebar":"0"\n}\n' panetab7
+networkeditor -p '{\n	"taskgraphcollapsemode":"Off",\n	"backgroundimageediting":"0",\n	"gridxstep":"0.5",\n	"overviewmode":"2",\n	"workitemattrtocollapseby":"",\n	"showparmdialogmax":"1",\n	"showtaskgraphperf":"0",\n	"palettecolors":"",\n	"obj:listmode":"0",\n	"showtree":"0",\n	"taskgraphsortcriteria":"Automatic",\n	"showparmdialog":"0",\n	"showtimedep":"0",\n	"showspareinputdep":"1",\n	"taskgraphperfstatname":"Cook Time",\n	"showmenu":"1",\n	"taskgraphsortdirection":"0",\n	"sop:listmode":"0",\n	"typesidebarsplit":"0.25",\n	"showdep":"1",\n	"showtasksmenu":"1",\n	"showcopsmenu":"1",\n	"treesplit":"0.25",\n	"palettemode":"0",\n	"gridmode":"2",\n	"showgrouplist":"0",\n	"gridystep":"0.5",\n	"showperfstats":"1",\n	"overviewbounds":"0.000000 0.000000 763.800000 347.400000",\n	"perfstatname":"Time",\n	"palettesize":"150 150",\n	"grouplistsplit":"0.75",\n	"showchilddep":"1",\n	"backgroundimagebrightness":"1.0",\n	"workitemcolorattribute":"",\n	"useworkitemcolorattribute":"1",\n	"showtypesidebar":"0"\n}\n' panetab7
 netcolumns -c display,xray,select,origin,capture,bone -n OBJ panetab7
 netcolumns -c display,render,template,selectabletemplate,highlight,unload,bypass,lock -n SOP panetab7
 netcolumns -c delscript,comment -n CHOPNET panetab7
@@ -99,3 +120,14 @@ parmeditor -T 0.25 -w 0 panetab1
 parmeditor -T 0.25 -w 0 panetab2
 geospreadsheet -c 0 -l horizontal -s 0.5 -m none -f 0 FloatingPanel
 scenegraphtree -S 0.25 -m 2 -p "/collections /lights" -c  -i  -o  -x 1 -s 1 -M 0 -C primtype,descendants,kind,populated,loaded,activation,visibility,solo,selectability  FloatingPanel
+viewerstow -x open -b stow -l open -m hide -c hide -d open ${DESKNAME}.FloatingPanel2.world
+vieweroption -a 0 ${DESKNAME}.FloatingPanel2.world
+viewlayout -s 2 ${DESKNAME}.FloatingPanel2.world
+viewtype -t ortho_right ${DESKNAME}.FloatingPanel2.world.`vpname("${DESKNAME}.FloatingPanel2.world",4)`
+viewtype -t ortho_front ${DESKNAME}.FloatingPanel2.world.`vpname("${DESKNAME}.FloatingPanel2.world",3)`
+viewtype -t ortho_top ${DESKNAME}.FloatingPanel2.world.`vpname("${DESKNAME}.FloatingPanel2.world",1)`
+viewtype -t perspective ${DESKNAME}.FloatingPanel2.world.`vpname("${DESKNAME}.FloatingPanel2.world",2)`
+geospreadsheet -c 0 -l horizontal -s 0.5 -m none -f 0 panetab10
+scenegraphtree -S 0.25 -m 2 -p "/collections /lights" -c  -i  -o  -x 1 -s 1 -M 0 -C primtype,descendants,kind,populated,loaded,activation,visibility,solo,selectability  panetab10
+parmeditor -T 0.25 -w 0 panetab6
+parmeditor -T 0.25 -w 0 panetab9
