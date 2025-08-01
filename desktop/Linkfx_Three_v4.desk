@@ -6,48 +6,48 @@ menubar      -1
 statusbar    -1
 radial menu set main
 root {
-    split 0.691797 H {
+    split 0.638281 H {
         split 0.148867 V R {
             tabs 0 1 {
-                pane panetab7 -a 0 -l 0 -H /obj/Procedural_Building_HDA_Dev_v1/Pro_Courtyard1/ -T SOP -m sceneview
+                pane panetab7 -a 0 -l 10 -H /obj/Procedural_Building_HDA_Dev_v1/Pro_Courtyard1/ -T SOP -m sceneview
             }
             tabs 0 1 {
-                pane panetab5 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m details
+                pane panetab5 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/Pro_Courtyard1/ -T SOP -m details
             }
         }
-        split 0.712635 V {
+        split 0.151294 V {
             tabs 0 1 {
                 pane panetab2 -a 0 -l 0 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m parmeditor
             }
             tabs 0 1 {
-                pane panetab6 -a 0 -l 10 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m parmeditor
+                pane panetab6 -a 0 -l 10 -H /obj/Procedural_Building_HDA_Dev_v1/Pro_Courtyard1/ -T SOP -m parmeditor
             }
         }
     }
 
-    panel panel1 -w 2560 23 2560 1360 -X {
+    panel panel1 -w 2560 57 2560 1360 -X {
         split 0.163672 H L {
             split 0.5 V R {
                 tabs 0 1 {
-                    pane panetab3 -a 0 -l 0 -H /obj/ -T OBJ -m parmeditor
+                    pane panetab3 -a 0 -l 0 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m parmeditor
                 }
                 tabs 0 1 {
-                    pane panetab4 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m parmeditor
+                    pane panetab4 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/Pro_Courtyard1/ -T SOP -m parmeditor
                 }
             }
             tabs 0 1 {
-                pane panetab1 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m neteditor
+                pane panetab1 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/Pro_Courtyard1/ -T SOP -m neteditor
             }
         }
     }
 
-    panel panel1 -w -866 708 638 680 -X {
-        split 0.649609 H {
+    panel panel1 -w -1454 87 1444 1283 -X {
+        split 0.237109 H {
             tabs 0 1 {
-                pane FloatingPanel -a 0 -l 0 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m sceneview
+                pane panetab8 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/Pro_Courtyard1/ -T SOP -m details
             }
             tabs 0 1 {
-                pane panetab8 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m details
+                pane FloatingPanel -a 0 -l 0 -H /obj/Procedural_Building_HDA_Dev_v1/ -T SOP -m sceneview
             }
         }
     }
@@ -55,7 +55,7 @@ root {
 shelfdock -o 0 -l icon_and_text -G "0.37 0.50" add shelf_set_1 linkfx_tools
 viewerstow -x open -b stow -l stow -m hide -c hide -d open ${DESKNAME}.panetab7.world
 vieweroption -a 0 ${DESKNAME}.panetab7.world
-viewlayout -s 1 ${DESKNAME}.panetab7.world
+viewlayout -s 2 ${DESKNAME}.panetab7.world
 viewtype -t ortho_right ${DESKNAME}.panetab7.world.`vpname("${DESKNAME}.panetab7.world",4)`
 viewtype -t ortho_front ${DESKNAME}.panetab7.world.`vpname("${DESKNAME}.panetab7.world",3)`
 viewtype -t perspective ${DESKNAME}.panetab7.world.`vpname("${DESKNAME}.panetab7.world",1)`
@@ -86,7 +86,7 @@ netcolumns -c delscript,comment -n MGR panetab1
 netcolumns -c delscript,comment -n DIR panetab1
 netcolumns -c delscript,comment -n DATA panetab1
 viewerstow -x open -b stow -l stow -m hide -c hide -d open ${DESKNAME}.FloatingPanel.world
-vieweroption -a 2 ${DESKNAME}.FloatingPanel.world
+vieweroption -a 0 ${DESKNAME}.FloatingPanel.world
 viewlayout -s 2 ${DESKNAME}.FloatingPanel.world
 viewtype -t ortho_right ${DESKNAME}.FloatingPanel.world.`vpname("${DESKNAME}.FloatingPanel.world",4)`
 viewtype -t ortho_front ${DESKNAME}.FloatingPanel.world.`vpname("${DESKNAME}.FloatingPanel.world",3)`
