@@ -12,7 +12,7 @@ root {
                 pane panetab4 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
             }
             tabs 0 1 {
-                pane panetab3 -a 0 -l 10 -H /obj/Procedural_Building_HDA_Dev_v1/Pro_Courtyard1/ -T SOP -m parmeditor
+                pane panetab3 -a 0 -l 10 -H /obj/Procedural_Building_HDA_Dev_v2/Pro_Courtyard1/ -T SOP -m parmeditor
             }
         }
         split 0.809194 H R {
@@ -25,7 +25,7 @@ root {
         }
     }
 
-    panel panel3 -w -2559 49 1324 1360 {
+    panel panel3 -w -2552 49 1324 1360 {
         split 0.6723 H R {
             tabs 0 1 {
                 pane panetab8 -a 0 -l 0 -H /obj/ -T OBJ -m sceneview
@@ -47,11 +47,11 @@ root {
         }
     }
 
-    panel panel1 -w -1233 44 1232 1360 {
+    panel panel1 -w -1226 44 1232 1360 {
         split 0.597027 H {
             split 0.249087 V R {
                 tabs 0 1 {
-                    pane FloatingPanel2 -a 0 -l 10 -H /obj/Procedural_Building_HDA_Dev_v1/Pro_Courtyard1/ -T SOP -m sceneview
+                    pane FloatingPanel2 -a 0 -l 10 -H /obj/Procedural_Building_HDA_Dev_v2/Pro_Courtyard1/ -T SOP -m sceneview
                 }
                 tabs 0 1 {
                     pane panetab10 -a 0 -l 0 -H /obj/ -T OBJ -m details
@@ -120,7 +120,7 @@ parmeditor -T 0.25 -w 0 panetab1
 parmeditor -T 0.25 -w 0 panetab2
 geospreadsheet -c 0 -l horizontal -s 0.5 -m none -f 0 FloatingPanel
 scenegraphtree -S 0.25 -m 2 -p "/collections /lights" -c  -i  -o  -x 1 -s 1 -M 0 -C primtype,descendants,kind,populated,loaded,activation,visibility,solo,selectability  FloatingPanel
-viewerstow -x open -b stow -l open -m hide -c hide -d open ${DESKNAME}.FloatingPanel2.world
+viewerstow -x open -b stow -l stow -m hide -c hide -d open ${DESKNAME}.FloatingPanel2.world
 vieweroption -a 0 ${DESKNAME}.FloatingPanel2.world
 viewlayout -s 2 ${DESKNAME}.FloatingPanel2.world
 viewtype -t ortho_right ${DESKNAME}.FloatingPanel2.world.`vpname("${DESKNAME}.FloatingPanel2.world",4)`
