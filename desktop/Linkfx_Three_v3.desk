@@ -9,7 +9,7 @@ root {
     split 0.204297 H L {
         split 0.545455 V R {
             tabs 0 1 {
-                pane panetab4 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
+                pane panetab4 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v2/Pro_Courtyard1/ -T SOP -m parmeditor
             }
             tabs 0 1 {
                 pane panetab3 -a 0 -l 10 -H /obj/Procedural_Building_HDA_Dev_v2/Pro_Courtyard1/ -T SOP -m parmeditor
@@ -17,7 +17,7 @@ root {
         }
         split 0.809194 H R {
             tabs 0 1 {
-                pane panetab7 -a 0 -l 1 -H /obj/ -T OBJ -m neteditor
+                pane panetab7 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v2/Pro_Courtyard1/ -T SOP -m neteditor
             }
             tabs 0 1 {
                 pane panetab5 -a 0 -l 0 -H /obj/ -T OBJ -m neteditor
@@ -25,17 +25,17 @@ root {
         }
     }
 
-    panel panel3 -w -2552 49 1324 1360 {
+    panel panel3 -w -2544 158 1249 1105 {
         split 0.6723 H R {
             tabs 0 1 {
-                pane panetab8 -a 0 -l 0 -H /obj/ -T OBJ -m sceneview
+                pane panetab8 -a 0 -l 10 -H /obj/Procedural_Building_HDA_Dev_v2/Pro_Courtyard1/ -T SOP -m sceneview
             }
             split 0.502557 V {
                 tabs 0 1 {
                     pane panetab1 -a 0 -l 0 -H /obj/ -T OBJ -m parmeditor
                 }
                 tabs 0 1 {
-                    pane panetab2 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
+                    pane panetab2 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v2/Pro_Courtyard1/ -T SOP -m parmeditor
                 }
             }
         }
@@ -43,12 +43,12 @@ root {
 
     panel panel2 -w 2560 57 2560 1360 {
         tabs 0 1 {
-            pane FloatingPanel -a 0 -l 1 -H /obj/ -T OBJ -m details
+            pane FloatingPanel -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v2/Pro_Courtyard1/ -T SOP -m details
         }
     }
 
-    panel panel1 -w -1226 44 1232 1360 {
-        split 0.597027 H {
+    panel panel1 -w -1212 160 1192 1081 {
+        split 0.462441 H {
             split 0.249087 V R {
                 tabs 0 1 {
                     pane FloatingPanel2 -a 0 -l 10 -H /obj/Procedural_Building_HDA_Dev_v2/Pro_Courtyard1/ -T SOP -m sceneview
@@ -62,7 +62,7 @@ root {
                     pane panetab6 -a 0 -l 0 -H /obj/ -T OBJ -m parmeditor
                 }
                 tabs 0 1 {
-                    pane panetab9 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
+                    pane panetab9 -a 0 -l 1 -H /obj/Procedural_Building_HDA_Dev_v2/Pro_Courtyard1/ -T SOP -m parmeditor
                 }
             }
         }
