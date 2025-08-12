@@ -57,3 +57,6 @@ jump.pref
 # !wingeo.pref
 !palette
 !font.cache
+font.cache
+hud.pref
+wingeo.pref
