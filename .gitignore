@@ -12,9 +12,6 @@ jump.pref
 # !config/
 # !config/**
 
-!desktop/
-!desktop/**
-
 !logo/
 !logo/**
 
@@ -30,33 +27,16 @@ jump.pref
 !mod/
 !mod/**
 
-!desktops.pref
 !display.pref
 !display_options.def
-!dso.cache
-!ExternalEditor.cfg
 !hotkeys.pref
 !houdini.env.company
 !*.keymap*.*
 !houdini.pref
 # !hud.pref
 !LINKFX*.*
-!networkeditor.pref
 !nodethemes.json
-!solaris.pref
 !tool.pref
 !ui.pref
 !VEXpressions.txt
 !Visualizers
-
-!hcommon.pref
-!hcomposite.pref
-!opencl.pref
-!pdgservices.json
-!ui.pref
-# !wingeo.pref
-!palette
-!font.cache
-font.cache
-hud.pref
-wingeo.pref
