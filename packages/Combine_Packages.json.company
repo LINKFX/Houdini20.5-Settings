@@ -1,0 +1,51 @@
+{
+    "env": [
+        {
+            "HDA_PATH": "C:/Users/Admin/Documents/houdini20.5/packages"
+        },
+        {
+            "OPS": "Z:/Openworld_System/Houdini/Projects/Environments"
+        },
+        {
+            "JINYONGPRO": "E:/Projects/JinYong_Pro"
+        },
+        {
+            "LINKFX_HDA": "$HOUDINI_PACKAGE_PATH/LINKFX"
+        },
+        {
+            "MCJ_HDA": "$HOUDINI_PACKAGE_PATH/MCJ"
+        },
+        {
+            "MOPS": "$HOUDINI_PACKAGE_PATH/MOPS-1.8.0"
+        },
+        {
+            "OPENWORLD_HDA": "$HOUDINI_PACKAGE_PATH/OpenWorld"
+        },
+        {
+            "OPENWORLD_SYSTEM_HDA": "$HOUDINI_PACKAGE_PATH/OpenWorld_System"
+        },
+        {
+            "OTHER_HDA": "$HOUDINI_PACKAGE_PATH/Other"
+        },
+        {
+            "ZJW_HDA": "$HOUDINI_PACKAGE_PATH/ZJF"
+        },
+        {
+            "ZZH_HDA": "$HOUDINI_PACKAGE_PATH/ZZH"
+        },
+        {
+            "WBB_HDA": "$HOUDINI_PACKAGE_PATH/Wbb"
+        }
+    ],
+    "hpath": [
+        "$LINKFX_HDA",
+        "$MCJ_HDA",
+        "$MOPS",
+        "$OPENWORLD_HDA",
+        "$OPENWORLD_SYSTEM_HDA",
+        "$OTHER_HDA"
+        "ZJW_HDA",
+        "$ZZH_HDA",
+        "$WBB_HDA"
+    ]
+}
