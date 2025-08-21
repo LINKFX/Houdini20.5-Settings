@@ -1,43 +1,32 @@
-# 1. 忽略所有
-*
-jump.pref
-# 2. 允许这些文件或目录
-!.git
-!.gitattributes
+# 0. 默认忽略仓库根下所有内容
+/*
+
+# 1. 保留 git 配置文件
 !.gitignore
+!.gitattributes
 
-!HDR/
+# 2. 允许的目录（白名单）
 !HDR/**
-
-# !config/
-# !config/**
-
-!logo/
 !logo/**
-
-!otls/
 !otls/**
-
-!packages/
 !packages/**
-
-!presets/
 !presets/**
-
-!mod/
 !mod/**
+!Visualizers/**
 
+# 3. 允许的单个文件（白名单）
 !display.pref
 !display_options.def
 !hotkeys.pref
 !houdini.env.company
 !*.keymap*.*
 !houdini.pref
-# !hud.pref
 !LINKFX*.*
 !nodethemes.json
 !tool.pref
 !ui.pref
 !VEXpressions.txt
-!Visualizers
-/desktop
+
+# 4. 明确要忽略的目录
+desktop/**
+config/**
