@@ -1,0 +1,6 @@
+git commit -m "restore config and update .gitignore"
+git push origin main
+
+git rm -r --cached config/   # 确保索引里干净
+git add config/              # 此时会生效
+git commit -m "restore config folder tracking"

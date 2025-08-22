@@ -38,6 +38,7 @@
 !/tool.pref
 !/ui.pref
 !/VEXpressions.txt
+!/GitHub_恢复代码.txt
 
 # 5) 明确忽略（根目录）
 /jump.pref
