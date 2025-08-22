@@ -7,6 +7,8 @@
 !.gitignore
 
 # 3) 允许的目录（整目录放行）
+!/desktop/
+!/desktop/**
 !/HDR/
 !/HDR/**
 !/logo/
@@ -17,6 +19,7 @@
 !/packages/**
 !/presets/
 !/presets/**
+
 !/mod/
 !/mod/**
 !/Visualizers/
