@@ -19,7 +19,8 @@
 !/packages/**
 !/presets/
 !/presets/**
-
+!/config/
+!/config/**
 !/mod/
 !/mod/**
 !/Visualizers/
