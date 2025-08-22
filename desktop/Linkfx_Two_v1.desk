@@ -7,26 +7,26 @@ statusbar    -1
 radial menu set main
 root {
     split 0.808594 H {
-        split 0.221256 H {
+        split 0.240097 H {
             tabs 0 1 {
-                pane panetab14 -a 0 -l 1 -H /obj/ -T OBJ -m pythonpanel
+                pane panetab14 -a 0 -l 1 -H /obj/geo1/ -T SOP -m pythonpanel
             }
-            split 0.14 V {
+            split 0.135266 V {
                 tabs 0 1 {
-                    pane panetab1 -a 0 -l 1 -H /obj/ -T OBJ -m sceneview
-                    pane panetab2 -a 0 -l 1 -H /obj/ -T OBJ -m apexeditor
+                    pane panetab1 -a 0 -l 1 -H /obj/geo1/ -T SOP -m sceneview
+                    pane panetab2 -a 0 -l 1 -H /obj/geo1/ -T SOP -m apexeditor
                 }
                 tabs 0 1 {
-                    pane panetab6 -a 0 -l 1 -H /obj/ -T OBJ -m details
+                    pane panetab6 -a 0 -l 1 -H /obj/geo1/ -T SOP -m details
                 }
             }
         }
         split 0.495169 V R {
             tabs 0 1 {
-                pane panetab5 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
+                pane panetab5 -a 0 -l 1 -H /obj/geo1/ -T SOP -m parmeditor
             }
             tabs 0 1 {
-                pane panetab7 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
+                pane panetab7 -a 0 -l 1 -H /obj/geo1/ -T SOP -m parmeditor
             }
         }
     }
@@ -35,14 +35,14 @@ root {
         split 0.285156 H L {
             split 0.5 V R {
                 tabs 0 1 {
-                    pane FloatingPanel -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
+                    pane FloatingPanel -a 0 -l 1 -H /obj/geo1/ -T SOP -m parmeditor
                 }
                 tabs 0 1 {
-                    pane panetab4 -a 0 -l 1 -H /obj/ -T OBJ -m parmeditor
+                    pane panetab4 -a 0 -l 1 -H /obj/geo1/ -T SOP -m parmeditor
                 }
             }
             tabs 0 1 {
-                pane panetab3 -a 0 -l 1 -H /obj/ -T OBJ -m neteditor
+                pane panetab3 -a 0 -l 1 -H /obj/geo1/ -T SOP -m neteditor
             }
         }
     }
@@ -56,7 +56,7 @@ viewtype -t ortho_right ${DESKNAME}.panetab1.world.`vpname("${DESKNAME}.panetab1
 viewtype -t ortho_front ${DESKNAME}.panetab1.world.`vpname("${DESKNAME}.panetab1.world",3)`
 viewtype -t ortho_top ${DESKNAME}.panetab1.world.`vpname("${DESKNAME}.panetab1.world",1)`
 viewtype -t perspective ${DESKNAME}.panetab1.world.`vpname("${DESKNAME}.panetab1.world",2)`
-networkeditor -p '{\n	"taskgraphcollapsemode":"Off",\n	"backgroundimageediting":"0",\n	"gridxstep":"2.0",\n	"overviewmode":"2",\n	"workitemattrtocollapseby":"",\n	"showparmdialogmax":"1",\n	"showtaskgraphperf":"0",\n	"palettecolors":"",\n	"taskgraphsortcriteria":"Automatic",\n	"showparmdialog":"0",\n	"showspareinputdep":"1",\n	"taskgraphperfstatname":"Cook Time",\n	"showmenu":"1",\n	"taskgraphsortdirection":"0",\n	"showdep":"0",\n	"showtasksmenu":"1",\n	"showcopsmenu":"1",\n	"palettemode":"0",\n	"gridmode":"0",\n	"gridystep":"1.0",\n	"showperfstats":"1",\n	"overviewbounds":"0.000000 0.000000 482.100000 298.500000",\n	"perfstatname":"Time",\n	"palettesize":"150 150",\n	"showchilddep":"1",\n	"backgroundimagebrightness":"1.0",\n	"workitemcolorattribute":"",\n	"useworkitemcolorattribute":"0"\n}\n' panetab2
+networkeditor -p '{\n	"taskgraphcollapsemode":"Off",\n	"backgroundimageediting":"0",\n	"gridxstep":"2.0",\n	"overviewmode":"2",\n	"workitemattrtocollapseby":"",\n	"showparmdialogmax":"1",\n	"showtaskgraphperf":"0",\n	"palettecolors":"",\n	"taskgraphsortcriteria":"Automatic",\n	"showparmdialog":"0",\n	"showspareinputdep":"1",\n	"taskgraphperfstatname":"Cook Time",\n	"showmenu":"1",\n	"taskgraphsortdirection":"0",\n	"showdep":"0",\n	"showtasksmenu":"1",\n	"showcopsmenu":"1",\n	"palettemode":"0",\n	"gridmode":"0",\n	"gridystep":"1.0",\n	"showperfstats":"1",\n	"overviewbounds":"0.000000 0.000000 470.400000 300.300000",\n	"perfstatname":"Time",\n	"palettesize":"150 150",\n	"showchilddep":"1",\n	"backgroundimagebrightness":"1.0",\n	"workitemcolorattribute":"",\n	"useworkitemcolorattribute":"0"\n}\n' panetab2
 geospreadsheet -c 0 -l horizontal -s 0.5 -m none -f 0 panetab6
 scenegraphtree -S 0.25 -m 2 -p "/collections /lights" -c  -i  -o  -x 1 -s 1 -M 0 -C primtype,descendants,kind,populated,loaded,activation,visibility,solo,selectability  panetab6
 parmeditor -T 0.25 -w 0 panetab5
