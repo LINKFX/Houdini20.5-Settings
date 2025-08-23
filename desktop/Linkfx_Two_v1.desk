@@ -1,0 +1,84 @@
+fullscreen   -1
+playbarshown 1
+playbar      -1
+shelf        -1
+menubar      -1
+statusbar    -1
+radial menu set main
+root {
+    split 0.808594 H {
+        split 0.240097 H {
+            tabs 0 1 {
+                pane panetab14 -a 0 -l 1 -H /obj/geo1/ -T SOP -m pythonpanel
+            }
+            split 0.135266 V {
+                tabs 0 1 {
+                    pane panetab1 -a 0 -l 1 -H /obj/geo1/ -T SOP -m sceneview
+                    pane panetab2 -a 0 -l 1 -H /obj/geo1/ -T SOP -m apexeditor
+                }
+                tabs 0 1 {
+                    pane panetab6 -a 0 -l 1 -H /obj/geo1/ -T SOP -m details
+                }
+            }
+        }
+        split 0.495169 V R {
+            tabs 0 1 {
+                pane panetab5 -a 0 -l 1 -H /obj/geo1/ -T SOP -m parmeditor
+            }
+            tabs 0 1 {
+                pane panetab7 -a 0 -l 1 -H /obj/geo1/ -T SOP -m parmeditor
+            }
+        }
+    }
+
+    panel panel1 -w 2560 23 2555 1296 -X {
+        split 0.285156 H L {
+            split 0.5 V R {
+                tabs 0 1 {
+                    pane FloatingPanel -a 0 -l 1 -H /obj/geo1/ -T SOP -m parmeditor
+                }
+                tabs 0 1 {
+                    pane panetab4 -a 0 -l 1 -H /obj/geo1/ -T SOP -m parmeditor
+                }
+            }
+            tabs 0 1 {
+                pane panetab3 -a 0 -l 1 -H /obj/geo1/ -T SOP -m neteditor
+            }
+        }
+    }
+}
+shelfdock -o 0 -l icon_and_text -G 0.50 add linkfx_tools
+pythonpanel -s on -t off -n sidefx::node_info panetab14
+viewerstow -x open -b open -l open -m hide -c hide -d open ${DESKNAME}.panetab1.world
+vieweroption -a 2 ${DESKNAME}.panetab1.world
+viewlayout -s 2 ${DESKNAME}.panetab1.world
+viewtype -t ortho_right ${DESKNAME}.panetab1.world.`vpname("${DESKNAME}.panetab1.world",4)`
+viewtype -t ortho_front ${DESKNAME}.panetab1.world.`vpname("${DESKNAME}.panetab1.world",3)`
+viewtype -t ortho_top ${DESKNAME}.panetab1.world.`vpname("${DESKNAME}.panetab1.world",1)`
+viewtype -t perspective ${DESKNAME}.panetab1.world.`vpname("${DESKNAME}.panetab1.world",2)`
+networkeditor -p '{\n	"taskgraphcollapsemode":"Off",\n	"backgroundimageediting":"0",\n	"gridxstep":"2.0",\n	"overviewmode":"2",\n	"workitemattrtocollapseby":"",\n	"showparmdialogmax":"1",\n	"showtaskgraphperf":"0",\n	"palettecolors":"",\n	"taskgraphsortcriteria":"Automatic",\n	"showparmdialog":"0",\n	"showspareinputdep":"1",\n	"taskgraphperfstatname":"Cook Time",\n	"showmenu":"1",\n	"taskgraphsortdirection":"0",\n	"showdep":"0",\n	"showtasksmenu":"1",\n	"showcopsmenu":"1",\n	"palettemode":"0",\n	"gridmode":"0",\n	"gridystep":"1.0",\n	"showperfstats":"1",\n	"overviewbounds":"0.000000 0.000000 470.400000 300.300000",\n	"perfstatname":"Time",\n	"palettesize":"150 150",\n	"showchilddep":"1",\n	"backgroundimagebrightness":"1.0",\n	"workitemcolorattribute":"",\n	"useworkitemcolorattribute":"0"\n}\n' panetab2
+geospreadsheet -c 0 -l horizontal -s 0.5 -m none -f 0 panetab6
+scenegraphtree -S 0.25 -m 2 -p "/collections /lights" -c  -i  -o  -x 1 -s 1 -M 0 -C primtype,descendants,kind,populated,loaded,activation,visibility,solo,selectability  panetab6
+parmeditor -T 0.25 -w 0 panetab5
+parmeditor -T 0.25 -w 0 panetab7
+parmeditor -T 0.25 -w 0 FloatingPanel
+parmeditor -T 0.25 -w 0 panetab4
+networkeditor -p '{\n	"taskgraphcollapsemode":"Off",\n	"backgroundimageediting":"0",\n	"gridxstep":"0.25",\n	"overviewmode":"2",\n	"workitemattrtocollapseby":"",\n	"showparmdialogmax":"1",\n	"showtaskgraphperf":"0",\n	"palettecolors":"",\n	"showtree":"0",\n	"taskgraphsortcriteria":"Automatic",\n	"showparmdialog":"0",\n	"showspareinputdep":"0",\n	"taskgraphperfstatname":"Cook Time",\n	"showmenu":"1",\n	"taskgraphsortdirection":"0",\n	"typesidebarsplit":"0.25",\n	"showdep":"1",\n	"showtasksmenu":"1",\n	"showcopsmenu":"1",\n	"treesplit":"0.25",\n	"palettemode":"0",\n	"gridmode":"2",\n	"showgrouplist":"0",\n	"gridystep":"0.25",\n	"showperfstats":"1",\n	"overviewbounds":"0.000000 0.000000 766.500000 390.300000",\n	"perfstatname":"Time",\n	"palettesize":"150 150",\n	"grouplistsplit":"0.75",\n	"showchilddep":"1",\n	"backgroundimagebrightness":"1.0",\n	"workitemcolorattribute":"",\n	"useworkitemcolorattribute":"1",\n	"showtypesidebar":"0"\n}\n' panetab3
+netcolumns -c display,xray,select,origin,capture,bone -n OBJ panetab3
+netcolumns -c display,render,template,selectabletemplate,highlight,unload,bypass,lock -n SOP panetab3
+netcolumns -c delscript,comment -n CHOPNET panetab3
+netcolumns -c display,export,audio,bypass,lock -n CHOP panetab3
+netcolumns -c startrender,bypass,lock -n ROP panetab3
+netcolumns -c delscript,comment -n SHOP panetab3
+netcolumns -c display,render,template,bypass -n COP2 panetab3
+netcolumns -c delscript,comment -n IMG panetab3
+netcolumns -c delscript,comment,input -n VOP panetab3
+netcolumns -c delscript,comment -n VOPNET panetab3
+netcolumns -c delscript,comment -n DOP panetab3
+netcolumns -c delscript,comment -n TOP panetab3
+netcolumns -c delscript,comment -n TOPNET panetab3
+netcolumns -c display,bypass,delscript,comment,input -n LOP panetab3
+netcolumns -c delscript,comment -n COP panetab3
+netcolumns -c delscript,comment -n MGR panetab3
+netcolumns -c delscript,comment -n DIR panetab3
+netcolumns -c delscript,comment -n DATA panetab3
