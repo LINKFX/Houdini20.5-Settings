@@ -21,7 +21,7 @@
         shadowmapsize ( 2048 )
         sceneantialias ( 3 )
         textureAnisotropy ( 8 )
-        viewGamma ( 2.2 )
+        viewGamma ( 1 )
         ambOcclusionLevel ( 3 )
         maxTextureSize ( 2048 2048 )
         scaleTextureSize ( 100 )
@@ -29,7 +29,7 @@
         maxTexture3DSize ( 256 256 256 )
         scaleTexture3DSize ( 100 )
         HDRTexture3DFormat ( 1 )
-        transparencyQuality ( 1 )
+        transparencyQuality ( 2 )
         volumeQuality ( 2 )
         volumeAmbientShadows ( 0.5 )
         volumeBSplines ( 1 )
@@ -41,12 +41,12 @@
         drawdisplacement ( 1 )
         drawtexturedspots ( 1 )
         highQualityLighting ( 1 )
-        ambientOcclusion ( 0 )
+        ambientOcclusion ( 1 )
         limitTextureSize ( 1 )
         limitTexture3DSize ( 1 )
         mipMapTextures ( 1 )
         hdrRender ( 1 )
-        drawshadows ( 0 )
+        drawshadows ( 1 )
         drawtransparentmaps ( 1 )
         removebackface ( 0 )
         correctBG ( 1 )
@@ -64,10 +64,10 @@
         reduceTex2D ( 1 )
         reduceTex3D ( 0 )
         use2DLimitsFor3DTex ( 0 )
-        useLighting ( 0 )
+        useLighting ( 1 )
         drawDiffuse ( 1 )
         drawAmbient ( 1 )
-        drawEmission ( 1 )
+        drawEmission ( 0 )
         pointInstancing ( 1 )
         polygonConvexQuality ( 1 )
         volumeWireAsPoints ( 0 )
@@ -165,7 +165,7 @@
         primnmlsmode ( on )
         boundarymode ( none )
         uvboundarymode ( uv )
-        shadingmode ( flat_wire )
+        shadingmode ( shade )
     }
     SELECTED_SCENE_OBJECT_RENDERING_OPTIONS
     {
@@ -210,7 +210,7 @@
         primnmlsmode ( on )
         boundarymode ( none )
         uvboundarymode ( uv )
-        shadingmode ( flat_wire )
+        shadingmode ( shade )
     }
     GHOST_SCENE_OBJECT_RENDERING_OPTIONS
     {
@@ -255,7 +255,7 @@
         primnmlsmode ( on )
         boundarymode ( none )
         uvboundarymode ( uv )
-        shadingmode ( flat_wire )
+        shadingmode ( shade )
     }
     DISPLAY_MODEL_RENDERING_OPTIONS
     {
@@ -300,7 +300,7 @@
         primnmlsmode ( on )
         boundarymode ( none )
         uvboundarymode ( uv )
-        shadingmode ( flat_wire )
+        shadingmode ( shade )
     }
     CURRENT_MODEL_RENDERING_OPTIONS
     {
@@ -619,7 +619,7 @@
     volumeFogEnable ( 0 )
     dofEnable ( 0 )
     bloomEnable ( 0 )
-    fastIntHQLight ( 1 )
+    fastIntHQLight ( 0 )
     fgImageEnable ( 1 )
     fgImageDepth ( 1 )
 }
@@ -631,7 +631,7 @@ adjustlimits ( 0 )
 orthogrid_spacing ( 0.2 0.2 )
 orthogrid_ruler ( 5 5 )
 orthogrid_rulertype ( main_axes )
-orthogrid_display ( 1 )
+orthogrid_display ( 0 )
 uvgrid_refspacing ( 0.1 0.1 )
 uvgrid_refdisplay ( 1 )
 uvgrid_pixelspacing ( 64 64 )

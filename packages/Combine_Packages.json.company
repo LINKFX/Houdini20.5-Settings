@@ -28,6 +28,9 @@
             "OTHER_HDA": "$HOUDINI_PACKAGE_PATH/Other"
         },
         {
+            "TEST_HDA": "$HOUDINI_PACKAGE_PATH/Test"
+        },
+        {
             "ZJW_HDA": "$HOUDINI_PACKAGE_PATH/ZJF"
         },
         {
@@ -43,6 +46,7 @@
         "$MOPS",
         "$OPENWORLD_HDA",
         "$OPENWORLD_SYSTEM_HDA",
+        "$TEST_HDA"
         "$OTHER_HDA"
         "ZJW_HDA",
         "$ZZH_HDA",
