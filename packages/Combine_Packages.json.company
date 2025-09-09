@@ -10,6 +10,9 @@
             "JINYONGPRO": "E:/Projects/JinYong_Pro"
         },
         {
+            "ASSETS_PATH": "E:/Projects/HORROR_GAME/TOWN_OF_MIST/Assets/"
+        },
+        {
             "LINKFX_HDA": "$HOUDINI_PACKAGE_PATH/LINKFX"
         },
         {
@@ -24,14 +27,14 @@
         {
             "OPENWORLD_SYSTEM_HDA": "$HOUDINI_PACKAGE_PATH/OpenWorld_System"
         },
-        {
-            "OTHER_HDA": "$HOUDINI_PACKAGE_PATH/Other"
-        },
+        // {
+        //     "OTHER_HDA": "$HOUDINI_PACKAGE_PATH/Other"
+        // },
         {
             "TEST_HDA": "$HOUDINI_PACKAGE_PATH/Test"
         },
         {
-            "ZJW_HDA": "$HOUDINI_PACKAGE_PATH/ZJF"
+            "ZJF_HDA": "$HOUDINI_PACKAGE_PATH/ZJF"
         },
         {
             "ZZH_HDA": "$HOUDINI_PACKAGE_PATH/ZZH"
@@ -46,9 +49,9 @@
         "$MOPS",
         "$OPENWORLD_HDA",
         "$OPENWORLD_SYSTEM_HDA",
-        "$TEST_HDA"
-        "$OTHER_HDA"
-        "ZJW_HDA",
+        "$TEST_HDA",
+        "$OTHER_HDA",
+        "$ZJF_HDA",
         "$ZZH_HDA",
         "$WBB_HDA"
     ]
