@@ -1,0 +1,10 @@
+{
+    "hpath": "$P4HOUDINI",
+    "load_package_once": true,
+    "enable": true,
+    "env": [
+        {
+            "P4HOUDINI": "$HOUDINI_PACKAGE_PATH/P4Houdini"
+        }
+    ]
+}

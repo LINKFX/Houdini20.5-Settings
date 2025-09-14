@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shelfDocument>
+  <!-- This file contains definitions of shelves, toolbars, and tools.
+ It should not be hand-edited when it is being used by the application.
+ Note, that two definitions of the same element are not allowed in
+ a single file. -->
+
+  <toolshelf name="p4houdini" label="P4Houdini">
+    <memberTool name="p4houdini_set_workspace"/>
+    <memberTool name="p4houdini_debug"/>
+    <memberTool name="p4houdini_toggle_enabled"/>
+    <memberTool name="p4houdini_checkout_hip_dependencies"/>
+    <memberTool name="p4houdini_hip_checkout"/>
+    <memberTool name="p4houdini_revert_hip"/>
+    <memberTool name="p4houdini_edit_changelist"/>
+    <memberTool name="p4houdini_submit"/>
+  </toolshelf>
+
+  <tool name="p4houdini_set_workspace" label="Set Workspace" icon="$P4HOUDINI/help/icons/set_depot.svg">
+    <script scriptType="python"><![CDATA[import P4Utils
+P4Utils.set_workspace()]]></script>
+  </tool>
+
+  <tool name="p4houdini_hip_checkout" label="Add/Checkout" icon="$P4HOUDINI/help/icons/add.svg">
+    <script scriptType="python"><![CDATA[import P4Houdini
+
+P4Houdini.hip_checkout_manual()]]></script>
+  </tool>
+
+  <tool name="p4houdini_submit" label="Submit" icon="$P4HOUDINI/help/icons/submit.svg">
+    <script scriptType="python"><![CDATA[import P4Houdini
+
+P4Houdini.submit_dialog()]]></script>
+  </tool>
+
+  <tool name="p4houdini_checkout_hip_dependencies" label="Checkout Dependencies" icon="$P4HOUDINI/help/icons/dependencies.svg">
+    <script scriptType="python"><![CDATA[import P4Houdini
+
+P4Houdini.hip_checkout_dependencies()]]></script>
+  </tool>
+
+  <tool name="p4houdini_debug" label="Debug Config" icon="$P4HOUDINI/help/icons/help.svg">
+    <script scriptType="python"><![CDATA[import P4Houdini
+import os
+
+plugin = P4Houdini.P4HoudiniPlugin()
+
+print("P4PREFERENCES --- ", plugin.preferences , "\n")
+
+if plugin.perforce_active and plugin.preferences.P4_Enabled:
+    print("P4INFO --- ", plugin.client_info, "\n")
+    plugin.disconnect_perforce()
+
+if not plugin.preferences.P4_Enabled:
+    print("P4HOUDINI - Plugin Disabled")]]></script>
+  </tool>
+
+  <tool name="p4houdini_revert_hip" label="Revert" icon="$P4HOUDINI/help/icons/revert.svg">
+    <script scriptType="python"><![CDATA[import P4Houdini
+
+P4Houdini.hip_revert()]]></script>
+  </tool>
+
+    <tool name="p4houdini_edit_changelist" label="Edit Changelist" icon="$P4HOUDINI/help/icons/edit.svg">
+    <script scriptType="python"><![CDATA[import hou
+import os
+import P4Houdini
+
+file = hou.hipFile.path()
+if os.path.isfile(file):
+    P4Houdini.file_edit_changelist(file)]]></script>
+  </tool>
+
+  <tool name="p4houdini_toggle_enabled" label="Enable Disable" icon="$P4HOUDINI/help/icons/toggle_enabled.svg">
+    <script scriptType="python"><![CDATA[import P4Houdini
+
+P4Houdini.toggle_plugin_active()]]></script>
+  </tool>
+</shelfDocument>
