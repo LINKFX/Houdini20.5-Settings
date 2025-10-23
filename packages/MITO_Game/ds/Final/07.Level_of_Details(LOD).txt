@@ -1,0 +1,484 @@
+{
+    name    selectedparms
+
+    parm {
+        name    "en_lodforcollision"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_lodforcollision"
+        label   "Unreal UProperty LODForCollision"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_lodforcollision" }
+
+        parm {
+            name    "lodforcollision_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_uproperty_LODForCollision" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "lodforcollision_help"
+            label   "Help"
+            type    label
+            default { "说明：指定用于碰撞的 LOD 等级。可从来源整型属性重命名为 unreal_uproperty_LODForCollision，或直接输入数值。\n示例(属性)：a=1 → 写出 unreal_uproperty_LODForCollision=1，a 被移除。\n示例(数值)：直接设置 unreal_uproperty_LODForCollision=1。\n结果：在Unreal Engine中，此属性指定哪个LOD模型用于碰撞计算。作用：允许使用较低细节的LOD进行碰撞以优化性能，同时保持高细节LOD用于视觉渲染，减少计算开销而不会牺牲外观质量。\nOwner：Detail。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_lodforcollision"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ en_lodforcollision == 0 }"
+            menu {
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_lodforcollision"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_lodforcollision == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "lodforcollision_from"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_lodforcollision == 0 } { form_mode_lodforcollision != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_lodforcollision\").evalAsString()" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_lodforcollision')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "lodforcollision_val"
+            label   "LOD Index"
+            type    integer
+            default { "0" }
+            disablewhen "{ en_lodforcollision == 0 } { form_mode_lodforcollision != value }"
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_minlod"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_minlod"
+        label   "Unreal UProperty MinLOD"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_minlod" }
+
+        parm {
+            name    "minlod_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_uproperty_MinLOD" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "minlod_help"
+            label   "Help"
+            type    label
+            default { "说明：指定可见的最小 LOD 等级。可从来源整型属性重命名为 unreal_uproperty_MinLOD，或直接输入数值。\n示例(属性)：a=1 → 写出 unreal_uproperty_MinLOD=1，a 被移除。\n示例(数值)：直接设置 unreal_uproperty_MinLOD=1。\n结果：在Unreal Engine中，此属性限制网格不会显示低于此LOD的版本。作用：控制LOD切换的最低水平，确保在远处使用适当的简化模型，优化渲染性能，同时防止过度简化导致的视觉问题。\nOwner：Detail。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_minlod"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ en_minlod == 0 }"
+            menu {
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_minlod"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_minlod == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "minlod_from"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_minlod == 0 } { form_mode_minlod != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_minlod\").evalAsString()" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_minlod')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "minlod_val"
+            label   "LOD Index"
+            type    integer
+            default { "0" }
+            disablewhen "{ en_minlod == 0 } { form_mode_minlod != value }"
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_lodgroup"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_lodgroup"
+        label   "Unreal UProperty LODGroup"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_lodgroup" }
+
+        parm {
+            name    "lodgroup_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_uproperty_LODGroup" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "lodgroup_help"
+            label   "Help"
+            type    label
+            default { "说明：指定网格的 LODGroup。可从来源字符串属性重命名为 unreal_uproperty_LODGroup，或直接输入组名。\n示例(属性)：a=SmallProp → 写出 unreal_uproperty_LODGroup=SmallProp，a 被移除。\n示例(数值)：直接设置 unreal_uproperty_LODGroup=LargeProp。\n结果：在Unreal Engine中，网格被分配到预定义的LOD组，该组有特定的切换距离和简化设置。作用：标准化LOD行为，确保不同资产的一致性能优化，例如SmallProp用于小物体快速切换LOD，LargeMap用于大场景渐进LOD。\nOwner：Detail。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_lodgroup"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ en_lodgroup == 0 }"
+            menu {
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_lodgroup"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_lodgroup == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "lodgroup_from"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_lodgroup == 0 } { form_mode_lodgroup != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_lodgroup\").evalAsString()" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_lodgroup')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "lodgroup_val"
+            label   "LOD Group"
+            type    string
+            default { "SmallProp" }
+            disablewhen "{ en_lodgroup == 0 } { form_mode_lodgroup != value }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_lodxscreensize"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_lodxscreensize"
+        label   "LOD X ScreenSize"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_lodxscreensize" }
+
+        parm {
+            name    "lodxscreensize_heading"
+            label   "Heading"
+            type    label
+            default { "lodX_screensize" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "lodxscreensize_help"
+            label   "Help"
+            type    label
+            default { "说明：为每个 LODX 设置屏幕占比大小。X 为 LOD 等级编号（如 0,1,2）。可从来源浮点属性重命名为 lodX_screensize，或直接输入数值。\n示例(属性)：a=0.8 → 写出 lod0_screensize=0.8，a 被移除。\n示例(数值)：直接设置 lod1_screensize=0.5。\n结果：在Unreal Engine中，当对象在屏幕上的大小低于此值时，切换到下一个LOD。作用：精细控制LOD切换阈值，平衡视觉质量和性能，例如为LOD0设置较高值以保持细节，为更高LOD设置较低值以优化远处渲染。\nOwner：Detail。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_lodxscreensize"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ en_lodxscreensize == 0 }"
+            menu {
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_lodxscreensize"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_lodxscreensize == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "lodxscreensize_from"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_lodxscreensize == 0 } { form_mode_lodxscreensize != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_lodxscreensize\").evalAsString()" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_lodxscreensize')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "lodxscreensize_val"
+            label   "Screen Size"
+            type    float
+            default { "1" }
+            disablewhen "{ en_lodxscreensize == 0 } { form_mode_lodxscreensize != value }"
+            range   { 0! 1 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_lodscreensize"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_lodscreensize"
+        label   "LOD ScreenSize"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_lodscreensize" }
+
+        parm {
+            name    "lodscreensize_heading"
+            label   "Heading"
+            type    label
+            default { "lod_screensize" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "lodscreensize_help"
+            label   "Help"
+            type    label
+            default { "说明：统一设置所有 LOD 的屏幕占比大小。可从来源浮点属性重命名为 lod_screensize，或直接输入数值。\n示例(属性)：a=0.6 → 写出 lod_screensize=0.6，a 被移除。\n示例(数值)：直接设置 lod_screensize=0.7。\n结果：在Unreal Engine中，所有LOD使用此阈值进行切换，当对象屏幕大小低于此值时切换LOD。作用：简化LOD管理，适用于需要一致切换的资产，优化整体性能而保持统一视觉过渡。\nOwner：Prim。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_lodscreensize"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_lodscreensize == 0 }"
+            menu {
+                "prim"  "Prim"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_lodscreensize"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_lodscreensize == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "lodscreensize_from"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_lodscreensize == 0 } { form_mode_lodscreensize != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_lodscreensize\").evalAsString()" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_lodscreensize')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "lodscreensize_val"
+            label   "Screen Size"
+            type    float
+            default { "1" }
+            disablewhen "{ en_lodscreensize == 0 } { form_mode_lodscreensize != value }"
+            range   { 0! 1 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+
+}

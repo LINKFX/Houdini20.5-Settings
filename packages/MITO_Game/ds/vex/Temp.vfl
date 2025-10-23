@@ -1,0 +1,341 @@
+// VEX Code for 05.04.Landscape_SplineControlPoint
+string H = "..";
+
+// ---------- 工具 ----------
+void _clear_other_owners(string owner; string an)
+{
+    if (owner != "point"  && haspointattrib(0,  an)) removeattrib(0, "point",  an);
+    if (owner != "prim"   && hasprimattrib(0,   an)) removeattrib(0, "prim",   an);
+    if (owner != "vertex" && hasvertexattrib(0, an)) removeattrib(0, "vertex", an);
+    if (owner != "detail" && hasdetailattrib(0, an)) removeattrib(0, "detail", an);
+}
+void _remove_all_owners(string an)
+{
+    if (haspointattrib(0,  an)) removeattrib(0, "point",  an);
+    if (hasprimattrib(0,   an)) removeattrib(0, "prim",   an);
+    if (hasvertexattrib(0, an)) removeattrib(0, "vertex", an);
+    if (hasdetailattrib(0, an)) removeattrib(0, "detail", an);
+}
+
+// 广播（仅用于 value 模式）
+void _broadcast_str(string owner; string an; string v){
+    if (owner=="point"){ int n=npoints(0); for(int i=0;i<n;i++) setpointattrib(0,an,i,v,"set"); }
+    else if (owner=="prim"){ int n=nprimitives(0); for(int i=0;i<n;i++) setprimattrib(0,an,i,v,"set"); }
+    else if (owner=="vertex"){ int nv=nvertices(0); for(int vid=0;vid<nv;vid++){ int pr=vertexprim(0,vid); int vtx=vertexprimindex(0,vid); setvertexattrib(0,an,pr,vtx,v,"set"); } }
+    else setdetailattrib(0,an,v,"set");
+}
+void _broadcast_int(string owner; string an; int v){
+    if (owner=="point"){ int n=npoints(0); for(int i=0;i<n;i++) setpointattrib(0,an,i,v,"set"); }
+    else if (owner=="prim"){ int n=nprimitives(0); for(int i=0;i<n;i++) setprimattrib(0,an,i,v,"set"); }
+    else if (owner=="vertex"){ int nv=nvertices(0); for(int vid=0;vid<nv;vid++){ int pr=vertexprim(0,vid); int vtx=vertexprimindex(0,vid); setvertexattrib(0,an,pr,vtx,v,"set"); } }
+    else setdetailattrib(0,an,v,"set");
+}
+void _broadcast_f(string owner; string an; float v){
+    if (owner=="point"){ int n=npoints(0); for(int i=0;i<n;i++) setpointattrib(0,an,i,v,"set"); }
+    else if (owner=="prim"){ int n=nprimitives(0); for(int i=0;i<n;i++) setprimattrib(0,an,i,v,"set"); }
+    else if (owner=="vertex"){ int nv=nvertices(0); for(int vid=0;vid<nv;vid++){ int pr=vertexprim(0,vid); int vtx=vertexprimindex(0,vid); setvertexattrib(0,an,pr,vtx,v,"set"); } }
+    else setdetailattrib(0,an,v,"set");
+}
+void _broadcast_v3(string owner; string an; vector v){
+    if (owner=="point"){ int n=npoints(0); for(int i=0;i<n;i++) setpointattrib(0,an,i,v,"set"); }
+    else if (owner=="prim"){ int n=nprimitives(0); for(int i=0;i<n;i++) setprimattrib(0,an,i,v,"set"); }
+    else if (owner=="vertex"){ int nv=nvertices(0); for(int vid=0;vid<nv;vid++){ int pr=vertexprim(0,vid); int vtx=vertexprimindex(0,vid); setvertexattrib(0,an,pr,vtx,v,"set"); } }
+    else setdetailattrib(0,an,v,"set");
+}
+
+// ==========================================================
+// A) Rotation (vector)  -> rot
+// ==========================================================
+{
+    string an = "rot";
+    int on = chi(H + "/en_rot");
+    if (!on) _remove_all_owners(an);
+    else{
+        string owner = chs(H + "/owner_rot");
+        string mode  = chs(H + "/form_mode_rot");
+        _clear_other_owners(owner, an);
+
+        if (mode=="attrib"){
+            string src = chs(H + "/rot_from");
+            if (owner=="point"){
+                int n = npoints(0);
+                for (int i=0;i<n;i++){ vector vv = point(0, src, i); setpointattrib(0, an, i, vv, "set"); }
+            }else if (owner=="vertex"){
+                int nv = nvertices(0);
+                for (int vid=0; vid<nv; vid++){
+                    int pr  = vertexprim(0, vid);
+                    int vtx = vertexprimindex(0, vid);
+                    vector vv = vertex(0, src, vid);
+                    setvertexattrib(0, an, pr, vtx, vv, "set");
+                }
+            }
+        }else{
+            vector v = chv(H + "/rot_val");
+            _broadcast_v3(owner, an, v);
+        }
+    }
+}
+
+// ==========================================================
+// B) Control Point ID (int) -> unreal_landscape_spline_control_point_id
+// ==========================================================
+{
+    string an = "unreal_landscape_spline_control_point_id";
+    int on = chi(H + "/en_unreal_landscape_spline_control_point_id");
+    if (!on) _remove_all_owners(an);
+    else{
+        string owner = chs(H + "/owner_unreal_landscape_spline_control_point_id");
+        string mode  = chs(H + "/form_mode_unreal_landscape_spline_control_point_id");
+        _clear_other_owners(owner, an);
+
+        if (mode=="attrib"){
+            string src = chs(H + "/unreal_landscape_spline_control_point_id_from");
+            if (owner=="point"){
+                int n = npoints(0);
+                for (int i=0;i<n;i++){ int vv = int(point(0, src, i)); setpointattrib(0, an, i, vv, "set"); }
+            }else if (owner=="vertex"){
+                int nv = nvertices(0);
+                for (int vid=0; vid<nv; vid++){
+                    int pr  = vertexprim(0, vid);
+                    int vtx = vertexprimindex(0, vid);
+                    int vv = int(vertex(0, src, vid));
+                    setvertexattrib(0, an, pr, vtx, vv, "set");
+                }
+            }
+        }else{
+            int v = chi(H + "/unreal_landscape_spline_control_point_id_val");
+            _broadcast_int(owner, an, v);
+        }
+    }
+}
+
+// ==========================================================
+// C) Lower Terrain (toggle->int) -> unreal_landscape_spline_control_point_lower_terrain
+// ==========================================================
+{
+    string an = "unreal_landscape_spline_control_point_lower_terrain";
+    int on = chi(H + "/en_unreal_landscape_spline_control_point_lower_terrain");
+    if (!on) _remove_all_owners(an);
+    else{
+        string owner = chs(H + "/owner_unreal_landscape_spline_control_point_lower_terrain");
+        string mode  = chs(H + "/form_mode_unreal_landscape_spline_control_point_lower_terrain");
+        _clear_other_owners(owner, an);
+
+        if (mode=="attrib"){
+            string src = chs(H + "/unreal_landscape_spline_control_point_lower_terrain_from");
+            if (owner=="point"){
+                int n = npoints(0);
+                for (int i=0;i<n;i++){ int vv = int(point(0, src, i)); setpointattrib(0, an, i, vv, "set"); }
+            }else if (owner=="vertex"){
+                int nv = nvertices(0);
+                for (int vid=0; vid<nv; vid++){
+                    int pr  = vertexprim(0, vid);
+                    int vtx = vertexprimindex(0, vid);
+                    int vv = int(vertex(0, src, vid));
+                    setvertexattrib(0, an, pr, vtx, vv, "set");
+                }
+            }
+        }else{
+            int v = chi(H + "/unreal_landscape_spline_control_point_lower_terrain_val");
+            _broadcast_int(owner, an, v);
+        }
+    }
+}
+
+// ==========================================================
+// D) Control Point Mesh (string) -> unreal_landscape_spline_control_point_mesh
+// ==========================================================
+{
+    string an = "unreal_landscape_spline_control_point_mesh";
+    int on = chi(H + "/en_unreal_landscape_spline_control_point_mesh");
+    if (!on) _remove_all_owners(an);
+    else{
+        string owner = chs(H + "/owner_unreal_landscape_spline_control_point_mesh");
+        string mode  = chs(H + "/form_mode_unreal_landscape_spline_control_point_mesh");
+        _clear_other_owners(owner, an);
+
+        if (mode=="attrib"){
+            string src = chs(H + "/unreal_landscape_spline_control_point_mesh_from");
+            if (owner=="point"){
+                int n = npoints(0);
+                for (int i=0;i<n;i++){ string vv = point(0, src, i); setpointattrib(0, an, i, vv, "set"); }
+            }else if (owner=="vertex"){
+                int nv = nvertices(0);
+                for (int vid=0; vid<nv; vid++){
+                    int pr  = vertexprim(0, vid);
+                    int vtx = vertexprimindex(0, vid);
+                    string vv = vertex(0, src, vid);
+                    setvertexattrib(0, an, pr, vtx, vv, "set");
+                }
+            }
+        }else{
+            string v = chs(H + "/unreal_landscape_spline_control_point_mesh_val");
+            _broadcast_str(owner, an, v);
+        }
+    }
+}
+
+// ==========================================================
+// E) Control Point Mesh Material Override (string) -> ..._material_overrideX
+// ==========================================================
+{
+    string an = "unreal_landscape_spline_control_point_mesh_material_overrideX";
+    int on = chi(H + "/en_unreal_landscape_spline_control_point_mesh_material_overrideX");
+    if (!on) _remove_all_owners(an);
+    else{
+        string owner = chs(H + "/owner_unreal_landscape_spline_control_point_mesh_material_overrideX");
+        string mode  = chs(H + "/form_mode_unreal_landscape_spline_control_point_mesh_material_overrideX");
+        _clear_other_owners(owner, an);
+
+        if (mode=="attrib"){
+            string src = chs(H + "/unreal_landscape_spline_control_point_mesh_material_overrideX_from");
+            if (owner=="point"){
+                int n = npoints(0);
+                for (int i=0;i<n;i++){ string vv = point(0, src, i); setpointattrib(0, an, i, vv, "set"); }
+            }else if (owner=="vertex"){
+                int nv = nvertices(0);
+                for (int vid=0; vid<nv; vid++){
+                    int pr  = vertexprim(0, vid);
+                    int vtx = vertexprimindex(0, vid);
+                    string vv = vertex(0, src, vid);
+                    setvertexattrib(0, an, pr, vtx, vv, "set");
+                }
+            }
+        }else{
+            string v = chs(H + "/unreal_landscape_spline_control_point_mesh_material_overrideX_val");
+            _broadcast_str(owner, an, v);
+        }
+    }
+}
+
+// ==========================================================
+// F) Control Point Mesh Scale (vector) -> ..._mesh_scale
+// ==========================================================
+{
+    string an = "unreal_landscape_spline_control_point_mesh_scale";
+    int on = chi(H + "/en_unreal_landscape_spline_control_point_mesh_scale");
+    if (!on) _remove_all_owners(an);
+    else{
+        string owner = chs(H + "/owner_unreal_landscape_spline_control_point_mesh_scale");
+        string mode  = chs(H + "/form_mode_unreal_landscape_spline_control_point_mesh_scale");
+        _clear_other_owners(owner, an);
+
+        if (mode=="attrib"){
+            string src = chs(H + "/unreal_landscape_spline_control_point_mesh_scale_from");
+            if (owner=="point"){
+                int n = npoints(0);
+                for (int i=0;i<n;i++){ vector vv = point(0, src, i); setpointattrib(0, an, i, vv, "set"); }
+            }else if (owner=="vertex"){
+                int nv = nvertices(0);
+                for (int vid=0; vid<nv; vid++){
+                    int pr  = vertexprim(0, vid);
+                    int vtx = vertexprimindex(0, vid);
+                    vector vv = vertex(0, src, vid);
+                    setvertexattrib(0, an, pr, vtx, vv, "set");
+                }
+            }
+        }else{
+            vector v = chv(H + "/unreal_landscape_spline_control_point_mesh_scale_val");
+            _broadcast_v3(owner, an, v);
+        }
+    }
+}
+
+// ==========================================================
+// G) Paint Layer Name (string) -> ..._paint_layer_name
+// ==========================================================
+{
+    string an = "unreal_landscape_spline_control_point_paint_layer_name";
+    int on = chi(H + "/en_unreal_landscape_spline_control_point_paint_layer_name");
+    if (!on) _remove_all_owners(an);
+    else{
+        string owner = chs(H + "/owner_unreal_landscape_spline_control_point_paint_layer_name");
+        string mode  = chs(H + "/form_mode_unreal_landscape_spline_control_point_paint_layer_name");
+        _clear_other_owners(owner, an);
+
+        if (mode=="attrib"){
+            string src = chs(H + "/unreal_landscape_spline_control_point_paint_layer_name_from");
+            if (owner=="point"){
+                int n = npoints(0);
+                for (int i=0;i<n;i++){ string vv = point(0, src, i); setpointattrib(0, an, i, vv, "set"); }
+            }else if (owner=="vertex"){
+                int nv = nvertices(0);
+                for (int vid=0; vid<nv; vid++){
+                    int pr  = vertexprim(0, vid);
+                    int vtx = vertexprimindex(0, vid);
+                    string vv = vertex(0, src, vid);
+                    setvertexattrib(0, an, pr, vtx, vv, "set");
+                }
+            }
+        }else{
+            string v = chs(H + "/unreal_landscape_spline_control_point_paint_layer_name_val");
+            _broadcast_str(owner, an, v);
+        }
+    }
+}
+
+// ==========================================================
+// H) Raise Terrain (toggle->int) -> ..._raise_terrain
+// ==========================================================
+{
+    string an = "unreal_landscape_spline_control_point_raise_terrain";
+    int on = chi(H + "/en_unreal_landscape_spline_control_point_raise_terrain");
+    if (!on) _remove_all_owners(an);
+    else{
+        string owner = chs(H + "/owner_unreal_landscape_spline_control_point_raise_terrain");
+        string mode  = chs(H + "/form_mode_unreal_landscape_spline_control_point_raise_terrain");
+        _clear_other_owners(owner, an);
+
+        if (mode=="attrib"){
+            string src = chs(H + "/unreal_landscape_spline_control_point_raise_terrain_from");
+            if (owner=="point"){
+                int n = npoints(0);
+                for (int i=0;i<n;i++){ int vv = int(point(0, src, i)); setpointattrib(0, an, i, vv, "set"); }
+            }else if (owner=="vertex"){
+                int nv = nvertices(0);
+                for (int vid=0; vid<nv; vid++){
+                    int pr  = vertexprim(0, vid);
+                    int vtx = vertexprimindex(0, vid);
+                    int vv = int(vertex(0, src, vid));
+                    setvertexattrib(0, an, pr, vtx, vv, "set");
+                }
+            }
+        }else{
+            int v = chi(H + "/unreal_landscape_spline_control_point_raise_terrain_val");
+            _broadcast_int(owner, an, v);
+        }
+    }
+}
+
+// ==========================================================
+// I) End Falloff (float) -> unreal_landscape_spline_end_falloff
+// ==========================================================
+{
+    string an = "unreal_landscape_spline_end_falloff";
+    int on = chi(H + "/en_unreal_landscape_spline_end_falloff");
+    if (!on) _remove_all_owners(an);
+    else{
+        string owner = chs(H + "/owner_unreal_landscape_spline_end_falloff");
+        string mode  = chs(H + "/form_mode_unreal_landscape_spline_end_falloff");
+        _clear_other_owners(owner, an);
+
+        if (mode=="attrib"){
+            string src = chs(H + "/unreal_landscape_spline_end_falloff_from");
+            if (owner=="point"){
+                int n = npoints(0);
+                for (int i=0;i<n;i++){ float vv = float(point(0, src, i)); setpointattrib(0, an, i, vv, "set"); }
+            }else if (owner=="vertex"){
+                int nv = nvertices(0);
+                for (int vid=0; vid<nv; vid++){
+                    int pr  = vertexprim(0, vid);
+                    int vtx = vertexprimindex(0, vid);
+                    float vv = float(vertex(0, src, vid));
+                    setvertexattrib(0, an, pr, vtx, vv, "set");
+                }
+            }
+        }else{
+            float v = chf(H + "/unreal_landscape_spline_end_falloff_val");
+            _broadcast_f(owner, an, v);
+        }
+    }
+}

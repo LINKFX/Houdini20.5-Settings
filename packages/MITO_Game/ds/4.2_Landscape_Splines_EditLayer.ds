@@ -1,0 +1,151 @@
+{
+    name    selectedparms
+
+    parm {
+        name    "en_ls_edit_name"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_ls_edit_name"
+        label   "EditLayer Name"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_parm" "editlayer_name_str2" }
+        parmtag { "sidefx::header_toggle" "en_ls_edit_name" }
+
+        parm {
+            name    "ls_edit_name_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_editlayer_name" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "ls_edit_name_help"
+            label   "Help"
+            type    label
+            default { "说明：要创建并将样条应用到的 Edit Layer 名称。\n示例：SplineLayer → 写出 unreal_landscape_editlayer_name=SplineLayer。\n结果：样条修改发生在该 Edit Layer。\nOwner：Point/Vertex/Prim。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_ls_edit_name"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            default { "prim" }
+            disablewhen "{ en_ls_edit_name == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+                "prim"      "Prim"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "editlayer_name_str2"
+            label   "Layer Name"
+            type    string
+            default { "SplineLayer" }
+            disablewhen "{ en_ls_edit_name == 0 }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_ls_edit_clear"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_ls_edit_clear"
+        label   "Clear EditLayer"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_ls_edit_clear" }
+
+        parm {
+            name    "ls_edit_clear_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_editlayer_clear" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "ls_edit_clear_help"
+            label   "Help"
+            type    label
+            default { "说明：该 Edit Layer 第一次在样条转换过程中被修改时是否先清空。\n示例：1 → 写出 unreal_landscape_editlayer_clear=1。\n结果：避免旧内容影响新的样条应用结果。\nOwner：Point/Vertex/Prim。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_ls_edit_clear"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            default { "prim" }
+            disablewhen "{ en_ls_edit_clear == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+                "prim"      "Prim"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_ls_edit_after"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_ls_edit_after"
+        label   "EditLayer After"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_parm" "editlayer_after_str2" }
+        parmtag { "sidefx::header_toggle" "en_ls_edit_after" }
+
+        parm {
+            name    "ls_edit_after_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_editlayer_after" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "ls_edit_after_help"
+            label   "Help"
+            type    label
+            default { "说明：将 unreal_landscape_editlayer_name 指定的图层移动到该图层之后。\n示例：Base → 写出 unreal_landscape_editlayer_after=Base。\n结果：控制 Edit Layer 在堆栈中的顺序。\nOwner：Vertex/Prim。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_ls_edit_after"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            default { "prim" }
+            disablewhen "{ en_ls_edit_after == 0 }"
+            menu {
+                "vertex"    "Vertex"
+                "prim"      "Prim"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "editlayer_after_str2"
+            label   "After Layer"
+            type    string
+            default { "Base" }
+            disablewhen "{ en_ls_edit_after == 0 }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+
+}

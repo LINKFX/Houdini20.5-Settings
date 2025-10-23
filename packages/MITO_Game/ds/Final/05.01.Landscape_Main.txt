@@ -1,0 +1,1644 @@
+{
+    name	selectedparms
+
+    group {
+        name    "folder3"
+        label   "Main"
+        parmtag { "group_default" "0" }
+        grouptag { "import_enable" "1" }
+        grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.Landscape.ds" }
+        grouptag { "import_token" "folder3:Splines_Segment" }
+
+        parm {
+            name    "en_mat_hole"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            parmtag { "import_token" "en_mat_hole" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_mat_hole"
+            label   "Material Hole"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            grouptag { "import_token" "grp_mat_hole:Material Hole" }
+            parmtag { "sidefx::header_parm" "mat_hole_path" }
+            parmtag { "sidefx::header_toggle" "en_mat_hole" }
+
+            parm {
+                name    "mat_hole_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_material_hole" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "mat_hole_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "mat_hole_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：指定用于 Landscape 洞（Hole）的材质资源路径（Content Path），用于标记被挖空区域。 \n示例：/Game/Materials/M_LandscapeHole → 实际写出 unreal_material_hole=/Game/Materials/M_LandscapeHole。 \n结果：UE 中可在地形使用该材质处理洞区域（通常配合 Masked 材质）。 \nOwner：Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "mat_hole_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_mat_hole"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_mat_hole == 0 }"
+                menu {
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "owner_mat_hole" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_mat_hole_path"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "form_mode_mat_hole_path" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "mat_hole_path_from"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ form_mode_mat_hole_path != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_mat_hole\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "mat_hole_path_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_mat_hole')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "mat_hole_path"
+                label   "Content Path"
+                type    string
+                default { "/Game/Materials/M_LandscapeHole" }
+                disablewhen "{ en_mat_hole == 0 } { form_mode_mat_hole_path != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "mat_hole_path" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_shared_actor"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            parmtag { "import_token" "en_shared_actor" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_shared_actor"
+            label   "Shared Actor Name"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            grouptag { "import_token" "grp_shared_actor:Shared Actor Name" }
+            parmtag { "sidefx::header_parm" "shared_actor_name" }
+            parmtag { "sidefx::header_toggle" "en_shared_actor" }
+
+            parm {
+                name    "shared_actor_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_shared_actor_name" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "shared_actor_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "shared_actor_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：启用 Landscape Streaming Proxies 时，用于主/共享 Landscape Actor 的命名。支持字符串 Token（如 {hda_actor_name}）。 \n示例：{hda_actor_name}_SharedLandscape → 实际写出 unreal_landscape_shared_actor_name={hda_actor_name}_SharedLandscape。 \n结果：各 Tile Actor 会从该共享名读取/派生。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "shared_actor_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_shared_actor"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_shared_actor == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "owner_shared_actor" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "shared_actor_name"
+                label   "Name"
+                type    string
+                default { "{hda_actor_name}_SharedLandscape" }
+                disablewhen "{ en_shared_actor == 0 }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "shared_actor_name" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_layer_min"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            parmtag { "import_token" "en_layer_min" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_layer_min"
+            label   "Layer Min"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            grouptag { "import_token" "grp_layer_min:Layer Min" }
+            parmtag { "sidefx::header_parm" "layer_min_val" }
+            parmtag { "sidefx::header_toggle" "en_layer_min" }
+
+            parm {
+                name    "layer_min_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_layer_min" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "layer_min_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "layer_min_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：将高度/权重值转换到 Landscape 时的最小阈值（归一化映射下界）。 \n示例：0 → 实际写出 unreal_landscape_layer_min=0。 \n结果：用于保证不同 Tile 以一致方式转换。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "layer_min_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_layer_min"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_layer_min == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "owner_layer_min" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_layer_min_val"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "form_mode_layer_min_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "layer_min_val_from"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ form_mode_layer_min_val != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_layer_min\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "layer_min_val_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_layer_min')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "layer_min_val"
+                label   "Value"
+                type    float
+                default { "0" }
+                disablewhen "{ en_layer_min == 0 } { form_mode_layer_min_val != value }"
+                range   { 0 10 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "layer_min_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_layer_max"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            parmtag { "import_token" "en_layer_max" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_layer_max"
+            label   "Layer Max"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            grouptag { "import_token" "grp_layer_max:Layer Max" }
+            parmtag { "sidefx::header_parm" "layer_max_val" }
+            parmtag { "sidefx::header_toggle" "en_layer_max" }
+
+            parm {
+                name    "layer_max_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_layer_max" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "layer_max_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "layer_max_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：将高度/权重值转换到 Landscape 时的最大阈值（归一化映射上界）。 \n示例：1 → 实际写出 unreal_landscape_layer_max=1。 \n结果：与最小阈值配合用于统一 Tile 的转换范围。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "layer_max_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_layer_max"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_layer_max == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "owner_layer_max" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_layer_max_val"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "form_mode_layer_max_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "layer_max_val_from"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ form_mode_layer_max_val != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_layer_max\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "layer_max_val_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_layer_max')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "layer_max_val"
+                label   "Value"
+                type    float
+                default { "1" }
+                disablewhen "{ en_layer_max == 0 } { form_mode_layer_max_val != value }"
+                range   { 0 10 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "layer_max_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_section_size"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            parmtag { "import_token" "en_section_size" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_section_size"
+            label   "Section Size"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            grouptag { "import_token" "grp_section_size:Section Size" }
+            parmtag { "sidefx::header_parm" "section_size" }
+            parmtag { "sidefx::header_toggle" "en_section_size" }
+
+            parm {
+                name    "section_size_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_section_size" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "section_size_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "section_size_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：设置 Landscape 的 Section 大小（如 63/127 等）。需与“Sections Per Component”配对设置。 \n示例：127 → 实际写出 unreal_landscape_section_size=127。 \n结果：影响地形组件的分割与渲染效率。 \nOwner：Prim。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "section_size_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_section_size"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_section_size == 0 }"
+                menu {
+                    "prim"  "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "owner_section_size" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "section_size"
+                label   "Size"
+                type    integer
+                default { "127" }
+                disablewhen "{ en_section_size == 0 }"
+                range   { 0 10 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "section_size" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_sections_per_comp"
+            label   "Enable"
+            type    toggle
+            default { "ch(\"en_section_size\")" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            parmtag { "import_token" "en_sections_per_comp" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_sections_per_comp"
+            label   "Sections Per Component"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            grouptag { "import_token" "grp_sections_per_comp:Sections Per Component" }
+            parmtag { "sidefx::header_parm" "sections_per_comp" }
+            parmtag { "sidefx::header_toggle" "en_sections_per_comp" }
+
+            parm {
+                name    "sections_per_comp_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_sections_per_component" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "sections_per_comp_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "sections_per_comp_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：每个组件包含的 Section 数（如 1/2）。需与“Section Size”配对设置。 \n示例：2 → 实际写出 unreal_landscape_sections_per_component=2。 \n结果：共同决定组件分辨率与数量。 \nOwner：Prim。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "sections_per_comp_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_sections_per_comp"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_sections_per_comp == 0 }"
+                menu {
+                    "prim"  "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "owner_sections_per_comp" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "sections_per_comp"
+                label   "Count"
+                type    integer
+                default { "2" }
+                disablewhen "{ en_sections_per_comp == 0 }"
+                range   { 0 10 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "sections_per_comp" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_unit_layer"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            parmtag { "import_token" "en_unit_layer" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_unit_layer"
+            label   "Unit Mask"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            grouptag { "import_token" "grp_unit_layer:Unit Mask" }
+            parmtag { "sidefx::header_toggle" "en_unit_layer" }
+
+            parm {
+                name    "unit_layer_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_unit_landscape_layer" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "unit_layer_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "unit_layer_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：以 0/1 单位区间解释掩码为 Landscape 图层（布尔化）。 \n示例：启用 → 实际写出 unreal_unit_landscape_layer=1。 \n结果：掩码值在阈值处截断为 0 或 1。 \nOwner：Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "unit_layer_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_unit_layer"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_unit_layer == 0 }"
+                menu {
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "owner_unit_layer" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "grp_unit_layer_enabled"
+                label   "Unit Mask Enabled"
+                type    toggle
+                default { "0" }
+                disablewhen "{ en_unit_layer == 0 }"
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_nonweight_list"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            parmtag { "import_token" "en_nonweight_list" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_nonweight_list"
+            label   "Non-Weight Layers (List)"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            grouptag { "import_token" "grp_nonweight_list:Non-Weight Layers (List)" }
+            parmtag { "sidefx::header_parm" "nonweight_list_str" }
+            parmtag { "sidefx::header_toggle" "en_nonweight_list" }
+
+            parm {
+                name    "nonweight_list_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_layer_nonweightblended" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "nonweight_list_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "nonweight_list_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：以空格分隔的掩码名称集合，创建为非权重混合（Non-Weight Blended）图层。 \n示例：Road Decal → 实际写出 unreal_landscape_layer_nonweightblended=\"Road Decal\"。 \n结果：这些图层不参与权重归一，适合覆盖/贴花。 \nOwner：Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "nonweight_list_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_nonweight_list"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_nonweight_list == 0 }"
+                menu {
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "owner_nonweight_list" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_nonweight_list_str"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "form_mode_nonweight_list_str" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "nonweight_list_str_from"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ form_mode_nonweight_list_str != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_nonweight_list\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "nonweight_list_str_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_nonweight_list')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "nonweight_list_str"
+                label   "Mask Names"
+                type    string
+                default { "Road,Decal" }
+                disablewhen "{ en_nonweight_list == 0 } { form_mode_nonweight_list_str != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "nonweight_list_str" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_layer_info"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            parmtag { "import_token" "en_layer_info" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_layer_info"
+            label   "Layer Info Path"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            grouptag { "import_token" "grp_layer_info:Layer Info Path" }
+            parmtag { "sidefx::header_parm" "layer_info_path" }
+            parmtag { "sidefx::header_toggle" "en_layer_info" }
+
+            parm {
+                name    "layer_info_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_layer_info" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "layer_info_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "layer_info_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：指定现有 LandscapeLayerInfo 资源路径，用于将掩码转换到对应图层。 \n示例：/Game/Landscape/LI_Road → 实际写出 unreal_landscape_layer_info=/Game/Landscape/LI_Road。 \n结果：使用指定 LayerInfo 对应的图层设置。 \nOwner：Prim。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "layer_info_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_layer_info"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_layer_info == 0 }"
+                menu {
+                    "prim"  "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "owner_layer_info" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_layer_info_path"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "form_mode_layer_info_path" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "layer_info_path_from"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ form_mode_layer_info_path != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_layer_info\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "layer_info_path_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_layer_info')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "layer_info_path"
+                label   "Content Path"
+                type    string
+                default { "/Game/Landscape/LI_Road" }
+                disablewhen "{ en_layer_info == 0 } { form_mode_layer_info_path != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "layer_info_path" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_noweightblend"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            parmtag { "import_token" "en_noweightblend" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_noweightblend"
+            label   "NoWeightBlend"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            grouptag { "import_token" "grp_noweightblend:NoWeightBlend" }
+            parmtag { "sidefx::header_toggle" "en_noweightblend" }
+
+            parm {
+                name    "noweightblend_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_layer_noweightblend" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "noweightblend_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "noweightblend_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：将图层的 LayerInfo 设为 NoWeightBlend（不参与权重归一），适合覆盖/贴花式图层。高于列表字段的优先级。 \n示例：启用 → 实际写出 unreal_landscape_layer_noweightblend=1。 \n结果：该图层不受其他权重图层影响。 \nOwner：Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "noweightblend_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_noweightblend"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_noweightblend == 0 }"
+                menu {
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "owner_noweightblend" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "newparameter2"
+                label   "NoWeightBlend Enabled"
+                type    toggle
+                default { "0" }
+                disablewhen "{ en_noweightblend == 0 }"
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_output_mode"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            parmtag { "import_token" "en_output_mode" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_output_mode"
+            label   "Output Mode"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            grouptag { "import_token" "grp_output_mode:Output Mode" }
+            parmtag { "sidefx::header_toggle" "en_output_mode" }
+
+            parm {
+                name    "output_mode_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_output_mode" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "output_mode_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "output_mode_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：切换为 Modify Edit Layer 输出模式（默认 Generate）。 \n示例：启用 → 实际写出 unreal_landscape_output_mode=1。 \n结果：对现有 Landscape 的 Edit Layer 进行修改而非新建。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "output_mode_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_output_mode"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_output_mode == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "owner_output_mode" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "grp_output_mode_enabled"
+                label   "Output Mode Enabled"
+                type    toggle
+                default { "0" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_editlayer_name"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            parmtag { "import_token" "en_editlayer_name" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_editlayer_name"
+            label   "EditLayer Name"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            grouptag { "import_token" "grp_editlayer_name:EditLayer Name" }
+            parmtag { "sidefx::header_parm" "editlayer_name_str" }
+            parmtag { "sidefx::header_toggle" "en_editlayer_name" }
+
+            parm {
+                name    "editlayer_name_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_editlayer_name" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "editlayer_name_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "editlayer_name_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：目标 Edit Layer 的名称。 \n示例：Landscape → 实际写出 unreal_landscape_editlayer_name=Landscape。 \n结果：将输出写入/创建到该命名的 Edit Layer。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "editlayer_name_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_editlayer_name"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_editlayer_name == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "owner_editlayer_name" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_editlayer_name_str"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "form_mode_editlayer_name_str" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "editlayer_name_str_from"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ form_mode_editlayer_name_str != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_editlayer_name\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "editlayer_name_str_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_editlayer_name')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "editlayer_name_str"
+                label   "Name"
+                type    string
+                default { "Landscape" }
+                disablewhen "{ en_editlayer_name == 0 } { form_mode_editlayer_name_str != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "editlayer_name_str" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_editlayer_type"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            parmtag { "import_token" "en_editlayer_type" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_editlayer_type"
+            label   "EditLayer Type"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            grouptag { "import_token" "grp_editlayer_type:EditLayer Type" }
+            parmtag { "sidefx::header_parm" "editlayer_type_mode" }
+            parmtag { "sidefx::header_toggle" "en_editlayer_type" }
+
+            parm {
+                name    "editlayer_type_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_editlayer_type" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "editlayer_type_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "editlayer_type_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：输出图层类型：0=Create New，1=Additive。 \n示例：Additive → 实际写出 unreal_landscape_editlayer_type=1。 \n结果：控制写入的图层是否在现有基础上相加。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "editlayer_type_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_editlayer_type"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_editlayer_type == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "owner_editlayer_type" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "editlayer_type_mode"
+                label   "Type"
+                type    ordinal
+                default { "0" }
+                disablewhen "{ en_editlayer_type == 0 }"
+                menu {
+                    "0" "Create New (0)"
+                    "1" "Additive (1)"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "editlayer_type_mode" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_editlayer_after"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            parmtag { "import_token" "en_editlayer_after" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_editlayer_after"
+            label   "EditLayer After"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            grouptag { "import_token" "grp_editlayer_after:EditLayer After" }
+            parmtag { "sidefx::header_parm" "editlayer_after_str" }
+            parmtag { "sidefx::header_toggle" "en_editlayer_after" }
+
+            parm {
+                name    "editlayer_after_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_editlayer_after" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "editlayer_after_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "editlayer_after_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：指定输出图层插入到目标 Landscape 的哪一图层之后。 \n示例：Base → 实际写出 unreal_landscape_editlayer_after=Base。 \n结果：用于调整图层堆叠顺序。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "editlayer_after_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_editlayer_after"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_editlayer_after == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "owner_editlayer_after" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_editlayer_after_str"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "form_mode_editlayer_after_str" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "editlayer_after_str_from"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ form_mode_editlayer_after_str != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_editlayer_after\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "editlayer_after_str_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_editlayer_after')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "editlayer_after_str"
+                label   "Layer Name"
+                type    string
+                default { "Base" }
+                disablewhen "{ en_editlayer_after == 0 } { form_mode_editlayer_after_str != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "editlayer_after_str" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_editlayer_clear"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            parmtag { "import_token" "en_editlayer_clear" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_editlayer_clear"
+            label   "Clear EditLayer"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            grouptag { "import_token" "grp_editlayer_clear:Clear EditLayer" }
+            parmtag { "sidefx::header_toggle" "en_editlayer_clear" }
+
+            parm {
+                name    "editlayer_clear_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_editlayer_clear" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "editlayer_clear_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "editlayer_clear_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：绘制前清空目标 Edit Layer。 \n示例：启用 → 实际写出 unreal_landscape_editlayer_clear=1。 \n结果：先清空，再写入新的高度/权重。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "editlayer_clear_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_editlayer_clear"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_editlayer_clear == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "owner_editlayer_clear" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "grp_editlayer_clear_enabled"
+                label   "Clear EditLayer Enabled"
+                type    toggle
+                default { "0" }
+                disablewhen "{ en_editlayer_clear == 0 }"
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_editlayer_sub"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            parmtag { "import_token" "en_editlayer_sub" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_editlayer_sub"
+            label   "Subtractive"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            grouptag { "import_token" "grp_editlayer_sub:Subtractive" }
+            parmtag { "sidefx::header_toggle" "en_editlayer_sub" }
+
+            parm {
+                name    "editlayer_sub_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_editlayer_subtractive" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "editlayer_sub_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "editlayer_sub_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：以 Subtractive Blend 写入掩码。 \n示例：启用 → 实际写出 unreal_landscape_editlayer_subtractive=1。 \n结果：UE 中对应 Paint Layer 的 Subtractive 属性为勾选。 \nOwner：Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "editlayer_sub_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_editlayer_sub"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_editlayer_sub == 0 }"
+                menu {
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "owner_editlayer_sub" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "grp_editlayer_sub_enabled"
+                label   "Subtractive Enabled"
+                type    toggle
+                default { "0" }
+                disablewhen "{ en_editlayer_sub == 0 }"
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_lock_after"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            parmtag { "import_token" "en_lock_after" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_lock_after"
+            label   "Lock After"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            grouptag { "import_token" "grp_lock_after:Lock After" }
+            parmtag { "sidefx::header_toggle" "en_lock_after" }
+
+            parm {
+                name    "lock_after_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_lock_layer" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "lock_after_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "lock_after_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：写入完成后锁定目标 Edit Layer。 \n示例：启用 → 实际写出 unreal_landscape_lock_layer=1。 \n结果：图层被标记为锁定，避免后续误写。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "lock_after_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_lock_after"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_lock_after == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "owner_lock_after" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "grp_lock_after_enabled"
+                label   "Lock After Enabled"
+                type    toggle
+                default { "0" }
+                disablewhen "{ en_lock_after == 0 }"
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_partition_grid"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            parmtag { "import_token" "en_partition_grid" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_partition_grid"
+            label   "Partition Grid Size"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            grouptag { "import_token" "grp_partition_grid:Partition Grid Size" }
+            parmtag { "sidefx::header_parm" "partition_grid_size" }
+            parmtag { "sidefx::header_toggle" "en_partition_grid" }
+
+            parm {
+                name    "partition_grid_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_partition_grid_size" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "partition_grid_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "partition_grid_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：控制关卡启用世界分区时的 Landscape 分区网格尺寸（仅在启用 World Partition 的关卡里生效）。 \n示例：0 → 实际写出 unreal_landscape_partition_grid_size=0。 \n结果：影响 Landscape 的分区切分与流式加载。 \nOwner：Prim。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "partition_grid_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_partition_grid"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_partition_grid == 0 }"
+                menu {
+                    "prim"  "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "owner_partition_grid" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "partition_grid_size"
+                label   "Value"
+                type    integer
+                default { "0" }
+                disablewhen "{ en_partition_grid == 0 }"
+                range   { 0 10 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "partition_grid_size" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_landscape_size"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            parmtag { "import_token" "en_landscape_size" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_landscape_size"
+            label   "Landscape Size (Single Tile)"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            grouptag { "import_token" "grp_landscape_size:Landscape Size (Single Tile)" }
+            parmtag { "sidefx::header_parm" "landscape_size_x" }
+            parmtag { "sidefx::header_toggle" "en_landscape_size" }
+
+            parm {
+                name    "landscape_size_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_landscape_size" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "landscape_size_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "landscape_size_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：导入单 Tile 时的总 Landscape 尺寸（宽×高）。 \n示例：4033 / 4033 → 实际写出 unreal_landscape_landscape_size=(4033,4033)。 \n结果：用于确定目标 Landscape 的整体分辨率。 \nOwner：Prim。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "landscape_size_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_landscape_size"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                default { "prim" }
+                disablewhen "{ en_landscape_size == 0 }"
+                menu {
+                    "prim"  "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "owner_landscape_size" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "landscape_size_x"
+                label   "Width"
+                type    integer
+                default { "4033" }
+                disablewhen "{ en_landscape_size == 0 }"
+                range   { 0 10 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "landscape_size_x" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "landscape_size_y"
+                label   "Height"
+                type    integer
+                default { "4033" }
+                disablewhen "{ en_landscape_size == 0 }"
+                range   { 0 10 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "landscape_size_y" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_editlayer_target"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            parmtag { "import_token" "en_editlayer_target" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_editlayer_target"
+            label   "EditLayer Target (deprecated)"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+            grouptag { "import_token" "grp_editlayer_target:EditLayer Target (deprecated)" }
+            parmtag { "sidefx::header_toggle" "en_editlayer_target" }
+
+            parm {
+                name    "editlayer_target_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_editlayer_target" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "editlayer_target_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "editlayer_target_help_heading"
+                label   "Help"
+                type    label
+                default { "弃用：请改用 unreal_output_name 统一设置输出名称，或按需使用 unreal_landscape_editlayer_name 控制 Edit Layer 名称。 \n示例：Landscape → 现在应写 unreal_output_name=Landscape。 \n结果：以统一命名控制 Bake 的目标层/对象名。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.01.Landscape_Main.ds" }
+                parmtag { "import_token" "editlayer_target_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+        }
+
+    }
+
+
+}

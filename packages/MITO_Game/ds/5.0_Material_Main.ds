@@ -1,0 +1,374 @@
+{
+    name	selectedparms
+
+    group {
+        name    "folder2"
+        label   "Main"
+        grouptag { "import_enable" "1" }
+        grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+
+        parm {
+            name    "en_mat"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+            parmtag { "import_token" "en_mat" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_mat"
+            label   "Unreal Material"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+            grouptag { "import_token" "grp_mat:Unreal Material" }
+            parmtag { "sidefx::header_toggle" "en_mat" }
+
+            parm {
+                name    "mat_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_material" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "mat_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "mat_help"
+                label   "Help"
+                type    label
+                default { "说明：指定导出的材质路径。可从来源字符串属性重命名为 unreal_material，或直接填写 Content Path。\n示例(属性)：来源 a=/Game/M_Master → 实际写出 unreal_material=/Game/M_Master，a 被移除。\n示例(数值)：直接设置 unreal_material=/Game/M_Master。\n结果：该网格在 UE 中会使用指定材质。\nOwner：Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "mat_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_mat"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_mat == 0 }"
+                menu {
+                    "prim"  "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "owner_mat" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_mat"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_mat == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "form_mode_mat" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "mat_from"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_mat == 0 } { form_mode_mat != attrib }"
+                menutoggle {
+                    [ " opmenu -l -a attribute ptdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "mat_from" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "mat_val"
+                label   "Material Path"
+                type    string
+                default { "/Game/M_Master" }
+                disablewhen "{ en_mat == 0 } { form_mode_mat != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "mat_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_physmat"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+            parmtag { "import_token" "en_physmat" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_physmat"
+            label   "Unreal Physical Material"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+            grouptag { "import_token" "grp_physmat:Unreal Physical Material" }
+            parmtag { "sidefx::header_toggle" "en_physmat" }
+
+            parm {
+                name    "physmat_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_physical_material" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "physmat_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "physmat_help"
+                label   "Help"
+                type    label
+                default { "说明：指定物理材质（如金属、石头）。可从来源字符串属性重命名为 unreal_physical_material，或直接填写 Content Path。\n示例(属性)：来源 a=/Game/PM_Rock → 实际写出 unreal_physical_material=/Game/PM_Rock，a 被移除。\n示例(数值)：直接设置 unreal_physical_material=/Game/PM_Rock。\n结果：在 UE 中碰撞时会触发对应物理反馈。\nOwner：Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "physmat_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_physmat"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_physmat == 0 }"
+                menu {
+                    "prim"  "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "owner_physmat" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_physmat"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_physmat == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "form_mode_physmat" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "physmat_from"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_physmat == 0 } { form_mode_physmat != attrib }"
+                menutoggle {
+                    [ " opmenu -l -a attribute ptdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "physmat_from" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "physmat_val"
+                label   "Physical Material Path"
+                type    string
+                default { "/Game/PM_Rock" }
+                disablewhen "{ en_physmat == 0 } { form_mode_physmat != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "physmat_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_sphysmat"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+            parmtag { "import_token" "en_sphysmat" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_sphysmat"
+            label   "Unreal Simple Physical Material"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+            grouptag { "import_token" "grp_sphysmat:Unreal Simple Physical Material" }
+            parmtag { "sidefx::header_toggle" "en_sphysmat" }
+
+            parm {
+                name    "sphysmat_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_simple_physical_material" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "sphysmat_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "sphysmat_help"
+                label   "Help"
+                type    label
+                default { "说明：指定简化版物理材质，常用于性能优化。可从来源字符串属性重命名为 unreal_simple_physical_material，或直接填写 Content Path。\n示例(属性)：来源 a=/Game/SPM_Soil → 实际写出 unreal_simple_physical_material=/Game/SPM_Soil，a 被移除。\n示例(数值)：直接设置 unreal_simple_physical_material=/Game/SPM_Soil。\n结果：在 UE 中碰撞时使用更轻量的物理效果。\nOwner：Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "sphysmat_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_sphysmat"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_sphysmat == 0 }"
+                menu {
+                    "prim"  "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "owner_sphysmat" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_sphysmat"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_sphysmat == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "form_mode_sphysmat" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "sphysmat_from"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_sphysmat == 0 } { form_mode_sphysmat != attrib }"
+                menutoggle {
+                    [ " opmenu -l -a attribute ptdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "sphysmat_from" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "sphysmat_val"
+                label   "Simple Physical Material Path"
+                type    string
+                default { "/Game/SPM_Soil" }
+                disablewhen "{ en_sphysmat == 0 } { form_mode_sphysmat != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "sphysmat_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_smoothmask"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+            parmtag { "import_token" "en_smoothmask" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_smoothmask"
+            label   "Unreal Face Smoothing Mask"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+            grouptag { "import_token" "grp_smoothmask:Unreal Face Smoothing Mask" }
+            parmtag { "sidefx::header_toggle" "en_smoothmask" }
+
+            parm {
+                name    "smoothmask_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_face_smoothing_mask" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "smoothmask_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "smoothmask_help"
+                label   "Help"
+                type    label
+                default { "说明：用于定义网格平滑组。相同数值的面在 UE 中光滑过渡，不同数值则会产生硬边。可从来源整型属性重命名为 unreal_face_smoothing_mask，或直接输入数值。\n示例(属性)：来源 mask=2 → 实际写出 unreal_face_smoothing_mask=2，mask 被移除。\n示例(数值)：直接设置 unreal_face_smoothing_mask=1。\n结果：相同值的面在 UE 中光滑，不同值的面形成硬边。\nOwner：Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "smoothmask_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_smoothmask"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_smoothmask == 0 }"
+                menu {
+                    "prim"  "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "owner_smoothmask" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_smoothmask"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_smoothmask == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "form_mode_smoothmask" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "smoothmask_from"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_smoothmask == 0 } { form_mode_smoothmask != attrib }"
+                menutoggle {
+                    [ " opmenu -l -a attribute primdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "smoothmask_from" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "smoothmask_val"
+                label   "Mask Value"
+                type    integer
+                default { "1" }
+                disablewhen "{ en_smoothmask == 0 } { form_mode_smoothmask != value }"
+                range   { 0 10 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.0_Material_Main.ds" }
+                parmtag { "import_token" "smoothmask_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+
+}

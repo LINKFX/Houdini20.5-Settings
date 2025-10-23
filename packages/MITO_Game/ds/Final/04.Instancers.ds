@@ -1,0 +1,982 @@
+{
+    name	selectedparms
+
+    parm {
+        name    "en_inst_instance"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_inst_instance"
+        label   "Unreal Instance"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_inst_instance" }
+
+        parm {
+            name    "inst_instance_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_instance" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "inst_instance_help"
+            label   "Help"
+            type    label
+            default { "说明：指定实例化的目标资源路径（或类名）。可通过 Attribute 或直接输入路径。\n示例(Attribute)：来源 attr=/Game/Props/SM_Chair → 写出 unreal_instance=/Game/Props/SM_Chair。\n示例(数值)：直接输入 Blueprint'/Game/BP/BP_Light.BP_Light_C' → UE 中实例化该蓝图类。\n结果：Bake 时会在 UE 场景中生成对应的实例化对象。\nOwner：Point/Detail。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_inst_instance"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "point" }
+            disablewhen "{ en_inst_instance == 0 }"
+            menu {
+                "point"     "Point"
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_inst_instance"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_inst_instance == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "inst_instance_from"
+            label   "Attribute From"
+            type    string
+            default { "unreal_instance" }
+            disablewhen "{ en_inst_instance == 0 } { form_mode_inst_instance != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_inst_instance\").evalAsString()" ]
+                [ "" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_inst_instance')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "inst_instance_val"
+            label   "Instance Path"
+            type    string
+            default { "/Game/Props/SM_Chair" }
+            disablewhen "{ en_inst_instance == 0 } { form_mode_inst_instance != value }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_inst_foliage"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_inst_foliage"
+        label   "Unreal Foliage"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_inst_foliage" }
+
+        parm {
+            name    "inst_foliage_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_foliage" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "inst_foliage_help"
+            label   "Help"
+            type    label
+            default { "说明：指定实例化对象是否作为 Foliage（植被系统）导入。可通过 Attribute 或数值指定。\n示例(Attribute)：来源 attr=1 → 写出 unreal_foliage=1，UE 中实例被添加到植被系统。\n示例(数值)：直接设置 Foliage=0 → UE 中实例按普通 Actor 放置。\n结果：控制实例是否加入 UE 的 Foliage 系统。\nOwner：Detail/Prim/Point。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_inst_foliage"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "point" }
+            disablewhen "{ en_inst_foliage == 0 }"
+            menu {
+                "point"     "Point"
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_inst_foliage"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_inst_foliage == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "inst_foliage_from"
+            label   "Attribute From"
+            type    string
+            default { "unreal_foliage" }
+            disablewhen "{ en_inst_foliage == 0 } { form_mode_inst_foliage != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_inst_foliage\").evalAsString()" ]
+                [ "" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_inst_foliage')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "inst_foliage_val"
+            label   "Foliage Enabled"
+            type    toggle
+            default { "1" }
+            disablewhen "{ en_inst_foliage == 0 } { form_mode_inst_foliage != value }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_inst_foliage_type"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_inst_foliage_type"
+        label   "Unreal Foliage Attachment Type"
+        parmtag { "sidefx::header_toggle" "en_inst_foliage_type" }
+
+        parm {
+            name    "inst_foliage_type_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_foliage_attachment_type" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "inst_foliage_type_help"
+            label   "Help"
+            type    label
+            default { "说明：指定植被实例附着方式。可通过 Attribute 或数值指定。\n示例(Attribute)：来源 attr=1 → 写出 unreal_foliage_attachment_type=1，UE 中植被附着到 Actor。\n示例(数值)：设置=2 → 植被附着到 Landscape。\n结果：决定植被系统中实例附着逻辑（0=不附着，1=附着Actor，2=附着Landscape）。\nOwner：Point。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_inst_foliage_type"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "point" }
+            disablewhen "{ en_inst_foliage_type == 0 }"
+            menu {
+                "point" "Point"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_inst_foliage_type"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_inst_foliage_type == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "inst_foliage_type_from"
+            label   "Attribute From"
+            type    string
+            default { "unreal_foliage_attachment_type" }
+            disablewhen "{ en_inst_foliage_type == 0 } { form_mode_inst_foliage_type != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_inst_foliage_type\").evalAsString()" ]
+                [ "" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_inst_foliage_type')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "inst_foliage_type_val"
+            label   "Attachment Type"
+            type    ordinal
+            default { "0" }
+            disablewhen "{ en_inst_foliage_type == 0 } { form_mode_inst_foliage_type != value }"
+            menu {
+                "not"                   "Not"
+                "adhering_actor"        "Adhering Actor"
+                "adhering_landscape"    "Adhering Landscape"
+            }
+            range   { 0 2 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_inst_foliage_dist"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_inst_foliage_dist"
+        label   "Unreal Foliage Attachment Distance"
+        parmtag { "sidefx::header_toggle" "en_inst_foliage_dist" }
+
+        parm {
+            name    "inst_foliage_dist_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_foliage_attachment_distance" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "inst_foliage_dist_help"
+            label   "Help"
+            type    label
+            default { "说明：设置植被附着时的垂直搜索距离。可通过 Attribute 或数值指定。\n示例(Attribute)：来源 attr=500 → 写出 unreal_foliage_attachment_distance=500。\n示例(数值)：直接输入 1000 → UE 中按 1000cm 搜索。\n结果：控制植被系统在附着时的垂直范围。\nOwner：Point。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_inst_foliage_dist"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "point" }
+            disablewhen "{ en_inst_foliage_dist == 0 }"
+            menu {
+                "point" "Point"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_inst_foliage_dist"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_inst_foliage_dist == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "inst_foliage_dist_from"
+            label   "Attribute From"
+            type    string
+            default { "unreal_foliage_attachment_distance" }
+            disablewhen "{ en_inst_foliage_dist == 0 } { form_mode_inst_foliage_dist != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_inst_foliage_dist\").evalAsString()" ]
+                [ "" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_inst_foliage_dist')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "inst_foliage_dist_val"
+            label   "Attachment Distance"
+            type    float
+            default { "1000" }
+            disablewhen "{ en_inst_foliage_dist == 0 } { form_mode_inst_foliage_dist != value }"
+            range   { 0 10000 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_inst_split"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_inst_split"
+        label   "Unreal Split Attribute"
+        parmtag { "sidefx::header_toggle" "en_inst_split" }
+
+        parm {
+            name    "inst_split_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_split_attr" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "inst_split_help"
+            label   "Help"
+            type    label
+            default { "说明：指定一个属性名，按其值将实例拆分为多个组件。\n示例(Attribute)：来源 attr=my_group → 写出 unreal_split_attr=my_group。\n示例(数值)：直接输入 my_type → UE 中实例按 my_type 值拆分。\n结果：实现实例的组件化拆分。\nOwner：Any。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_inst_split"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "point" }
+            disablewhen "{ en_inst_split == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_inst_split"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_inst_split == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "inst_split_from"
+            label   "Attribute From"
+            type    string
+            default { "unreal_split_attr" }
+            disablewhen "{ en_inst_split == 0 } { form_mode_inst_split != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_inst_split\").evalAsString()" ]
+                [ "" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_inst_split')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "inst_split_val"
+            label   "Split Attribute"
+            type    string
+            default { "my_type" }
+            disablewhen "{ en_inst_split == 0 } { form_mode_inst_split != value }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_inst_hierarchical"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_inst_hierarchical"
+        label   "Hierarchical Instancer"
+        parmtag { "sidefx::header_toggle" "en_inst_hierarchical" }
+
+        parm {
+            name    "inst_hierarchical_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_hierarchical_instancer" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "inst_hierarchical_help"
+            label   "Help"
+            type    label
+            default { "说明：是否强制使用 Hierarchical Instanced Static Mesh Component (HISM)。可通过 Attribute 或数值指定。\n示例(Attribute)：来源 attr=1 → 写出 unreal_hierarchical_instancer=1。\n示例(数值)：直接设置=0 → UE 使用普通 Instancer。\n结果：1=强制使用 HISM，0=使用普通 Instancer。\nOwner：Any。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_inst_hierarchical"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ en_inst_hierarchical == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_inst_hierarchical"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_inst_hierarchical == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "inst_hierarchical_from"
+            label   "Attribute From"
+            type    string
+            default { "unreal_hierarchical_instancer" }
+            disablewhen "{ en_inst_hierarchical == 0 } { form_mode_inst_hierarchical != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_inst_hierarchical\").evalAsString()" ]
+                [ "" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_inst_hierarchical')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "inst_hierarchical_val"
+            label   "Hierarchical Instancer"
+            type    toggle
+            default { "1" }
+            disablewhen "{ en_inst_hierarchical == 0 } { form_mode_inst_hierarchical != value }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_inst_force"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_inst_force"
+        label   "Force Instancer"
+        parmtag { "sidefx::header_toggle" "en_inst_force" }
+
+        parm {
+            name    "inst_force_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_force_instancer" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "inst_force_help"
+            label   "Help"
+            type    label
+            default { "说明：是否强制生成 Instancer 组件，即使只有一个实例。可通过 Attribute 或数值指定。\n示例(Attribute)：来源 attr=1 → 写出 unreal_force_instancer=1。\n示例(数值)：直接设置=0 → UE 自动决定是否创建 Instancer。\n结果：控制 Instancer 生成逻辑。\nOwner：Any。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_inst_force"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ en_inst_force == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_inst_force"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_inst_force == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "inst_force_from"
+            label   "Attribute From"
+            type    string
+            default { "unreal_force_instancer" }
+            disablewhen "{ en_inst_force == 0 } { form_mode_inst_force != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_inst_force\").evalAsString()" ]
+                [ "" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_inst_force')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "inst_force_val"
+            label   "Force Instancer"
+            type    toggle
+            default { "0" }
+            disablewhen "{ en_inst_force == 0 } { form_mode_inst_force != value }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_inst_numfloats"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_inst_numfloats"
+        label   "Num Custom Floats"
+        parmtag { "sidefx::header_toggle" "en_inst_numfloats" }
+
+        parm {
+            name    "inst_numfloats_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_num_custom_floats" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "inst_numfloats_help"
+            label   "Help"
+            type    label
+            default { "说明：指定 Instancer 的自定义浮点数个数，用于 Per Instance Custom Data。可通过 Attribute 或数值指定。\n示例(Attribute)：来源 attr=3 → 写出 unreal_num_custom_floats=3。\n示例(数值)：直接设置=2 → UE 中每个实例拥有 2 个自定义浮点。\n结果：控制实例化组件的自定义浮点数据通道数。\nOwner：Any。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_inst_numfloats"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ en_inst_numfloats == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_inst_numfloats"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_inst_numfloats == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "inst_numfloats_from"
+            label   "Attribute From"
+            type    string
+            default { "unreal_num_custom_floats" }
+            disablewhen "{ en_inst_numfloats == 0 } { form_mode_inst_numfloats != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_inst_numfloats\").evalAsString()" ]
+                [ "" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_inst_numfloats')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "inst_numfloats_val"
+            label   "Custom Floats Count"
+            type    integer
+            default { "0" }
+            disablewhen "{ en_inst_numfloats == 0 } { form_mode_inst_numfloats != value }"
+            range   { 0 16 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_inst_customdata"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_inst_customdata"
+        label   "Per Instance Custom Data"
+        parmtag { "sidefx::header_toggle" "en_inst_customdata" }
+
+        parm {
+            name    "inst_customdata_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_per_instance_custom_dataX" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "inst_customdata_help"
+            label   "Help"
+            type    label
+            default { "说明：设置每个实例的自定义浮点数据（索引从 0 开始）。可通过 Attribute 或数值指定。\n示例(Attribute)：来源 attr=0.5 → 写出 unreal_per_instance_custom_data0=0.5。\n示例(数值)：直接设置 Data0=1.0 → UE 中实例的 CustomData[0]=1.0。\n结果：用于材质或蓝图中读取每个实例的自定义数据。\nOwner：Any。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_perinst_numfloats"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            default { "detail" }
+            disablewhen "{ en_inst_customdata == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        multiparm {
+            name    "num_inst_customdata"
+            label    "Number of Custom Data"
+
+            parm {
+                name    "inst_customdata_val#"
+                label   "Custom Data Value #"
+                type    float
+                default { "0" }
+                disablewhen "{ en_inst_customdata == 0 }"
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+    parm {
+        name    "en_inst_origin"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_inst_origin"
+        label   "Unreal Instance Origin"
+        parmtag { "sidefx::header_toggle" "en_inst_origin" }
+
+        parm {
+            name    "inst_origin_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_instance_origin" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "inst_origin_help"
+            label   "Help"
+            type    label
+            default { "说明：设置实例化对象的原点位置（相对 HDA 组件）。可通过 Attribute 或数值指定。\n示例(Attribute)：来源 attr={0,0,100} → 写出 unreal_instance_origin={0,0,100}。\n示例(数值)：直接输入 {50,0,0} → UE 中实例偏移 50cm。\n结果：控制实例组件相对原点的偏移量。\nOwner：Point/Detail。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_inst_origin"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "point" }
+            disablewhen "{ en_inst_origin == 0 }"
+            menu {
+                "point"     "Point"
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_inst_origin"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_inst_origin == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "inst_origin_from"
+            label   "Attribute From"
+            type    string
+            default { "unreal_instance_origin" }
+            disablewhen "{ en_inst_origin == 0 } { form_mode_inst_origin != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_inst_origin\").evalAsString()" ]
+                [ "" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_inst_origin')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "inst_origin_val"
+            label   "Instance Origin"
+            type    vector
+            size    3
+            default { "0" "0" "0" }
+            disablewhen "{ en_inst_origin == 0 } { form_mode_inst_origin != value }"
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+
+}

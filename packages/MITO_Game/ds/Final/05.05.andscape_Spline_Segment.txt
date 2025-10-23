@@ -1,0 +1,324 @@
+{
+    name	selectedparms
+
+    group {
+        name    "folder3_4"
+        label   "Splines_Segment"
+        tabbreak
+        parmtag { "group_default" "0" }
+        grouptag { "import_enable" "1" }
+        grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.Landscape.ds" }
+        grouptag { "import_token" "folder3:Splines_Segment" }
+
+        parm {
+            name    "en_seg_editlayer_name"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+            parmtag { "import_token" "en_seg_editlayer_name" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_seg_editlayer_name"
+            label   "Edit Layer Name"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+            grouptag { "import_token" "grp_seg_editlayer_name:Edit Layer Name" }
+            parmtag { "sidefx::header_toggle" "en_seg_editlayer_name" }
+
+            parm {
+                name    "seg_editlayer_name_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_editlayer_name" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+                parmtag { "import_token" "seg_editlayer_name_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "seg_editlayer_name_help"
+                label   "Help"
+                type    label
+                default { "说明：要创建并应用样条的编辑图层名称。\n示例(Attribute)：unreal_landscape_editlayer_name=MyLayer。\n示例(Value)：直接输入 MyLayer。\n结果：Bake 时在地形上创建并应用该编辑图层。\nOwner：Point/Vertex/Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+                parmtag { "import_token" "seg_editlayer_name_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "seg_editlayer_name_val"
+                label   "Layer Name"
+                type    string
+                default { "" }
+                disablewhen "{ en_seg_editlayer_name == 0 }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+                parmtag { "import_token" "seg_editlayer_name_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_seg_conn"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+            parmtag { "import_token" "en_seg_conn" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_seg_conn"
+            label   "Segment Connections"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+            grouptag { "import_token" "grp_seg_conn:Segment Connections" }
+            parmtag { "sidefx::header_toggle" "en_seg_conn" }
+
+            parm {
+                name    "seg_conn_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_segment_connectionX_*" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+                parmtag { "import_token" "seg_conn_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "seg_conn_help"
+                label   "Help"
+                type    label
+                default { "说明：为样条段的两端 (X=0/1) 设置连接参数。每个条目包含：\n- Mesh Socket Name：指定端点的插槽名称。\n- Tangent Length：指定端点的切线长度。\n示例(Attribute)：connection0_mesh_socket_name=Start，connection0_tangent_length=100。\n示例(Value)：在列表中为端点设置 Socket 和 Tangent。\n结果：Bake 时端点将使用指定 Socket，并按给定切线长度布置样条。\nOwner：Point/Vertex/Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+                parmtag { "import_token" "seg_conn_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            multiparm {
+                name    "seg_conn_count"
+                label    "Connections"
+                disablewhen "{ en_seg_conn == 0 }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+                parmtag { "import_token" "seg_conn_count" }
+
+                parm {
+                    name    "seg_conn_socket#"
+                    label   "Mesh Socket Name"
+                    type    string
+                    default { "" }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+                    parmtag { "import_token" "seg_conn_socket#" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "seg_conn_tanlen#"
+                    label   "Tangent Length"
+                    type    float
+                    default { "0" }
+                    range   { 0 10 }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+                    parmtag { "import_token" "seg_conn_tanlen#" }
+                    parmtag { "script_callback_language" "python" }
+                }
+            }
+
+        }
+
+        parm {
+            name    "en_seg_mesh"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+            parmtag { "import_token" "en_seg_mesh" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_seg_mesh"
+            label   "Segment Meshes"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+            grouptag { "import_token" "grp_seg_mesh:Segment Meshes" }
+            parmtag { "sidefx::header_toggle" "en_seg_mesh" }
+
+            parm {
+                name    "seg_mesh_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_segment_meshX" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+                parmtag { "import_token" "seg_mesh_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "seg_mesh_help"
+                label   "Help"
+                type    label
+                default { "说明：为样条段指定一组或多组静态网格。每个条目包含：\n- Mesh Path：网格路径。\n- Mesh Scale：网格缩放。\n- Material Overrides：该网格的材质覆盖 (可多个)。\n示例(Attribute)：mesh0=/Game/SM_Bridge，mesh0_material_override0=/Game/MI_Bridge。\n示例(Value)：列表中逐项设置 Mesh Path，并为每项添加 Overrides 与 Scale。\n结果：Bake 时将按序布置 Mesh，并应用对应的材质覆盖与缩放。\nOwner：Point/Vertex/Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+                parmtag { "import_token" "seg_mesh_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            multiparm {
+                name    "seg_mesh_count"
+                label    "Meshes"
+                disablewhen "{ en_seg_mesh == 0 }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+                parmtag { "import_token" "seg_mesh_count" }
+
+                parm {
+                    name    "seg_mesh_val#"
+                    label   "Mesh Path"
+                    type    string
+                    default { "" }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+                    parmtag { "import_token" "seg_mesh_val#" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "seg_mesh_scale#"
+                    label   "Mesh Scale"
+                    type    float
+                    default { "1" }
+                    range   { 0 10 }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+                    parmtag { "import_token" "seg_mesh_scale#" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                multiparm {
+                    name    "seg_mesh_ovr_count#"
+                    label    "Material Overrides"
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+                    parmtag { "import_token" "seg_mesh_ovr_count#" }
+
+                    parm {
+                        name    "seg_mesh_ovr_val#_#"
+                        label   "Material Path"
+                        type    string
+                        default { "" }
+                        parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+                        parmtag { "import_token" "seg_mesh_ovr_val#_#" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                }
+
+            }
+
+        }
+
+        parm {
+            name    "en_seg_paint_layer_name"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+            parmtag { "import_token" "en_seg_paint_layer_name" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_seg_paint_layer_name"
+            label   "Segment Paint Layer Name"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+            grouptag { "import_token" "grp_seg_paint_layer_name:Segment Paint Layer Name" }
+            parmtag { "sidefx::header_toggle" "en_seg_paint_layer_name" }
+
+            parm {
+                name    "seg_paint_layer_name_help"
+                label   "Help"
+                type    label
+                default { "说明：指定样条段应用到地形的绘制图层名称。\n示例(Attribute)：unreal_landscape_spline_segment_paint_layer_name=Dirt。\n示例(Value)：直接输入 Dirt。\n结果：Bake 时在该样条段范围内绘制 Dirt 图层。\nOwner：Point/Vertex/Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+                parmtag { "import_token" "seg_paint_layer_name_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "seg_paint_layer_name_val"
+                label   "Paint Layer Name"
+                type    string
+                default { "" }
+                disablewhen "{ en_seg_paint_layer_name == 0 }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+                parmtag { "import_token" "seg_paint_layer_name_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_seg_lower_terrain"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+            parmtag { "import_token" "en_seg_lower_terrain" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_seg_lower_terrain"
+            label   "Segment Lower Terrain"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+            grouptag { "import_token" "grp_seg_lower_terrain:Segment Lower Terrain" }
+            parmtag { "sidefx::header_toggle" "en_seg_lower_terrain" }
+
+            parm {
+                name    "seg_lower_terrain_help"
+                label   "Help"
+                type    label
+                default { "说明：是否压低样条段覆盖的地形。\n示例(Attribute)：unreal_landscape_spline_segment_lower_terrain=1。\n示例(Value)：勾选启用。\n结果：Bake 时样条段会下压地形。\nOwner：Point/Vertex/Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+                parmtag { "import_token" "seg_lower_terrain_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "seg_lower_terrain_val"
+                label   "Lower Enabled"
+                type    toggle
+                default { "0" }
+                disablewhen "{ en_seg_lower_terrain == 0 }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+                parmtag { "import_token" "seg_lower_terrain_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_seg_raise_terrain"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+            parmtag { "import_token" "en_seg_raise_terrain" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_seg_raise_terrain"
+            label   "Segment Raise Terrain"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+            grouptag { "import_token" "grp_seg_raise_terrain:Segment Raise Terrain" }
+            parmtag { "sidefx::header_toggle" "en_seg_raise_terrain" }
+
+            parm {
+                name    "seg_raise_terrain_help"
+                label   "Help"
+                type    label
+                default { "说明：是否抬高样条段覆盖的地形。\n示例(Attribute)：unreal_landscape_spline_segment_raise_terrain=1。\n示例(Value)：勾选启用。\n结果：Bake 时样条段会抬高地形。\nOwner：Point/Vertex/Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+                parmtag { "import_token" "seg_raise_terrain_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "seg_raise_terrain_val"
+                label   "Raise Enabled"
+                type    toggle
+                default { "0" }
+                disablewhen "{ en_seg_raise_terrain == 0 }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.05.andscape_Spline_Segment.ds" }
+                parmtag { "import_token" "seg_raise_terrain_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+
+}

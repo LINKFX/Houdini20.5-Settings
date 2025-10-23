@@ -1,0 +1,92 @@
+{
+    name    selectedparms
+
+    parm {
+        name    "en_mesh_socket"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "folder6"
+        label   "Mesh Sockets"
+        parmtag { "sidefx::header_toggle" "en_mesh_socket" }
+
+        parm {
+            name    "mesh_socket_help"
+            label   "Help"
+            type    label
+            default { "说明：定义 Mesh 的多个 Socket（位置、旋转、缩放、名称、标签、附着 Actor）。通过 multiparm 可添加任意数量。\n示例(Attribute)：来源 mesh_socket0_pos=(0,50,100)，mesh_socket0_name=Grip → 写出 UE 中 Socket Grip 位置(0,50,100)。\n示例(Value)：直接输入 Position=(0,0,100)，Name=WeaponSocket → UE 中生成名为 WeaponSocket 的 Socket。\n结果：Bake 后 Static Mesh 在 UE 中自动生成对应数量的 Socket，每个带有设定的变换和可选 Actor/Tag，用于蓝图或运行时附着。\nOwner：Detail。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+
+        parm {
+            name    "owner_socket_actor2"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ en_mesh_socket == 0 }"
+            menu {
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+
+        multiparm {
+            name    "num_sockets"
+            label   "Number of Mesh Sockets"
+
+            parm {
+                name    "socket_pos#"
+                label   "Socket Position"
+                type    float
+                size    3
+                default { "0" "0" "0" }
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "socket_rot#"
+                label   "Socket Rotation (Quat)"
+                type    float
+                size    4
+                default { "0" "0" "0" "1" }
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "socket_scale#"
+                label   "Socket Scale"
+                type    float
+                size    3
+                default { "1" "1" "1" }
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "socket_name#"
+                label   "Socket Name"
+                type    string
+                default { "Socket_#" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "socket_tag#"
+                label   "Socket Tag"
+                type    string
+                default { "Gameplay" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "socket_actor#"
+                label   "Socket Actor"
+                type    string
+                default { "Blueprint'/Game/Actor/BP_SocketActor.BP_SocketActor_C'" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+    }
+}

@@ -1,0 +1,187 @@
+// VEX Code generated from DS file with cleanup logic
+
+string H = "..";
+
+// --- unreal_nanite_position_precision ---
+if (chi(H + "/en_mesh_nanite_position_precision")) {
+    string owner = chs(H + "/owner_mesh_nanite_position_precision");
+    string mode = chs(H + "/form_mode_mesh_nanite_position_precision");
+    string attr_name = "unreal_nanite_position_precision";
+    if (owner != "point"  && haspointattrib(0, attr_name))  removepointattrib(0, attr_name);
+    if (owner != "prim"   && hasprimattrib(0, attr_name))   removeprimattrib(0, attr_name);
+    if (owner != "detail" && hasdetailattrib(0, attr_name)) removedetailattrib(0, attr_name);
+    if (mode == "attrib") {
+        string from_attr = chs(H + "/mesh_nanite_position_precision_from");
+        if (owner == "point") {
+            if (!haspointattrib(0, attr_name)) addpointattrib(0, attr_name, 0);
+            int np = npoints(0);
+            for(int i=0; i<np; i++) {
+                int from_val = point(0, from_attr, i);
+                setpointattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "prim") {
+            if (!hasprimattrib(0, attr_name)) addprimattrib(0, attr_name, 0);
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) {
+                int from_val = prim(0, from_attr, i);
+                setprimattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "detail") {
+            if (!hasdetailattrib(0, attr_name)) adddetailattrib(0, attr_name, 0);
+            int from_val = detail(0, from_attr, 0);
+            setdetailattrib(0, attr_name, from_val, "set");
+        }
+    } else {
+        int u = chi(H + "/mesh_nanite_position_precision_val");
+        if (owner == "point") {
+            if (!haspointattrib(0, attr_name)) addpointattrib(0, attr_name, 0);
+            int np = npoints(0);
+            for(int i=0; i<np; i++) setpointattrib(0, attr_name, i, u, "set");
+        } else if (owner == "prim") {
+            if (!hasprimattrib(0, attr_name)) addprimattrib(0, attr_name, 0);
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) setprimattrib(0, attr_name, i, u, "set");
+        } else if (owner == "detail") {
+            if (!hasdetailattrib(0, attr_name)) adddetailattrib(0, attr_name, 0);
+            setdetailattrib(0, attr_name, u, "set");
+        }
+    }
+}
+
+// --- unreal_nanite_percent_triangles ---
+if (chi(H + "/en_mesh_nanite_percent_triangles")) {
+    string owner = chs(H + "/owner_mesh_nanite_percent_triangles");
+    string mode = chs(H + "/form_mode_mesh_nanite_percent_triangles");
+    string attr_name = "unreal_nanite_percent_triangles";
+    if (owner != "point"  && haspointattrib(0, attr_name))  removepointattrib(0, attr_name);
+    if (owner != "prim"   && hasprimattrib(0, attr_name))   removeprimattrib(0, attr_name);
+    if (owner != "detail" && hasdetailattrib(0, attr_name)) removedetailattrib(0, attr_name);
+    if (mode == "attrib") {
+        string from_attr = chs(H + "/mesh_nanite_percent_triangles_from");
+        if (owner == "point") {
+            if (!haspointattrib(0, attr_name)) addpointattrib(0, attr_name, 0);
+            int np = npoints(0);
+            for(int i=0; i<np; i++) {
+                int from_val = point(0, from_attr, i);
+                setpointattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "prim") {
+            if (!hasprimattrib(0, attr_name)) addprimattrib(0, attr_name, 0);
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) {
+                int from_val = prim(0, from_attr, i);
+                setprimattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "detail") {
+            if (!hasdetailattrib(0, attr_name)) adddetailattrib(0, attr_name, 0);
+            int from_val = detail(0, from_attr, 0);
+            setdetailattrib(0, attr_name, from_val, "set");
+        }
+    } else {
+        int u = chi(H + "/mesh_nanite_percent_triangles_val");
+        if (owner == "point") {
+            if (!haspointattrib(0, attr_name)) addpointattrib(0, attr_name, 0);
+            int np = npoints(0);
+            for(int i=0; i<np; i++) setpointattrib(0, attr_name, i, u, "set");
+        } else if (owner == "prim") {
+            if (!hasprimattrib(0, attr_name)) addprimattrib(0, attr_name, 0);
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) setprimattrib(0, attr_name, i, u, "set");
+        } else if (owner == "detail") {
+            if (!hasdetailattrib(0, attr_name)) adddetailattrib(0, attr_name, 0);
+            setdetailattrib(0, attr_name, u, "set");
+        }
+    }
+}
+
+// --- unreal_nanite_fallback_relative_error ---
+if (chi(H + "/en_mesh_nanite_fallback_relative_error")) {
+    string owner = chs(H + "/owner_mesh_nanite_fallback_relative_error");
+    string mode = chs(H + "/form_mode_mesh_nanite_fallback_relative_error");
+    string attr_name = "unreal_nanite_fallback_relative_error";
+    if (owner != "point"  && haspointattrib(0, attr_name))  removepointattrib(0, attr_name);
+    if (owner != "prim"   && hasprimattrib(0, attr_name))   removeprimattrib(0, attr_name);
+    if (owner != "detail" && hasdetailattrib(0, attr_name)) removedetailattrib(0, attr_name);
+    if (mode == "attrib") {
+        string from_attr = chs(H + "/mesh_nanite_fallback_relative_error_from");
+        if (owner == "point") {
+            if (!haspointattrib(0, attr_name)) addpointattrib(0, attr_name, 0.0);
+            int np = npoints(0);
+            for(int i=0; i<np; i++) {
+                float from_val = point(0, from_attr, i);
+                setpointattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "prim") {
+            if (!hasprimattrib(0, attr_name)) addprimattrib(0, attr_name, 0.0);
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) {
+                float from_val = prim(0, from_attr, i);
+                setprimattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "detail") {
+            if (!hasdetailattrib(0, attr_name)) adddetailattrib(0, attr_name, 0.0);
+            float from_val = detail(0, from_attr, 0);
+            setdetailattrib(0, attr_name, from_val, "set");
+        }
+    } else {
+        float u = chf(H + "/mesh_nanite_fallback_relative_error_val");
+        if (owner == "point") {
+            if (!haspointattrib(0, attr_name)) addpointattrib(0, attr_name, 0.0);
+            int np = npoints(0);
+            for(int i=0; i<np; i++) setpointattrib(0, attr_name, i, u, "set");
+        } else if (owner == "prim") {
+            if (!hasprimattrib(0, attr_name)) addprimattrib(0, attr_name, 0.0);
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) setprimattrib(0, attr_name, i, u, "set");
+        } else if (owner == "detail") {
+            if (!hasdetailattrib(0, attr_name)) adddetailattrib(0, attr_name, 0.0);
+            setdetailattrib(0, attr_name, u, "set");
+        }
+    }
+}
+
+// --- unreal_nanite_trim_relative_error ---
+if (chi(H + "/en_mesh_nanite_trim_relative_error")) {
+    string owner = chs(H + "/owner_mesh_nanite_trim_relative_error");
+    string mode = chs(H + "/form_mode_mesh_nanite_trim_relative_error");
+    string attr_name = "unreal_nanite_trim_relative_error";
+    if (owner != "point"  && haspointattrib(0, attr_name))  removepointattrib(0, attr_name);
+    if (owner != "prim"   && hasprimattrib(0, attr_name))   removeprimattrib(0, attr_name);
+    if (owner != "detail" && hasdetailattrib(0, attr_name)) removedetailattrib(0, attr_name);
+    if (mode == "attrib") {
+        string from_attr = chs(H + "/mesh_nanite_trim_relative_error_from");
+        if (owner == "point") {
+            if (!haspointattrib(0, attr_name)) addpointattrib(0, attr_name, 0.0);
+            int np = npoints(0);
+            for(int i=0; i<np; i++) {
+                float from_val = point(0, from_attr, i);
+                setpointattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "prim") {
+            if (!hasprimattrib(0, attr_name)) addprimattrib(0, attr_name, 0.0);
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) {
+                float from_val = prim(0, from_attr, i);
+                setprimattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "detail") {
+            if (!hasdetailattrib(0, attr_name)) adddetailattrib(0, attr_name, 0.0);
+            float from_val = detail(0, from_attr, 0);
+            setdetailattrib(0, attr_name, from_val, "set");
+        }
+    } else {
+        float u = chf(H + "/mesh_nanite_trim_relative_error_val");
+        if (owner == "point") {
+            if (!haspointattrib(0, attr_name)) addpointattrib(0, attr_name, 0.0);
+            int np = npoints(0);
+            for(int i=0; i<np; i++) setpointattrib(0, attr_name, i, u, "set");
+        } else if (owner == "prim") {
+            if (!hasprimattrib(0, attr_name)) addprimattrib(0, attr_name, 0.0);
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) setprimattrib(0, attr_name, i, u, "set");
+        } else if (owner == "detail") {
+            if (!hasdetailattrib(0, attr_name)) adddetailattrib(0, attr_name, 0.0);
+            setdetailattrib(0, attr_name, u, "set");
+        }
+    }
+}

@@ -1,0 +1,451 @@
+// VEX Code for 08.01.Meshs_Main HDA
+
+string H = ".."; // HDA 相对路径
+
+// ========== 通用工具函数 ==========
+void ensure_attr(string owner; string aname; string type)
+{
+    if (owner == "point")
+    {
+        if (type == "string" && !haspointattrib(0, aname)) addpointattrib(0, aname, "");
+        else if (type == "int" && !haspointattrib(0, aname)) addpointattrib(0, aname, 0);
+        else if (type == "float" && !haspointattrib(0, aname)) addpointattrib(0, aname, 0.0);
+    }
+    else if (owner == "prim")
+    {
+        if (type == "string" && !hasprimattrib(0, aname)) addprimattrib(0, aname, "");
+        else if (type == "int" && !hasprimattrib(0, aname)) addprimattrib(0, aname, 0);
+        else if (type == "float" && !hasprimattrib(0, aname)) addprimattrib(0, aname, 0.0);
+    }
+    else if (owner == "vertex")
+    {
+        if (type == "string" && !hasvertexattrib(0, aname)) addvertexattrib(0, aname, "");
+        else if (type == "int" && !hasvertexattrib(0, aname)) addvertexattrib(0, aname, 0);
+        else if (type == "float" && !hasvertexattrib(0, aname)) addvertexattrib(0, aname, 0.0);
+    }
+    else
+    {
+        if (type == "string" && !hasdetailattrib(0, aname)) adddetailattrib(0, aname, "");
+        else if (type == "int" && !hasdetailattrib(0, aname)) adddetailattrib(0, aname, 0);
+        else if (type == "float" && !hasdetailattrib(0, aname)) adddetailattrib(0, aname, 0.0);
+    }
+}
+
+void set_val(string owner; string aname; string type; string sval)
+{
+    if (type == "string")
+    {
+        if (owner == "point")  { int np=npoints(0); for(int i=0;i<np;i++) setpointattrib(0, aname, i, sval, "set"); }
+        else if (owner == "prim"){ int np=nprimitives(0); for(int i=0;i<np;i++) setprimattrib(0, aname, i, sval, "set"); }
+        else if (owner == "vertex"){ int np=nprimitives(0); for(int p=0;p<np;p++){ int nv = primvertexcount(0, p); for(int v=0;v<nv;v++){ setvertexattrib(0, aname, p, v, sval, "set"); }} }
+        else setdetailattrib(0, aname, sval, "set");
+    }
+    else if (type == "int")
+    {
+        int v_int = atoi(sval);
+        if (owner == "point")  { int np=npoints(0); for(int i=0;i<np;i++) setpointattrib(0, aname, i, v_int, "set"); }
+        else if (owner == "prim"){ int np=nprimitives(0); for(int i=0;i<np;i++) setprimattrib(0, aname, i, v_int, "set"); }
+        else if (owner == "vertex"){ int np=nprimitives(0); for(int p=0;p<np;p++){ int nv = primvertexcount(0, p); for(int v=0;v<nv;v++){ setvertexattrib(0, aname, p, v, v_int, "set"); }} }
+        else setdetailattrib(0, aname, v_int, "set");
+    }
+    else
+    {
+        float v_float = atof(sval);
+        if (owner == "point")  { int np=npoints(0); for(int i=0;i<np;i++) setpointattrib(0, aname, i, v_float, "set"); }
+        else if (owner == "prim"){ int np=nprimitives(0); for(int i=0;i<np;i++) setprimattrib(0, aname, i, v_float, "set"); }
+        else if (owner == "vertex"){ int np=nprimitives(0); for(int p=0;p<np;p++){ int nv = primvertexcount(0, p); for(int v=0;v<nv;v++){ setvertexattrib(0, aname, p, v, v_float, "set"); }} }
+        else setdetailattrib(0, aname, v_float, "set");
+    }
+}
+
+void write_bool(string owner; string aname; int enabled)
+{
+    ensure_attr(owner, aname, "int");
+    set_val(owner, aname, "int", itoa(enabled));
+}
+
+void write_str(string owner; string aname; string v)
+{
+    ensure_attr(owner, aname, "string");
+    set_val(owner, aname, "string", v);
+}
+
+// ========== 处理 08.01.Meshs_Main.ds 中的参数 ==========
+
+// --- Lightmap Resolution ---
+if (chi(H + "/mesh_main_en_unreal_lightmap_resolution"))
+{
+    string owner = chs(H + "/mesh_main_owner_unreal_lightmap_resolution");
+    string mode = chs(H + "/mesh_main_form_mode_unreal_lightmap_resolution");
+    string attr_name = "unreal_lightmap_resolution";
+    if (mode == "attrib")
+    {
+        string from_attr = chs(H + "/mesh_main_unreal_lightmap_resolution_from");
+        ensure_attr(owner, attr_name, "int");
+        if (owner == "point")
+        {
+            int np = npoints(0);
+            for(int i=0; i<np; i++)
+            {
+                int from_val = point(0, from_attr, i);
+                setpointattrib(0, attr_name, i, from_val, "set");
+            }
+        }
+        else if (owner == "prim")
+        {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++)
+            {
+                int from_val = prim(0, from_attr, i);
+                setprimattrib(0, attr_name, i, from_val, "set");
+            }
+        }
+        else if (owner == "vertex")
+        {
+            int np = nprimitives(0);
+            for(int p=0; p<np; p++)
+            {
+                int nv = primvertexcount(0, p);
+                for(int v=0; v<nv; v++)
+                {
+                    int from_val = vertexattrib(0, from_attr, p, v);
+                    setvertexattrib(0, attr_name, p, v, from_val, "set");
+                }
+            }
+        }
+        else
+        {
+            int from_val = detail(0, from_attr, 0);
+            setdetailattrib(0, attr_name, from_val, "set");
+        }
+    }
+    else
+    {
+        int v = chi(H + "/mesh_main_unreal_lightmap_resolution_val");
+        write_bool(owner, attr_name, v);
+    }
+}
+
+// --- Output Name ---
+if (chi(H + "/mesh_main_en_unreal_output_name"))
+{
+    string owner = chs(H + "/mesh_main_owner_unreal_output_name");
+    string mode = chs(H + "/mesh_main_form_mode_unreal_output_name");
+    string attr_name = "unreal_output_name";
+    if (mode == "attrib")
+    {
+        string from_attr = chs(H + "/mesh_main_unreal_output_name_from");
+        ensure_attr(owner, attr_name, "string");
+        if (owner == "point")
+        {
+            int np = npoints(0);
+            for(int i=0; i<np; i++)
+            {
+                string from_val = point(0, from_attr, i);
+                setpointattrib(0, attr_name, i, from_val, "set");
+            }
+        }
+        else if (owner == "prim")
+        {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++)
+            {
+                string from_val = prim(0, from_attr, i);
+                setprimattrib(0, attr_name, i, from_val, "set");
+            }
+        }
+        else if (owner == "vertex")
+        {
+            int np = nprimitives(0);
+            for(int p=0; p<np; p++)
+            {
+                int nv = primvertexcount(0, p);
+                for(int v=0; v<nv; v++)
+                {
+                    string from_val = vertexattrib(0, from_attr, p, v);
+                    setvertexattrib(0, attr_name, p, v, from_val, "set");
+                }
+            }
+        }
+        else
+        {
+            string from_val = detail(0, from_attr, 0);
+            setdetailattrib(0, attr_name, from_val, "set");
+        }
+    }
+    else
+    {
+        string v = chs(H + "/mesh_main_unreal_output_name_val");
+        write_str(owner, attr_name, v);
+    }
+}
+
+// --- Disable Gamma Correction ---
+if (chi(H + "/mesh_main_en_unreal_disable_gamma_correction"))
+{
+    string owner = chs(H + "/mesh_main_owner_unreal_disable_gamma_correction");
+    string mode = chs(H + "/mesh_main_form_mode_unreal_disable_gamma_correction");
+    string attr_name = "unreal_disable_gamma_correction";
+    if (mode == "attrib")
+    {
+        string from_attr = chs(H + "/mesh_main_unreal_disable_gamma_correction_from");
+        ensure_attr(owner, attr_name, "int");
+        if (owner == "point")
+        {
+            int np = npoints(0);
+            for(int i=0; i<np; i++)
+            {
+                int from_val = point(0, from_attr, i);
+                setpointattrib(0, attr_name, i, from_val, "set");
+            }
+        }
+        else if (owner == "prim")
+        {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++)
+            {
+                int from_val = prim(0, from_attr, i);
+                setprimattrib(0, attr_name, i, from_val, "set");
+            }
+        }
+        else if (owner == "vertex")
+        {
+            int np = nprimitives(0);
+            for(int p=0; p<np; p++)
+            {
+                int nv = primvertexcount(0, p);
+                for(int v=0; v<nv; v++)
+                {
+                    int from_val = vertexattrib(0, from_attr, p, v);
+                    setvertexattrib(0, attr_name, p, v, from_val, "set");
+                }
+            }
+        }
+        else
+        {
+            int from_val = detail(0, from_attr, 0);
+            setdetailattrib(0, attr_name, from_val, "set");
+        }
+    }
+    else
+    {
+        int v = chi(H + "/mesh_main_unreal_disable_gamma_correction_val");
+        write_bool(owner, attr_name, v);
+    }
+}
+
+// --- Generated Mesh Name ---
+if (chi(H + "/mesh_main_en_unreal_generated_mesh_name"))
+{
+    string owner = chs(H + "/mesh_main_owner_unreal_generated_mesh_name");
+    string mode = chs(H + "/mesh_main_form_mode_unreal_generated_mesh_name");
+    string attr_name = "unreal_generated_mesh_name";
+    if (mode == "attrib")
+    {
+        string from_attr = chs(H + "/mesh_main_unreal_generated_mesh_name_from");
+        ensure_attr(owner, attr_name, "string");
+        if (owner == "point")
+        {
+            int np = npoints(0);
+            for(int i=0; i<np; i++)
+            {
+                string from_val = point(0, from_attr, i);
+                setpointattrib(0, attr_name, i, from_val, "set");
+            }
+        }
+        else if (owner == "prim")
+        {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++)
+            {
+                string from_val = prim(0, from_attr, i);
+                setprimattrib(0, attr_name, i, from_val, "set");
+            }
+        }
+        else if (owner == "vertex")
+        {
+            int np = nprimitives(0);
+            for(int p=0; p<np; p++)
+            {
+                int nv = primvertexcount(0, p);
+                for(int v=0; v<nv; v++)
+                {
+                    string from_val = vertexattrib(0, from_attr, p, v);
+                    setvertexattrib(0, attr_name, p, v, from_val, "set");
+                }
+            }
+        }
+        else
+        {
+            string from_val = detail(0, from_attr, 0);
+            setdetailattrib(0, attr_name, from_val, "set");
+        }
+    }
+    else
+    {
+        string v = chs(H + "/mesh_main_unreal_generated_mesh_name_val");
+        write_str(owner, attr_name, v);
+    }
+}
+
+// --- Nanite Enabled ---
+if (chi(H + "/mesh_main_en_unreal_nanite_enabled"))
+{
+    string owner = chs(H + "/mesh_main_owner_unreal_nanite_enabled");
+    string mode = chs(H + "/mesh_main_form_mode_unreal_nanite_enabled");
+    string attr_name = "unreal_nanite_enabled";
+    if (mode == "attrib")
+    {
+        string from_attr = chs(H + "/mesh_main_unreal_nanite_enabled_from");
+        ensure_attr(owner, attr_name, "int");
+        if (owner == "point")
+        {
+            int np = npoints(0);
+            for(int i=0; i<np; i++)
+            {
+                int from_val = point(0, from_attr, i);
+                setpointattrib(0, attr_name, i, from_val, "set");
+            }
+        }
+        else if (owner == "prim")
+        {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++)
+            {
+                int from_val = prim(0, from_attr, i);
+                setprimattrib(0, attr_name, i, from_val, "set");
+            }
+        }
+        else if (owner == "vertex")
+        {
+            int np = nprimitives(0);
+            for(int p=0; p<np; p++)
+            {
+                int nv = primvertexcount(0, p);
+                for(int v=0; v<nv; v++)
+                {
+                    int from_val = vertexattrib(0, from_attr, p, v);
+                    setvertexattrib(0, attr_name, p, v, from_val, "set");
+                }
+            }
+        }
+        else
+        {
+            int from_val = detail(0, from_attr, 0);
+            setdetailattrib(0, attr_name, from_val, "set");
+        }
+    }
+    else
+    {
+        int v = chi(H + "/mesh_main_unreal_nanite_enabled_val");
+        write_bool(owner, attr_name, v);
+    }
+}
+
+// --- Nanite Position Precision ---
+if (chi(H + "/mesh_main_en_unreal_nanite_position_precision"))
+{
+    string owner = chs(H + "/mesh_main_owner_unreal_nanite_position_precision");
+    string mode = chs(H + "/mesh_main_form_mode_unreal_nanite_position_precision");
+    string attr_name = "unreal_nanite_position_precision";
+    if (mode == "attrib")
+    {
+        string from_attr = chs(H + "/mesh_main_unreal_nanite_position_precision_from");
+        ensure_attr(owner, attr_name, "int");
+        if (owner == "point")
+        {
+            int np = npoints(0);
+            for(int i=0; i<np; i++)
+            {
+                int from_val = point(0, from_attr, i);
+                setpointattrib(0, attr_name, i, from_val, "set");
+            }
+        }
+        else if (owner == "prim")
+        {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++)
+            {
+                int from_val = prim(0, from_attr, i);
+                setprimattrib(0, attr_name, i, from_val, "set");
+            }
+        }
+        else if (owner == "vertex")
+        {
+            int np = nprimitives(0);
+            for(int p=0; p<np; p++)
+            {
+                int nv = primvertexcount(0, p);
+                for(int v=0; v<nv; v++)
+                {
+                    int from_val = vertexattrib(0, from_attr, p, v);
+                    setvertexattrib(0, attr_name, p, v, from_val, "set");
+                }
+            }
+        }
+        else
+        {
+            int from_val = detail(0, from_attr, 0);
+            setdetailattrib(0, attr_name, from_val, "set");
+        }
+    }
+    else
+    {
+        int v = chi(H + "/mesh_main_unreal_nanite_position_precision_val");
+        write_bool(owner, attr_name, v);
+    }
+}
+
+// --- Nanite Percent Triangles ---
+if (chi(H + "/mesh_main_en_unreal_nanite_percent_triangles"))
+{
+    string owner = chs(H + "/mesh_main_owner_unreal_nanite_percent_triangles");
+    string mode = chs(H + "/mesh_main_form_mode_unreal_nanite_percent_triangles");
+    string attr_name = "unreal_nanite_percent_triangles";
+    if (mode == "attrib")
+    {
+        string from_attr = chs(H + "/mesh_main_unreal_nanite_percent_triangles_from");
+        ensure_attr(owner, attr_name, "int");
+        if (owner == "point")
+        {
+            int np = npoints(0);
+            for(int i=0; i<np; i++)
+            {
+                int from_val = point(0, from_attr, i);
+                setpointattrib(0, attr_name, i, from_val, "set");
+            }
+        }
+        else if (owner == "prim")
+        {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++)
+            {
+                int from_val = prim(0, from_attr, i);
+                setprimattrib(0, attr_name, i, from_val, "set");
+            }
+        }
+        else if (owner == "vertex")
+        {
+            int np = nprimitives(0);
+            for(int p=0; p<np; p++)
+            {
+                int nv = primvertexcount(0, p);
+                for(int v=0; v<nv; v++)
+                {
+                    int from_val = vertexattrib(0, from_attr, p, v);
+                    setvertexattrib(0, attr_name, p, v, from_val, "set");
+                }
+            }
+        }
+        else
+        {
+            int from_val = detail(0, from_attr, 0);
+            setdetailattrib(0, attr_name, from_val, "set");
+        }
+    }
+    else
+    {
+        int v = chi(H + "/mesh_main_unreal_nanite_percent_triangles_val");
+        write_bool(owner, attr_name, v);
+    }
+}

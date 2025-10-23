@@ -1,0 +1,911 @@
+{
+    name	selectedparms
+
+    parm {
+        name    "en_unit_layer"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_unit_layer"
+        label   "Unit Mask"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_unit_layer" }
+
+        parm {
+            name    "unit_layer_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_unit_landscape_layer" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "unit_layer_help_heading"
+            label   "Help"
+            type    label
+            default { "说明：以 0/1 单位区间解释掩码为 Landscape 图层（布尔化）。 \n示例：启用 → 实际写出 unreal_unit_landscape_layer=1。 \n结果：掩码值在阈值处截断为 0 或 1。 \nOwner：Prim/Detail。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_unit_layer"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_unit_layer == 0 }"
+            menu {
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "newparameter"
+            label   "Unit Mask Enabled"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_nonweight_list"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_nonweight_list"
+        label   "Non-Weight Layers (List)"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_parm" "nonweight_list_str" }
+        parmtag { "sidefx::header_toggle" "en_nonweight_list" }
+
+        parm {
+            name    "nonweight_list_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_layer_nonweightblended" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "nonweight_list_help_heading"
+            label   "Help"
+            type    label
+            default { "说明：以空格分隔的掩码名称集合，创建为非权重混合（Non-Weight Blended）图层。 \n示例：Road Decal → 实际写出 unreal_landscape_layer_nonweightblended=\"Road Decal\"。 \n结果：这些图层不参与权重归一，适合覆盖/贴花。 \nOwner：Prim/Detail。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_nonweight_list"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_nonweight_list == 0 }"
+            menu {
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_nonweight_list_str"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "nonweight_list_str_from"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ form_mode_nonweight_list_str != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_nonweight_list\").evalAsString()" ]
+                [ "" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_nonweight_list')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "nonweight_list_str"
+            label   "Mask Names"
+            type    string
+            default { "Road,Decal" }
+            disablewhen "{ en_nonweight_list == 0 } { form_mode_nonweight_list_str != value }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_layer_info"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_layer_info"
+        label   "Layer Info Path"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_parm" "layer_info_path" }
+        parmtag { "sidefx::header_toggle" "en_layer_info" }
+
+        parm {
+            name    "layer_info_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_layer_info" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "layer_info_help_heading"
+            label   "Help"
+            type    label
+            default { "说明：指定现有 LandscapeLayerInfo 资源路径，用于将掩码转换到对应图层。 \n示例：/Game/Landscape/LI_Road → 实际写出 unreal_landscape_layer_info=/Game/Landscape/LI_Road。 \n结果：使用指定 LayerInfo 对应的图层设置。 \nOwner：Prim。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_layer_info"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_layer_info == 0 }"
+            menu {
+                "prim"  "Prim"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_layer_info_path"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "layer_info_path_from"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ form_mode_layer_info_path != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_layer_info\").evalAsString()" ]
+                [ "" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_layer_info')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "layer_info_path"
+            label   "Content Path"
+            type    string
+            default { "/Game/Landscape/LI_Road" }
+            disablewhen "{ en_layer_info == 0 } { form_mode_layer_info_path != value }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_noweightblend"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_noweightblend"
+        label   "NoWeightBlend"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_noweightblend" }
+
+        parm {
+            name    "noweightblend_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_layer_noweightblend" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "noweightblend_help_heading"
+            label   "Help"
+            type    label
+            default { "说明：将图层的 LayerInfo 设为 NoWeightBlend（不参与权重归一），适合覆盖/贴花式图层。高于列表字段的优先级。 \n示例：启用 → 实际写出 unreal_landscape_layer_noweightblend=1。 \n结果：该图层不受其他权重图层影响。 \nOwner：Prim/Detail。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_noweightblend"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_noweightblend == 0 }"
+            menu {
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "newparameter2"
+            label   "NoWeightBlend Enabled"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_output_mode"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_output_mode"
+        label   "Output Mode"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_output_mode" }
+
+        parm {
+            name    "output_mode_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_output_mode" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "output_mode_help_heading"
+            label   "Help"
+            type    label
+            default { "说明：切换为 Modify Edit Layer 输出模式（默认 Generate）。 \n示例：启用 → 实际写出 unreal_landscape_output_mode=1。 \n结果：对现有 Landscape 的 Edit Layer 进行修改而非新建。 \nOwner：Point/Prim/Detail。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_output_mode"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_output_mode == 0 }"
+            menu {
+                "point"     "Point"
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "newparameter3"
+            label   "Output Mode Enabled"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_editlayer_name"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_editlayer_name"
+        label   "EditLayer Name"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_parm" "editlayer_name_str" }
+        parmtag { "sidefx::header_toggle" "en_editlayer_name" }
+
+        parm {
+            name    "editlayer_name_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_editlayer_name" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "editlayer_name_help_heading"
+            label   "Help"
+            type    label
+            default { "说明：目标 Edit Layer 的名称。 \n示例：Landscape → 实际写出 unreal_landscape_editlayer_name=Landscape。 \n结果：将输出写入/创建到该命名的 Edit Layer。 \nOwner：Point/Prim/Detail。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_editlayer_name"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_editlayer_name == 0 }"
+            menu {
+                "point"     "Point"
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_editlayer_name_str"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "editlayer_name_str_from"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ form_mode_editlayer_name_str != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_editlayer_name\").evalAsString()" ]
+                [ "" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_editlayer_name')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "editlayer_name_str"
+            label   "Name"
+            type    string
+            default { "Landscape" }
+            disablewhen "{ en_editlayer_name == 0 } { form_mode_editlayer_name_str != value }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_editlayer_type"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_editlayer_type"
+        label   "EditLayer Type"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_parm" "editlayer_type_mode" }
+        parmtag { "sidefx::header_toggle" "en_editlayer_type" }
+
+        parm {
+            name    "editlayer_type_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_editlayer_type" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "editlayer_type_help_heading"
+            label   "Help"
+            type    label
+            default { "说明：输出图层类型：0=Create New，1=Additive。 \n示例：Additive → 实际写出 unreal_landscape_editlayer_type=1。 \n结果：控制写入的图层是否在现有基础上相加。 \nOwner：Point/Prim/Detail。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_editlayer_type"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_editlayer_type == 0 }"
+            menu {
+                "point"     "Point"
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "editlayer_type_mode"
+            label   "Type"
+            type    ordinal
+            default { "0" }
+            disablewhen "{ en_editlayer_type == 0 }"
+            menu {
+                "0" "Create New (0)"
+                "1" "Additive (1)"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_editlayer_after"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_editlayer_after"
+        label   "EditLayer After"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_parm" "editlayer_after_str" }
+        parmtag { "sidefx::header_toggle" "en_editlayer_after" }
+
+        parm {
+            name    "editlayer_after_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_editlayer_after" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "editlayer_after_help_heading"
+            label   "Help"
+            type    label
+            default { "说明：指定输出图层插入到目标 Landscape 的哪一图层之后。 \n示例：Base → 实际写出 unreal_landscape_editlayer_after=Base。 \n结果：用于调整图层堆叠顺序。 \nOwner：Point/Prim/Detail。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_editlayer_after"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_editlayer_after == 0 }"
+            menu {
+                "point"     "Point"
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_editlayer_after_str"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "editlayer_after_str_from"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ form_mode_editlayer_after_str != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_editlayer_after\").evalAsString()" ]
+                [ "" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_editlayer_after')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "editlayer_after_str"
+            label   "Layer Name"
+            type    string
+            default { "Base" }
+            disablewhen "{ en_editlayer_after == 0 } { form_mode_editlayer_after_str != value }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_editlayer_clear"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_editlayer_clear"
+        label   "Clear EditLayer"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_editlayer_clear" }
+
+        parm {
+            name    "editlayer_clear_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_editlayer_clear" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "editlayer_clear_help_heading"
+            label   "Help"
+            type    label
+            default { "说明：绘制前清空目标 Edit Layer。 \n示例：启用 → 实际写出 unreal_landscape_editlayer_clear=1。 \n结果：先清空，再写入新的高度/权重。 \nOwner：Point/Prim/Detail。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_editlayer_clear"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_editlayer_clear == 0 }"
+            menu {
+                "point"     "Point"
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "newparameter4"
+            label   "Clear EditLayer Enabled"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_editlayer_sub"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_editlayer_sub"
+        label   "Subtractive"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_editlayer_sub" }
+
+        parm {
+            name    "editlayer_sub_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_editlayer_subtractive" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "editlayer_sub_help_heading"
+            label   "Help"
+            type    label
+            default { "说明：以 Subtractive Blend 写入掩码。 \n示例：启用 → 实际写出 unreal_landscape_editlayer_subtractive=1。 \n结果：UE 中对应 Paint Layer 的 Subtractive 属性为勾选。 \nOwner：Prim/Detail。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_editlayer_sub"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_editlayer_sub == 0 }"
+            menu {
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "newparameter5"
+            label   "Subtractive Enabled"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_lock_after"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_lock_after"
+        label   "Lock After"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_lock_after" }
+
+        parm {
+            name    "lock_after_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_lock_layer" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "lock_after_help_heading"
+            label   "Help"
+            type    label
+            default { "说明：写入完成后锁定目标 Edit Layer。 \n示例：启用 → 实际写出 unreal_landscape_lock_layer=1。 \n结果：图层被标记为锁定，避免后续误写。 \nOwner：Point/Prim/Detail。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_lock_after"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_lock_after == 0 }"
+            menu {
+                "point"     "Point"
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "newparameter6"
+            label   "Lock After Enabled"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_partition_grid"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_partition_grid"
+        label   "Partition Grid Size"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_parm" "partition_grid_size" }
+        parmtag { "sidefx::header_toggle" "en_partition_grid" }
+
+        parm {
+            name    "partition_grid_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_partition_grid_size" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "partition_grid_help_heading"
+            label   "Help"
+            type    label
+            default { "说明：控制关卡启用世界分区时的 Landscape 分区网格尺寸（仅在启用 World Partition 的关卡里生效）。 \n示例：0 → 实际写出 unreal_landscape_partition_grid_size=0。 \n结果：影响 Landscape 的分区切分与流式加载。 \nOwner：Prim。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_partition_grid"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_partition_grid == 0 }"
+            menu {
+                "prim"  "Prim"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "partition_grid_size"
+            label   "Value"
+            type    integer
+            default { "0" }
+            disablewhen "{ en_partition_grid == 0 }"
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_landscape_size"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_landscape_size"
+        label   "Landscape Size (Single Tile)"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_parm" "landscape_size_x" }
+        parmtag { "sidefx::header_toggle" "en_landscape_size" }
+
+        parm {
+            name    "landscape_size_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_landscape_size" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "landscape_size_help_heading"
+            label   "Help"
+            type    label
+            default { "说明：导入单 Tile 时的总 Landscape 尺寸（宽×高）。 \n示例：4033 / 4033 → 实际写出 unreal_landscape_landscape_size=(4033,4033)。 \n结果：用于确定目标 Landscape 的整体分辨率。 \nOwner：Prim。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_landscape_size"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            default { "prim" }
+            disablewhen "{ en_landscape_size == 0 }"
+            menu {
+                "prim"  "Prim"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "landscape_size_x"
+            label   "Width"
+            type    integer
+            default { "4033" }
+            disablewhen "{ en_landscape_size == 0 }"
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "landscape_size_y"
+            label   "Height"
+            type    integer
+            default { "4033" }
+            disablewhen "{ en_landscape_size == 0 }"
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_editlayer_target"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_editlayer_target"
+        label   "EditLayer Target (deprecated)"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_editlayer_target" }
+
+        parm {
+            name    "editlayer_target_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_editlayer_target" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "editlayer_target_help_heading"
+            label   "Help"
+            type    label
+            default { "弃用：请改用 unreal_output_name 统一设置输出名称，或按需使用 unreal_landscape_editlayer_name 控制 Edit Layer 名称。 \n示例：Landscape → 现在应写 unreal_output_name=Landscape。 \n结果：以统一命名控制 Bake 的目标层/对象名。 \nOwner：Point/Prim/Detail。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+    }
+
+
+}

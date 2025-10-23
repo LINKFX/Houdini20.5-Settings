@@ -1,0 +1,104 @@
+{
+    name    selectedparms
+
+    ########################################################################
+    # unreal_landscape_spline
+    ########################################################################
+    parm {
+        name    "en_ls_spline"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_ls_spline"
+        label   "Landscape Spline"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_ls_spline" }
+
+        parm {
+            name    "ls_spline_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_spline" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "ls_spline_help"
+            label   "Help"
+            type    label
+            default { "说明：设为 1 使插件将曲线原语识别为 Landscape Splines。\n示例：1 → 写出 unreal_landscape_spline=1。\n结果：后续曲线作为 Landscape Spline 参与生成/应用。\nOwner：Point/Vertex/Prim/Detail。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_ls_spline"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            default { "prim" }
+            disablewhen "{ en_ls_spline == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    ########################################################################
+    # unreal_landscape_spline_target_landscape
+    ########################################################################
+    parm {
+        name    "en_ls_target"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_ls_target"
+        label   "Target Landscape"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_parm" "ls_target_str" }
+        parmtag { "sidefx::header_toggle" "en_ls_target" }
+
+        parm {
+            name    "ls_target_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_spline_target_landscape" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "ls_target_help"
+            label   "Help"
+            type    label
+            default { "说明：指定用于创建样条的目标 Landscape。可设为 InputX(0,1,…) 指向 HDA 的某个输入 Landscape。\n示例：Input0 → 写出 unreal_landscape_spline_target_landscape=Input0。\n结果：样条会应用到所选 Landscape。\nOwner：Prim。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_ls_target"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_ls_target == 0 }"
+            menu {
+                "prim"  "Prim"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "ls_target_str"
+            label   "Landscape Name"
+            type    string
+            default { "Landscape" }
+            disablewhen "{ en_ls_target == 0 }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+}

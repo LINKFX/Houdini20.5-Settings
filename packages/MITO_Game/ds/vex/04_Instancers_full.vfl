@@ -1,0 +1,372 @@
+// VEX Code for 04.Instancers HDA
+
+string H = "..";
+
+// --- unreal_instance ---
+if (chi(H + "/en_inst_instance")) {
+    string owner = chs(H + "/owner_inst_instance");
+    string mode = chs(H + "/form_mode_inst_instance");
+    string attr_name = "unreal_instance";
+    if (mode == "attrib") {
+        string from_attr = chs(H + "/inst_instance_from");
+        if (owner == "point") {
+            int np = npoints(0);
+            for(int i=0; i<np; i++) {
+                string from_val = point(0, from_attr, i);
+                setpointattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "prim") {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) {
+                string from_val = prim(0, from_attr, i);
+                setprimattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "detail") {
+            string from_val = detail(0, from_attr, 0);
+            setdetailattrib(0, attr_name, from_val, "set");
+        }
+    } else {
+        string u = chs(H + "/inst_instance_val");
+        if (owner == "point") {
+            int np = npoints(0);
+            for(int i=0; i<np; i++) {
+                setpointattrib(0, attr_name, i, u, "set");
+            }
+        } else if (owner == "prim") {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) {
+                setprimattrib(0, attr_name, i, u, "set");
+            }
+        } else if (owner == "detail") {
+            setdetailattrib(0, attr_name, u, "set");
+        }
+    }
+}
+
+// --- unreal_foliage ---
+if (chi(H + "/en_inst_foliage")) {
+    string owner = chs(H + "/owner_inst_foliage");
+    string mode = chs(H + "/form_mode_inst_foliage");
+    string attr_name = "unreal_foliage";
+    if (mode == "attrib") {
+        string from_attr = chs(H + "/inst_foliage_from");
+        if (owner == "point") {
+            int np = npoints(0);
+            for(int i=0; i<np; i++) {
+                int from_val = point(0, from_attr, i);
+                setpointattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "prim") {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) {
+                int from_val = prim(0, from_attr, i);
+                setprimattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "detail") {
+            int from_val = detail(0, from_attr, 0);
+            setdetailattrib(0, attr_name, from_val, "set");
+        }
+    } else {
+        int u = chi(H + "/inst_foliage_val");
+        if (owner == "point") {
+            int np = npoints(0);
+            for(int i=0; i<np; i++) {
+                setpointattrib(0, attr_name, i, u, "set");
+            }
+        } else if (owner == "prim") {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) {
+                setprimattrib(0, attr_name, i, u, "set");
+            }
+        } else if (owner == "detail") {
+            setdetailattrib(0, attr_name, u, "set");
+        }
+    }
+}
+
+// --- unreal_foliage_attachment_type ---
+if (chi(H + "/en_inst_foliage_type")) {
+    string owner = chs(H + "/owner_inst_foliage_type");
+    string mode = chs(H + "/form_mode_inst_foliage_type");
+    string attr_name = "unreal_foliage_attachment_type";
+    if (mode == "attrib") {
+        string from_attr = chs(H + "/inst_foliage_type_from");
+        if (owner == "point") {
+            int np = npoints(0);
+            for(int i=0; i<np; i++) {
+                int from_val = point(0, from_attr, i);
+                setpointattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "prim") {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) {
+                int from_val = prim(0, from_attr, i);
+                setprimattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "detail") {
+            int from_val = detail(0, from_attr, 0);
+            setdetailattrib(0, attr_name, from_val, "set");
+        }
+    } else {
+        int u = chi(H + "/inst_foliage_type_val");
+        if (owner == "point") {
+            int np = npoints(0);
+            for(int i=0; i<np; i++) {
+                setpointattrib(0, attr_name, i, u, "set");
+            }
+        } else if (owner == "prim") {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) {
+                setprimattrib(0, attr_name, i, u, "set");
+            }
+        } else if (owner == "detail") {
+            setdetailattrib(0, attr_name, u, "set");
+        }
+    }
+}
+
+// --- unreal_foliage_attachment_distance ---
+if (chi(H + "/en_inst_foliage_dist")) {
+    string owner = chs(H + "/owner_inst_foliage_dist");
+    string mode = chs(H + "/form_mode_inst_foliage_dist");
+    string attr_name = "unreal_foliage_attachment_distance";
+    if (mode == "attrib") {
+        string from_attr = chs(H + "/inst_foliage_dist_from");
+        if (owner == "point") {
+            int np = npoints(0);
+            for(int i=0; i<np; i++) {
+                float from_val = point(0, from_attr, i);
+                setpointattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "prim") {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) {
+                float from_val = prim(0, from_attr, i);
+                setprimattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "detail") {
+            float from_val = detail(0, from_attr, 0);
+            setdetailattrib(0, attr_name, from_val, "set");
+        }
+    } else {
+        float u = chf(H + "/inst_foliage_dist_val");
+        if (owner == "point") {
+            int np = npoints(0);
+            for(int i=0; i<np; i++) {
+                setpointattrib(0, attr_name, i, u, "set");
+            }
+        } else if (owner == "prim") {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) {
+                setprimattrib(0, attr_name, i, u, "set");
+            }
+        } else if (owner == "detail") {
+            setdetailattrib(0, attr_name, u, "set");
+        }
+    }
+}
+
+// --- unreal_split_attr ---
+if (chi(H + "/en_inst_split")) {
+    string owner = chs(H + "/owner_inst_split");
+    string mode = chs(H + "/form_mode_inst_split");
+    string attr_name = "unreal_split_attr";
+    if (mode == "attrib") {
+        string from_attr = chs(H + "/inst_split_from");
+        if (owner == "point") {
+            int np = npoints(0);
+            for(int i=0; i<np; i++) {
+                string from_val = point(0, from_attr, i);
+                setpointattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "prim") {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) {
+                string from_val = prim(0, from_attr, i);
+                setprimattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "detail") {
+            string from_val = detail(0, from_attr, 0);
+            setdetailattrib(0, attr_name, from_val, "set");
+        }
+    } else {
+        string u = chs(H + "/inst_split_val");
+        if (owner == "point") {
+            int np = npoints(0);
+            for(int i=0; i<np; i++) {
+                setpointattrib(0, attr_name, i, u, "set");
+            }
+        } else if (owner == "prim") {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) {
+                setprimattrib(0, attr_name, i, u, "set");
+            }
+        } else if (owner == "detail") {
+            setdetailattrib(0, attr_name, u, "set");
+        }
+    }
+}
+
+// --- unreal_hierarchical_instancer ---
+if (chi(H + "/en_inst_hierarchical")) {
+    string owner = chs(H + "/owner_inst_hierarchical");
+    string mode = chs(H + "/form_mode_inst_hierarchical");
+    string attr_name = "unreal_hierarchical_instancer";
+    if (mode == "attrib") {
+        string from_attr = chs(H + "/inst_hierarchical_from");
+        if (owner == "point") {
+            int np = npoints(0);
+            for(int i=0; i<np; i++) {
+                int from_val = point(0, from_attr, i);
+                setpointattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "prim") {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) {
+                int from_val = prim(0, from_attr, i);
+                setprimattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "detail") {
+            int from_val = detail(0, from_attr, 0);
+            setdetailattrib(0, attr_name, from_val, "set");
+        }
+    } else {
+        int u = chi(H + "/inst_hierarchical_val");
+        if (owner == "point") {
+            int np = npoints(0);
+            for(int i=0; i<np; i++) {
+                setpointattrib(0, attr_name, i, u, "set");
+            }
+        } else if (owner == "prim") {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) {
+                setprimattrib(0, attr_name, i, u, "set");
+            }
+        } else if (owner == "detail") {
+            setdetailattrib(0, attr_name, u, "set");
+        }
+    }
+}
+
+// --- unreal_force_instancer ---
+if (chi(H + "/en_inst_force")) {
+    string owner = chs(H + "/owner_inst_force");
+    string mode = chs(H + "/form_mode_inst_force");
+    string attr_name = "unreal_force_instancer";
+    if (mode == "attrib") {
+        string from_attr = chs(H + "/inst_force_from");
+        if (owner == "point") {
+            int np = npoints(0);
+            for(int i=0; i<np; i++) {
+                int from_val = point(0, from_attr, i);
+                setpointattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "prim") {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) {
+                int from_val = prim(0, from_attr, i);
+                setprimattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "detail") {
+            int from_val = detail(0, from_attr, 0);
+            setdetailattrib(0, attr_name, from_val, "set");
+        }
+    } else {
+        int u = chi(H + "/inst_force_val");
+        if (owner == "point") {
+            int np = npoints(0);
+            for(int i=0; i<np; i++) {
+                setpointattrib(0, attr_name, i, u, "set");
+            }
+        } else if (owner == "prim") {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) {
+                setprimattrib(0, attr_name, i, u, "set");
+            }
+        } else if (owner == "detail") {
+            setdetailattrib(0, attr_name, u, "set");
+        }
+    }
+}
+
+// --- unreal_num_custom_floats ---
+if (chi(H + "/en_inst_numfloats")) {
+    string owner = chs(H + "/owner_inst_numfloats");
+    string mode = chs(H + "/form_mode_inst_numfloats");
+    string attr_name = "unreal_num_custom_floats";
+    if (mode == "attrib") {
+        string from_attr = chs(H + "/inst_numfloats_from");
+        if (owner == "point") {
+            int np = npoints(0);
+            for(int i=0; i<np; i++) {
+                int from_val = point(0, from_attr, i);
+                setpointattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "prim") {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) {
+                int from_val = prim(0, from_attr, i);
+                setprimattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "detail") {
+            int from_val = detail(0, from_attr, 0);
+            setdetailattrib(0, attr_name, from_val, "set");
+        }
+    } else {
+        int u = chi(H + "/inst_numfloats_val");
+        if (owner == "point") {
+            int np = npoints(0);
+            for(int i=0; i<np; i++) {
+                setpointattrib(0, attr_name, i, u, "set");
+            }
+        } else if (owner == "prim") {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) {
+                setprimattrib(0, attr_name, i, u, "set");
+            }
+        } else if (owner == "detail") {
+            setdetailattrib(0, attr_name, u, "set");
+        }
+    }
+}
+
+// --- unreal_instance_origin ---
+if (chi(H + "/en_inst_origin")) {
+    string owner = chs(H + "/owner_inst_origin");
+    string mode = chs(H + "/form_mode_inst_origin");
+    string attr_name = "unreal_instance_origin";
+    if (mode == "attrib") {
+        string from_attr = chs(H + "/inst_origin_from");
+        if (owner == "point") {
+            int np = npoints(0);
+            for(int i=0; i<np; i++) {
+                vector from_val = point(0, from_attr, i);
+                setpointattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "prim") {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) {
+                vector from_val = prim(0, from_attr, i);
+                setprimattrib(0, attr_name, i, from_val, "set");
+            }
+        } else if (owner == "detail") {
+            vector from_val = detail(0, from_attr, 0);
+            setdetailattrib(0, attr_name, from_val, "set");
+        }
+    } else {
+        vector u = chv(H + "/inst_origin_val");
+        if (owner == "point") {
+            int np = npoints(0);
+            for(int i=0; i<np; i++) {
+                setpointattrib(0, attr_name, i, u, "set");
+            }
+        } else if (owner == "prim") {
+            int np = nprimitives(0);
+            for(int i=0; i<np; i++) {
+                setprimattrib(0, attr_name, i, u, "set");
+            }
+        } else if (owner == "detail") {
+            setdetailattrib(0, attr_name, u, "set");
+        }
+    }
+}

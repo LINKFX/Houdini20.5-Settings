@@ -1,0 +1,303 @@
+{
+    name	selectedparms
+
+    group {
+        name    "folder3_2"
+        label   "Splines_Edit_Layer"
+        parmtag { "group_default" "0" }
+        grouptag { "import_enable" "1" }
+        grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.Landscape.ds" }
+        grouptag { "import_token" "folder3:Splines_Segment" }
+
+        parm {
+            name    "en_ls_edit_name"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.03.Landscape_SplinesEditLayer.ds" }
+            parmtag { "import_token" "en_ls_edit_name" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_ls_edit_name"
+            label   "EditLayer Name"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.03.Landscape_SplinesEditLayer.ds" }
+            grouptag { "import_token" "grp_ls_edit_name:EditLayer Name" }
+            parmtag { "sidefx::header_parm" "editlayer_name_str2" }
+            parmtag { "sidefx::header_toggle" "en_ls_edit_name" }
+
+            parm {
+                name    "ls_edit_name_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_editlayer_name" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.03.Landscape_SplinesEditLayer.ds" }
+                parmtag { "import_token" "ls_edit_name_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "ls_edit_name_help"
+                label   "Help"
+                type    label
+                default { "说明：要创建并将样条应用到的 Edit Layer 名称。\n示例：SplineLayer → 写出 unreal_landscape_editlayer_name=SplineLayer。\n结果：样条修改发生在该 Edit Layer。\nOwner：Point/Vertex/Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.03.Landscape_SplinesEditLayer.ds" }
+                parmtag { "import_token" "ls_edit_name_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_ls_edit_name"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_ls_edit_name == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                    "prim"      "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.03.Landscape_SplinesEditLayer.ds" }
+                parmtag { "import_token" "owner_ls_edit_name" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_editlayer_name_str2"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.03.Landscape_SplinesEditLayer.ds" }
+                parmtag { "import_token" "form_mode_editlayer_name_str2" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "editlayer_name_str2_from"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ form_mode_editlayer_name_str2 != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_ls_edit_name\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.03.Landscape_SplinesEditLayer.ds" }
+                parmtag { "import_token" "editlayer_name_str2_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_ls_edit_name')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "editlayer_name_str2"
+                label   "Layer Name"
+                type    string
+                default { "SplineLayer" }
+                disablewhen "{ en_ls_edit_name == 0 } { form_mode_editlayer_name_str2 != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.03.Landscape_SplinesEditLayer.ds" }
+                parmtag { "import_token" "editlayer_name_str2" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_ls_edit_clear"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.03.Landscape_SplinesEditLayer.ds" }
+            parmtag { "import_token" "en_ls_edit_clear" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_ls_edit_clear"
+            label   "Clear EditLayer"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.03.Landscape_SplinesEditLayer.ds" }
+            grouptag { "import_token" "grp_ls_edit_clear:Clear EditLayer" }
+            parmtag { "sidefx::header_toggle" "en_ls_edit_clear" }
+
+            parm {
+                name    "ls_edit_clear_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_editlayer_clear" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.03.Landscape_SplinesEditLayer.ds" }
+                parmtag { "import_token" "ls_edit_clear_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "ls_edit_clear_help"
+                label   "Help"
+                type    label
+                default { "说明：该 Edit Layer 第一次在样条转换过程中被修改时是否先清空。\n示例：1 → 写出 unreal_landscape_editlayer_clear=1。\n结果：避免旧内容影响新的样条应用结果。\nOwner：Point/Vertex/Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.03.Landscape_SplinesEditLayer.ds" }
+                parmtag { "import_token" "ls_edit_clear_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_ls_edit_clear"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                default { "prim" }
+                disablewhen "{ en_ls_edit_clear == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                    "prim"      "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.03.Landscape_SplinesEditLayer.ds" }
+                parmtag { "import_token" "owner_ls_edit_clear" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_ls_edit_after"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.03.Landscape_SplinesEditLayer.ds" }
+            parmtag { "import_token" "en_ls_edit_after" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_ls_edit_after"
+            label   "EditLayer After"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.03.Landscape_SplinesEditLayer.ds" }
+            grouptag { "import_token" "grp_ls_edit_after:EditLayer After" }
+            parmtag { "sidefx::header_parm" "editlayer_after_str2" }
+            parmtag { "sidefx::header_toggle" "en_ls_edit_after" }
+
+            parm {
+                name    "ls_edit_after_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_editlayer_after" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.03.Landscape_SplinesEditLayer.ds" }
+                parmtag { "import_token" "ls_edit_after_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "ls_edit_after_help"
+                label   "Help"
+                type    label
+                default { "说明：将 unreal_landscape_editlayer_name 指定的图层移动到该图层之后。\n示例：Base → 写出 unreal_landscape_editlayer_after=Base。\n结果：控制 Edit Layer 在堆栈中的顺序。\nOwner：Vertex/Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.03.Landscape_SplinesEditLayer.ds" }
+                parmtag { "import_token" "ls_edit_after_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_ls_edit_after"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_ls_edit_after == 0 }"
+                menu {
+                    "vertex"    "Vertex"
+                    "prim"      "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.03.Landscape_SplinesEditLayer.ds" }
+                parmtag { "import_token" "owner_ls_edit_after" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_editlayer_after_str2"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.03.Landscape_SplinesEditLayer.ds" }
+                parmtag { "import_token" "form_mode_editlayer_after_str2" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "editlayer_after_str2_from"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ form_mode_editlayer_after_str2 != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_ls_edit_after\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.03.Landscape_SplinesEditLayer.ds" }
+                parmtag { "import_token" "editlayer_after_str2_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_ls_edit_after')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "editlayer_after_str2"
+                label   "After Layer"
+                type    string
+                default { "Base" }
+                disablewhen "{ en_ls_edit_after == 0 } { form_mode_editlayer_after_str2 != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.03.Landscape_SplinesEditLayer.ds" }
+                parmtag { "import_token" "editlayer_after_str2" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+
+}

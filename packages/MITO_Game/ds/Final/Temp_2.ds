@@ -1,0 +1,108 @@
+{
+    name	selectedparms
+
+    parm {
+        name    "en_unreal_landscape_spline_control_point_mesh_scale"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_unreal_landscape_spline_control_point_mesh_scale"
+        label   "Control Point Mesh Scale"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_unreal_landscape_spline_control_point_mesh_scale" }
+
+        parm {
+            name    "unreal_landscape_spline_control_point_mesh_scale_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_spline_control_point_mesh_scale" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "unreal_landscape_spline_control_point_mesh_scale_help"
+            label   "Help"
+            type    label
+            default { "说明：设置控制点网格的缩放比例 (x y z)。\n示例(Attribute)：来源 attr=mesh_scale → (1,2,1)。\n示例(Value)：直接输入 1 2 1。\n结果：Bake 时网格会按指定比例缩放。\nOwner：Point/Vertex。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_unreal_landscape_spline_control_point_mesh_scale"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "point" }
+            disablewhen "{ en_unreal_landscape_spline_control_point_mesh_scale == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_unreal_landscape_spline_control_point_mesh_scale"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_unreal_landscape_spline_control_point_mesh_scale == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "unreal_landscape_spline_control_point_mesh_scale_from"
+            label   "Attribute From"
+            type    string
+            default { "unreal_landscape_spline_control_point_mesh_scale" }
+            disablewhen "{ en_unreal_landscape_spline_control_point_mesh_scale == 0 } { form_mode_unreal_landscape_spline_control_point_mesh_scale != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_unreal_landscape_spline_control_point_mesh_scale\").evalAsString()" ]
+                [ "" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_unreal_landscape_spline_control_point_mesh_scale')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "unreal_landscape_spline_control_point_mesh_scale_val"
+            label   "Control Point Mesh Scale Value"
+            type    vector
+            size    3
+            default { "0" "0" "0" }
+            disablewhen "{ en_unreal_landscape_spline_control_point_mesh_scale == 0 } { form_mode_unreal_landscape_spline_control_point_mesh_scale != value }"
+            range   { -1 1 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+
+}

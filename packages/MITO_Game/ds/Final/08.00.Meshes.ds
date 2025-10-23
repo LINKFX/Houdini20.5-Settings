@@ -1,0 +1,1218 @@
+{
+    name	selectedparms
+
+    group {
+        name    "folder_main"
+        label   "Main"
+        grouptag { "import_enable" "1" }
+        grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+        grouptag { "import_token" "folder_meshes:Meshes" }
+
+        parm {
+            name    "en_mesh_lightmap_resolution"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+            parmtag { "import_token" "en_mesh_lightmap_resolution" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_mesh_lightmap_resolution"
+            label   "Unreal Lightmap Resolution"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+            grouptag { "import_token" "grp_mesh_lightmap_resolution:Unreal Lightmap Resolution" }
+            parmtag { "sidefx::header_toggle" "en_mesh_lightmap_resolution" }
+
+            parm {
+                name    "mesh_lightmap_resolution_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_lightmap_resolution" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "mesh_lightmap_resolution_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "mesh_lightmap_resolution_help"
+                label   "Help"
+                type    label
+                default { "Lightmap resolution for the mesh component.\n说明：设置网格组件的光照贴图分辨率。可通过 Attribute 或数值指定。\n示例(Attribute)：来源 attr=128 → 写出 unreal_lightmap_resolution=128。\n示例(数值)：直接设置=64 → UE 中网格使用 64 分辨率光照贴图。\n结果：控制网格的光照贴图质量。\nOwner：Any。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "mesh_lightmap_resolution_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_mesh_lightmap_resolution"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "detail" }
+                disablewhen "{ en_mesh_lightmap_resolution == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "vertex"    "Vertex"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "owner_mesh_lightmap_resolution" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_mesh_lightmap_resolution"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_mesh_lightmap_resolution == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "form_mode_mesh_lightmap_resolution" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "mesh_lightmap_resolution_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_lightmap_resolution" }
+                disablewhen "{ en_mesh_lightmap_resolution == 0 } { form_mode_mesh_lightmap_resolution != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_mesh_lightmap_resolution\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "mesh_lightmap_resolution_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_mesh_lightmap_resolution')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "mesh_lightmap_resolution_val"
+                label   "Lightmap Resolution"
+                type    integer
+                default { "64" }
+                disablewhen "{ en_mesh_lightmap_resolution == 0 } { form_mode_mesh_lightmap_resolution != value }"
+                range   { 1 1024 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "mesh_lightmap_resolution_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        groupcollapsible {
+            name    "grp_mesh_output_name"
+            label   "Unreal Output Name"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+            grouptag { "import_token" "grp_mesh_output_name:Unreal Output Name" }
+
+            parm {
+                name    "mesh_output_name_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_output_name" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "mesh_output_name_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "mesh_output_name_help"
+                label   "Help"
+                type    label
+                default { "Name to be used for the output. Default value used for single landscape actor: Landscape.\n说明：输出名称，用于 HDA 顶部参数。默认单景演员为 'Landscape'。不可调，此处仅参考顶部设置。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "mesh_output_name_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+        }
+
+        parm {
+            name    "en_mesh_disable_gamma_correction"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+            parmtag { "import_token" "en_mesh_disable_gamma_correction" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_mesh_disable_gamma_correction"
+            label   "Unreal Disable Gamma Correction"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+            grouptag { "import_token" "grp_mesh_disable_gamma_correction:Unreal Disable Gamma Correction" }
+            parmtag { "sidefx::header_toggle" "en_mesh_disable_gamma_correction" }
+
+            parm {
+                name    "mesh_disable_gamma_correction_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_disable_gamma_correction" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "mesh_disable_gamma_correction_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "mesh_disable_gamma_correction_help"
+                label   "Help"
+                type    label
+                default { "If not 0, gamma correction is not performed when reading the 'Cd' attribute.\n说明：若非 0，则不进行 Cd 属性的伽马校正。可通过 Attribute 或数值指定。\n示例(Attribute)：来源 attr=1 → 写出 unreal_disable_gamma_correction=1。\n示例(数值)：直接设置=0 → 启用校正。\n结果：控制 Cd 属性的伽马处理。\nOwner：Any。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "mesh_disable_gamma_correction_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_mesh_disable_gamma_correction"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "detail" }
+                disablewhen "{ en_mesh_disable_gamma_correction == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "vertex"    "Vertex"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "owner_mesh_disable_gamma_correction" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_mesh_disable_gamma_correction"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_mesh_disable_gamma_correction == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "form_mode_mesh_disable_gamma_correction" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "mesh_disable_gamma_correction_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_disable_gamma_correction" }
+                disablewhen "{ en_mesh_disable_gamma_correction == 0 } { form_mode_mesh_disable_gamma_correction != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_mesh_disable_gamma_correction\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "mesh_disable_gamma_correction_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_mesh_disable_gamma_correction')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "mesh_disable_gamma_correction_val"
+                label   "Disable Gamma Correction"
+                type    integer
+                default { "0" }
+                disablewhen "{ en_mesh_disable_gamma_correction == 0 } { form_mode_mesh_disable_gamma_correction != value }"
+                range   { 0 1 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "mesh_disable_gamma_correction_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        groupcollapsible {
+            name    "grp_mesh_generated_mesh_name"
+            label   "Unreal Generated Mesh Name (Deprecated)"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+            grouptag { "import_token" "grp_mesh_generated_mesh_name:Unreal Generated Mesh Name (Deprecated)" }
+
+            parm {
+                name    "mesh_generated_mesh_name_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_generated_mesh_name" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "mesh_generated_mesh_name_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "mesh_generated_mesh_name_help"
+                label   "Help"
+                type    label
+                default { "(Deprecated) use unreal_output_name instead.\n说明：废弃属性，请使用 unreal_output_name 代替。指向 HDA 顶部输出名称。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "mesh_generated_mesh_name_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+        }
+
+    }
+
+    group {
+        name    "folder_meshes_1"
+        label   "Nanite"
+        grouptag { "import_enable" "1" }
+        grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+        grouptag { "import_token" "folder_meshes:Meshes Nanite" }
+
+        parm {
+            name    "nanite_help"
+            label   "Nanite Settings Help"
+            type    label
+            default { "(UE5 only) The plugin can control the Nanite settings on the meshes found in the outputs of your HDA by using the following attributes. Having any of these three attributes automatically enables Nanite on the generated Static Meshes. This only applies to refined meshes, as Houdini Proxy Meshes do not support Nanite." }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+            parmtag { "import_token" "nanite_help" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "en_nanite_enabled"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+            parmtag { "import_token" "en_nanite_enabled" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_nanite_enabled"
+            label   "Unreal Nanite Enabled"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+            grouptag { "import_token" "grp_nanite_enabled:Unreal Nanite Enabled" }
+            parmtag { "sidefx::header_toggle" "en_nanite_enabled" }
+
+            parm {
+                name    "nanite_enabled_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_nanite_enabled" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "nanite_enabled_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "nanite_enabled_help"
+                label   "Help"
+                type    label
+                default { "Turns on Nanite on the generated meshes.\n说明：启用生成的网格 Nanite。可通过 Attribute 或数值指定。\n示例(Attribute)：来源 attr=1 → 写出 unreal_nanite_enabled=1。\n示例(数值)：直接设置=0 → 禁用 Nanite。\n结果：控制是否启用 Nanite。\nOwner：Any。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "nanite_enabled_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_nanite_enabled"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "detail" }
+                disablewhen "{ en_nanite_enabled == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "vertex"    "Vertex"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "owner_nanite_enabled" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_nanite_enabled"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_nanite_enabled == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "form_mode_nanite_enabled" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "nanite_enabled_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_nanite_enabled" }
+                disablewhen "{ en_nanite_enabled == 0 } { form_mode_nanite_enabled != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_nanite_enabled\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "nanite_enabled_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_nanite_enabled')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "nanite_enabled_val"
+                label   "Nanite Enabled"
+                type    integer
+                default { "0" }
+                disablewhen "{ en_nanite_enabled == 0 } { form_mode_nanite_enabled != value }"
+                range   { 0 1 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "nanite_enabled_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_nanite_position_precision"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+            parmtag { "import_token" "en_nanite_position_precision" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_nanite_position_precision"
+            label   "Unreal Nanite Position Precision"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+            grouptag { "import_token" "grp_nanite_position_precision:Unreal Nanite Position Precision" }
+            parmtag { "sidefx::header_toggle" "en_nanite_position_precision" }
+
+            parm {
+                name    "nanite_position_precision_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_nanite_position_precision" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "nanite_position_precision_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "nanite_position_precision_help"
+                label   "Help"
+                type    label
+                default { "The position precision attribute to be used for Nanite Meshes (UE5).\n说明：Nanite 网格的位置精度属性。可通过 Attribute 或数值指定。\n示例(Attribute)：来源 attr=1 → 写出 unreal_nanite_position_precision=1。\n示例(数值)：直接设置=0 → 默认精度。\n结果：控制 Nanite 网格的位置精度。\nOwner：Any。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "nanite_position_precision_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_nanite_position_precision"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "detail" }
+                disablewhen "{ en_nanite_position_precision == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "vertex"    "Vertex"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "owner_nanite_position_precision" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_nanite_position_precision"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_nanite_position_precision == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "form_mode_nanite_position_precision" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "nanite_position_precision_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_nanite_position_precision" }
+                disablewhen "{ en_nanite_position_precision == 0 } { form_mode_nanite_position_precision != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_nanite_position_precision\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "nanite_position_precision_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_nanite_position_precision')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "nanite_position_precision_val"
+                label   "Position Precision"
+                type    integer
+                default { "0" }
+                disablewhen "{ en_nanite_position_precision == 0 } { form_mode_nanite_position_precision != value }"
+                range   { -10 10 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "nanite_position_precision_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_nanite_percent_triangles"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+            parmtag { "import_token" "en_nanite_percent_triangles" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_nanite_percent_triangles"
+            label   "Unreal Nanite Percent Triangles"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+            grouptag { "import_token" "grp_nanite_percent_triangles:Unreal Nanite Percent Triangles" }
+            parmtag { "sidefx::header_toggle" "en_nanite_percent_triangles" }
+
+            parm {
+                name    "nanite_percent_triangles_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_nanite_percent_triangles" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "nanite_percent_triangles_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "nanite_percent_triangles_help"
+                label   "Help"
+                type    label
+                default { "The percent of triangles to keep for Nanite Meshes, zero by default (no triangles).\n说明：Nanite 网格保留三角形百分比。可通过 Attribute 或数值指定。\n示例(Attribute)：来源 attr=50 → 写出 unreal_nanite_percent_triangles=50。\n示例(数值)：直接设置=0 → 无三角形。\n结果：控制 Nanite 网格的三角形保留比例。\nOwner：Any。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "nanite_percent_triangles_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_nanite_percent_triangles"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "detail" }
+                disablewhen "{ en_nanite_percent_triangles == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "vertex"    "Vertex"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "owner_nanite_percent_triangles" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_nanite_percent_triangles"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_nanite_percent_triangles == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "form_mode_nanite_percent_triangles" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "nanite_percent_triangles_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_nanite_percent_triangles" }
+                disablewhen "{ en_nanite_percent_triangles == 0 } { form_mode_nanite_percent_triangles != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_nanite_percent_triangles\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "nanite_percent_triangles_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_nanite_percent_triangles')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "nanite_percent_triangles_val"
+                label   "Percent Triangles"
+                type    integer
+                default { "0" }
+                disablewhen "{ en_nanite_percent_triangles == 0 } { form_mode_nanite_percent_triangles != value }"
+                range   { 0 100 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "nanite_percent_triangles_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_nanite_fallback_relative_error"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+            parmtag { "import_token" "en_nanite_fallback_relative_error" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_nanite_fallback_relative_error"
+            label   "Unreal Nanite Fallback Relative Error"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+            grouptag { "import_token" "grp_nanite_fallback_relative_error:Unreal Nanite Fallback Relative Error" }
+            parmtag { "sidefx::header_toggle" "en_nanite_fallback_relative_error" }
+
+            parm {
+                name    "nanite_fallback_relative_error_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_nanite_fallback_relative_error" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "nanite_fallback_relative_error_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "nanite_fallback_relative_error_help"
+                label   "Help"
+                type    label
+                default { "Fallback relative error - sets the maximum amount of relative error allowed when removing details from the source mesh. This relative error value doesn't have a unit size and is relative to the size of the mesh.\n说明：后备相对误差 - 移除源网格细节时允许的最大误差。可通过 Attribute 或数值指定。\n示例(Attribute)：来源 attr=0.01 → 写出 unreal_nanite_fallback_relative_error=0.01。\n示例(数值)：直接设置=0.01 → 默认值。\n结果：控制 Nanite 后备误差。\nOwner：Any。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "nanite_fallback_relative_error_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_nanite_fallback_relative_error"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "detail" }
+                disablewhen "{ en_nanite_fallback_relative_error == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "vertex"    "Vertex"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "owner_nanite_fallback_relative_error" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_nanite_fallback_relative_error"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_nanite_fallback_relative_error == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "form_mode_nanite_fallback_relative_error" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "nanite_fallback_relative_error_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_nanite_fallback_relative_error" }
+                disablewhen "{ en_nanite_fallback_relative_error == 0 } { form_mode_nanite_fallback_relative_error != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_nanite_fallback_relative_error\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "nanite_fallback_relative_error_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_nanite_fallback_relative_error')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "nanite_fallback_relative_error_val"
+                label   "Fallback Relative Error"
+                type    float
+                default { "0.01" }
+                disablewhen "{ en_nanite_fallback_relative_error == 0 } { form_mode_nanite_fallback_relative_error != value }"
+                range   { 0 1 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "nanite_fallback_relative_error_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_nanite_trim_relative_error"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+            parmtag { "import_token" "en_nanite_trim_relative_error" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_nanite_trim_relative_error"
+            label   "Unreal Nanite Trim Relative Error"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+            grouptag { "import_token" "grp_nanite_trim_relative_error:Unreal Nanite Trim Relative Error" }
+            parmtag { "sidefx::header_toggle" "en_nanite_trim_relative_error" }
+
+            parm {
+                name    "nanite_trim_relative_error_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_nanite_trim_relative_error" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "nanite_trim_relative_error_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "nanite_trim_relative_error_help"
+                label   "Help"
+                type    label
+                default { "Trim relative error - All detail in the source mesh with less visual impact than this relative error amount is removed. This relative error value doesn't have a unit size and is relative to the size of the mesh.\n说明：修剪相对误差 - 移除视觉影响小于此误差的源网格细节。可通过 Attribute 或数值指定。\n示例(Attribute)：来源 attr=0.001 → 写出 unreal_nanite_trim_relative_error=0.001。\n示例(数值)：直接设置=0.001 → 默认值。\n结果：控制 Nanite 修剪误差。\nOwner：Any。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "nanite_trim_relative_error_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_nanite_trim_relative_error"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "detail" }
+                disablewhen "{ en_nanite_trim_relative_error == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "vertex"    "Vertex"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "owner_nanite_trim_relative_error" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_nanite_trim_relative_error"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_nanite_trim_relative_error == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "form_mode_nanite_trim_relative_error" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "nanite_trim_relative_error_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_nanite_trim_relative_error" }
+                disablewhen "{ en_nanite_trim_relative_error == 0 } { form_mode_nanite_trim_relative_error != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_nanite_trim_relative_error\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "nanite_trim_relative_error_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_nanite_trim_relative_error')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "nanite_trim_relative_error_val"
+                label   "Trim Relative Error"
+                type    float
+                default { "0.001" }
+                disablewhen "{ en_nanite_trim_relative_error == 0 } { form_mode_nanite_trim_relative_error != value }"
+                range   { 0 1 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+                parmtag { "import_token" "nanite_trim_relative_error_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+    group {
+        name    "folder_meshes_2"
+        label   "Sockets"
+        tabbreak
+        grouptag { "import_enable" "1" }
+        grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+
+        parm {
+            name    "en_mesh_socket"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+            parmtag { "import_token" "en_mesh_socket" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "folder6"
+            label   "Mesh Sockets"
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+            grouptag { "import_token" "folder6:Mesh Sockets" }
+            parmtag { "sidefx::header_toggle" "en_mesh_socket" }
+
+            parm {
+                name    "mesh_socket_help"
+                label   "Help"
+                type    label
+                default { "说明：定义 Mesh 的多个 Socket（位置、旋转、缩放、名称、标签、附着 Actor）。通过 multiparm 可添加任意数量。\n示例(Attribute)：来源 mesh_socket0_pos=(0,50,100)，mesh_socket0_name=Grip → 写出 UE 中 Socket Grip 位置(0,50,100)。\n示例(Value)：直接输入 Position=(0,0,100)，Name=WeaponSocket → UE 中生成名为 WeaponSocket 的 Socket。\n结果：Bake 后 Static Mesh 在 UE 中自动生成对应数量的 Socket，每个带有设定的变换和可选 Actor/Tag，用于蓝图或运行时附着。\nOwner：Detail。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                parmtag { "import_token" "mesh_socket_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            multiparm {
+                name    "num_sockets"
+                label    "Number of Mesh Sockets"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                parmtag { "import_token" "num_sockets" }
+
+                parm {
+                    name    "en_socket#"
+                    label   "Enable Socket #"
+                    type    toggle
+                    default { "1" }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "en_socket#" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                groupcollapsible {
+                    name    "grp_socket#"
+                    label   "Socket #"
+                    grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    grouptag { "import_token" "grp_socket#:Socket #" }
+                    parmtag { "sidefx::header_toggle" "en_socket#" }
+
+                    parm {
+                        name    "mode_socket#"
+                        label   "Mode"
+                        type    ordinal
+                        default { "value" }
+                        disablewhen "{ en_socket# == 0 }"
+                        menu {
+                            "attrib"    "Attribute"
+                            "value"     "Value"
+                        }
+                        parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                        parmtag { "import_token" "mode_socket#" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    parm {
+                        name    "socket_pos_from#"
+                        label   "Attribute Position"
+                        type    string
+                        default { "mesh_socket#_pos" }
+                        disablewhen "{ en_socket# == 0 } { mode_socket# != attrib }"
+                        menureplace {
+                            [ "node = hou.pwd()" ]
+                            [ "in_node = node.node(\"IN\")" ]
+                            [ "if not in_node:" ]
+                            [ "    return []" ]
+                            [ "geo = in_node.geometry()" ]
+                            [ "attrs = [a.name() for a in geo.globalAttribs()]" ]
+                            [ "menu = []" ]
+                            [ "for a in attrs:" ]
+                            [ "    menu += [a, a]" ]
+                            [ "return menu" ]
+                            language python
+                        }
+                        parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                        parmtag { "import_token" "socket_pos_from#" }
+                        parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'detail')" }
+                        parmtag { "menu_script_language" "python" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    parm {
+                        name    "socket_pos_val#"
+                        label   "Socket Position"
+                        type    float
+                        size    3
+                        default { "0" "0" "0" }
+                        disablewhen "{ en_socket# == 0 } { mode_socket# != value }"
+                        range   { 0 10 }
+                        parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                        parmtag { "import_token" "socket_pos_val#" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    parm {
+                        name    "socket_rot_from#"
+                        label   "Attribute Rotation"
+                        type    string
+                        default { "mesh_socket#_rot" }
+                        disablewhen "{ en_socket# == 0 } { mode_socket# != attrib }"
+                        menureplace {
+                            [ "node = hou.pwd()" ]
+                            [ "in_node = node.node(\"IN\")" ]
+                            [ "if not in_node:" ]
+                            [ "    return []" ]
+                            [ "geo = in_node.geometry()" ]
+                            [ "attrs = [a.name() for a in geo.globalAttribs()]" ]
+                            [ "menu = []" ]
+                            [ "for a in attrs:" ]
+                            [ "    menu += [a, a]" ]
+                            [ "return menu" ]
+                            language python
+                        }
+                        parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                        parmtag { "import_token" "socket_rot_from#" }
+                        parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'detail')" }
+                        parmtag { "menu_script_language" "python" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    parm {
+                        name    "socket_rot_val#"
+                        label   "Socket Rotation (Quat)"
+                        type    float
+                        size    4
+                        default { "0" "0" "0" "1" }
+                        disablewhen "{ en_socket# == 0 } { mode_socket# != value }"
+                        range   { 0 10 }
+                        parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                        parmtag { "import_token" "socket_rot_val#" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    parm {
+                        name    "socket_scale_from#"
+                        label   "Attribute Scale"
+                        type    string
+                        default { "mesh_socket#_scale" }
+                        disablewhen "{ en_socket# == 0 } { mode_socket# != attrib }"
+                        menureplace {
+                            [ "node = hou.pwd()" ]
+                            [ "in_node = node.node(\"IN\")" ]
+                            [ "if not in_node:" ]
+                            [ "    return []" ]
+                            [ "geo = in_node.geometry()" ]
+                            [ "attrs = [a.name() for a in geo.globalAttribs()]" ]
+                            [ "menu = []" ]
+                            [ "for a in attrs:" ]
+                            [ "    menu += [a, a]" ]
+                            [ "return menu" ]
+                            language python
+                        }
+                        parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                        parmtag { "import_token" "socket_scale_from#" }
+                        parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'detail')" }
+                        parmtag { "menu_script_language" "python" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    parm {
+                        name    "socket_scale_val#"
+                        label   "Socket Scale"
+                        type    float
+                        size    3
+                        default { "1" "1" "1" }
+                        disablewhen "{ en_socket# == 0 } { mode_socket# != value }"
+                        range   { 0 10 }
+                        parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                        parmtag { "import_token" "socket_scale_val#" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    parm {
+                        name    "socket_name_from#"
+                        label   "Attribute Name"
+                        type    string
+                        default { "mesh_socket#_name" }
+                        disablewhen "{ en_socket# == 0 } { mode_socket# != attrib }"
+                        menureplace {
+                            [ "node = hou.pwd()" ]
+                            [ "in_node = node.node(\"IN\")" ]
+                            [ "if not in_node:" ]
+                            [ "    return []" ]
+                            [ "geo = in_node.geometry()" ]
+                            [ "attrs = [a.name() for a in geo.globalAttribs()]" ]
+                            [ "menu = []" ]
+                            [ "for a in attrs:" ]
+                            [ "    menu += [a, a]" ]
+                            [ "return menu" ]
+                            language python
+                        }
+                        parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                        parmtag { "import_token" "socket_name_from#" }
+                        parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'detail')" }
+                        parmtag { "menu_script_language" "python" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    parm {
+                        name    "socket_name_val#"
+                        label   "Socket Name"
+                        type    string
+                        default { "Socket_#" }
+                        disablewhen "{ en_socket# == 0 } { mode_socket# != value }"
+                        parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                        parmtag { "import_token" "socket_name_val#" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    parm {
+                        name    "socket_tag_from#"
+                        label   "Attribute Tag"
+                        type    string
+                        default { "mesh_socket#_tag" }
+                        disablewhen "{ en_socket# == 0 } { mode_socket# != attrib }"
+                        menureplace {
+                            [ "node = hou.pwd()" ]
+                            [ "in_node = node.node(\"IN\")" ]
+                            [ "if not in_node:" ]
+                            [ "    return []" ]
+                            [ "geo = in_node.geometry()" ]
+                            [ "attrs = [a.name() for a in geo.globalAttribs()]" ]
+                            [ "menu = []" ]
+                            [ "for a in attrs:" ]
+                            [ "    menu += [a, a]" ]
+                            [ "return menu" ]
+                            language python
+                        }
+                        parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                        parmtag { "import_token" "socket_tag_from#" }
+                        parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'detail')" }
+                        parmtag { "menu_script_language" "python" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    parm {
+                        name    "socket_tag_val#"
+                        label   "Socket Tag"
+                        type    string
+                        default { "Gameplay" }
+                        disablewhen "{ en_socket# == 0 } { mode_socket# != value }"
+                        parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                        parmtag { "import_token" "socket_tag_val#" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    parm {
+                        name    "socket_actor_from#"
+                        label   "Attribute Actor"
+                        type    string
+                        default { "mesh_socket#_actor" }
+                        disablewhen "{ en_socket# == 0 } { mode_socket# != attrib }"
+                        menureplace {
+                            [ "node = hou.pwd()" ]
+                            [ "in_node = node.node(\"IN\")" ]
+                            [ "if not in_node:" ]
+                            [ "    return []" ]
+                            [ "geo = in_node.geometry()" ]
+                            [ "attrs = [a.name() for a in geo.globalAttribs()]" ]
+                            [ "menu = []" ]
+                            [ "for a in attrs:" ]
+                            [ "    menu += [a, a]" ]
+                            [ "return menu" ]
+                            language python
+                        }
+                        parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                        parmtag { "import_token" "socket_actor_from#" }
+                        parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'detail')" }
+                        parmtag { "menu_script_language" "python" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    parm {
+                        name    "socket_actor_val#"
+                        label   "Socket Actor"
+                        type    string
+                        default { "Blueprint'/Game/Actor/BP_SocketActor.BP_SocketActor_C'" }
+                        disablewhen "{ en_socket# == 0 } { mode_socket# != value }"
+                        parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                        parmtag { "import_token" "socket_actor_val#" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                }
+
+            }
+
+        }
+
+    }
+
+
+}

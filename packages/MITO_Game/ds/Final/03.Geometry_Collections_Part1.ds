@@ -1,0 +1,788 @@
+{
+    name	selectedparms
+
+    parm {
+        name    "gc_output_enable"
+        label   "Geometry Collection Output"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_gc_output"
+        label   "Geometry Collection Output"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "gc_output_enable" }
+
+        parm {
+            name    "gc_output_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_output_geometry_collection" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "gc_output_help"
+            label   "Help"
+            type    label
+            default { "说明：将几何作为 Geometry Collection 输出，用于 Chaos 破碎/聚类模拟。\n示例(Attribute)：unreal_output_geometry_collection=1\n示例(Value)：勾选启用\n结果：Bake 为 Geometry Collection 资源或其实例，用于后续碎裂与动力学。\nOwner：Prim。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_gc_output"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ gc_output_enable == 0 }"
+            menu {
+                "point"     "Point"
+                "prim"      "Prim"
+                "vertex"    "Vertex"
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_gc_output"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ gc_output_enable == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gc_output_from"
+            label   "Attribute From"
+            type    string
+            default { "unreal_output_geometry_collection" }
+            disablewhen "{ gc_output_enable == 0 } { form_mode_gc_output != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_gc_output\").evalAsString()" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_gc_output')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gc_output_val"
+            label   "Output Enabled"
+            type    toggle
+            default { "1" }
+            disablewhen "{ gc_output_enable == 0 } { form_mode_gc_output != value }"
+            range   { 0 1 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "gc_cluster_enable"
+        label   "Enable Clustering"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_gc_cluster"
+        label   "Enable Clustering"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "gc_cluster_enable" }
+
+        parm {
+            name    "gc_cluster_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_gc_enable_clustering" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "gc_cluster_help"
+            label   "Help"
+            type    label
+            default { "说明：启用层级聚类（由大到小的分层碎片），与“Max Cluster Level”配合使用。\n示例(Attribute)：unreal_gc_enable_clustering=1\n示例(Value)：勾选启用\n结果：碎片以层级组织，便于逐级破坏控制。\nOwner：Prim。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_gc_cluster"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ gc_cluster_enable == 0 }"
+            menu {
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_gc_cluster"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ gc_cluster_enable == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gc_cluster_from"
+            label   "Attribute From"
+            type    string
+            default { "unreal_gc_enable_clustering" }
+            disablewhen "{ gc_cluster_enable == 0 } { form_mode_gc_cluster != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_gc_cluster\").evalAsString()" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_gc_cluster')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gc_cluster_val"
+            label   "Cluster Enabled"
+            type    toggle
+            default { "1" }
+            disablewhen "{ gc_cluster_enable == 0 } { form_mode_gc_cluster != value }"
+            range   { 0 1 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "gc_cluster_connection_enable"
+        label   "Cluster Connection Type"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_gc_cluster_connection"
+        label   "Cluster Connection Type"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "gc_cluster_connection_enable" }
+
+        parm {
+            name    "gc_cluster_connection_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_gc_clustering_cluster_connection_type" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "gc_cluster_connection_help"
+            label   "Help"
+            type    label
+            default { "说明：指定聚类连接类型。0 = PointImplicit, 1 = MinimalSpanningSubsetDelaunayTriangulation, 3 = PointImplicitAugmentedWithMinimalDelaunay。 示例(Attribute)：unreal_gc_clustering_cluster_connection_type=0 示例(Value)：0 结果：定义聚类中碎片的连接方式。 Owner：Detail。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_gc_cluster_connection"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ gc_cluster_connection_enable == 0 }"
+            menu {
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_gc_cluster_connection"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ gc_cluster_connection_enable == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gc_cluster_connection_from"
+            label   "Attribute From"
+            type    string
+            default { "unreal_gc_clustering_cluster_connection_type" }
+            disablewhen "{ gc_cluster_connection_enable == 0 } { form_mode_gc_cluster_connection != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_gc_cluster_connection\").evalAsString()" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_gc_cluster_connection')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gc_cluster_connection_val"
+            label   "Connection Type"
+            type    ordinal
+            default { "0" }
+            disablewhen "{ gc_cluster_connection_enable == 0 } { form_mode_gc_cluster_connection != value }"
+            menu {
+                "0" "PointImplicit"
+                "1" "MinimalSpanningSubsetDelaunayTriangulation"
+                "2" "PointImplicitAugmentedWithMinimalDelaunay"
+            }
+            range   { 0 3 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "gc_max_size_enable"
+        label   "Collisions Max Size"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_gc_max_size"
+        label   "Collisions Max Size"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "gc_max_size_enable" }
+
+        parm {
+            name    "gc_max_size_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_gc_collisions_max_size" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "gc_max_size_help"
+            label   "Help"
+            type    label
+            default { "说明：指定Size Specific Data的最大尺寸。需要用于指定多个Size Specific Data。\n示例(Attribute)：unreal_gc_collisions_max_size=100.0\n示例(Value)：100.0\n结果：定义多级碰撞设置的尺寸上限。\nOwner：Detail。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_gc_max_size"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ gc_max_size_enable == 0 }"
+            menu {
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_gc_max_size"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ gc_max_size_enable == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gc_max_size_from"
+            label   "Attribute From"
+            type    string
+            default { "unreal_gc_collisions_max_size" }
+            disablewhen "{ gc_max_size_enable == 0 } { form_mode_gc_max_size != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_gc_max_size\").evalAsString()" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_gc_max_size')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gc_max_size_val"
+            label   "Max Size Value"
+            type    float
+            default { "100" }
+            disablewhen "{ gc_max_size_enable == 0 } { form_mode_gc_max_size != value }"
+            range   { 0 10000 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "gc_damage_enable"
+        label   "Collisions Damage Threshold"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_gc_damage"
+        label   "Collisions Damage Threshold"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "gc_damage_enable" }
+
+        parm {
+            name    "gc_damage_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_gc_collisions_damage_threshold" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "gc_damage_help"
+            label   "Help"
+            type    label
+            default { "说明：设定碎片受力破坏阈值，值越小越容易破碎。\n示例(Attribute)：unreal_gc_collisions_damage_threshold=50\n示例(Value)：50\n结果：控制碎片在模拟中的破裂强度。\nOwner：Detail。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_gc_damage"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ gc_damage_enable == 0 }"
+            menu {
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_gc_damage"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ gc_damage_enable == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gc_damage_from"
+            label   "Attribute From"
+            type    string
+            default { "unreal_gc_collisions_damage_threshold" }
+            disablewhen "{ gc_damage_enable == 0 } { form_mode_gc_damage != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_gc_damage\").evalAsString()" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_gc_damage')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gc_damage_val"
+            label   "Threshold Value"
+            type    float
+            default { "50" }
+            disablewhen "{ gc_damage_enable == 0 } { form_mode_gc_damage != value }"
+            range   { 0 1000 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "gc_max_level_enable"
+        label   "Max Cluster Level"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_gc_max_level"
+        label   "Max Cluster Level"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "gc_max_level_enable" }
+
+        parm {
+            name    "gc_max_level_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_gc_max_cluster_level" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "gc_max_level_help"
+            label   "Help"
+            type    label
+            default { "说明：限制聚类的最大层级深度（0=仅根层）。\n示例(Attribute)：unreal_gc_max_cluster_level=2\n示例(Value)：输入 2\n结果：层级越高，破碎递进越细。\nOwner：Prim。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_gc_max_level"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ gc_max_level_enable == 0 }"
+            menu {
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_gc_max_level"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ gc_max_level_enable == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gc_max_level_from"
+            label   "Attribute From"
+            type    string
+            default { "unreal_gc_max_cluster_level" }
+            disablewhen "{ gc_max_level_enable == 0 } { form_mode_gc_max_level != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_gc_max_level\").evalAsString()" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_gc_max_level')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gc_max_level_val"
+            label   "Max Level"
+            type    integer
+            default { "2" }
+            disablewhen "{ gc_max_level_enable == 0 } { form_mode_gc_max_level != value }"
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "gc_min_level_set_resolution_enable"
+        label   "Min Level Set Resolution"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_gc_min_level_set_resolution"
+        label   "Min Level Set Resolution"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "gc_min_level_set_resolution_enable" }
+
+        parm {
+            name    "gc_min_level_set_resolution_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_gc_collisions_min_level_set_resolution_X" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "gc_min_level_set_resolution_help"
+            label   "Help"
+            type    label
+            default { "说明：指定碰撞的最小水平集分辨率。X 指定大小特定数据的索引。\n示例(Attribute)：unreal_gc_collisions_min_level_set_resolution_0=5\n示例(Value)：5\n结果：控制碰撞网格的分辨率。\nOwner：Int。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_gc_min_level_set_resolution"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ gc_min_level_set_resolution_enable == 0 }"
+            menu {
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_gc_min_level_set_resolution"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ gc_min_level_set_resolution_enable == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gc_min_level_set_resolution_from"
+            label   "Attribute From"
+            type    string
+            default { "unreal_gc_collisions_min_level_set_resolution_X" }
+            disablewhen "{ gc_min_level_set_resolution_enable == 0 } { form_mode_gc_min_level_set_resolution != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_gc_min_level_set_resolution\").evalAsString()" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_gc_min_level_set_resolution')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gc_min_level_set_resolution_val"
+            label   "Resolution Value"
+            type    integer
+            default { "5" }
+            disablewhen "{ gc_min_level_set_resolution_enable == 0 } { form_mode_gc_min_level_set_resolution != value }"
+            range   { 1 100 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "gc_implicit_type_enable"
+        label   "Implicit Type"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_gc_implicit_type"
+        label   "Implicit Type"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "gc_implicit_type_enable" }
+
+        parm {
+            name    "gc_implicit_type_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_gc_collisions_implicit_type_X" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "gc_implicit_type_help"
+            label   "Help"
+            type    label
+            default { "说明：指定碰撞的隐式类型。0=None,1=Box,2=Sphere,3=Capsule,4=Level Set,5=Convex。X 指定大小特定数据的索引。\n示例(Attribute)：unreal_gc_collisions_implicit_type_0=1\n示例(Value)：1\n结果：定义碰撞形状。\nOwner：Int。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_gc_implicit_type"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ gc_implicit_type_enable == 0 }"
+            menu {
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_gc_implicit_type"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ gc_implicit_type_enable == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gc_implicit_type_from"
+            label   "Attribute From"
+            type    string
+            default { "unreal_gc_collisions_implicit_type_X" }
+            disablewhen "{ gc_implicit_type_enable == 0 } { form_mode_gc_implicit_type != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_gc_implicit_type\").evalAsString()" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_gc_implicit_type')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gc_implicit_type_val"
+            label   "Type Value"
+            type    ordinal
+            default { "1" }
+            disablewhen "{ gc_implicit_type_enable == 0 } { form_mode_gc_implicit_type != value }"
+            menu {
+                "0" "None"
+                "1" "Box"
+                "2" "Sphere"
+                "3" "Capsule"
+                "4" "Level Set"
+                "5" "Convex"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+
+}

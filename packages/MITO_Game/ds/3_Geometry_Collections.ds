@@ -1,0 +1,343 @@
+{
+    name	selectedparms
+
+    parm {
+        name    "en_gc_output"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_gc_output"
+        label   "Geometry Collection Output"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_gc_output" }
+
+        parm {
+            name    "gc_output_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_output_geometry_collection" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "gc_output_help_heading"
+            label   "Help"
+            type    label
+            default { "说明：将几何作为 Geometry Collection 输出，用于 Chaos 破碎/聚类模拟。 \n示例：启用 → 实际写出 unreal_output_geometry_collection=1。 \n结果：Bake 为 Geometry Collection 资源或其实例，用于后续碎裂与动力学。 \nOwner：Prim。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_gc_output"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            default { "prim" }
+            disablewhen "{ en_gc_output == 0 }"
+            menu {
+                "prim"  "Prim"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_gc_cluster"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_gc_cluster"
+        label   "Enable Clustering"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_parm" "gc_enable_clustering" }
+        parmtag { "sidefx::header_toggle" "en_gc_cluster" }
+
+        parm {
+            name    "gc_cluster_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_gc_enable_clustering" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "gc_cluster_help_heading"
+            label   "Help"
+            type    label
+            default { "说明：启用层级聚类（由大到小的分层碎片），与“Max Cluster Level”配合使用。 \n示例：启用 → 实际写出 unreal_gc_enable_clustering=1。 \n结果：碎片以层级组织，便于逐级破坏控制。 \nOwner：Prim。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_gc_cluster"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_gc_cluster == 0 }"
+            menu {
+                "prim"  "Prim"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gc_enable_clustering"
+            label   "Flag"
+            type    integer
+            default { "1" }
+            disablewhen "{ en_gc_cluster == 0 }"
+            range   { 0 1 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_gc_max_level"
+        label   "Enable"
+        type    toggle
+        default { "ch(\"en_gc_cluster\")" }
+    }
+    groupcollapsible {
+        name    "grp_gc_max_level"
+        label   "Max Cluster Level"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_parm" "gc_max_level" }
+        parmtag { "sidefx::header_toggle" "en_gc_max_level" }
+
+        parm {
+            name    "gc_max_level_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_gc_max_cluster_level" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "gc_max_level_help_heading"
+            label   "Help"
+            type    label
+            default { "说明：限制聚类的最大层级深度（0=仅根层）。 \n示例：Level=2 → 实际写出 unreal_gc_max_cluster_level=2。 \n结果：层级越高，破碎递进越细。 \nOwner：Prim。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_gc_max_level"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_gc_max_level == 0 }"
+            menu {
+                "prim"  "Prim"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gc_max_level"
+            label   "Level"
+            type    integer
+            default { "2" }
+            disablewhen "{ en_gc_max_level == 0 }"
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_gc_damage"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_gc_damage"
+        label   "Damage Threshold"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_parm" "gc_damage_threshold" }
+        parmtag { "sidefx::header_toggle" "en_gc_damage" }
+
+        parm {
+            name    "gc_damage_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_gc_damage_threshold" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "gc_damage_help_heading"
+            label   "Help"
+            type    label
+            default { "说明：设定碎片受力破坏阈值（单位依项目设置），值越小越容易破碎。 \n示例：50 → 实际写出 unreal_gc_damage_threshold=50。 \n结果：控制碎片在模拟中的破裂强度。 \nOwner：Prim。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_gc_damage"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_gc_damage == 0 }"
+            menu {
+                "prim"  "Prim"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gc_damage_threshold"
+            label   "Value"
+            type    float
+            default { "50" }
+            disablewhen "{ en_gc_damage == 0 }"
+            range   { 0 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_gc_anchor"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_gc_anchor"
+        label   "Anchor"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_parm" "gc_anchor_flag" }
+        parmtag { "sidefx::header_toggle" "en_gc_anchor" }
+
+        parm {
+            name    "gc_anchor_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_gc_anchor" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "gc_anchor_help_heading"
+            label   "Help"
+            type    label
+            default { "说明：将碎片标记为锚点（固定或高稳定），常用于地基/墙根。 \n示例：启用 → 实际写出 unreal_gc_anchor=1。 \n结果：被标记碎片更不易移动或破碎。 \nOwner：Prim。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_gc_anchor"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            default { "prim" }
+            disablewhen "{ en_gc_anchor == 0 }"
+            menu {
+                "prim"  "Prim"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_gc_connect"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_gc_connect"
+        label   "Connection Type"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_parm" "gc_connection_type" }
+        parmtag { "sidefx::header_toggle" "en_gc_connect" }
+
+        parm {
+            name    "gc_connect_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_gc_connection_type" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "gc_connect_help_heading"
+            label   "Help"
+            type    label
+            default { "说明：设置碎片连接拓扑，影响破坏传播：Proximity（邻接接触）或 Delaunay（三角化连通）。 \n示例：Proximity → 实际写出 unreal_gc_connection_type=proximity。 \n结果：不同拓扑带来不同的断裂路径。 \nOwner：Prim。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_gc_connect"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_gc_connect == 0 }"
+            menu {
+                "prim"  "Prim"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gc_connection_type"
+            label   "Type"
+            type    ordinal
+            default { "proximity" }
+            disablewhen "{ en_gc_connect == 0 }"
+            menu {
+                "proximity" "Proximity"
+                "delaunay"  "Delaunay"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "en_gc_rest"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_gc_rest"
+        label   "Rest Collection Path"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_parm" "gc_rest_path" }
+        parmtag { "sidefx::header_toggle" "en_gc_rest" }
+
+        parm {
+            name    "gc_rest_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_gc_rest_collection" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "gc_rest_help_heading"
+            label   "Help"
+            type    label
+            default { "说明：引用已有 Geometry Collection 资源作为 Rest 状态路径；为空则按当前输出生成。 \n示例：/Game/Destruction/GC_Rest → 实际写出 unreal_gc_rest_collection=/Game/Destruction/GC_Rest。 \n结果：以指定资源作为初始静置状态参与模拟。 \nOwner：Prim。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_gc_rest"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_gc_rest == 0 }"
+            menu {
+                "prim"  "Prim"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "gc_rest_path"
+            label   "Content Path"
+            type    string
+            default { "/Game/Destruction/GC_Rest" }
+            disablewhen "{ en_gc_rest == 0 }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+
+}

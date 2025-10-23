@@ -1,0 +1,500 @@
+{
+    name    selectedparms
+
+    ########################################################################
+    # Unreal Lightmap Resolution
+    ########################################################################
+    parm {
+        name    "en_lightmap_res"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_lightmap_res"
+        label   "Unreal Lightmap Resolution"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_lightmap_res" }
+
+        parm {
+            name    "lightmap_res_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_lightmap_resolution" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "lightmap_res_help"
+            label   "Help"
+            type    label
+            default { "说明：设置 Mesh 的 Lightmap 分辨率。可通过属性或直接指定数值。\n示例(属性)：来源 a=512 → 写出 unreal_lightmap_resolution=512。\n示例(数值)：直接设置 unreal_lightmap_resolution=256。\n结果：控制生成网格的光照贴图分辨率。\nOwner：Any。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+
+        parm {
+            name    "owner_lightmap_res"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_lightmap_res == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+        }
+
+        parm {
+            name    "form_mode_lightmap_res"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_lightmap_res == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+        }
+
+        parm {
+            name    "lightmap_res_from"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_lightmap_res == 0 } { form_mode_lightmap_res != attrib }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+        }
+
+        parm {
+            name    "lightmap_res_val"
+            label   "Lightmap Resolution"
+            type    int
+            default { "256" }
+            disablewhen "{ en_lightmap_res == 0 } { form_mode_lightmap_res != value }"
+            range   { 0! 8192 }
+        }
+    }
+
+    ########################################################################
+    # Unreal Output Name
+    ########################################################################
+    parm {
+        name    "en_output_name"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_output_name"
+        label   "Unreal Output Name"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_output_name" }
+
+        parm {
+            name    "output_name_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_output_name" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "output_name_help"
+            label   "Help"
+            type    label
+            default { "说明：指定输出资源的名称。可统一重命名 Bake 后的 Actor/组件/网格。\n示例(属性)：来源 a=SM_Rock → 写出 unreal_output_name=SM_Rock。\n示例(数值)：直接设置 unreal_output_name=SM_Road。\n结果：输出对象按该名称生成。\nOwner：Any。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+
+        parm {
+            name    "owner_output_name"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ en_output_name == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+        }
+
+        parm {
+            name    "form_mode_output_name"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_output_name == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+        }
+
+        parm {
+            name    "output_name_from"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_output_name == 0 } { form_mode_output_name != attrib }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+        }
+
+        parm {
+            name    "output_name_val"
+            label   "Output Name"
+            type    string
+            default { "SM_Default" }
+            disablewhen "{ en_output_name == 0 } { form_mode_output_name != value }"
+        }
+    }
+
+    ########################################################################
+    # Unreal Disable Gamma Correction
+    ########################################################################
+    parm {
+        name    "en_disable_gamma"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_disable_gamma"
+        label   "Unreal Disable Gamma Correction"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_disable_gamma" }
+
+        parm {
+            name    "disable_gamma_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_disable_gamma_correction" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "disable_gamma_help"
+            label   "Help"
+            type    label
+            default { "说明：是否关闭颜色属性(Cd)的伽马校正。值≠0 表示关闭。\n示例(属性)：a=1 → 写出 unreal_disable_gamma_correction=1。\n示例(数值)：直接设置 unreal_disable_gamma_correction=1。\n结果：禁用颜色数据的 gamma 校正。\nOwner：Any。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+
+        parm {
+            name    "owner_disable_gamma"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ en_disable_gamma == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+        }
+
+        parm {
+            name    "form_mode_disable_gamma"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_disable_gamma == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+        }
+
+        parm {
+            name    "disable_gamma_from"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_disable_gamma == 0 } { form_mode_disable_gamma != attrib }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+        }
+
+        parm {
+            name    "disable_gamma_val"
+            label   "Disable Gamma"
+            type    int
+            default { "0" }
+            disablewhen "{ en_disable_gamma == 0 } { form_mode_disable_gamma != value }"
+            range   { 0 1 }
+        }
+    }
+
+    ########################################################################
+    # Unreal Generated Mesh Name (Deprecated ⚠️)
+    ########################################################################
+    parm {
+        name    "en_generated_mesh_name"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_generated_mesh_name"
+        label   "Unreal Generated Mesh Name (Deprecated)"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_generated_mesh_name" }
+
+        parm {
+            name    "generated_mesh_name_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_generated_mesh_name" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "generated_mesh_name_help"
+            label   "Help"
+            type    label
+            default { "说明：已废弃 ⚠️，请改用 unreal_output_name。\n示例：unreal_generated_mesh_name=SM_Old → 已不推荐，需改为 unreal_output_name=SM_Old。\n结果：保持兼容性，但未来版本可能移除。\nOwner：Any。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+    }
+
+    ########################################################################
+    # Unreal Nanite Enabled
+    ########################################################################
+    parm {
+        name    "en_nanite_enabled"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_nanite_enabled"
+        label   "Unreal Nanite Enabled"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_nanite_enabled" }
+
+        parm {
+            name    "nanite_enabled_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_nanite_enabled" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "nanite_enabled_help"
+            label   "Help"
+            type    label
+            default { "说明：是否启用 Nanite（UE5）。值≠0 表示启用。\n示例(属性)：a=1 → 写出 unreal_nanite_enabled=1。\n示例(数值)：直接设置 unreal_nanite_enabled=1。\n结果：生成的网格启用 Nanite 渲染。\nOwner：Any。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+
+        parm {
+            name    "owner_nanite_enabled"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ en_nanite_enabled == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+        }
+
+        parm {
+            name    "form_mode_nanite_enabled"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_nanite_enabled == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+        }
+
+        parm {
+            name    "nanite_enabled_from"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_nanite_enabled == 0 } { form_mode_nanite_enabled != attrib }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+        }
+
+        parm {
+            name    "nanite_enabled_val"
+            label   "Nanite Enabled"
+            type    int
+            default { "0" }
+            disablewhen "{ en_nanite_enabled == 0 } { form_mode_nanite_enabled != value }"
+            range   { 0 1 }
+        }
+    }
+
+    ########################################################################
+    # Unreal Nanite Position Precision
+    ########################################################################
+    parm {
+        name    "en_nanite_precision"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_nanite_precision"
+        label   "Unreal Nanite Position Precision"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_nanite_precision" }
+
+        parm {
+            name    "nanite_precision_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_nanite_position_precision" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "nanite_precision_help"
+            label   "Help"
+            type    label
+            default { "说明：指定 Nanite 网格使用的位置精度模式（UE5）。数值对应不同精度等级。\n示例(属性)：a=1 → 写出 unreal_nanite_position_precision=1。\n示例(数值)：直接设置 unreal_nanite_position_precision=2。\n结果：控制 Nanite 网格顶点位置存储的精度。\nOwner：Any。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+
+        parm {
+            name    "owner_nanite_precision"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ en_nanite_precision == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+        }
+
+        parm {
+            name    "form_mode_nanite_precision"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_nanite_precision == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+        }
+
+        parm {
+            name    "nanite_precision_from"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_nanite_precision == 0 } { form_mode_nanite_precision != attrib }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+        }
+
+        parm {
+            name    "nanite_precision_val"
+            label   "Position Precision"
+            type    int
+            default { "0" }
+            disablewhen "{ en_nanite_precision == 0 } { form_mode_nanite_precision != value }"
+        }
+    }
+
+    ########################################################################
+    # Unreal Nanite Percent Triangles
+    ########################################################################
+    parm {
+        name    "en_nanite_percent"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_nanite_percent"
+        label   "Unreal Nanite Percent Triangles"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_nanite_percent" }
+
+        parm {
+            name    "nanite_percent_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_nanite_percent_triangles" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "nanite_percent_help"
+            label   "Help"
+            type    label
+            default { "说明：保留 Nanite 网格的三角形百分比（UE5）。0 表示不保留，100 表示全部保留。\n示例(属性)：a=50 → 写出 unreal_nanite_percent_triangles=50。\n示例(数值)：直接设置 unreal_nanite_percent_triangles=25。\n结果：控制 Nanite 网格的三角面数量比例。\nOwner：Any。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+
+        parm {
+            name    "owner_nanite_percent"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ en_nanite_percent == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+        }
+
+        parm {
+            name    "form_mode_nanite_percent"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_nanite_percent == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+        }
+
+        parm {
+            name    "nanite_percent_from"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_nanite_percent == 0 } { form_mode_nanite_percent != attrib }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+        }
+
+        parm {
+            name    "nanite_percent_val"
+            label   "Percent Triangles"
+            type    int
+            default { "100" }
+            disablewhen "{ en_nanite_percent == 0 } { form_mode_nanite_percent != value }"
+            range   { 0 100 }
+        }
+    }
+}

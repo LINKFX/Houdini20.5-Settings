@@ -1,0 +1,375 @@
+{
+    name    selectedparms
+
+    ########################################################################
+    # Unreal UProperty LODForCollision
+    ########################################################################
+    parm {
+        name    "en_lodforcollision"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_lodforcollision"
+        label   "Unreal UProperty LODForCollision"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_lodforcollision" }
+
+        parm {
+            name    "lodforcollision_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_uproperty_LODForCollision" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "lodforcollision_help"
+            label   "Help"
+            type    label
+            default { "说明：指定用于碰撞的 LOD 等级。可从来源整型属性重命名为 unreal_uproperty_LODForCollision，或直接输入数值。\n示例(属性)：a=1 → 写出 unreal_uproperty_LODForCollision=1，a 被移除。\n示例(数值)：直接设置 unreal_uproperty_LODForCollision=1。\n结果：UE 中使用指定的 LOD 进行碰撞检测。\nOwner：Detail。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+
+        parm {
+            name    "owner_lodforcollision"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ en_lodforcollision == 0 }"
+            menu {
+                "detail"    "Detail"
+            }
+        }
+
+        parm {
+            name    "form_mode_lodforcollision"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_lodforcollision == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+        }
+
+        parm {
+            name    "lodforcollision_from"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_lodforcollision == 0 } { form_mode_lodforcollision != attrib }"
+            menutoggle { [ " opmenu -l -a attribute detaildel " ] }
+        }
+
+        parm {
+            name    "lodforcollision_val"
+            label   "LOD Index"
+            type    integer
+            default { "0" }
+            disablewhen "{ en_lodforcollision == 0 } { form_mode_lodforcollision != value }"
+        }
+    }
+
+    ########################################################################
+    # Unreal UProperty MinLOD
+    ########################################################################
+    parm {
+        name    "en_minlod"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_minlod"
+        label   "Unreal UProperty MinLOD"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_minlod" }
+
+        parm {
+            name    "minlod_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_uproperty_MinLOD" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "minlod_help"
+            label   "Help"
+            type    label
+            default { "说明：指定可见的最小 LOD 等级。可从来源整型属性重命名为 unreal_uproperty_MinLOD，或直接输入数值。\n示例(属性)：a=1 → 写出 unreal_uproperty_MinLOD=1，a 被移除。\n示例(数值)：直接设置 unreal_uproperty_MinLOD=1。\n结果：UE 中限制网格的最小显示 LOD。\nOwner：Detail。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+
+        parm {
+            name    "owner_minlod"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ en_minlod == 0 }"
+            menu {
+                "detail"    "Detail"
+            }
+        }
+
+        parm {
+            name    "form_mode_minlod"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_minlod == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+        }
+
+        parm {
+            name    "minlod_from"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_minlod == 0 } { form_mode_minlod != attrib }"
+            menutoggle { [ " opmenu -l -a attribute detaildel " ] }
+        }
+
+        parm {
+            name    "minlod_val"
+            label   "LOD Index"
+            type    integer
+            default { "0" }
+            disablewhen "{ en_minlod == 0 } { form_mode_minlod != value }"
+        }
+    }
+
+    ########################################################################
+    # Unreal UProperty LODGroup
+    ########################################################################
+    parm {
+        name    "en_lodgroup"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_lodgroup"
+        label   "Unreal UProperty LODGroup"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_lodgroup" }
+
+        parm {
+            name    "lodgroup_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_uproperty_LODGroup" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "lodgroup_help"
+            label   "Help"
+            type    label
+            default { "说明：指定网格的 LODGroup。可从来源字符串属性重命名为 unreal_uproperty_LODGroup，或直接输入组名。\n示例(属性)：a=SmallProp → 写出 unreal_uproperty_LODGroup=SmallProp，a 被移除。\n示例(数值)：直接设置 unreal_uproperty_LODGroup=LargeProp。\n结果：UE 中网格会应用到对应的 LODGroup。\nOwner：Detail。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+
+        parm {
+            name    "owner_lodgroup"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ en_lodgroup == 0 }"
+            menu {
+                "detail"    "Detail"
+            }
+        }
+
+        parm {
+            name    "form_mode_lodgroup"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_lodgroup == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+        }
+
+        parm {
+            name    "lodgroup_from"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_lodgroup == 0 } { form_mode_lodgroup != attrib }"
+            menutoggle { [ " opmenu -l -a attribute detaildel " ] }
+        }
+
+        parm {
+            name    "lodgroup_val"
+            label   "LOD Group"
+            type    string
+            default { "SmallProp" }
+            disablewhen "{ en_lodgroup == 0 } { form_mode_lodgroup != value }"
+        }
+    }
+
+    ########################################################################
+    # LODX ScreenSize
+    ########################################################################
+    parm {
+        name    "en_lodxscreensize"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_lodxscreensize"
+        label   "LOD X ScreenSize"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_lodxscreensize" }
+
+        parm {
+            name    "lodxscreensize_heading"
+            label   "Heading"
+            type    label
+            default { "lodX_screensize" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "lodxscreensize_help"
+            label   "Help"
+            type    label
+            default { "说明：为每个 LODX 设置屏幕占比大小。X 为 LOD 等级编号（如 0,1,2）。\n示例(属性)：a=0.8 → 写出 lod0_screensize=0.8，a 被移除。\n示例(数值)：直接设置 lod1_screensize=0.5。\n结果：UE 中指定该 LOD 的屏幕显示比例。\nOwner：Detail。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+
+        parm {
+            name    "owner_lodxscreensize"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ en_lodxscreensize == 0 }"
+            menu {
+                "detail"    "Detail"
+            }
+        }
+
+        parm {
+            name    "form_mode_lodxscreensize"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_lodxscreensize == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+        }
+
+        parm {
+            name    "lodxscreensize_from"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_lodxscreensize == 0 } { form_mode_lodxscreensize != attrib }"
+            menutoggle { [ " opmenu -l -a attribute detaildel " ] }
+        }
+
+        parm {
+            name    "lodxscreensize_val"
+            label   "Screen Size"
+            type    float
+            default { "1.0" }
+            disablewhen "{ en_lodxscreensize == 0 } { form_mode_lodxscreensize != value }"
+            range   { 0! 1 }
+        }
+    }
+
+    ########################################################################
+    # LOD ScreenSize
+    ########################################################################
+    parm {
+        name    "en_lodscreensize"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_lodscreensize"
+        label   "LOD ScreenSize"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_lodscreensize" }
+
+        parm {
+            name    "lodscreensize_heading"
+            label   "Heading"
+            type    label
+            default { "lod_screensize" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "lodscreensize_help"
+            label   "Help"
+            type    label
+            default { "说明：统一设置所有 LOD 的屏幕占比大小。\n示例(属性)：a=0.6 → 写出 lod_screensize=0.6，a 被移除。\n示例(数值)：直接设置 lod_screensize=0.7。\n结果：UE 中该值将应用于所有 LOD。\nOwner：Prim。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+
+        parm {
+            name    "owner_lodscreensize"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_lodscreensize == 0 }"
+            menu {
+                "prim"    "Prim"
+            }
+        }
+
+        parm {
+            name    "form_mode_lodscreensize"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_lodscreensize == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+        }
+
+        parm {
+            name    "lodscreensize_from"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_lodscreensize == 0 } { form_mode_lodscreensize != attrib }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+        }
+
+        parm {
+            name    "lodscreensize_val"
+            label   "Screen Size"
+            type    float
+            default { "1.0" }
+            disablewhen "{ en_lodscreensize == 0 } { form_mode_lodscreensize != value }"
+            range   { 0! 1 }
+        }
+    }
+}

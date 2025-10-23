@@ -1,0 +1,36 @@
+{
+    name	selectedparms
+
+    groupcollapsible {
+        name    "grp_unreal_ref_class"
+        label   "Unreal Ref Class"
+        parmtag { "sidefx::header_parm" "unreal_ref_class_preview" }
+
+        parm {
+            name    "help_unreal_ref_class"
+            label   "Help"
+            type    label
+            default { "说明：与 unreal_ref 搭配使用，用于限制 Asset Picker 的筛选类别。\n示例：parmtag { \"unreal_ref_class\" \"Material\" }\n结果：在 UE 中只能选择特定类型的资源（如 Material）。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "unreal_ref_class_preview"
+            label   "Unreal Ref Class Tag"
+            type    string
+            size    2
+            default { "unreal_ref_class" "Material" }
+            parmtag { "script_callback_language" "python" }
+            parmtag { "sidefx::key_value_dict_key_label" "unreal_ref_class" }
+        }
+        parm {
+            name    "unreal_ref_class_preview3"
+            label   "Unreal Ref Class Tag"
+            type    string
+            size    2
+            default { "" "MaterialInstance" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+
+}

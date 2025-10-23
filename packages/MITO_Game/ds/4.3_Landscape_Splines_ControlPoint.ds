@@ -1,0 +1,1005 @@
+{
+    name    selectedparms
+
+    ########################################################################
+    # Control Point Rotation
+    ########################################################################
+    parm {
+        name    "en_cp_rot"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_cp_rot"
+        label   "Control Point Rotation"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_cp_rot" }
+
+        parm {
+            name    "cp_rot_heading"
+            label   "Heading"
+            type    label
+            default { "rot" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "cp_rot_help"
+            label   "Help"
+            type    label
+            default { "说明：可从来源向量属性重命名为 rot（并删除原名），或直接指定向量值。通常逐点/逐顶点设置。\n示例(属性)：来源 a=(0,0,90) → 实际写出 rot=(0,0,90)，a 被移除。\n示例(数值)：直接设置 rot=(0,0,90)。\n结果：控制点旋转按 rot 应用。\nOwner：Point/Vertex。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_cp_rot"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "point" }
+            disablewhen "{ en_cp_rot == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_form_mode_rot"
+            label   "CP Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_cp_rot == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_rot_from_pt"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_cp_rot == 0 } { owner_cp_rot != point } { cp_form_mode_rot != attrib }"
+            hidewhen "{ owner_cp_rot != point }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_rot_from_vtx"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_cp_rot == 0 } { owner_cp_rot != vertex } { cp_form_mode_rot != attrib }"
+            hidewhen "{ owner_cp_rot != vertex }"
+            menutoggle { [ " opmenu -l -a attribute vtxdel " ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_rot_x"
+            label   "Rot X"
+            type    float
+            joinnext
+            default { "0" }
+            disablewhen "{ en_cp_rot == 0 } { cp_form_mode_rot != value }"
+            range   { 0 360 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_rot_y"
+            label   "Rot Y"
+            type    float
+            joinnext
+            default { "0" }
+            disablewhen "{ en_cp_rot == 0 } { cp_form_mode_rot != value }"
+            range   { 0 360 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_rot_z"
+            label   "Rot Z"
+            type    float
+            default { "0" }
+            disablewhen "{ en_cp_rot == 0 } { cp_form_mode_rot != value }"
+            range   { 0 360 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    ########################################################################
+    # Control Point Id
+    ########################################################################
+    parm {
+        name    "en_cp_id"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_cp_id"
+        label   "Control Point Id"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_cp_id" }
+
+        parm {
+            name    "cp_id_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_spline_control_point_id" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "cp_id_help"
+            label   "Help"
+            type    label
+            default { "说明：可从来源整型属性重命名为 unreal_landscape_spline_control_point_id，或直接指定数值。用于标识控制点，id≥0 有效，<0 表示非控制点。\n示例(属性)：来源 a=5 → 实际写出 unreal_landscape_spline_control_point_id=5，a 被移除。\n示例(数值)：直接设置 unreal_landscape_spline_control_point_id=5。\n结果：控制点按该 Id 识别。\nOwner：Point/Vertex。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_cp_id"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "point" }
+            disablewhen "{ en_cp_id == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_form_mode_id"
+            label   "CP Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_cp_id == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_id_from_pt"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_cp_id == 0 } { owner_cp_id != point } { cp_form_mode_id != attrib }"
+            hidewhen "{ owner_cp_id != point }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_id_from_vtx"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_cp_id == 0 } { owner_cp_id != vertex } { cp_form_mode_id != attrib }"
+            hidewhen "{ owner_cp_id != vertex }"
+            menutoggle { [ " opmenu -l -a attribute vtxdel " ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_id_val"
+            label   "Id"
+            type    integer
+            default { "0" }
+            disablewhen "{ en_cp_id == 0 } { cp_form_mode_id != value }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    ########################################################################
+    # Control Point Lower Terrain
+    ########################################################################
+    parm {
+        name    "en_cp_lower"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_cp_lower"
+        label   "Lower Terrain"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_cp_lower" }
+
+        parm {
+            name    "cp_lower_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_spline_control_point_lower_terrain" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "cp_lower_help"
+            label   "Help"
+            type    label
+            default { "说明：可从来源整型属性重命名为 unreal_landscape_spline_control_point_lower_terrain，或直接指定 0/1 值。通常逐点/逐顶点设置。\n示例(属性)：来源 a=1 → 实际写出 unreal_landscape_spline_control_point_lower_terrain=1，a 被移除。\n示例(数值)：直接设置 unreal_landscape_spline_control_point_lower_terrain=1。\n结果：控制点是否启用 Lower Terrain 属性。\nOwner：Point/Vertex。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_cp_lower"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "point" }
+            disablewhen "{ en_cp_lower == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_form_mode_lower"
+            label   "CP Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_cp_lower == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_lower_from_pt"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_cp_lower == 0 } { owner_cp_lower != point } { cp_form_mode_lower != attrib }"
+            hidewhen "{ owner_cp_lower != point }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_lower_from_vtx"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_cp_lower == 0 } { owner_cp_lower != vertex } { cp_form_mode_lower != attrib }"
+            hidewhen "{ owner_cp_lower != vertex }"
+            menutoggle { [ " opmenu -l -a attribute vtxdel " ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_lower_val"
+            label   "Value"
+            type    toggle
+            default { "0" }
+            disablewhen "{ en_cp_lower == 0 } { cp_form_mode_lower != value }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    ########################################################################
+    # Control Point Mesh
+    ########################################################################
+    parm {
+        name    "en_cp_mesh"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_cp_mesh"
+        label   "Control Point Mesh"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_cp_mesh" }
+
+        parm {
+            name    "cp_mesh_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_spline_control_point_mesh" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "cp_mesh_help"
+            label   "Help"
+            type    label
+            default { "说明：可从来源字符串属性重命名为 unreal_landscape_spline_control_point_mesh，或直接指定 Content Path。通常逐点/逐顶点设置。\n示例(属性)：来源 m=/Game/Mesh/SM_Road → 实际写出 unreal_landscape_spline_control_point_mesh=/Game/Mesh/SM_Road，m 被移除。\n示例(数值)：直接设置 unreal_landscape_spline_control_point_mesh=/Game/Mesh/SM_Road。\n结果：在该控制点放置指定的静态网格。\nOwner：Point/Vertex。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_cp_mesh"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "point" }
+            disablewhen "{ en_cp_mesh == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_form_mode_mesh"
+            label   "CP Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_cp_mesh == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_mesh_from_pt"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_cp_mesh == 0 } { owner_cp_mesh != point } { cp_form_mode_mesh != attrib }"
+            hidewhen "{ owner_cp_mesh != point }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_mesh_from_vtx"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_cp_mesh == 0 } { owner_cp_mesh != vertex } { cp_form_mode_mesh != attrib }"
+            hidewhen "{ owner_cp_mesh != vertex }"
+            menutoggle { [ " opmenu -l -a attribute vtxdel " ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_mesh_val"
+            label   "Mesh Path"
+            type    string
+            default { "/Game/Mesh/SM_Road" }
+            disablewhen "{ en_cp_mesh == 0 } { cp_form_mode_mesh != value }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    ########################################################################
+    # Control Point Mesh Material Override
+    ########################################################################
+    parm {
+        name    "en_cp_matovr"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_cp_matovr"
+        label   "Mesh Material Override"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_cp_matovr" }
+
+        parm {
+            name    "cp_matovr_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_spline_control_point_mesh_material_overrideX" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "cp_matovr_help"
+            label   "Help"
+            type    label
+            default { "说明：可从来源字符串属性重命名为 unreal_landscape_spline_control_point_mesh_material_overrideX，或直接指定 Content Path。X 为材质槽索引。\n示例(属性)：来源 m=/Game/MI_Rock，X=0 → 实际写出 unreal_landscape_spline_control_point_mesh_material_override0=/Game/MI_Rock，m 被移除。\n示例(数值)：直接设置 unreal_landscape_spline_control_point_mesh_material_override0=/Game/MI_Rock。\n结果：替换该控制点网格的材质槽。\nOwner：Point/Vertex。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_cp_matovr"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "point" }
+            disablewhen "{ en_cp_matovr == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_form_mode_matovr"
+            label   "CP Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_cp_matovr == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_matovr_from_pt"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_cp_matovr == 0 } { owner_cp_matovr != point } { cp_form_mode_matovr != attrib }"
+            hidewhen "{ owner_cp_matovr != point }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_matovr_from_vtx"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_cp_matovr == 0 } { owner_cp_matovr != vertex } { cp_form_mode_matovr != attrib }"
+            hidewhen "{ owner_cp_matovr != vertex }"
+            menutoggle { [ " opmenu -l -a attribute vtxdel " ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_matovr_val"
+            label   "Material Path"
+            type    string
+            default { "/Game/MI_Rock" }
+            disablewhen "{ en_cp_matovr == 0 } { cp_form_mode_matovr != value }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    ########################################################################
+    # Control Point Mesh Scale
+    ########################################################################
+    parm {
+        name    "en_cp_meshscale"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_cp_meshscale"
+        label   "Mesh Scale"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_cp_meshscale" }
+
+        parm {
+            name    "cp_meshscale_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_spline_control_point_mesh_scale" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "cp_meshscale_help"
+            label   "Help"
+            type    label
+            default { "说明：可从来源向量属性重命名为 unreal_landscape_spline_control_point_mesh_scale，或直接指定缩放向量。\n示例(属性)：来源 scl=(1,2,1) → 实际写出 unreal_landscape_spline_control_point_mesh_scale=(1,2,1)，scl 被移除。\n示例(数值)：直接设置 unreal_landscape_spline_control_point_mesh_scale=(1,2,1)。\n结果：控制点处的网格缩放。\nOwner：Point/Vertex。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_cp_meshscale"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "point" }
+            disablewhen "{ en_cp_meshscale == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_form_mode_meshscale"
+            label   "CP Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_cp_meshscale == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_meshscale_from_pt"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_cp_meshscale == 0 } { owner_cp_meshscale != point } { cp_form_mode_meshscale != attrib }"
+            hidewhen "{ owner_cp_meshscale != point }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_meshscale_from_vtx"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_cp_meshscale == 0 } { owner_cp_meshscale != vertex } { cp_form_mode_meshscale != attrib }"
+            hidewhen "{ owner_cp_meshscale != vertex }"
+            menutoggle { [ " opmenu -l -a attribute vtxdel " ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_meshscale_x"
+            label   "Scale X"
+            type    float
+            joinnext
+            default { "1" }
+            disablewhen "{ en_cp_meshscale == 0 } { cp_form_mode_meshscale != value }"
+            range   { 0! 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_meshscale_y"
+            label   "Scale Y"
+            type    float
+            joinnext
+            default { "1" }
+            disablewhen "{ en_cp_meshscale == 0 } { cp_form_mode_meshscale != value }"
+            range   { 0! 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_meshscale_z"
+            label   "Scale Z"
+            type    float
+            default { "1" }
+            disablewhen "{ en_cp_meshscale == 0 } { cp_form_mode_meshscale != value }"
+            range   { 0! 10 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    ########################################################################
+    # Control Point Paint Layer Name
+    ########################################################################
+    parm {
+        name    "en_cp_paintlayer"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_cp_paintlayer"
+        label   "Paint Layer Name"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_cp_paintlayer" }
+
+        parm {
+            name    "cp_paintlayer_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_spline_control_point_paint_layer_name" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "cp_paintlayer_help"
+            label   "Help"
+            type    label
+            default { "说明：可从来源字符串属性重命名为 unreal_landscape_spline_control_point_paint_layer_name，或直接指定图层名。\n示例(属性)：来源 a=Grass → 实际写出 unreal_landscape_spline_control_point_paint_layer_name=Grass，a 被移除。\n示例(数值)：直接设置 unreal_landscape_spline_control_point_paint_layer_name=Grass。\n结果：指定控制点绘制使用的 Landscape 图层。\nOwner：Point/Vertex。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_cp_paintlayer"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "point" }
+            disablewhen "{ en_cp_paintlayer == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_form_mode_paintlayer"
+            label   "CP Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_cp_paintlayer == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_paintlayer_from_pt"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_cp_paintlayer == 0 } { owner_cp_paintlayer != point } { cp_form_mode_paintlayer != attrib }"
+            hidewhen "{ owner_cp_paintlayer != point }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_paintlayer_from_vtx"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_cp_paintlayer == 0 } { owner_cp_paintlayer != vertex } { cp_form_mode_paintlayer != attrib }"
+            hidewhen "{ owner_cp_paintlayer != vertex }"
+            menutoggle { [ " opmenu -l -a attribute vtxdel " ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_paintlayer_val"
+            label   "Layer Name"
+            type    string
+            default { "Grass" }
+            disablewhen "{ en_cp_paintlayer == 0 } { cp_form_mode_paintlayer != value }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    ########################################################################
+    # Control Point Raise Terrain
+    ########################################################################
+    parm {
+        name    "en_cp_raise"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_cp_raise"
+        label   "Raise Terrain"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_cp_raise" }
+
+        parm {
+            name    "cp_raise_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_spline_control_point_raise_terrain" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "cp_raise_help"
+            label   "Help"
+            type    label
+            default { "说明：可从来源整型属性重命名为 unreal_landscape_spline_control_point_raise_terrain，或直接指定 0/1 值。通常逐点/逐顶点设置。\n示例(属性)：来源 a=1 → 实际写出 unreal_landscape_spline_control_point_raise_terrain=1，a 被移除。\n示例(数值)：直接设置 unreal_landscape_spline_control_point_raise_terrain=1。\n结果：控制点是否启用 Raise Terrain 属性。\nOwner：Point/Vertex。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_cp_raise"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "point" }
+            disablewhen "{ en_cp_raise == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_form_mode_raise"
+            label   "CP Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_cp_raise == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_raise_from_pt"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_cp_raise == 0 } { owner_cp_raise != point } { cp_form_mode_raise != attrib }"
+            hidewhen "{ owner_cp_raise != point }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_raise_from_vtx"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_cp_raise == 0 } { owner_cp_raise != vertex } { cp_form_mode_raise != attrib }"
+            hidewhen "{ owner_cp_raise != vertex }"
+            menutoggle { [ " opmenu -l -a attribute vtxdel " ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_raise_val"
+            label   "Value"
+            type    toggle
+            default { "0" }
+            disablewhen "{ en_cp_raise == 0 } { cp_form_mode_raise != value }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    ########################################################################
+    # Control Point End Falloff
+    ########################################################################
+    parm {
+        name    "en_cp_endfalloff"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_cp_endfalloff"
+        label   "End Falloff"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_cp_endfalloff" }
+
+        parm {
+            name    "cp_endfalloff_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_spline_end_falloff" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "cp_endfalloff_help"
+            label   "Help"
+            type    label
+            default { "说明：可从来源浮点属性重命名为 unreal_landscape_spline_end_falloff，或直接指定数值。\n示例(属性)：来源 a=256.0 → 实际写出 unreal_landscape_spline_end_falloff=256.0，a 被移除。\n示例(数值)：直接设置 unreal_landscape_spline_end_falloff=256.0。\n结果：指定样条端点的 Falloff 距离。\nOwner：Point/Vertex。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_cp_endfalloff"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "point" }
+            disablewhen "{ en_cp_endfalloff == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_form_mode_endfalloff"
+            label   "CP Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_cp_endfalloff == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_endfalloff_from_pt"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_cp_endfalloff == 0 } { owner_cp_endfalloff != point } { cp_form_mode_endfalloff != attrib }"
+            hidewhen "{ owner_cp_endfalloff != point }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_endfalloff_from_vtx"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_cp_endfalloff == 0 } { owner_cp_endfalloff != vertex } { cp_form_mode_endfalloff != attrib }"
+            hidewhen "{ owner_cp_endfalloff != vertex }"
+            menutoggle { [ " opmenu -l -a attribute vtxdel " ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_endfalloff_val"
+            label   "Falloff"
+            type    float
+            default { "256.0" }
+            disablewhen "{ en_cp_endfalloff == 0 } { cp_form_mode_endfalloff != value }"
+            range   { 0! 10000 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    ########################################################################
+    # Control Point Half Width
+    ########################################################################
+    parm {
+        name    "en_cp_halfwidth"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_cp_halfwidth"
+        label   "Half Width"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_cp_halfwidth" }
+
+        parm {
+            name    "cp_halfwidth_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_spline_half_width" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "cp_halfwidth_help"
+            label   "Help"
+            type    label
+            default { "说明：可从来源浮点属性重命名为 unreal_landscape_spline_half_width，或直接指定数值。\n示例(属性)：来源 a=200.0 → 实际写出 unreal_landscape_spline_half_width=200.0，a 被移除。\n示例(数值)：直接设置 unreal_landscape_spline_half_width=200.0。\n结果：指定样条半宽度。\nOwner：Point/Vertex。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_cp_halfwidth"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "point" }
+            disablewhen "{ en_cp_halfwidth == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_form_mode_halfwidth"
+            label   "CP Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_cp_halfwidth == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_halfwidth_from_pt"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_cp_halfwidth == 0 } { owner_cp_halfwidth != point } { cp_form_mode_halfwidth != attrib }"
+            hidewhen "{ owner_cp_halfwidth != point }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_halfwidth_from_vtx"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_cp_halfwidth == 0 } { owner_cp_halfwidth != vertex } { cp_form_mode_halfwidth != attrib }"
+            hidewhen "{ owner_cp_halfwidth != vertex }"
+            menutoggle { [ " opmenu -l -a attribute vtxdel " ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_halfwidth_val"
+            label   "Half Width"
+            type    float
+            default { "200.0" }
+            disablewhen "{ en_cp_halfwidth == 0 } { cp_form_mode_halfwidth != value }"
+            range   { 0! 10000 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    ########################################################################
+    # Control Point Side Falloff
+    ########################################################################
+    parm {
+        name    "en_cp_sidefalloff"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_cp_sidefalloff"
+        label   "Side Falloff"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_cp_sidefalloff" }
+
+        parm {
+            name    "cp_sidefalloff_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_spline_side_falloff" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "cp_sidefalloff_help"
+            label   "Help"
+            type    label
+            default { "说明：可从来源浮点属性重命名为 unreal_landscape_spline_side_falloff，或直接指定数值。\n示例(属性)：来源 a=128.0 → 实际写出 unreal_landscape_spline_side_falloff=128.0，a 被移除。\n示例(数值)：直接设置 unreal_landscape_spline_side_falloff=128.0。\n结果：指定样条的 Side Falloff 范围。\nOwner：Point/Vertex。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_cp_sidefalloff"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "point" }
+            disablewhen "{ en_cp_sidefalloff == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_form_mode_sidefalloff"
+            label   "CP Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_cp_sidefalloff == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_sidefalloff_from_pt"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_cp_sidefalloff == 0 } { owner_cp_sidefalloff != point } { cp_form_mode_sidefalloff != attrib }"
+            hidewhen "{ owner_cp_sidefalloff != point }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_sidefalloff_from_vtx"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_cp_sidefalloff == 0 } { owner_cp_sidefalloff != vertex } { cp_form_mode_sidefalloff != attrib }"
+            hidewhen "{ owner_cp_sidefalloff != vertex }"
+            menutoggle { [ " opmenu -l -a attribute vtxdel " ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "cp_sidefalloff_val"
+            label   "Falloff"
+            type    float
+            default { "128.0" }
+            disablewhen "{ en_cp_sidefalloff == 0 } { cp_form_mode_sidefalloff != value }"
+            range   { 0! 10000 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+}

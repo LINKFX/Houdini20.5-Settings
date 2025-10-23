@@ -1,0 +1,1454 @@
+{
+    name	selectedparms
+
+    groupsimple {
+        name    "folder7"
+        label   "Root Folder"
+        grouptag { "sidefx::look" "blank" }
+
+        parm {
+            name    "target_landscape_name"
+            label   "Landscape"
+            type    ordinal
+            default { "Landscape" }
+            menu {
+                "Landscape" "Landscape"
+            }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "run_mode"
+            label   "Run Mode"
+            type    ordinal
+            default { "0" }
+            menu {
+                "0" "Unset"
+                "1" "Cache"
+                "2" "Load"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "create_input_node"
+            label   "Auto Create Input Node"
+            type    button
+            default { "0" }
+            help    "根据输入端名称，自动创建Null节点"
+            parmtag { "button_icon" "" }
+            parmtag { "script_callback" "hou.phm().create_input_nulls(kwargs)" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "create_output_node"
+            label   "Auto Create Output Node"
+            type    button
+            default { "0" }
+            help    "根据输出端名称，自动创建Null节点"
+            parmtag { "button_icon" "" }
+            parmtag { "script_callback" "hou.phm().create_output_nulls(kwargs)" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "preview"
+            label   "Preview"
+            type    toggle
+            default { "1" }
+            parmtag { "script_callback_language" "python" }
+        }
+        group {
+            name    "folder10"
+            label   "Landscape Settings"
+
+            group {
+                name    "folder11"
+                label   "Landscape Cache To UE"
+                disablewhentab "{ run_mode != 1 }"
+                parmtag { "group_default" "1" }
+                grouptag { "sidefx::switcher" "folder4" }
+
+                groupcollapsible {
+                    name    "height_layers"
+                    label   "—————Height Layers———————————————————————"
+                    grouptag { "sidefx::switcher" "height_layers" }
+
+                    parm {
+                        name    "load_all_caches"
+                        label   "Load All Caches"
+                        type    button
+                        joinnext
+                        default { "0" }
+                        parmtag { "script_callback" "hou.phm().load_all_caches(kwargs)" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    parm {
+                        name    "uninstall_all_caches"
+                        label   "Uninstall All Caches"
+                        type    button
+                        default { "0" }
+                        parmtag { "script_callback" "hou.phm().uninstall_all_caches(kwargs)" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    groupcollapsible {
+                        name    "folder13"
+                        label   "Export Layers To Unreal"
+                        grouptag { "sidefx::switcher" "folder0" }
+
+                        groupsimple {
+                            name    "folder0"
+                            label   "Base Layer"
+                            grouptag { "sidefx::look" "blank" }
+
+                            parm {
+                                name    "cache_layer_name_1"
+                                label   "Layers Name"
+                                type    ordinal
+                                nolabel
+                                joinnext
+                                default { "0" }
+                                disablewhen "{ target_landscape_name != -1 }"
+                                menu {
+                                    "Base_Layer"        "Base_Layer"
+                                    "Macrol_Layer"      "Macrol_Layer"
+                                    "Procedural_Layer"  "Procedural_Layer"
+                                    "Manual_Layer"      "Manual_Layer"
+                                    "Splines_Layer"     "Splines_Layer"
+                                    "Material_Layer"    "Material_Layer"
+                                    "Splines"           "Splines"
+                                }
+                                parmtag { "script_callback_language" "python" }
+                            }
+                            parm {
+                                name    "as_1"
+                                label   "As"
+                                type    label
+                                nolabel
+                                joinnext
+                                default { "As" }
+                            }
+                            parm {
+                                name    "update_layer_name_1"
+                                label   "Layer Name"
+                                type    ordinal
+                                nolabel
+                                joinnext
+                                default { "0" }
+                                menu {
+                                    "Base_Layer"        "Base_Layer"
+                                    "Macrol_Layer"      "Macrol_Layer"
+                                    "Procedural_Layer"  "Procedural_Layer"
+                                    "Manual_Layer"      "Manual_Layer"
+                                    "Splines_Layer"     "Splines_Layer"
+                                    "Material_Layer"    "Material_Layer"
+                                    "Splines"           "Splines"
+                                }
+                                parmtag { "script_callback_language" "python" }
+                            }
+                            parm {
+                                name    "output_mode_1"
+                                label   "Output Mode"
+                                type    integer
+                                nolabel
+                                joinnext
+                                default { "1" }
+                                menu {
+                                    "0" "Create New"
+                                    "1" "Only Update Layer"
+                                }
+                                range   { 0 10 }
+                                parmtag { "autoscope" "0000000000000000" }
+                                parmtag { "script_callback_language" "python" }
+                            }
+                            parm {
+                                name    "lock_layer_1"
+                                label   "Lock Layer"
+                                type    toggle
+                                joinnext
+                                default { "1" }
+                                range   { 0 10 }
+                                parmtag { "autoscope" "0000000000000000" }
+                                parmtag { "script_callback_language" "python" }
+                            }
+                            parm {
+                                name    "save_layer_1"
+                                label   "Save Layer"
+                                type    button
+                                joinnext
+                                default { "0" }
+                                range   { 0 1 }
+                                parmtag { "autoscope" "0000000000000000" }
+                                parmtag { "script_callback_language" "python" }
+                                parmtag { "takecontrol" "always" }
+                            }
+                            parm {
+                                name    "reload_1"
+                                label   "Reload Geometry"
+                                type    button
+                                joinnext
+                                default { "0" }
+                                range   { 0 1 }
+                                parmtag { "autoscope" "0000000000000000" }
+                            }
+                            parm {
+                                name    "cache_to_ue_load_1"
+                                label   "Load from Disk"
+                                type    toggle
+                                joinnext
+                                default { "off" }
+                                range   { 0 1 }
+                                parmtag { "autoscope" "0000000000000000" }
+                            }
+                            parm {
+                                name    "display_path_1"
+                                label   "Display Path"
+                                type    toggle
+                                joinnext
+                                default { "0" }
+                                parmtag { "script_callback_language" "python" }
+                            }
+                            parm {
+                                name    "sepparm14"
+                                label   "Spacer"
+                                type    separator
+                                default { "" }
+                                parmtag { "sidefx::layout_height" "small" }
+                                parmtag { "sidefx::look" "blank" }
+                            }
+                            parm {
+                                name    "to_unreal_path1"
+                                label   "Path"
+                                type    geometry
+                                default { "$ASSETS_PATH/Environments/Landscape/TO_UNREAL/`chs(\"cache_layer_name_1\")`_To_Unreal.bgeo.sc" }
+                                hidewhen "{ display_path_1 == 0 }"
+                                menureplace {
+                                    [ "opmenu -l -a filecache3 file" ]
+                                }
+                                range   { 0 1 }
+                                parmtag { "autoscope" "0000000000000000" }
+                                parmtag { "filechooser_mode" "write" }
+                                parmtag { "sidefx::header_toggle" "display_path" }
+                            }
+                        }
+
+                        groupsimple {
+                            name    "folder1"
+                            label   "Macrol Layer"
+                            grouptag { "sidefx::look" "blank" }
+
+                            parm {
+                                name    "cache_layer_name_2"
+                                label   "Layers Name"
+                                type    ordinal
+                                nolabel
+                                joinnext
+                                default { "1" }
+                                disablewhen "{ target_landscape_name != -1 }"
+                                menu {
+                                    "Base_Layer"        "Base_Layer"
+                                    "Macrol_Layer"      "Macrol_Layer"
+                                    "Procedural_Layer"  "Procedural_Layer"
+                                    "Manual_Layer"      "Manual_Layer"
+                                    "Splines_Layer"     "Splines_Layer"
+                                    "Material_Layer"    "Material_Layer"
+                                    "Splines"           "Splines"
+                                }
+                                parmtag { "script_callback_language" "python" }
+                            }
+                            parm {
+                                name    "as_2"
+                                label   "As"
+                                type    label
+                                nolabel
+                                joinnext
+                                default { "As" }
+                            }
+                            parm {
+                                name    "update_layer_name_2"
+                                label   "Layers Name"
+                                type    ordinal
+                                nolabel
+                                joinnext
+                                default { "1" }
+                                menu {
+                                    "Base_Layer"        "Base_Layer"
+                                    "Macrol_Layer"      "Macrol_Layer"
+                                    "Procedural_Layer"  "Procedural_Layer"
+                                    "Manual_Layer"      "Manual_Layer"
+                                    "Splines_Layer"     "Splines_Layer"
+                                    "Material_Layer"    "Material_Layer"
+                                    "Splines"           "Splines"
+                                }
+                                parmtag { "script_callback_language" "python" }
+                            }
+                            parm {
+                                name    "output_mode_2"
+                                label   "Output Mode"
+                                type    integer
+                                nolabel
+                                joinnext
+                                default { "1" }
+                                menu {
+                                    "0" "Create New"
+                                    "1" "Only Update Layer"
+                                }
+                                range   { 0 10 }
+                                parmtag { "autoscope" "0000000000000000" }
+                                parmtag { "script_callback_language" "python" }
+                            }
+                            parm {
+                                name    "lock_layer_2"
+                                label   "Lock Layer"
+                                type    toggle
+                                joinnext
+                                default { "1" }
+                                range   { 0 10 }
+                                parmtag { "autoscope" "0000000000000000" }
+                                parmtag { "script_callback_language" "python" }
+                            }
+                            parm {
+                                name    "save_layer_2"
+                                label   "Save Layer"
+                                type    button
+                                joinnext
+                                default { "0" }
+                                range   { 0 1 }
+                                parmtag { "autoscope" "0000000000000000" }
+                                parmtag { "script_callback_language" "python" }
+                                parmtag { "takecontrol" "always" }
+                            }
+                            parm {
+                                name    "reload_2"
+                                label   "Reload Geometry"
+                                type    button
+                                joinnext
+                                default { "0" }
+                                range   { 0 1 }
+                                parmtag { "autoscope" "0000000000000000" }
+                            }
+                            parm {
+                                name    "cache_to_ue_load_2"
+                                label   "Load from Disk"
+                                type    toggle
+                                joinnext
+                                default { "off" }
+                                range   { 0 1 }
+                                parmtag { "autoscope" "0000000000000000" }
+                            }
+                            parm {
+                                name    "display_path_2"
+                                label   "Display Path"
+                                type    toggle
+                                joinnext
+                                default { "0" }
+                                parmtag { "script_callback_language" "python" }
+                            }
+                            parm {
+                                name    "sepparm15"
+                                label   "Spacer"
+                                type    separator
+                                default { "" }
+                                parmtag { "sidefx::layout_height" "small" }
+                                parmtag { "sidefx::look" "blank" }
+                            }
+                            parm {
+                                name    "to_unreal_path2"
+                                label   "Path"
+                                type    geometry
+                                default { "$ASSETS_PATH/Environments/Landscape/TO_UNREAL/`chs(\"cache_layer_name_2\")`_To_Unreal.bgeo.sc" }
+                                hidewhen "{ display_path_2 == 0 }"
+                                menureplace {
+                                    [ "opmenu -l -a filecache3 file" ]
+                                }
+                                range   { 0 1 }
+                                parmtag { "autoscope" "0000000000000000" }
+                                parmtag { "filechooser_mode" "write" }
+                            }
+                        }
+
+                        groupsimple {
+                            name    "folder2"
+                            label   "Procedural Layer"
+                            grouptag { "sidefx::look" "blank" }
+
+                            parm {
+                                name    "cache_layer_name_3"
+                                label   "Layers Name"
+                                type    ordinal
+                                nolabel
+                                joinnext
+                                default { "2" }
+                                disablewhen "{ target_landscape_name != -1 }"
+                                menu {
+                                    "Base_Layer"        "Base_Layer"
+                                    "Macrol_Layer"      "Macrol_Layer"
+                                    "Procedural_Layer"  "Procedural_Layer"
+                                    "Manual_Layer"      "Manual_Layer"
+                                    "Splines_Layer"     "Splines_Layer"
+                                    "Material_Layer"    "Material_Layer"
+                                    "Splines"           "Splines"
+                                }
+                                parmtag { "script_callback_language" "python" }
+                            }
+                            parm {
+                                name    "as_3"
+                                label   "As"
+                                type    label
+                                nolabel
+                                joinnext
+                                default { "As" }
+                            }
+                            parm {
+                                name    "update_layer_name_3"
+                                label   "Layers Name"
+                                type    ordinal
+                                nolabel
+                                joinnext
+                                default { "2" }
+                                menu {
+                                    "Base_Layer"        "Base_Layer"
+                                    "Macrol_Layer"      "Macrol_Layer"
+                                    "Procedural_Layer"  "Procedural_Layer"
+                                    "Manual_Layer"      "Manual_Layer"
+                                    "Splines_Layer"     "Splines_Layer"
+                                    "Material_Layer"    "Material_Layer"
+                                    "Splines"           "Splines"
+                                }
+                                parmtag { "script_callback_language" "python" }
+                            }
+                            parm {
+                                name    "output_mode_3"
+                                label   "Output Mode"
+                                type    integer
+                                nolabel
+                                joinnext
+                                default { "1" }
+                                menu {
+                                    "0" "Create New"
+                                    "1" "Only Update Layer"
+                                }
+                                range   { 0 10 }
+                                parmtag { "autoscope" "0000000000000000" }
+                                parmtag { "script_callback_language" "python" }
+                            }
+                            parm {
+                                name    "lock_layer_3"
+                                label   "Lock Layer"
+                                type    toggle
+                                joinnext
+                                default { "1" }
+                                range   { 0 10 }
+                                parmtag { "autoscope" "0000000000000000" }
+                                parmtag { "script_callback_language" "python" }
+                            }
+                            parm {
+                                name    "save_layer_3"
+                                label   "Save Layer"
+                                type    button
+                                joinnext
+                                default { "0" }
+                                range   { 0 1 }
+                                parmtag { "autoscope" "0000000000000000" }
+                                parmtag { "script_callback_language" "python" }
+                                parmtag { "takecontrol" "always" }
+                            }
+                            parm {
+                                name    "reload_3"
+                                label   "Reload Geometry"
+                                type    button
+                                joinnext
+                                default { "0" }
+                                range   { 0 1 }
+                                parmtag { "autoscope" "0000000000000000" }
+                            }
+                            parm {
+                                name    "cache_to_ue_load_3"
+                                label   "Load from Disk"
+                                type    toggle
+                                joinnext
+                                default { "off" }
+                                range   { 0 1 }
+                                parmtag { "autoscope" "0000000000000000" }
+                            }
+                            parm {
+                                name    "display_path_3"
+                                label   "Display Path"
+                                type    toggle
+                                joinnext
+                                default { "0" }
+                                parmtag { "script_callback_language" "python" }
+                            }
+                            parm {
+                                name    "sepparm16"
+                                label   "Spacer"
+                                type    separator
+                                default { "" }
+                                parmtag { "sidefx::layout_height" "small" }
+                                parmtag { "sidefx::look" "blank" }
+                            }
+                            parm {
+                                name    "to_unreal_path3"
+                                label   "Path"
+                                type    geometry
+                                default { "$ASSETS_PATH/Environments/Landscape/TO_UNREAL/`chs(\"cache_layer_name_3\")`_To_Unreal.bgeo.sc" }
+                                hidewhen "{ display_path_3 == 0 }"
+                                menureplace {
+                                    [ "opmenu -l -a filecache3 file" ]
+                                }
+                                range   { 0 1 }
+                                parmtag { "autoscope" "0000000000000000" }
+                                parmtag { "filechooser_mode" "write" }
+                            }
+                        }
+
+                        groupsimple {
+                            name    "folder3"
+                            label   "Manual Layer"
+                            grouptag { "sidefx::look" "blank" }
+
+                            parm {
+                                name    "cache_layer_name_4"
+                                label   "Layers Name"
+                                type    ordinal
+                                nolabel
+                                joinnext
+                                default { "3" }
+                                disablewhen "{ target_landscape_name != -1 }"
+                                menu {
+                                    "Base_Layer"        "Base_Layer"
+                                    "Macrol_Layer"      "Macrol_Layer"
+                                    "Procedural_Layer"  "Procedural_Layer"
+                                    "Manual_Layer"      "Manual_Layer"
+                                    "Splines_Layer"     "Splines_Layer"
+                                    "Material_Layer"    "Material_Layer"
+                                    "Splines"           "Splines"
+                                }
+                                parmtag { "script_callback_language" "python" }
+                            }
+                            parm {
+                                name    "as_4"
+                                label   "As"
+                                type    label
+                                nolabel
+                                joinnext
+                                default { "As" }
+                            }
+                            parm {
+                                name    "update_layer_name_4"
+                                label   "Layers Name"
+                                type    ordinal
+                                nolabel
+                                joinnext
+                                default { "3" }
+                                menu {
+                                    "Base_Layer"        "Base_Layer"
+                                    "Macrol_Layer"      "Macrol_Layer"
+                                    "Procedural_Layer"  "Procedural_Layer"
+                                    "Manual_Layer"      "Manual_Layer"
+                                    "Splines_Layer"     "Splines_Layer"
+                                    "Material_Layer"    "Material_Layer"
+                                    "Splines"           "Splines"
+                                }
+                                parmtag { "script_callback_language" "python" }
+                            }
+                            parm {
+                                name    "output_mode_4"
+                                label   "Output Mode"
+                                type    integer
+                                nolabel
+                                joinnext
+                                default { "1" }
+                                menu {
+                                    "0" "Create New"
+                                    "1" "Only Update Layer"
+                                }
+                                range   { 0 10 }
+                                parmtag { "autoscope" "0000000000000000" }
+                                parmtag { "script_callback_language" "python" }
+                            }
+                            parm {
+                                name    "lock_layer_4"
+                                label   "Lock Layer"
+                                type    toggle
+                                joinnext
+                                default { "off" }
+                                range   { 0 10 }
+                                parmtag { "autoscope" "0000000000000000" }
+                                parmtag { "script_callback_language" "python" }
+                            }
+                            parm {
+                                name    "save_layer_4"
+                                label   "Save Layer"
+                                type    button
+                                joinnext
+                                default { "0" }
+                                range   { 0 1 }
+                                parmtag { "autoscope" "0000000000000000" }
+                                parmtag { "script_callback_language" "python" }
+                                parmtag { "takecontrol" "always" }
+                            }
+                            parm {
+                                name    "reload_4"
+                                label   "Reload Geometry"
+                                type    button
+                                joinnext
+                                default { "0" }
+                                range   { 0 1 }
+                                parmtag { "autoscope" "0000000000000000" }
+                            }
+                            parm {
+                                name    "cache_to_ue_load_4"
+                                label   "Load from Disk"
+                                type    toggle
+                                joinnext
+                                default { "off" }
+                                range   { 0 1 }
+                                parmtag { "autoscope" "0000000000000000" }
+                            }
+                            parm {
+                                name    "display_path_4"
+                                label   "Display Path"
+                                type    toggle
+                                joinnext
+                                default { "0" }
+                                parmtag { "script_callback_language" "python" }
+                            }
+                            parm {
+                                name    "sepparm8"
+                                label   "Spacer"
+                                type    separator
+                                default { "" }
+                                parmtag { "sidefx::layout_height" "small" }
+                                parmtag { "sidefx::look" "blank" }
+                            }
+                            parm {
+                                name    "to_unreal_path4"
+                                label   "Path"
+                                type    geometry
+                                default { "$ASSETS_PATH/Environments/Landscape/TO_UNREAL/`chs(\"cache_layer_name_4\")`_To_Unreal.bgeo.sc" }
+                                hidewhen "{ display_path_4 == 0 }"
+                                menureplace {
+                                    [ "opmenu -l -a filecache3 file" ]
+                                }
+                                range   { 0 1 }
+                                parmtag { "autoscope" "0000000000000000" }
+                                parmtag { "filechooser_mode" "write" }
+                            }
+                        }
+
+                        parm {
+                            name    "splines_enable"
+                            label   "Splines Enable"
+                            type    toggle
+                            nolabel
+                            default { "0" }
+                            parmtag { "script_callback_language" "python" }
+                        }
+                        groupcollapsible {
+                            name    "folder14"
+                            label   "Splines"
+                            disablewhentab "{ splines_enable == 0 }"
+                            parmtag { "group_default" "0" }
+                            parmtag { "sidefx::header_toggle" "splines_enable" }
+                            grouptag { "sidefx::switcher" "folder7" }
+
+                            groupsimple {
+                                name    "folder4"
+                                label   "Splines Layer"
+                                grouptag { "sidefx::look" "blank" }
+
+                                parm {
+                                    name    "cache_layer_name_5"
+                                    label   "Layers Name"
+                                    type    ordinal
+                                    nolabel
+                                    joinnext
+                                    default { "4" }
+                                    disablewhen "{ target_landscape_name != -1 }"
+                                    menu {
+                                        "Base_Layer"        "Base_Layer"
+                                        "Macrol_Layer"      "Macrol_Layer"
+                                        "Procedural_Layer"  "Procedural_Layer"
+                                        "Manual_Layer"      "Manual_Layer"
+                                        "Splines_Layer"     "Splines_Layer"
+                                        "Material_Layer"    "Material_Layer"
+                                        "Splines"           "Splines"
+                                    }
+                                    parmtag { "script_callback_language" "python" }
+                                }
+                                parm {
+                                    name    "as_5"
+                                    label   "As"
+                                    type    label
+                                    nolabel
+                                    joinnext
+                                    default { "As" }
+                                }
+                                parm {
+                                    name    "update_layer_name_5"
+                                    label   "Layers Name"
+                                    type    ordinal
+                                    nolabel
+                                    joinnext
+                                    default { "4" }
+                                    menu {
+                                        "Base_Layer"        "Base_Layer"
+                                        "Macrol_Layer"      "Macrol_Layer"
+                                        "Procedural_Layer"  "Procedural_Layer"
+                                        "Manual_Layer"      "Manual_Layer"
+                                        "Splines_Layer"     "Splines_Layer"
+                                        "Material_Layer"    "Material_Layer"
+                                        "Splines"           "Splines"
+                                    }
+                                    parmtag { "script_callback_language" "python" }
+                                }
+                                parm {
+                                    name    "output_mode_5"
+                                    label   "Output Mode"
+                                    type    integer
+                                    nolabel
+                                    joinnext
+                                    default { "1" }
+                                    menu {
+                                        "0" "Create New"
+                                        "1" "Only Update Layer"
+                                    }
+                                    range   { 0 10 }
+                                    parmtag { "autoscope" "0000000000000000" }
+                                    parmtag { "script_callback_language" "python" }
+                                }
+                                parm {
+                                    name    "lock_layer_5"
+                                    label   "Lock Layer"
+                                    type    toggle
+                                    joinnext
+                                    default { "off" }
+                                    range   { 0 10 }
+                                    parmtag { "autoscope" "0000000000000000" }
+                                    parmtag { "script_callback_language" "python" }
+                                }
+                                parm {
+                                    name    "save_layer_5"
+                                    label   "Save Layer"
+                                    type    button
+                                    joinnext
+                                    default { "0" }
+                                    range   { 0 1 }
+                                    parmtag { "autoscope" "0000000000000000" }
+                                    parmtag { "script_callback_language" "python" }
+                                    parmtag { "takecontrol" "always" }
+                                }
+                                parm {
+                                    name    "reload_5"
+                                    label   "Reload Geometry"
+                                    type    button
+                                    joinnext
+                                    default { "0" }
+                                    range   { 0 1 }
+                                    parmtag { "autoscope" "0000000000000000" }
+                                }
+                                parm {
+                                    name    "cache_to_ue_load_5"
+                                    label   "Load from Disk"
+                                    type    toggle
+                                    joinnext
+                                    default { "off" }
+                                    range   { 0 1 }
+                                    parmtag { "autoscope" "0000000000000000" }
+                                }
+                                parm {
+                                    name    "display_path_5"
+                                    label   "Display Path"
+                                    type    toggle
+                                    joinnext
+                                    default { "0" }
+                                    parmtag { "script_callback_language" "python" }
+                                }
+                                parm {
+                                    name    "sepparm19"
+                                    label   "Spacer"
+                                    type    separator
+                                    default { "" }
+                                    parmtag { "sidefx::layout_height" "small" }
+                                    parmtag { "sidefx::look" "blank" }
+                                }
+                                parm {
+                                    name    "to_unreal_path5"
+                                    label   "Path"
+                                    type    geometry
+                                    default { "$ASSETS_PATH/Environments/Landscape/TO_UNREAL/`chs(\"cache_layer_name_5\")`_To_Unreal.bgeo.sc" }
+                                    hidewhen "{ display_path_5 == 0 }"
+                                    menureplace {
+                                        [ "opmenu -l -a filecache3 file" ]
+                                    }
+                                    range   { 0 1 }
+                                    parmtag { "autoscope" "0000000000000000" }
+                                    parmtag { "filechooser_mode" "write" }
+                                }
+                            }
+
+                            groupsimple {
+                                name    "folder5"
+                                label   "Splines"
+                                grouptag { "sidefx::look" "blank" }
+
+                                parm {
+                                    name    "cache_layer_name_7"
+                                    label   "Layers Name"
+                                    type    ordinal
+                                    nolabel
+                                    joinnext
+                                    default { "6" }
+                                    disablewhen "{ target_landscape_name != -1 }"
+                                    menu {
+                                        "Base_Layer"        "Base_Layer"
+                                        "Macrol_Layer"      "Macrol_Layer"
+                                        "Procedural_Layer"  "Procedural_Layer"
+                                        "Manual_Layer"      "Manual_Layer"
+                                        "Splines_Layer"     "Splines_Layer"
+                                        "Material_Layer"    "Material_Layer"
+                                        "Splines"           "Splines"
+                                    }
+                                    parmtag { "script_callback_language" "python" }
+                                }
+                                parm {
+                                    name    "as_7"
+                                    label   "As"
+                                    type    label
+                                    nolabel
+                                    joinnext
+                                    default { "As" }
+                                }
+                                parm {
+                                    name    "update_layer_name_7"
+                                    label   "Layers Name"
+                                    type    ordinal
+                                    nolabel
+                                    joinnext
+                                    default { "6" }
+                                    menu {
+                                        "Base_Layer"        "Base_Layer"
+                                        "Macrol_Layer"      "Macrol_Layer"
+                                        "Procedural_Layer"  "Procedural_Layer"
+                                        "Manual_Layer"      "Manual_Layer"
+                                        "Splines_Layer"     "Splines_Layer"
+                                        "Material_Layer"    "Material_Layer"
+                                        "Splines"           "Splines"
+                                    }
+                                    parmtag { "script_callback_language" "python" }
+                                }
+                                parm {
+                                    name    "output_mode_7"
+                                    label   "Output Mode"
+                                    type    integer
+                                    nolabel
+                                    joinnext
+                                    default { "1" }
+                                    menu {
+                                        "0" "Create New"
+                                        "1" "Only Update Layer"
+                                    }
+                                    range   { 0 10 }
+                                    parmtag { "autoscope" "0000000000000000" }
+                                    parmtag { "script_callback_language" "python" }
+                                }
+                                parm {
+                                    name    "lock_layer_7"
+                                    label   "Lock Layer"
+                                    type    toggle
+                                    joinnext
+                                    default { "off" }
+                                    range   { 0 10 }
+                                    parmtag { "autoscope" "0000000000000000" }
+                                    parmtag { "script_callback_language" "python" }
+                                }
+                                parm {
+                                    name    "save_layer_7"
+                                    label   "Save Layer"
+                                    type    button
+                                    joinnext
+                                    default { "0" }
+                                    range   { 0 1 }
+                                    parmtag { "autoscope" "0000000000000000" }
+                                    parmtag { "script_callback_language" "python" }
+                                    parmtag { "takecontrol" "always" }
+                                }
+                                parm {
+                                    name    "reload7"
+                                    label   "Reload Geometry"
+                                    type    button
+                                    joinnext
+                                    default { "0" }
+                                    range   { 0 1 }
+                                    parmtag { "autoscope" "0000000000000000" }
+                                }
+                                parm {
+                                    name    "cache_to_ue_load_7"
+                                    label   "Load from Disk"
+                                    type    toggle
+                                    joinnext
+                                    default { "off" }
+                                    range   { 0 1 }
+                                    parmtag { "autoscope" "0000000000000000" }
+                                }
+                                parm {
+                                    name    "display_path_7"
+                                    label   "Display Path"
+                                    type    toggle
+                                    joinnext
+                                    default { "0" }
+                                    parmtag { "script_callback_language" "python" }
+                                }
+                                parm {
+                                    name    "sepparm18"
+                                    label   "Spacer"
+                                    type    separator
+                                    default { "" }
+                                    parmtag { "sidefx::layout_height" "small" }
+                                    parmtag { "sidefx::look" "blank" }
+                                }
+                                parm {
+                                    name    "to_unreal_path7"
+                                    label   "Path"
+                                    type    geometry
+                                    default { "$ASSETS_PATH/Environments/Landscape/TO_UNREAL/`chs(\"cache_layer_name_7\")`_To_Unreal.bgeo.sc" }
+                                    hidewhen "{ display_path_7 == 0 }"
+                                    menureplace {
+                                        [ "opmenu -l -a filecache3 file" ]
+                                    }
+                                    range   { 0 1 }
+                                    parmtag { "autoscope" "0000000000000000" }
+                                    parmtag { "filechooser_mode" "write" }
+                                }
+                            }
+
+                        }
+
+                    }
+
+                }
+
+                parm {
+                    name    "sepparm2"
+                    label   "Separator"
+                    type    separator
+                    default { "" }
+                }
+                groupcollapsible {
+                    name    "folder12_1"
+                    label   "—————Material Layers———————————————————————"
+
+                    parm {
+                        name    "cache_layer_name_6"
+                        label   "Layers Name"
+                        type    ordinal
+                        nolabel
+                        joinnext
+                        default { "5" }
+                        disablewhen "{ target_landscape_name != -1 }"
+                        menu {
+                            "Base_Layer"        "Base_Layer"
+                            "Macrol_Layer"      "Macrol_Layer"
+                            "Procedural_Layer"  "Procedural_Layer"
+                            "Manual_Layer"      "Manual_Layer"
+                            "Splines_Layer"     "Splines_Layer"
+                            "Material_Layer"    "Material_Layer"
+                            "Splines"           "Splines"
+                        }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    parm {
+                        name    "as_8"
+                        label   "As"
+                        type    label
+                        nolabel
+                        joinnext
+                        default { "Add To" }
+                    }
+                    parm {
+                        name    "update_layer_name_8"
+                        label   "Layers Name"
+                        type    ordinal
+                        nolabel
+                        joinnext
+                        default { "3" }
+                        menu {
+                            "Base_Layer"        "Base_Layer"
+                            "Macrol_Layer"      "Macrol_Layer"
+                            "Procedural_Layer"  "Procedural_Layer"
+                            "Manual_Layer"      "Manual_Layer"
+                            "Splines_Layer"     "Splines_Layer"
+                            "Material_Layer"    "Material_Layer"
+                            "Splines"           "Splines"
+                        }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    parm {
+                        name    "output_mode_6"
+                        label   "Output Mode"
+                        type    integer
+                        nolabel
+                        joinnext
+                        default { "1" }
+                        menu {
+                            "0" "Create New"
+                            "1" "Only Update Layer"
+                        }
+                        range   { 0 10 }
+                        parmtag { "autoscope" "0000000000000000" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    parm {
+                        name    "lock_layer_6"
+                        label   "Lock Layer"
+                        type    toggle
+                        joinnext
+                        default { "off" }
+                        range   { 0 10 }
+                        parmtag { "autoscope" "0000000000000000" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    parm {
+                        name    "save_layer_6"
+                        label   "Save Layer"
+                        type    button
+                        joinnext
+                        default { "0" }
+                        range   { 0 1 }
+                        parmtag { "autoscope" "0000000000000000" }
+                        parmtag { "script_callback_language" "python" }
+                        parmtag { "takecontrol" "always" }
+                    }
+                    parm {
+                        name    "reload6"
+                        label   "Reload Geometry"
+                        type    button
+                        joinnext
+                        default { "0" }
+                        range   { 0 1 }
+                        parmtag { "autoscope" "0000000000000000" }
+                    }
+                    parm {
+                        name    "cache_to_ue_load_6"
+                        label   "Load from Disk"
+                        type    toggle
+                        joinnext
+                        default { "off" }
+                        range   { 0 1 }
+                        parmtag { "autoscope" "0000000000000000" }
+                    }
+                    parm {
+                        name    "display_path_6"
+                        label   "Display Path"
+                        type    toggle
+                        joinnext
+                        default { "0" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    parm {
+                        name    "sepparm20"
+                        label   "Spacer"
+                        type    separator
+                        default { "" }
+                        parmtag { "sidefx::layout_height" "small" }
+                        parmtag { "sidefx::look" "blank" }
+                    }
+                    parm {
+                        name    "to_unreal_path6"
+                        label   "Path"
+                        type    geometry
+                        default { "$ASSETS_PATH/Environments/Landscape/TO_UNREAL/`chs(\"cache_layer_name_1\")`_To_Unreal.bgeo.sc" }
+                        hidewhen "{ display_path_6 == 0 }"
+                        menureplace {
+                            [ "opmenu -l -a filecache3 file" ]
+                        }
+                        range   { 0 1 }
+                        parmtag { "autoscope" "0000000000000000" }
+                        parmtag { "filechooser_mode" "write" }
+                    }
+                    parm {
+                        name    "sepparm3"
+                        label   "Separator"
+                        type    separator
+                        default { "" }
+                    }
+                    parm {
+                        name    "auto_get_mt_layers"
+                        label   "Auto Get Layers"
+                        type    button
+                        default { "0" }
+                        parmtag { "script_callback" "hou.phm().get_layer(kwargs); hou.phm().auto_set_layer_names(kwargs)" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    parm {
+                        name    "active_all_layers"
+                        label   "Active All Layers"
+                        type    button
+                        joinnext
+                        default { "0" }
+                        parmtag { "script_callback" "hou.phm().active_all_layers(kwargs)" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    parm {
+                        name    "uninstall_all_layers"
+                        label   "Uninstall All Layers"
+                        type    button
+                        default { "0" }
+                        parmtag { "script_callback" "hou.phm().uninstall_all_layers(kwargs)" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    multiparm {
+                        name    "mt_layer_folder"
+                        label    "Layers"
+                        parmtag { "multistartoffset" "1" }
+
+                        parm {
+                            name    "update_mt_layer_name_mt_#"
+                            label   "Layer Name"
+                            type    ordinal
+                            nolabel
+                            joinnext
+                            default { "0" }
+                            disablewhen "{ active_# == 0 }"
+                            menu {
+                                [ "node = kwargs[\"node\"]" ]
+                                [ "parm = node.parm(\"layer_name_list\")" ]
+                                [ "" ]
+                                [ "if not parm:" ]
+                                [ "    return [\"none\", \"⚠️ 参数缺失\"]" ]
+                                [ "" ]
+                                [ "layer_str = parm.eval()" ]
+                                [ "if not layer_str:" ]
+                                [ "    return [\"none\", \"⚠️ 未加载\"]" ]
+                                [ "" ]
+                                [ "names = layer_str.split(\",\")" ]
+                                [ "menu = []" ]
+                                [ "for name in names:" ]
+                                [ "    menu += [name, name]" ]
+                                [ "" ]
+                                [ "return menu" ]
+                                language python
+                            }
+                            parmtag { "script_callback_language" "python" }
+                        }
+                        parm {
+                            name    "no_weight_blend_mt_#"
+                            label   "No Weight Blend"
+                            type    toggle
+                            joinnext
+                            default { "0" }
+                            disablewhen "{ active_# == 0 }"
+                            parmtag { "script_callback_language" "python" }
+                        }
+                        parm {
+                            name    "active_#"
+                            label   "Active"
+                            type    toggle
+                            default { "1" }
+                            parmtag { "script_callback_language" "python" }
+                        }
+                    }
+
+                    parm {
+                        name    "layer_name_list"
+                        label   "Layer List"
+                        type    string
+                        default { "" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    groupsimple {
+                        name    "folder15"
+                        label   "Match Unreal LayerInfo"
+                        invisibletab
+                        grouptag { "sidefx::switcher" "folder10" }
+
+                        parm {
+                            name    "info_path"
+                            label   "Unreal LayersInfo Path"
+                            type    directory
+                            default { "/Script/Landscape.LandscapeLayerInfoObject'/Game/Environments/Maps/LinAn_sharedassets/" }
+                            parmtag { "filechooser_mode" "read" }
+                            parmtag { "script_callback_language" "python" }
+                        }
+                    }
+
+                }
+
+            }
+
+            group {
+                name    "folder11_1"
+                label   "Landscape Load From UE"
+                tabbreak
+                disablewhentab "{ run_mode != 2 }"
+                grouptag { "group_default" "1" }
+                grouptag { "sidefx::switcher" "folder5" }
+
+                parm {
+                    name    "load_from_ue"
+                    label   "Load from Disk         "
+                    type    toggle
+                    joinnext
+                    default { "on" }
+                    range   { 0 1 }
+                    parmtag { "autoscope" "0000000000000000" }
+                }
+                parm {
+                    name    "from_unreal_landscape_path"
+                    label   "Path"
+                    type    geometry
+                    joinnext
+                    default { "$ASSETS_PATH/Environments/Landscape/TO_HOUDINI/Landscape_To_Houdini.bgeo.sc" }
+                    menureplace {
+                        [ "opmenu -l -a filecache3 file" ]
+                    }
+                    range   { 0 1 }
+                    parmtag { "autoscope" "0000000000000000" }
+                    parmtag { "filechooser_mode" "write" }
+                }
+                parm {
+                    name    "reload"
+                    label   "Reload Geometry"
+                    type    button
+                    default { "0" }
+                    range   { 0 1 }
+                    parmtag { "autoscope" "0000000000000000" }
+                }
+            }
+
+        }
+
+        group {
+            name    "folder10_1"
+            label   "Preview"
+            disablewhentab "{ preview == 0 }"
+            grouptag { "sidefx::header_toggle" "preview" }
+
+            groupsimple {
+                name    "folder8"
+                label   "Height Layers"
+
+                groupcollapsible {
+                    name    "resample1"
+                    label   "Resample"
+                    parmtag { "group_default" "0" }
+                    parmtag { "sidefx::header_parm" "gridspacing" }
+
+                    parm {
+                        name    "gridspacing"
+                        label   "Grid Spacing"
+                        type    float
+                        default { "4" }
+                        range   { 1! 5 }
+                        parmtag { "autoscope" "0000000000000000" }
+                    }
+                    parm {
+                        name    "filterscale"
+                        label   "Filter Scale"
+                        type    float
+                        default { "1" }
+                        range   { 0! 5 }
+                        parmtag { "autoscope" "0000000000000000" }
+                    }
+                }
+
+                parm {
+                    name    "newparameter"
+                    label   "Base Layer"
+                    type    toggle
+                    default { "1" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "newparameter2"
+                    label   "Macrol_Layer"
+                    type    toggle
+                    default { "1" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "newparameter3"
+                    label   "Procedural_Layer"
+                    type    toggle
+                    default { "1" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "newparameter4"
+                    label   "Manual_Layer"
+                    type    toggle
+                    default { "1" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "newparameter5"
+                    label   "Splines_Layer"
+                    type    toggle
+                    default { "1" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "display_material_layer"
+                    label   "Material_Layer"
+                    type    toggle
+                    default { "1" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "newparameter7"
+                    label   "Splines"
+                    type    toggle
+                    default { "1" }
+                    parmtag { "script_callback_language" "python" }
+                }
+            }
+
+            parm {
+                name    "sepparm"
+                label   "Spacer"
+                type    separator
+                default { "" }
+                parmtag { "sidefx::layout_height" "small" }
+                parmtag { "sidefx::look" "blank" }
+            }
+            groupsimple {
+                name    "folder9"
+                label   "Material Layers"
+                disablewhentab "{ display_material_layer == 0 }"
+
+                groupcollapsible {
+                    name    "resample2"
+                    label   "Resample"
+                    parmtag { "group_default" "0" }
+                    parmtag { "sidefx::header_parm" "gridspacing2" }
+
+                    parm {
+                        name    "gridspacing2"
+                        label   "Grid Spacing"
+                        type    float
+                        default { "1" }
+                        range   { 1! 5 }
+                        parmtag { "autoscope" "0000000000000000" }
+                    }
+                    parm {
+                        name    "filterscale2"
+                        label   "Filter Scale"
+                        type    float
+                        default { "1" }
+                        range   { 0! 5 }
+                        parmtag { "autoscope" "0000000000000000" }
+                    }
+                }
+
+                parm {
+                    name    "display_mode"
+                    label   "Display Mode"
+                    type    ordinal
+                    default { "0" }
+                    menu {
+                        "0" "Custom Layer"
+                        "1" "Auto Layer Colors"
+                    }
+                    parmtag { "script_callback_language" "python" }
+                }
+                group {
+                    name    "folder16"
+                    label   "Custom Layer"
+                    disablewhentab "{ display_mode != 0 }"
+
+                    parm {
+                        name    "srcname1"
+                        label   "Source"
+                        type    string
+                        default { "Pro_Base_01" }
+                        menureplace {
+                            [ "opmenu -l -a heightfield_copylayer1 srcname1" ]
+                        }
+                        parmtag { "autoscope" "0000000000000000" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                }
+
+                group {
+                    name    "folder16_1"
+                    label   "Auto Layer Colors"
+                    disablewhentab "{ display_mode != 1 }"
+
+                    parm {
+                        name    "getlayers"
+                        label   "Get Layers(Basic)"
+                        type    button
+                        default { "0" }
+                        parmtag { "script_callback" "hou.phm().generate_layers(kwargs)" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    parm {
+                        name    "getlayers2"
+                        label   "Get Layers(Random)"
+                        type    button
+                        default { "0" }
+                        parmtag { "script_callback" "hou.phm().generate_layers_random(kwargs)" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    parm {
+                        name    "randColor"
+                        label   "Random Color On Input Changed"
+                        type    toggle
+                        default { "1" }
+                        parmtag { "script_callback_language" "python" }
+                    }
+                    multiparm {
+                        name    "layers"
+                        label    "Layers"
+                        default 0
+                        parmtag { "autoscope" "0000000000000000" }
+
+                        parm {
+                            name    "enable_#"
+                            label   "Enable"
+                            type    toggle
+                            default { "1" }
+                            parmtag { "script_callback_language" "python" }
+                        }
+                        parm {
+                            name    "name_#"
+                            label   "Name #"
+                            type    string
+                            default { "" }
+                            disablewhen "{ enable_# == 0 }"
+                            menureplace {
+                                [ "import terraintoolutils" ]
+                                [ "" ]
+                                [ "return terraintoolutils.buildNameMenu(kwargs['node'])" ]
+                                language python
+                            }
+                            parmtag { "script_callback_language" "python" }
+                        }
+                        parm {
+                            name    "color_#"
+                            label   "Color #"
+                            type    color
+                            size    3
+                            default { "1" "1" "1" }
+                            disablewhen "{ enable_# == 0 }"
+                            range   { 0 1 }
+                            parmtag { "script_callback_language" "python" }
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+
+        parm {
+            name    "labelparm"
+            label   "Label"
+            type    label
+            nolabel
+            default { "默认为不加载模式" }
+        }
+    }
+
+
+}

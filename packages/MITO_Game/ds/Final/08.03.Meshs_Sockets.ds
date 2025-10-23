@@ -1,0 +1,494 @@
+{
+    name	selectedparms
+
+    group {
+        name    "folder0_2"
+        label   "Sockets"
+        tabbreak
+        grouptag { "import_enable" "1" }
+        grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+
+        parm {
+            name    "mesh_socket_help"
+            label   "Mesh Sockets Help"
+            type    label
+            default { "插件可以通过以下属性在网格上创建Socket，用于在UE中附加Actor或组件。point属性基于点组自动生成多个Socket（使用点的P/N作为transform）；detail属性手动指定多个Socket（用X占位符区分，如mesh_socket1_pos）。Owner：point用于自动，detail用于手动。" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+            parmtag { "import_token" "mesh_socket_help" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        groupcollapsible {
+            name    "grp_mesh_point_sockets"
+            label   "Point-based Sockets"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+            grouptag { "import_token" "grp_mesh_point_sockets:Point-based Sockets" }
+
+            parm {
+                name    "en_mesh_socket_name"
+                label   "Enable Name"
+                type    toggle
+                default { "0" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                parmtag { "import_token" "en_mesh_socket_name" }
+                parmtag { "script_callback_language" "python" }
+            }
+            groupcollapsible {
+                name    "grp_mesh_socket_name"
+                label   "Socket Name"
+                parmtag { "group_default" "0" }
+                grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                grouptag { "import_token" "grp_mesh_socket_name:Socket Name" }
+                parmtag { "sidefx::header_toggle" "en_mesh_socket_name" }
+
+                parm {
+                    name    "mesh_socket_name_heading"
+                    label   "Heading"
+                    type    label
+                    default { "mesh_socket_name" }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "mesh_socket_name_heading" }
+                    parmtag { "sidefx::look" "heading" }
+                }
+                parm {
+                    name    "mesh_socket_name_help"
+                    label   "Help"
+                    type    label
+                    default { "网格Socket名称（point）。基于点组生成Socket的名称。\n说明：可通过Attribute或值指定。\n示例(Attribute)：来源attr=\"SocketA\" → 写出mesh_socket_name=\"SocketA\"。在UE中，创建名为SocketA的Socket。\n示例(值)：设置=\"MySocket\" → 所有点组Socket用此名。\n结果：在UE中，用于附件点名称。\nOwner：Point。" }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "mesh_socket_name_help" }
+                    parmtag { "sidefx::look" "heading" }
+                }
+                parm {
+                    name    "owner_mesh_socket_name"
+                    label   "Attribute Owner"
+                    type    ordinal
+                    nolabel
+                    joinnext
+                    default { "point" }
+                    disablewhen "{ en_mesh_socket_name == 0 }"
+                    menu {
+                        "point"     "Point"
+                        "prim"      "Prim"
+                        "vertex"    "Vertex"
+                        "detail"    "Detail"
+                    }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "owner_mesh_socket_name" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "form_mode_mesh_socket_name"
+                    label   "Form Mode"
+                    type    ordinal
+                    nolabel
+                    default { "value" }
+                    disablewhen "{ en_mesh_socket_name == 0 }"
+                    menu {
+                        "attrib"    "Attribute"
+                        "value"     "Value"
+                    }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "form_mode_mesh_socket_name" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "mesh_socket_name_from"
+                    label   "Attribute From"
+                    type    string
+                    default { "mesh_socket_name" }
+                    disablewhen "{ en_mesh_socket_name == 0 } { form_mode_mesh_socket_name != attrib }"
+                    menureplace {
+                        [ "node = hou.pwd()" ]
+                        [ "owner = node.parm(\"owner_mesh_socket_name\").evalAsString()" ]
+                        [ "" ]
+                        [ "in_node = node.node(\"IN\")" ]
+                        [ "if not in_node:" ]
+                        [ "    return []" ]
+                        [ "" ]
+                        [ "geo = in_node.geometry()" ]
+                        [ "attrs = []" ]
+                        [ "" ]
+                        [ "if owner == \"point\":" ]
+                        [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                        [ "elif owner == \"prim\":" ]
+                        [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                        [ "elif owner == \"vertex\":" ]
+                        [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                        [ "elif owner == \"detail\":" ]
+                        [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                        [ "" ]
+                        [ "menu = []" ]
+                        [ "for a in attrs:" ]
+                        [ "    menu += [a, a]" ]
+                        [ "" ]
+                        [ "return menu" ]
+                        language python
+                    }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "mesh_socket_name_from" }
+                    parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_mesh_socket_name')" }
+                    parmtag { "menu_script_language" "python" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "mesh_socket_name_val"
+                    label   "Name Value"
+                    type    string
+                    default { "" }
+                    disablewhen "{ en_mesh_socket_name == 0 } { form_mode_mesh_socket_name != value }"
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "mesh_socket_name_val" }
+                    parmtag { "script_callback_language" "python" }
+                }
+            }
+
+            parm {
+                name    "en_mesh_socket_tag"
+                label   "Enable Tag"
+                type    toggle
+                default { "0" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                parmtag { "import_token" "en_mesh_socket_tag" }
+                parmtag { "script_callback_language" "python" }
+            }
+            groupcollapsible {
+                name    "grp_mesh_socket_tag"
+                label   "Socket Tag"
+                parmtag { "group_default" "0" }
+                grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                grouptag { "import_token" "grp_mesh_socket_tag:Socket Tag" }
+                parmtag { "sidefx::header_toggle" "en_mesh_socket_tag" }
+
+                parm {
+                    name    "mesh_socket_tag_heading"
+                    label   "Heading"
+                    type    label
+                    default { "mesh_socket_tag" }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "mesh_socket_tag_heading" }
+                    parmtag { "sidefx::look" "heading" }
+                }
+                parm {
+                    name    "mesh_socket_tag_help"
+                    label   "Help"
+                    type    label
+                    default { "网格Socket标签（point）。基于点组生成Socket的标签。\n说明：可通过Attribute或值指定。\n示例(Attribute)：来源attr=\"TagB\" → 写出mesh_socket_tag=\"TagB\"。在UE中，添加标签到Socket。\n示例(值)：设置=\"MyTag\" → 所有Socket用此标签。\n结果：在UE中，用于分类或查询Socket。\nOwner：Point。" }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "mesh_socket_tag_help" }
+                    parmtag { "sidefx::look" "heading" }
+                }
+                parm {
+                    name    "owner_mesh_socket_tag"
+                    label   "Attribute Owner"
+                    type    ordinal
+                    nolabel
+                    joinnext
+                    default { "point" }
+                    disablewhen "{ en_mesh_socket_tag == 0 }"
+                    menu {
+                        "point"     "Point"
+                        "prim"      "Prim"
+                        "vertex"    "Vertex"
+                        "detail"    "Detail"
+                    }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "owner_mesh_socket_tag" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "form_mode_mesh_socket_tag"
+                    label   "Form Mode"
+                    type    ordinal
+                    nolabel
+                    default { "value" }
+                    disablewhen "{ en_mesh_socket_tag == 0 }"
+                    menu {
+                        "attrib"    "Attribute"
+                        "value"     "Value"
+                    }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "form_mode_mesh_socket_tag" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "mesh_socket_tag_from"
+                    label   "Attribute From"
+                    type    string
+                    default { "mesh_socket_tag" }
+                    disablewhen "{ en_mesh_socket_tag == 0 } { form_mode_mesh_socket_tag != attrib }"
+                    menureplace {
+                        [ "node = hou.pwd()" ]
+                        [ "owner = node.parm(\"owner_mesh_socket_tag\").evalAsString()" ]
+                        [ "" ]
+                        [ "in_node = node.node(\"IN\")" ]
+                        [ "if not in_node:" ]
+                        [ "    return []" ]
+                        [ "" ]
+                        [ "geo = in_node.geometry()" ]
+                        [ "attrs = []" ]
+                        [ "" ]
+                        [ "if owner == \"point\":" ]
+                        [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                        [ "elif owner == \"prim\":" ]
+                        [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                        [ "elif owner == \"vertex\":" ]
+                        [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                        [ "elif owner == \"detail\":" ]
+                        [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                        [ "" ]
+                        [ "menu = []" ]
+                        [ "for a in attrs:" ]
+                        [ "    menu += [a, a]" ]
+                        [ "" ]
+                        [ "return menu" ]
+                        language python
+                    }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "mesh_socket_tag_from" }
+                    parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_mesh_socket_tag')" }
+                    parmtag { "menu_script_language" "python" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "mesh_socket_tag_val"
+                    label   "Tag Value"
+                    type    string
+                    default { "" }
+                    disablewhen "{ en_mesh_socket_tag == 0 } { form_mode_mesh_socket_tag != value }"
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "mesh_socket_tag_val" }
+                    parmtag { "script_callback_language" "python" }
+                }
+            }
+
+            parm {
+                name    "en_mesh_socket_actor"
+                label   "Enable Actor"
+                type    toggle
+                default { "0" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                parmtag { "import_token" "en_mesh_socket_actor" }
+                parmtag { "script_callback_language" "python" }
+            }
+            groupcollapsible {
+                name    "grp_mesh_socket_actor"
+                label   "Socket Actor"
+                parmtag { "group_default" "0" }
+                grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                grouptag { "import_token" "grp_mesh_socket_actor:Socket Actor" }
+                parmtag { "sidefx::header_toggle" "en_mesh_socket_actor" }
+
+                parm {
+                    name    "mesh_socket_actor_heading"
+                    label   "Heading"
+                    type    label
+                    default { "mesh_socket_actor" }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "mesh_socket_actor_heading" }
+                    parmtag { "sidefx::look" "heading" }
+                }
+                parm {
+                    name    "mesh_socket_actor_help"
+                    label   "Help"
+                    type    label
+                    default { "网格Socket Actor（point）。指定附加到Socket的Actor路径。\n说明：可通过Attribute或值指定。\n示例(Attribute)：来源attr=\"/Game/ActorPath\" → 写出mesh_socket_actor=\"/Game/ActorPath\"。在UE中，自动附加该Actor到Socket。\n示例(值)：设置=\"/Game/MyActor\" → 所有Socket附加此Actor。\n结果：在UE中，实现预设附件。\nOwner：Point。" }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "mesh_socket_actor_help" }
+                    parmtag { "sidefx::look" "heading" }
+                }
+                parm {
+                    name    "owner_mesh_socket_actor"
+                    label   "Attribute Owner"
+                    type    ordinal
+                    nolabel
+                    joinnext
+                    default { "point" }
+                    disablewhen "{ en_mesh_socket_actor == 0 }"
+                    menu {
+                        "point"     "Point"
+                        "prim"      "Prim"
+                        "vertex"    "Vertex"
+                        "detail"    "Detail"
+                    }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "owner_mesh_socket_actor" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "form_mode_mesh_socket_actor"
+                    label   "Form Mode"
+                    type    ordinal
+                    nolabel
+                    default { "value" }
+                    disablewhen "{ en_mesh_socket_actor == 0 }"
+                    menu {
+                        "attrib"    "Attribute"
+                        "value"     "Value"
+                    }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "form_mode_mesh_socket_actor" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "mesh_socket_actor_from"
+                    label   "Attribute From"
+                    type    string
+                    default { "mesh_socket_actor" }
+                    disablewhen "{ en_mesh_socket_actor == 0 } { form_mode_mesh_socket_actor != attrib }"
+                    menureplace {
+                        [ "node = hou.pwd()" ]
+                        [ "owner = node.parm(\"owner_mesh_socket_actor\").evalAsString()" ]
+                        [ "" ]
+                        [ "in_node = node.node(\"IN\")" ]
+                        [ "if not in_node:" ]
+                        [ "    return []" ]
+                        [ "" ]
+                        [ "geo = in_node.geometry()" ]
+                        [ "attrs = []" ]
+                        [ "" ]
+                        [ "if owner == \"point\":" ]
+                        [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                        [ "elif owner == \"prim\":" ]
+                        [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                        [ "elif owner == \"vertex\":" ]
+                        [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                        [ "elif owner == \"detail\":" ]
+                        [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                        [ "" ]
+                        [ "menu = []" ]
+                        [ "for a in attrs:" ]
+                        [ "    menu += [a, a]" ]
+                        [ "" ]
+                        [ "return menu" ]
+                        language python
+                    }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "mesh_socket_actor_from" }
+                    parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_mesh_socket_actor')" }
+                    parmtag { "menu_script_language" "python" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "mesh_socket_actor_val"
+                    label   "Actor Value"
+                    type    string
+                    default { "" }
+                    disablewhen "{ en_mesh_socket_actor == 0 } { form_mode_mesh_socket_actor != value }"
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "mesh_socket_actor_val" }
+                    parmtag { "script_callback_language" "python" }
+                }
+            }
+
+        }
+
+        multiparm {
+            name    "mesh_detail_sockets"
+            label    "Detail-based Socket"
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+            parmtag { "import_token" "mesh_detail_sockets" }
+
+            parm {
+                name    "en_mesh_socket#"
+                label   "Enable Socket #"
+                type    toggle
+                default { "1" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                parmtag { "import_token" "en_mesh_socket#" }
+                parmtag { "script_callback_language" "python" }
+            }
+            groupcollapsible {
+                name    "grp_mesh_socket#"
+                label   "Socket #"
+                grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                grouptag { "import_token" "grp_mesh_socket#:Socket #" }
+                parmtag { "sidefx::header_toggle" "en_mesh_socket#" }
+
+                parm {
+                    name    "owner_mesh_socket#"
+                    label   "Attribute Owner"
+                    type    ordinal
+                    default { "detail" }
+                    disablewhen "{ en_mesh_socket# == 0 }"
+                    menu {
+                        "detail"    "Detail"
+                    }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "owner_mesh_socket#" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "mesh_socket_pos_val#"
+                    label   "Socket Position"
+                    type    float
+                    size    3
+                    default { "0" "0" "0" }
+                    disablewhen "{ en_mesh_socket# == 0 }"
+                    range   { 0 10 }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "mesh_socket_pos_val#" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "mesh_socket_rot_val#"
+                    label   "Socket Rotation (Quat)"
+                    type    float
+                    size    4
+                    default { "0" "0" "0" "1" }
+                    disablewhen "{ en_mesh_socket# == 0 }"
+                    range   { 0 10 }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "mesh_socket_rot_val#" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "mesh_socket_scale_val#"
+                    label   "Socket Scale"
+                    type    float
+                    size    3
+                    default { "1" "1" "1" }
+                    disablewhen "{ en_mesh_socket# == 0 }"
+                    range   { 0 10 }
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "mesh_socket_scale_val#" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "mesh_socket_name_val#"
+                    label   "Socket Name"
+                    type    string
+                    default { "Socket_#" }
+                    disablewhen "{ en_mesh_socket# == 0 }"
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "mesh_socket_name_val#" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "mesh_socket_tag_val#"
+                    label   "Socket Tag"
+                    type    string
+                    default { "Gameplay" }
+                    disablewhen "{ en_mesh_socket# == 0 }"
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "mesh_socket_tag_val#" }
+                    parmtag { "script_callback_language" "python" }
+                }
+                parm {
+                    name    "mesh_socket_actor_val#"
+                    label   "Socket Actor"
+                    type    string
+                    default { "Blueprint'/Game/Actor/BP_SocketActor.BP_SocketActor_C'" }
+                    disablewhen "{ en_mesh_socket# == 0 }"
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.03.Meshs_Sockets.ds" }
+                    parmtag { "import_token" "mesh_socket_actor_val#" }
+                    parmtag { "script_callback_language" "python" }
+                }
+            }
+
+        }
+
+    }
+
+
+}

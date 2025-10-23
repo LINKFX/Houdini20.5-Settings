@@ -1,0 +1,51 @@
+{
+    name	selectedparms
+
+    groupcollapsible {
+        name    "grp_output_name"
+        label   "Output Name"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_parm" "output_name_str" }
+        parmtag { "sidefx::header_toggle" "en_output_name" }
+
+        parm {
+            name    "output_name_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_output_name" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "output_name_help_heading"
+            label   "Help"
+            type    label
+            default { "说明：统一控制 Bake 输出的命名（Actor/资源/图层等）。支持字符串 Token（如 {world}、{bake}、{actor}），在运行时展开为项目上下文。\n示例：SM_Bridge_01 → 实际写出 unreal_output_name=SM_Bridge_01。\n结果：后续管线统一使用该名称创建或匹配目标对象（也替代旧字段 unreal_bake_name、unreal_landscape_editlayer_target）。\nOwner：Point/Prim/Detail。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_output_name"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_output_name == 0 }"
+            menu {
+                "point"     "Point"
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "output_name_str"
+            label   "Name"
+            type    string
+            default { "OutputName" }
+            disablewhen "{ en_output_name == 0 }"
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+
+}

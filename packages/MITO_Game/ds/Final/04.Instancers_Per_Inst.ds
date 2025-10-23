@@ -1,0 +1,63 @@
+{
+    name	selectedparms
+
+    parm {
+        name    "en_inst_customdata"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_inst_customdata"
+        label   "Per Instance Custom Data"
+        parmtag { "sidefx::header_toggle" "en_inst_customdata" }
+
+        parm {
+            name    "inst_customdata_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_per_instance_custom_dataX" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "inst_customdata_help"
+            label   "Help"
+            type    label
+            default { "说明：设置每个实例的自定义浮点数据（索引从 0 开始）。可通过 Attribute 或数值指定。\n示例(Attribute)：来源 attr=0.5 → 写出 unreal_per_instance_custom_data0=0.5。\n示例(数值)：直接设置 Data0=1.0 → UE 中实例的 CustomData[0]=1.0。\n结果：用于材质或蓝图中读取每个实例的自定义数据。\nOwner：Any。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_perinst_numfloats"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            default { "detail" }
+            disablewhen "{ en_inst_customdata == 0 }"
+            menu {
+                "point"     "Point"
+                "vertex"    "Vertex"
+                "prim"      "Prim"
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        multiparm {
+            name    "num_inst_customdata"
+            label    "Number of Custom Data"
+
+            parm {
+                name    "inst_customdata_val#"
+                label   "Custom Data Value #"
+                type    float
+                default { "0" }
+                disablewhen "{ en_inst_customdata == 0 }"
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+
+}

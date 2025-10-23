@@ -1,0 +1,195 @@
+{
+    name	selectedparms
+
+    group {
+        name    "folder2_1"
+        label   "Instances"
+        grouptag { "import_enable" "1" }
+        grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.1_Material_Instances.ds" }
+
+        parm {
+            name    "en_matinst"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.1_Material_Instances.ds" }
+            parmtag { "import_token" "en_matinst" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_matinst"
+            label   "Unreal Material Instance"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.1_Material_Instances.ds" }
+            grouptag { "import_token" "grp_matinst:Unreal Material Instance" }
+            parmtag { "sidefx::header_toggle" "en_matinst" }
+
+            parm {
+                name    "matinst_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_material_instance" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.1_Material_Instances.ds" }
+                parmtag { "import_token" "matinst_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "matinst_help"
+                label   "Help"
+                type    label
+                default { "说明：指定生成材质实例的基础材质路径。可从来源字符串属性重命名为 unreal_material_instance，或直接填写 Content Path。\n示例(属性)：来源 a=/Game/MI_Base → 实际写出 unreal_material_instance=/Game/MI_Base，a 被移除。\n示例(数值)：直接设置 unreal_material_instance=/Game/MI_Base。\n结果：网格会生成该材质的实例并应用。\nOwner：Prim/Detail。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.1_Material_Instances.ds" }
+                parmtag { "import_token" "matinst_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_matinst"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_matinst == 0 }"
+                menu {
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.1_Material_Instances.ds" }
+                parmtag { "import_token" "owner_matinst" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_matinst"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_matinst == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.1_Material_Instances.ds" }
+                parmtag { "import_token" "form_mode_matinst" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "matinst_from"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_matinst == 0 } { form_mode_matinst != attrib }"
+                menutoggle {
+                    [ " opmenu -l -a attribute ptdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.1_Material_Instances.ds" }
+                parmtag { "import_token" "matinst_from" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "matinst_val"
+                label   "Instance Base Path"
+                type    string
+                default { "/Game/MI_Base" }
+                disablewhen "{ en_matinst == 0 } { form_mode_matinst != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.1_Material_Instances.ds" }
+                parmtag { "import_token" "matinst_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_matinst_hole"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.1_Material_Instances.ds" }
+            parmtag { "import_token" "en_matinst_hole" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_matinst_hole"
+            label   "Unreal Material Hole Instance"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.1_Material_Instances.ds" }
+            grouptag { "import_token" "grp_matinst_hole:Unreal Material Hole Instance" }
+            parmtag { "sidefx::header_toggle" "en_matinst_hole" }
+
+            parm {
+                name    "matinst_hole_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_material_hole_instance" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.1_Material_Instances.ds" }
+                parmtag { "import_token" "matinst_hole_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "matinst_hole_help"
+                label   "Help"
+                type    label
+                default { "说明：指定 Landscape Hole 使用的材质实例路径。可从来源字符串属性重命名为 unreal_material_hole_instance，或直接填写 Content Path。\n示例(属性)：来源 a=/Game/MI_Hole → 实际写出 unreal_material_hole_instance=/Game/MI_Hole，a 被移除。\n示例(数值)：直接设置 unreal_material_hole_instance=/Game/MI_Hole。\n结果：在 UE 中应用于 Landscape Holes。\nOwner：Prim/Detail。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.1_Material_Instances.ds" }
+                parmtag { "import_token" "matinst_hole_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_matinst_hole"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_matinst_hole == 0 }"
+                menu {
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.1_Material_Instances.ds" }
+                parmtag { "import_token" "owner_matinst_hole" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_matinst_hole"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_matinst_hole == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.1_Material_Instances.ds" }
+                parmtag { "import_token" "form_mode_matinst_hole" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "matinst_hole_from"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_matinst_hole == 0 } { form_mode_matinst_hole != attrib }"
+                menutoggle {
+                    [ " opmenu -l -a attribute ptdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.1_Material_Instances.ds" }
+                parmtag { "import_token" "matinst_hole_from" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "matinst_hole_val"
+                label   "Hole Instance Path"
+                type    string
+                default { "/Game/MI_Hole" }
+                disablewhen "{ en_matinst_hole == 0 } { form_mode_matinst_hole != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/5.1_Material_Instances.ds" }
+                parmtag { "import_token" "matinst_hole_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+
+}

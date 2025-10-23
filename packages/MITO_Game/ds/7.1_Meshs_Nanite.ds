@@ -1,0 +1,382 @@
+{
+    name    selectedparms
+
+    ########################################################################
+    # Nanite Enabled (bNaniteEnabled)
+    ########################################################################
+    parm {
+        name    "en_mn_enabled"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_mn_enabled"
+        label   "Nanite Enabled"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_mn_enabled" }
+
+        parm {
+            name    "mn_enabled_heading"
+            label   "Heading"
+            type    label
+            default { "bNaniteEnabled" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "mn_enabled_help"
+            label   "Help"
+            type    label
+            default { "说明：控制 Static Mesh 是否启用 Nanite（总开关）。可通过 Attribute 或直接指定数值。\n示例(Attribute)：来源 bNaniteEnabled=1 → 写出 bNaniteEnabled=1，UE 中 Nanite 启用。\n示例(数值)：直接在参数中将 Nanite Enabled=启用 → UE 中同名选项生效。\n结果：网格使用 Nanite 虚拟几何渲染，近景细节保真，远景自动降面。\nOwner：Prim/Detail。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+
+        parm {
+            name    "owner_mn_enabled"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_mn_enabled == 0 }"
+            menu {
+                "point"  "Point"
+                "vertex" "Vertex"
+                "prim"   "Prim"
+                "detail" "Detail"
+            }
+        }
+
+        parm {
+            name    "form_mode_mn_enabled"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_mn_enabled == 0 }"
+            menu {
+                "attrib" "Attribute"
+                "value"  "Value"
+            }
+        }
+        parm {
+            name    "mn_enabled_from"
+            label   "Attribute From"
+            type    string
+            default { "bNaniteEnabled" }
+            disablewhen "{ en_mn_enabled == 0 } { form_mode_mn_enabled != attrib }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+        }
+        parm {
+            name    "mn_enabled_val"
+            label   "Nanite Enabled"
+            type    toggle
+            default { "1" }
+            disablewhen "{ en_mn_enabled == 0 } { form_mode_mn_enabled != value }"
+        }
+    }
+
+    ########################################################################
+    # Nanite Fallback Percent Triangles (NaniteSettings_FallbackPercentTriangles)
+    ########################################################################
+    parm {
+        name    "en_mn_fallback"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_mn_fallback"
+        label   "Nanite Fallback Percent Triangles"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_mn_fallback" }
+
+        parm {
+            name    "mn_fallback_heading"
+            label   "Heading"
+            type    label
+            default { "NaniteSettings_FallbackPercentTriangles" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "mn_fallback_help"
+            label   "Help"
+            type    label
+            default { "说明：设置 Nanite 的回退三角百分比。可通过 Attribute 或直接指定数值。\n示例(Attribute)：来源 NaniteSettings_FallbackPercentTriangles=0.25 → 写出同名属性，UE 中回退为 25%。\n示例(数值)：在参数中将 Fallback=0.2 → UE 中该 Mesh 回退为 20%。\n结果：控制远景时网格的降面比例，数值越低越省性能。\nOwner：Prim/Detail。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+
+        parm {
+            name    "owner_mn_fallback"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_mn_fallback == 0 }"
+            menu {
+                "point"  "Point"
+                "vertex" "Vertex"
+                "prim"   "Prim"
+                "detail" "Detail"
+            }
+        }
+
+        parm {
+            name    "form_mode_mn_fallback"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_mn_fallback == 0 }"
+            menu {
+                "attrib" "Attribute"
+                "value"  "Value"
+            }
+        }
+        parm {
+            name    "mn_fallback_from"
+            label   "Attribute From"
+            type    string
+            default { "NaniteSettings_FallbackPercentTriangles" }
+            disablewhen "{ en_mn_fallback == 0 } { form_mode_mn_fallback != attrib }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+        }
+        parm {
+            name    "mn_fallback_val"
+            label   "Fallback Percent Triangles"
+            type    float
+            default { "0.25" }
+            range   { 0! 1 }
+            disablewhen "{ en_mn_fallback == 0 } { form_mode_mn_fallback != value }"
+        }
+    }
+
+    ########################################################################
+    # Nanite Keep Percent Triangles (NaniteSettings_KeepPercentTriangles)
+    ########################################################################
+    parm {
+        name    "en_mn_keep"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_mn_keep"
+        label   "Nanite Keep Percent Triangles"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_mn_keep" }
+
+        parm {
+            name    "mn_keep_heading"
+            label   "Heading"
+            type    label
+            default { "NaniteSettings_KeepPercentTriangles" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "mn_keep_help"
+            label   "Help"
+            type    label
+            default { "说明：设置 Nanite 的保留三角百分比。可通过 Attribute 或直接指定数值。\n示例(Attribute)：来源 NaniteSettings_KeepPercentTriangles=1.0 → 写出同名属性，UE 中保留 100%。\n示例(数值)：在参数中将 Keep=0.8 → UE 中该 Mesh 保留 80% 三角。\n结果：控制 Nanite 在 LOD 处理中可保留的比例，数值越高细节越完整。\nOwner：Prim/Detail。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+
+        parm {
+            name    "owner_mn_keep"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_mn_keep == 0 }"
+            menu {
+                "point"  "Point"
+                "vertex" "Vertex"
+                "prim"   "Prim"
+                "detail" "Detail"
+            }
+        }
+
+        parm {
+            name    "form_mode_mn_keep"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_mn_keep == 0 }"
+            menu {
+                "attrib" "Attribute"
+                "value"  "Value"
+            }
+        }
+        parm {
+            name    "mn_keep_from"
+            label   "Attribute From"
+            type    string
+            default { "NaniteSettings_KeepPercentTriangles" }
+            disablewhen "{ en_mn_keep == 0 } { form_mode_mn_keep != attrib }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+        }
+        parm {
+            name    "mn_keep_val"
+            label   "Keep Percent Triangles"
+            type    float
+            default { "1.0" }
+            range   { 0! 1 }
+            disablewhen "{ en_mn_keep == 0 } { form_mode_mn_keep != value }"
+        }
+    }
+
+    ########################################################################
+    # Nanite Position Precision (NaniteSettings_PositionPrecision)
+    ########################################################################
+    parm {
+        name    "en_mn_posprec"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_mn_posprec"
+        label   "Nanite Position Precision"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_mn_posprec" }
+
+        parm {
+            name    "mn_posprec_heading"
+            label   "Heading"
+            type    label
+            default { "NaniteSettings_PositionPrecision" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "mn_posprec_help"
+            label   "Help"
+            type    label
+            default { "说明：设置 Nanite 的位置量化精度。可通过 Attribute 或直接指定数值。\n示例(Attribute)：来源 NaniteSettings_PositionPrecision=1.0 → 写出同名属性，UE 中位置精度为 1.0。\n示例(数值)：在参数中将 Position Precision=0.5 → UE 中该 Mesh 精度较低，性能更优。\n结果：控制 Nanite 空间量化的坐标精度，数值越高越精确（但开销更高）。\nOwner：Prim/Detail。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+
+        parm {
+            name    "owner_mn_posprec"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_mn_posprec == 0 }"
+            menu {
+                "point"  "Point"
+                "vertex" "Vertex"
+                "prim"   "Prim"
+                "detail" "Detail"
+            }
+        }
+
+        parm {
+            name    "form_mode_mn_posprec"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_mn_posprec == 0 }"
+            menu {
+                "attrib" "Attribute"
+                "value"  "Value"
+            }
+        }
+        parm {
+            name    "mn_posprec_from"
+            label   "Attribute From"
+            type    string
+            default { "NaniteSettings_PositionPrecision" }
+            disablewhen "{ en_mn_posprec == 0 } { form_mode_mn_posprec != attrib }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+        }
+        parm {
+            name    "mn_posprec_val"
+            label   "Position Precision"
+            type    float
+            default { "1.0" }
+            range   { 0! 10 }
+            disablewhen "{ en_mn_posprec == 0 } { form_mode_mn_posprec != value }"
+        }
+    }
+
+    ########################################################################
+    # Nanite Rotation Precision (NaniteSettings_RotationPrecision)
+    ########################################################################
+    parm {
+        name    "en_mn_rotprec"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_mn_rotprec"
+        label   "Nanite Rotation Precision"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_mn_rotprec" }
+
+        parm {
+            name    "mn_rotprec_heading"
+            label   "Heading"
+            type    label
+            default { "NaniteSettings_RotationPrecision" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "mn_rotprec_help"
+            label   "Help"
+            type    label
+            default { "说明：设置 Nanite 的旋转量化精度。可通过 Attribute 或直接指定数值。\n示例(Attribute)：来源 NaniteSettings_RotationPrecision=1.0 → 写出同名属性，UE 中旋转精度为 1.0。\n示例(数值)：在参数中将 Rotation Precision=0.5 → UE 中该 Mesh 旋转量化精度较低，性能更优。\n结果：控制 Nanite 的角度量化精度，数值越高越精确（但开销更高）。\nOwner：Prim/Detail。 " }
+            parmtag { "sidefx::look" "heading" }
+        }
+
+        parm {
+            name    "owner_mn_rotprec"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_mn_rotprec == 0 }"
+            menu {
+                "point"  "Point"
+                "vertex" "Vertex"
+                "prim"   "Prim"
+                "detail" "Detail"
+            }
+        }
+
+        parm {
+            name    "form_mode_mn_rotprec"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_mn_rotprec == 0 }"
+            menu {
+                "attrib" "Attribute"
+                "value"  "Value"
+            }
+        }
+        parm {
+            name    "mn_rotprec_from"
+            label   "Attribute From"
+            type    string
+            default { "NaniteSettings_RotationPrecision" }
+            disablewhen "{ en_mn_rotprec == 0 } { form_mode_mn_rotprec != attrib }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+        }
+        parm {
+            name    "mn_rotprec_val"
+            label   "Rotation Precision"
+            type    float
+            default { "1.0" }
+            range   { 0! 10 }
+            disablewhen "{ en_mn_rotprec == 0 } { form_mode_mn_rotprec != value }"
+        }
+    }
+}

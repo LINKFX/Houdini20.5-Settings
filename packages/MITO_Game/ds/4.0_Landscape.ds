@@ -1,0 +1,3087 @@
+{
+    name	selectedparms
+
+    group {
+        name    "folder3"
+        label   "Main"
+
+        parm {
+            name    "en_mat_hole"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+        }
+        groupcollapsible {
+            name    "grp_mat_hole"
+            label   "Material Hole"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_parm" "mat_hole_path" }
+            parmtag { "sidefx::header_toggle" "en_mat_hole" }
+
+            parm {
+                name    "mat_hole_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_material_hole" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "mat_hole_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：指定用于 Landscape 洞（Hole）的材质资源路径（Content Path），用于标记被挖空区域。 \n示例：/Game/Materials/M_LandscapeHole → 实际写出 unreal_material_hole=/Game/Materials/M_LandscapeHole。 \n结果：UE 中可在地形使用该材质处理洞区域（通常配合 Masked 材质）。 \nOwner：Prim/Detail。 " }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_mat_hole"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_mat_hole == 0 }"
+                menu {
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "mat_hole_path"
+                label   "Content Path"
+                type    string
+                default { "/Game/Materials/M_LandscapeHole" }
+                disablewhen "{ en_mat_hole == 0 }"
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_shared_actor"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+        }
+        groupcollapsible {
+            name    "grp_shared_actor"
+            label   "Shared Actor Name"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_parm" "shared_actor_name" }
+            parmtag { "sidefx::header_toggle" "en_shared_actor" }
+
+            parm {
+                name    "shared_actor_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_shared_actor_name" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "shared_actor_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：启用 Landscape Streaming Proxies 时，用于主/共享 Landscape Actor 的命名。支持字符串 Token（如 {hda_actor_name}）。 \n示例：{hda_actor_name}_SharedLandscape → 实际写出 unreal_landscape_shared_actor_name={hda_actor_name}_SharedLandscape。 \n结果：各 Tile Actor 会从该共享名读取/派生。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_shared_actor"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_shared_actor == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "shared_actor_name"
+                label   "Name"
+                type    string
+                default { "{hda_actor_name}_SharedLandscape" }
+                disablewhen "{ en_shared_actor == 0 }"
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_layer_min"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+        }
+        groupcollapsible {
+            name    "grp_layer_min"
+            label   "Layer Min"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_parm" "layer_min_val" }
+            parmtag { "sidefx::header_toggle" "en_layer_min" }
+
+            parm {
+                name    "layer_min_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_layer_min" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "layer_min_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：将高度/权重值转换到 Landscape 时的最小阈值（归一化映射下界）。 \n示例：0 → 实际写出 unreal_landscape_layer_min=0。 \n结果：用于保证不同 Tile 以一致方式转换。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_layer_min"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_layer_min == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "layer_min_val"
+                label   "Value"
+                type    float
+                default { "0" }
+                disablewhen "{ en_layer_min == 0 }"
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_layer_max"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+        }
+        groupcollapsible {
+            name    "grp_layer_max"
+            label   "Layer Max"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_parm" "layer_max_val" }
+            parmtag { "sidefx::header_toggle" "en_layer_max" }
+
+            parm {
+                name    "layer_max_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_layer_max" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "layer_max_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：将高度/权重值转换到 Landscape 时的最大阈值（归一化映射上界）。 \n示例：1 → 实际写出 unreal_landscape_layer_max=1。 \n结果：与最小阈值配合用于统一 Tile 的转换范围。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_layer_max"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_layer_max == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "layer_max_val"
+                label   "Value"
+                type    float
+                default { "1" }
+                disablewhen "{ en_layer_max == 0 }"
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_section_size"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+        }
+        groupcollapsible {
+            name    "grp_section_size"
+            label   "Section Size"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_parm" "section_size" }
+            parmtag { "sidefx::header_toggle" "en_section_size" }
+
+            parm {
+                name    "section_size_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_section_size" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "section_size_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：设置 Landscape 的 Section 大小（如 63/127 等）。需与“Sections Per Component”配对设置。 \n示例：127 → 实际写出 unreal_landscape_section_size=127。 \n结果：影响地形组件的分割与渲染效率。 \nOwner：Prim。 " }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_section_size"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_section_size == 0 }"
+                menu {
+                    "prim"  "Prim"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "section_size"
+                label   "Size"
+                type    integer
+                default { "127" }
+                disablewhen "{ en_section_size == 0 }"
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_sections_per_comp"
+            label   "Enable"
+            type    toggle
+            default { "ch(\"en_section_size\")" }
+        }
+        groupcollapsible {
+            name    "grp_sections_per_comp"
+            label   "Sections Per Component"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_parm" "sections_per_comp" }
+            parmtag { "sidefx::header_toggle" "en_sections_per_comp" }
+
+            parm {
+                name    "sections_per_comp_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_sections_per_component" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "sections_per_comp_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：每个组件包含的 Section 数（如 1/2）。需与“Section Size”配对设置。 \n示例：2 → 实际写出 unreal_landscape_sections_per_component=2。 \n结果：共同决定组件分辨率与数量。 \nOwner：Prim。 " }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_sections_per_comp"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_sections_per_comp == 0 }"
+                menu {
+                    "prim"  "Prim"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "sections_per_comp"
+                label   "Count"
+                type    integer
+                default { "2" }
+                disablewhen "{ en_sections_per_comp == 0 }"
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_unit_layer"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+        }
+        groupcollapsible {
+            name    "grp_unit_layer"
+            label   "Unit Mask"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_toggle" "en_unit_layer" }
+
+            parm {
+                name    "unit_layer_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_unit_landscape_layer" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "unit_layer_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：以 0/1 单位区间解释掩码为 Landscape 图层（布尔化）。 \n示例：启用 → 实际写出 unreal_unit_landscape_layer=1。 \n结果：掩码值在阈值处截断为 0 或 1。 \nOwner：Prim/Detail。 " }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_unit_layer"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                default { "prim" }
+                disablewhen "{ en_unit_layer == 0 }"
+                menu {
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_nonweight_list"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+        }
+        groupcollapsible {
+            name    "grp_nonweight_list"
+            label   "Non-Weight Layers (List)"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_parm" "nonweight_list_str" }
+            parmtag { "sidefx::header_toggle" "en_nonweight_list" }
+
+            parm {
+                name    "nonweight_list_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_layer_nonweightblended" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "nonweight_list_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：以空格分隔的掩码名称集合，创建为非权重混合（Non-Weight Blended）图层。 \n示例：Road Decal → 实际写出 unreal_landscape_layer_nonweightblended=\"Road Decal\"。 \n结果：这些图层不参与权重归一，适合覆盖/贴花。 \nOwner：Prim/Detail。 " }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_nonweight_list"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_nonweight_list == 0 }"
+                menu {
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "nonweight_list_str"
+                label   "Mask Names"
+                type    string
+                default { "Road Decal" }
+                disablewhen "{ en_nonweight_list == 0 }"
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_layer_info"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+        }
+        groupcollapsible {
+            name    "grp_layer_info"
+            label   "Layer Info Path"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_parm" "layer_info_path" }
+            parmtag { "sidefx::header_toggle" "en_layer_info" }
+
+            parm {
+                name    "layer_info_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_layer_info" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "layer_info_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：指定现有 LandscapeLayerInfo 资源路径，用于将掩码转换到对应图层。 \n示例：/Game/Landscape/LI_Road → 实际写出 unreal_landscape_layer_info=/Game/Landscape/LI_Road。 \n结果：使用指定 LayerInfo 对应的图层设置。 \nOwner：Prim。 " }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_layer_info"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_layer_info == 0 }"
+                menu {
+                    "prim"  "Prim"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "layer_info_path"
+                label   "Content Path"
+                type    string
+                default { "/Game/Landscape/LI_Road" }
+                disablewhen "{ en_layer_info == 0 }"
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_noweightblend"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+        }
+        groupcollapsible {
+            name    "grp_noweightblend"
+            label   "NoWeightBlend"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_toggle" "en_noweightblend" }
+
+            parm {
+                name    "noweightblend_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_layer_noweightblend" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "noweightblend_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：将图层的 LayerInfo 设为 NoWeightBlend（不参与权重归一），适合覆盖/贴花式图层。高于列表字段的优先级。 \n示例：启用 → 实际写出 unreal_landscape_layer_noweightblend=1。 \n结果：该图层不受其他权重图层影响。 \nOwner：Prim/Detail。 " }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_noweightblend"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                default { "prim" }
+                disablewhen "{ en_noweightblend == 0 }"
+                menu {
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_output_mode"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+        }
+        groupcollapsible {
+            name    "grp_output_mode"
+            label   "Output Mode"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_toggle" "en_output_mode" }
+
+            parm {
+                name    "output_mode_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_output_mode" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "output_mode_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：切换为 Modify Edit Layer 输出模式（默认 Generate）。 \n示例：启用 → 实际写出 unreal_landscape_output_mode=1。 \n结果：对现有 Landscape 的 Edit Layer 进行修改而非新建。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_output_mode"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                default { "prim" }
+                disablewhen "{ en_output_mode == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_editlayer_name"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+        }
+        groupcollapsible {
+            name    "grp_editlayer_name"
+            label   "EditLayer Name"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_parm" "editlayer_name_str" }
+            parmtag { "sidefx::header_toggle" "en_editlayer_name" }
+
+            parm {
+                name    "editlayer_name_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_editlayer_name" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "editlayer_name_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：目标 Edit Layer 的名称。 \n示例：Landscape → 实际写出 unreal_landscape_editlayer_name=Landscape。 \n结果：将输出写入/创建到该命名的 Edit Layer。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_editlayer_name"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_editlayer_name == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "editlayer_name_str"
+                label   "Name"
+                type    string
+                default { "Landscape" }
+                disablewhen "{ en_editlayer_name == 0 }"
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_editlayer_type"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+        }
+        groupcollapsible {
+            name    "grp_editlayer_type"
+            label   "EditLayer Type"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_parm" "editlayer_type_mode" }
+            parmtag { "sidefx::header_toggle" "en_editlayer_type" }
+
+            parm {
+                name    "editlayer_type_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_editlayer_type" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "editlayer_type_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：输出图层类型：0=Create New，1=Additive。 \n示例：Additive → 实际写出 unreal_landscape_editlayer_type=1。 \n结果：控制写入的图层是否在现有基础上相加。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_editlayer_type"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_editlayer_type == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "editlayer_type_mode"
+                label   "Type"
+                type    ordinal
+                default { "0" }
+                disablewhen "{ en_editlayer_type == 0 }"
+                menu {
+                    "0" "Create New (0)"
+                    "1" "Additive (1)"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_editlayer_after"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+        }
+        groupcollapsible {
+            name    "grp_editlayer_after"
+            label   "EditLayer After"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_parm" "editlayer_after_str" }
+            parmtag { "sidefx::header_toggle" "en_editlayer_after" }
+
+            parm {
+                name    "editlayer_after_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_editlayer_after" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "editlayer_after_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：指定输出图层插入到目标 Landscape 的哪一图层之后。 \n示例：Base → 实际写出 unreal_landscape_editlayer_after=Base。 \n结果：用于调整图层堆叠顺序。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_editlayer_after"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_editlayer_after == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "editlayer_after_str"
+                label   "Layer Name"
+                type    string
+                default { "Base" }
+                disablewhen "{ en_editlayer_after == 0 }"
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_editlayer_clear"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+        }
+        groupcollapsible {
+            name    "grp_editlayer_clear"
+            label   "Clear EditLayer"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_toggle" "en_editlayer_clear" }
+
+            parm {
+                name    "editlayer_clear_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_editlayer_clear" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "editlayer_clear_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：绘制前清空目标 Edit Layer。 \n示例：启用 → 实际写出 unreal_landscape_editlayer_clear=1。 \n结果：先清空，再写入新的高度/权重。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_editlayer_clear"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                default { "prim" }
+                disablewhen "{ en_editlayer_clear == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_editlayer_sub"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+        }
+        groupcollapsible {
+            name    "grp_editlayer_sub"
+            label   "Subtractive"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_toggle" "en_editlayer_sub" }
+
+            parm {
+                name    "editlayer_sub_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_editlayer_subtractive" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "editlayer_sub_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：以 Subtractive Blend 写入掩码。 \n示例：启用 → 实际写出 unreal_landscape_editlayer_subtractive=1。 \n结果：UE 中对应 Paint Layer 的 Subtractive 属性为勾选。 \nOwner：Prim/Detail。 " }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_editlayer_sub"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                default { "prim" }
+                disablewhen "{ en_editlayer_sub == 0 }"
+                menu {
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_lock_after"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+        }
+        groupcollapsible {
+            name    "grp_lock_after"
+            label   "Lock After"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_toggle" "en_lock_after" }
+
+            parm {
+                name    "lock_after_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_lock_layer" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "lock_after_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：写入完成后锁定目标 Edit Layer。 \n示例：启用 → 实际写出 unreal_landscape_lock_layer=1。 \n结果：图层被标记为锁定，避免后续误写。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_lock_after"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                default { "prim" }
+                disablewhen "{ en_lock_after == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_partition_grid"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+        }
+        groupcollapsible {
+            name    "grp_partition_grid"
+            label   "Partition Grid Size"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_parm" "partition_grid_size" }
+            parmtag { "sidefx::header_toggle" "en_partition_grid" }
+
+            parm {
+                name    "partition_grid_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_partition_grid_size" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "partition_grid_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：控制关卡启用世界分区时的 Landscape 分区网格尺寸（仅在启用 World Partition 的关卡里生效）。 \n示例：0 → 实际写出 unreal_landscape_partition_grid_size=0。 \n结果：影响 Landscape 的分区切分与流式加载。 \nOwner：Prim。 " }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_partition_grid"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_partition_grid == 0 }"
+                menu {
+                    "prim"  "Prim"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "partition_grid_size"
+                label   "Value"
+                type    integer
+                default { "0" }
+                disablewhen "{ en_partition_grid == 0 }"
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_landscape_size"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+        }
+        groupcollapsible {
+            name    "grp_landscape_size"
+            label   "Landscape Size (Single Tile)"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_parm" "landscape_size_x" }
+            parmtag { "sidefx::header_toggle" "en_landscape_size" }
+
+            parm {
+                name    "landscape_size_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_landscape_size" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "landscape_size_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：导入单 Tile 时的总 Landscape 尺寸（宽×高）。 \n示例：4033 / 4033 → 实际写出 unreal_landscape_landscape_size=(4033,4033)。 \n结果：用于确定目标 Landscape 的整体分辨率。 \nOwner：Prim。 " }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_landscape_size"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                default { "prim" }
+                disablewhen "{ en_landscape_size == 0 }"
+                menu {
+                    "prim"  "Prim"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "landscape_size_x"
+                label   "Width"
+                type    integer
+                default { "4033" }
+                disablewhen "{ en_landscape_size == 0 }"
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "landscape_size_y"
+                label   "Height"
+                type    integer
+                default { "4033" }
+                disablewhen "{ en_landscape_size == 0 }"
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_editlayer_target"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+        }
+        groupcollapsible {
+            name    "grp_editlayer_target"
+            label   "EditLayer Target (deprecated)"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_toggle" "en_editlayer_target" }
+
+            parm {
+                name    "editlayer_target_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_editlayer_target" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "editlayer_target_help_heading"
+                label   "Help"
+                type    label
+                default { "弃用：请改用 unreal_output_name 统一设置输出名称，或按需使用 unreal_landscape_editlayer_name 控制 Edit Layer 名称。 \n示例：Landscape → 现在应写 unreal_output_name=Landscape。 \n结果：以统一命名控制 Bake 的目标层/对象名。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "sidefx::look" "heading" }
+            }
+        }
+
+    }
+
+    group {
+        name    "folder3_1"
+        label   "Splines_General"
+
+        parm {
+            name    "en_ls_spline"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+        }
+        groupcollapsible {
+            name    "grp_ls_spline"
+            label   "Landscape Spline"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_toggle" "en_ls_spline" }
+
+            parm {
+                name    "ls_spline_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "ls_spline_help"
+                label   "Help"
+                type    label
+                default { "说明：设为 1 使插件将曲线原语识别为 Landscape Splines。\n示例：1 → 写出 unreal_landscape_spline=1。\n结果：后续曲线作为 Landscape Spline 参与生成/应用。\nOwner：Point/Vertex/Prim/Detail。" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_ls_spline"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                default { "prim" }
+                disablewhen "{ en_ls_spline == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+            }
+        }
+
+        parm {
+            name    "en_ls_target"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+        }
+        groupcollapsible {
+            name    "grp_ls_target"
+            label   "Target Landscape"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_parm" "ls_target_str" }
+            parmtag { "sidefx::header_toggle" "en_ls_target" }
+
+            parm {
+                name    "ls_target_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_target_landscape" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "ls_target_help"
+                label   "Help"
+                type    label
+                default { "说明：指定用于创建样条的目标 Landscape。可设为 InputX(0,1,…) 指向 HDA 的某个输入 Landscape。\n示例：Input0 → 写出 unreal_landscape_spline_target_landscape=Input0。\n结果：样条会应用到所选 Landscape。\nOwner：Prim。" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_ls_target"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_ls_target == 0 }"
+                menu {
+                    "prim"  "Prim"
+                }
+            }
+            parm {
+                name    "ls_target_str"
+                label   "Landscape Name"
+                type    string
+                default { "Landscape" }
+                disablewhen "{ en_ls_target == 0 }"
+            }
+        }
+
+    }
+
+    group {
+        name    "folder3_2"
+        label   "Splines_EditLayer"
+        grouptag { "import_enable" "1" }
+        grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.2_Landscape_Splines_EditLayer.ds" }
+
+        parm {
+            name    "en_ls_edit_name"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.2_Landscape_Splines_EditLayer.ds" }
+            parmtag { "import_token" "en_ls_edit_name" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_ls_edit_name"
+            label   "EditLayer Name"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.2_Landscape_Splines_EditLayer.ds" }
+            grouptag { "import_token" "grp_ls_edit_name:EditLayer Name" }
+            parmtag { "sidefx::header_parm" "editlayer_name_str2" }
+            parmtag { "sidefx::header_toggle" "en_ls_edit_name" }
+
+            parm {
+                name    "ls_edit_name_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_editlayer_name" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.2_Landscape_Splines_EditLayer.ds" }
+                parmtag { "import_token" "ls_edit_name_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "ls_edit_name_help"
+                label   "Help"
+                type    label
+                default { "说明：要创建并将样条应用到的 Edit Layer 名称。\n示例：SplineLayer → 写出 unreal_landscape_editlayer_name=SplineLayer。\n结果：样条修改发生在该 Edit Layer。\nOwner：Point/Vertex/Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.2_Landscape_Splines_EditLayer.ds" }
+                parmtag { "import_token" "ls_edit_name_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_ls_edit_name"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                default { "prim" }
+                disablewhen "{ en_ls_edit_name == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                    "prim"      "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.2_Landscape_Splines_EditLayer.ds" }
+                parmtag { "import_token" "owner_ls_edit_name" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "editlayer_name_str2"
+                label   "Layer Name"
+                type    string
+                default { "SplineLayer" }
+                disablewhen "{ en_ls_edit_name == 0 }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.2_Landscape_Splines_EditLayer.ds" }
+                parmtag { "import_token" "editlayer_name_str" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_ls_edit_clear"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.2_Landscape_Splines_EditLayer.ds" }
+            parmtag { "import_token" "en_ls_edit_clear" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_ls_edit_clear"
+            label   "Clear EditLayer"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.2_Landscape_Splines_EditLayer.ds" }
+            grouptag { "import_token" "grp_ls_edit_clear:Clear EditLayer" }
+            parmtag { "sidefx::header_toggle" "en_ls_edit_clear" }
+
+            parm {
+                name    "ls_edit_clear_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_editlayer_clear" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.2_Landscape_Splines_EditLayer.ds" }
+                parmtag { "import_token" "ls_edit_clear_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "ls_edit_clear_help"
+                label   "Help"
+                type    label
+                default { "说明：该 Edit Layer 第一次在样条转换过程中被修改时是否先清空。\n示例：1 → 写出 unreal_landscape_editlayer_clear=1。\n结果：避免旧内容影响新的样条应用结果。\nOwner：Point/Vertex/Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.2_Landscape_Splines_EditLayer.ds" }
+                parmtag { "import_token" "ls_edit_clear_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_ls_edit_clear"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                default { "prim" }
+                disablewhen "{ en_ls_edit_clear == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                    "prim"      "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.2_Landscape_Splines_EditLayer.ds" }
+                parmtag { "import_token" "owner_ls_edit_clear" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_ls_edit_after"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.2_Landscape_Splines_EditLayer.ds" }
+            parmtag { "import_token" "en_ls_edit_after" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_ls_edit_after"
+            label   "EditLayer After"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.2_Landscape_Splines_EditLayer.ds" }
+            grouptag { "import_token" "grp_ls_edit_after:EditLayer After" }
+            parmtag { "sidefx::header_parm" "editlayer_after_str2" }
+            parmtag { "sidefx::header_toggle" "en_ls_edit_after" }
+
+            parm {
+                name    "ls_edit_after_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_editlayer_after" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.2_Landscape_Splines_EditLayer.ds" }
+                parmtag { "import_token" "ls_edit_after_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "ls_edit_after_help"
+                label   "Help"
+                type    label
+                default { "说明：将 unreal_landscape_editlayer_name 指定的图层移动到该图层之后。\n示例：Base → 写出 unreal_landscape_editlayer_after=Base。\n结果：控制 Edit Layer 在堆栈中的顺序。\nOwner：Vertex/Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.2_Landscape_Splines_EditLayer.ds" }
+                parmtag { "import_token" "ls_edit_after_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_ls_edit_after"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                default { "prim" }
+                disablewhen "{ en_ls_edit_after == 0 }"
+                menu {
+                    "vertex"    "Vertex"
+                    "prim"      "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.2_Landscape_Splines_EditLayer.ds" }
+                parmtag { "import_token" "owner_ls_edit_after" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "editlayer_after_str2"
+                label   "After Layer"
+                type    string
+                default { "Base" }
+                disablewhen "{ en_ls_edit_after == 0 }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.2_Landscape_Splines_EditLayer.ds" }
+                parmtag { "import_token" "editlayer_after_str" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+    group {
+        name    "folder3_3"
+        label   "Splines_ControlPoint"
+        grouptag { "import_enable" "1" }
+        grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+
+        parm {
+            name    "en_cp_rot"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+            parmtag { "import_token" "en_cp_rot" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_cp_rot"
+            label   "Control Point Rotation"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+            grouptag { "import_token" "grp_cp_rot:Control Point Rotation" }
+            parmtag { "sidefx::header_toggle" "en_cp_rot" }
+
+            parm {
+                name    "cp_rot_heading"
+                label   "Heading"
+                type    label
+                default { "rot" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_rot_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "cp_rot_help"
+                label   "Help"
+                type    label
+                default { "说明：可从来源向量属性重命名为 rot（并删除原名），或直接指定向量值。通常逐点/逐顶点设置。\n示例(属性)：来源 a=(0,0,90) → 实际写出 rot=(0,0,90)，a 被移除。\n示例(数值)：直接设置 rot=(0,0,90)。\n结果：控制点旋转按 rot 应用。\nOwner：Point/Vertex。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_rot_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_cp_rot"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_cp_rot == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "owner_cp_rot" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_form_mode_rot"
+                label   "CP Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_cp_rot == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_form_mode_rot" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_rot_from_pt"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_cp_rot == 0 } { owner_cp_rot != point } { cp_form_mode_rot != attrib }"
+                hidewhen "{ owner_cp_rot != point }"
+                menutoggle {
+                    [ " opmenu -l -a attribute ptdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_rot_from_pt" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_rot_from_vtx"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_cp_rot == 0 } { owner_cp_rot != vertex } { cp_form_mode_rot != attrib }"
+                hidewhen "{ owner_cp_rot != vertex }"
+                menutoggle {
+                    [ " opmenu -l -a attribute vtxdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_rot_from_vtx" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_rot_x"
+                label   "Rot X"
+                type    float
+                joinnext
+                default { "0" }
+                disablewhen "{ en_cp_rot == 0 } { cp_form_mode_rot != value }"
+                range   { 0 360 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_rot_x" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_rot_y"
+                label   "Rot Y"
+                type    float
+                joinnext
+                default { "0" }
+                disablewhen "{ en_cp_rot == 0 } { cp_form_mode_rot != value }"
+                range   { 0 360 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_rot_y" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_rot_z"
+                label   "Rot Z"
+                type    float
+                default { "0" }
+                disablewhen "{ en_cp_rot == 0 } { cp_form_mode_rot != value }"
+                range   { 0 360 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_rot_z" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_cp_id"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+            parmtag { "import_token" "en_cp_id" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_cp_id"
+            label   "Control Point Id"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+            grouptag { "import_token" "grp_cp_id:Control Point Id" }
+            parmtag { "sidefx::header_toggle" "en_cp_id" }
+
+            parm {
+                name    "cp_id_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_control_point_id" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_id_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "cp_id_help"
+                label   "Help"
+                type    label
+                default { "说明：可从来源整型属性重命名为 unreal_landscape_spline_control_point_id，或直接指定数值。用于标识控制点，id≥0 有效，<0 表示非控制点。\n示例(属性)：来源 a=5 → 实际写出 unreal_landscape_spline_control_point_id=5，a 被移除。\n示例(数值)：直接设置 unreal_landscape_spline_control_point_id=5。\n结果：控制点按该 Id 识别。\nOwner：Point/Vertex。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_id_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_cp_id"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_cp_id == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "owner_cp_id" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_form_mode_id"
+                label   "CP Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_cp_id == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_form_mode_id" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_id_from_pt"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_cp_id == 0 } { owner_cp_id != point } { cp_form_mode_id != attrib }"
+                hidewhen "{ owner_cp_id != point }"
+                menutoggle {
+                    [ " opmenu -l -a attribute ptdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_id_from_pt" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_id_from_vtx"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_cp_id == 0 } { owner_cp_id != vertex } { cp_form_mode_id != attrib }"
+                hidewhen "{ owner_cp_id != vertex }"
+                menutoggle {
+                    [ " opmenu -l -a attribute vtxdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_id_from_vtx" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_id_val"
+                label   "Id"
+                type    integer
+                default { "0" }
+                disablewhen "{ en_cp_id == 0 } { cp_form_mode_id != value }"
+                range   { 0 10 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_id_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_cp_lower"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+            parmtag { "import_token" "en_cp_lower" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_cp_lower"
+            label   "Lower Terrain"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+            grouptag { "import_token" "grp_cp_lower:Lower Terrain" }
+            parmtag { "sidefx::header_toggle" "en_cp_lower" }
+
+            parm {
+                name    "cp_lower_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_control_point_lower_terrain" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_lower_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "cp_lower_help"
+                label   "Help"
+                type    label
+                default { "说明：可从来源整型属性重命名为 unreal_landscape_spline_control_point_lower_terrain，或直接指定 0/1 值。通常逐点/逐顶点设置。\n示例(属性)：来源 a=1 → 实际写出 unreal_landscape_spline_control_point_lower_terrain=1，a 被移除。\n示例(数值)：直接设置 unreal_landscape_spline_control_point_lower_terrain=1。\n结果：控制点是否启用 Lower Terrain 属性。\nOwner：Point/Vertex。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_lower_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_cp_lower"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_cp_lower == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "owner_cp_lower" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_form_mode_lower"
+                label   "CP Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_cp_lower == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_form_mode_lower" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_lower_from_pt"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_cp_lower == 0 } { owner_cp_lower != point } { cp_form_mode_lower != attrib }"
+                hidewhen "{ owner_cp_lower != point }"
+                menutoggle {
+                    [ " opmenu -l -a attribute ptdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_lower_from_pt" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_lower_from_vtx"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_cp_lower == 0 } { owner_cp_lower != vertex } { cp_form_mode_lower != attrib }"
+                hidewhen "{ owner_cp_lower != vertex }"
+                menutoggle {
+                    [ " opmenu -l -a attribute vtxdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_lower_from_vtx" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_lower_val"
+                label   "Value"
+                type    integer
+                default { "1" }
+                disablewhen "{ en_cp_lower == 0 } { cp_form_mode_lower != value }"
+                range   { 0! 1! }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_lower_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_cp_mesh"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+            parmtag { "import_token" "en_cp_mesh" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_cp_mesh"
+            label   "Control Point Mesh"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+            grouptag { "import_token" "grp_cp_mesh:Control Point Mesh" }
+            parmtag { "sidefx::header_toggle" "en_cp_mesh" }
+
+            parm {
+                name    "cp_mesh_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_control_point_mesh" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_mesh_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "cp_mesh_help"
+                label   "Help"
+                type    label
+                default { "说明：可从来源字符串属性重命名为 unreal_landscape_spline_control_point_mesh，或直接指定 Content Path。通常逐点/逐顶点设置。\n示例(属性)：来源 m=/Game/Mesh/SM_Road → 实际写出 unreal_landscape_spline_control_point_mesh=/Game/Mesh/SM_Road，m 被移除。\n示例(数值)：直接设置 unreal_landscape_spline_control_point_mesh=/Game/Mesh/SM_Road。\n结果：在该控制点放置指定的静态网格。\nOwner：Point/Vertex。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_mesh_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_cp_mesh"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_cp_mesh == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "owner_cp_mesh" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_form_mode_mesh"
+                label   "CP Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_cp_mesh == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_form_mode_mesh" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_mesh_from_pt"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_cp_mesh == 0 } { owner_cp_mesh != point } { cp_form_mode_mesh != attrib }"
+                hidewhen "{ owner_cp_mesh != point }"
+                menutoggle {
+                    [ " opmenu -l -a attribute ptdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_mesh_from_pt" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_mesh_from_vtx"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_cp_mesh == 0 } { owner_cp_mesh != vertex } { cp_form_mode_mesh != attrib }"
+                hidewhen "{ owner_cp_mesh != vertex }"
+                menutoggle {
+                    [ " opmenu -l -a attribute vtxdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_mesh_from_vtx" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_mesh_val"
+                label   "Mesh Path"
+                type    string
+                default { "/Game/Mesh/SM_Road" }
+                disablewhen "{ en_cp_mesh == 0 } { cp_form_mode_mesh != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_mesh_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_cp_matovr"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/temp.ds" }
+            parmtag { "import_token" "en_cp_matovr" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_cp_matovr"
+            label   "Mesh Material Override"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/temp.ds" }
+            grouptag { "import_token" "grp_cp_matovr:Mesh Material Override" }
+            parmtag { "sidefx::header_toggle" "en_cp_matovr" }
+
+            parm {
+                name    "cp_matovr_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_control_point_mesh_material_overrideX" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/temp.ds" }
+                parmtag { "import_token" "cp_matovr_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "cp_matovr_help"
+                label   "Help"
+                type    label
+                default { "说明：用于替换控制点网格的材质槽。可通过 multiparm 创建多个 override_count 项，每项输出属性名为 unreal_landscape_spline_control_point_mesh_material_overrideX，其中 X 为材质槽索引。\n示例(属性)：来源 a=/Game/MI_Rock，索引=0 → 实际写出 unreal_landscape_spline_control_point_mesh_material_override0=/Game/MI_Rock，a 被移除。\n示例(数值)：直接设置 unreal_landscape_spline_control_point_mesh_material_override1=/Game/MI_Snow。\n结果：逐槽替换该控制点网格的材质。\nOwner：Point/Vertex。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/temp.ds" }
+                parmtag { "import_token" "cp_matovr_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_cp_matovr"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                default { "point" }
+                disablewhen "{ en_cp_matovr == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/temp.ds" }
+                parmtag { "import_token" "owner_cp_matovr" }
+                parmtag { "script_callback_language" "python" }
+            }
+            multiparm {
+                name    "override_count"
+                label    "Overrides"
+                disablewhen "{ en_cp_matovr == 0 }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/temp.ds" }
+                parmtag { "import_token" "override_count" }
+
+                parm {
+                    name    "cp_matovr_val#"
+                    label   "Material Path"
+                    type    string
+                    default { "/Game/MI_Rock" }
+                    disablewhen "{ en_cp_matovr == 0 }"
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/temp.ds" }
+                    parmtag { "import_token" "cp_matovr_val#" }
+                    parmtag { "script_callback_language" "python" }
+                }
+            }
+
+        }
+
+        parm {
+            name    "en_cp_meshscale"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+            parmtag { "import_token" "en_cp_meshscale" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_cp_meshscale"
+            label   "Mesh Scale"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+            grouptag { "import_token" "grp_cp_meshscale:Mesh Scale" }
+            parmtag { "sidefx::header_toggle" "en_cp_meshscale" }
+
+            parm {
+                name    "cp_meshscale_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_control_point_mesh_scale" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_meshscale_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "cp_meshscale_help"
+                label   "Help"
+                type    label
+                default { "说明：可从来源向量属性重命名为 unreal_landscape_spline_control_point_mesh_scale，或直接指定缩放向量。\n示例(属性)：来源 scl=(1,2,1) → 实际写出 unreal_landscape_spline_control_point_mesh_scale=(1,2,1)，scl 被移除。\n示例(数值)：直接设置 unreal_landscape_spline_control_point_mesh_scale=(1,2,1)。\n结果：控制点处的网格缩放。\nOwner：Point/Vertex。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_meshscale_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_cp_meshscale"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_cp_meshscale == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "owner_cp_meshscale" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_form_mode_meshscale"
+                label   "CP Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_cp_meshscale == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_form_mode_meshscale" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_meshscale_from_pt"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_cp_meshscale == 0 } { owner_cp_meshscale != point } { cp_form_mode_meshscale != attrib }"
+                hidewhen "{ owner_cp_meshscale != point }"
+                menutoggle {
+                    [ " opmenu -l -a attribute ptdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_meshscale_from_pt" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_meshscale_from_vtx"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_cp_meshscale == 0 } { owner_cp_meshscale != vertex } { cp_form_mode_meshscale != attrib }"
+                hidewhen "{ owner_cp_meshscale != vertex }"
+                menutoggle {
+                    [ " opmenu -l -a attribute vtxdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_meshscale_from_vtx" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_meshscale_x"
+                label   "Scale X"
+                type    float
+                joinnext
+                default { "1" }
+                disablewhen "{ en_cp_meshscale == 0 } { cp_form_mode_meshscale != value }"
+                range   { 0! 10 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_meshscale_x" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_meshscale_y"
+                label   "Scale Y"
+                type    float
+                joinnext
+                default { "1" }
+                disablewhen "{ en_cp_meshscale == 0 } { cp_form_mode_meshscale != value }"
+                range   { 0! 10 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_meshscale_y" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_meshscale_z"
+                label   "Scale Z"
+                type    float
+                default { "1" }
+                disablewhen "{ en_cp_meshscale == 0 } { cp_form_mode_meshscale != value }"
+                range   { 0! 10 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_meshscale_z" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_cp_paintlayer"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+            parmtag { "import_token" "en_cp_paintlayer" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_cp_paintlayer"
+            label   "Paint Layer Name"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+            grouptag { "import_token" "grp_cp_paintlayer:Paint Layer Name" }
+            parmtag { "sidefx::header_toggle" "en_cp_paintlayer" }
+
+            parm {
+                name    "cp_paintlayer_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_control_point_paint_layer_name" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_paintlayer_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "cp_paintlayer_help"
+                label   "Help"
+                type    label
+                default { "说明：可从来源字符串属性重命名为 unreal_landscape_spline_control_point_paint_layer_name，或直接指定图层名。\n示例(属性)：来源 a=Grass → 实际写出 unreal_landscape_spline_control_point_paint_layer_name=Grass，a 被移除。\n示例(数值)：直接设置 unreal_landscape_spline_control_point_paint_layer_name=Grass。\n结果：指定控制点绘制使用的 Landscape 图层。\nOwner：Point/Vertex。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_paintlayer_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_cp_paintlayer"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_cp_paintlayer == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "owner_cp_paintlayer" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_form_mode_paintlayer"
+                label   "CP Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_cp_paintlayer == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_form_mode_paintlayer" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_paintlayer_from_pt"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_cp_paintlayer == 0 } { owner_cp_paintlayer != point } { cp_form_mode_paintlayer != attrib }"
+                hidewhen "{ owner_cp_paintlayer != point }"
+                menutoggle {
+                    [ " opmenu -l -a attribute ptdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_paintlayer_from_pt" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_paintlayer_from_vtx"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_cp_paintlayer == 0 } { owner_cp_paintlayer != vertex } { cp_form_mode_paintlayer != attrib }"
+                hidewhen "{ owner_cp_paintlayer != vertex }"
+                menutoggle {
+                    [ " opmenu -l -a attribute vtxdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_paintlayer_from_vtx" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_paintlayer_val"
+                label   "Layer Name"
+                type    string
+                default { "Grass" }
+                disablewhen "{ en_cp_paintlayer == 0 } { cp_form_mode_paintlayer != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_paintlayer_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_cp_raise"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+            parmtag { "import_token" "en_cp_raise" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_cp_raise"
+            label   "Raise Terrain"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+            grouptag { "import_token" "grp_cp_raise:Raise Terrain" }
+            parmtag { "sidefx::header_toggle" "en_cp_raise" }
+
+            parm {
+                name    "cp_raise_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_control_point_raise_terrain" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_raise_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "cp_raise_help"
+                label   "Help"
+                type    label
+                default { "说明：可从来源整型属性重命名为 unreal_landscape_spline_control_point_raise_terrain，或直接指定 0/1 值。通常逐点/逐顶点设置。\n示例(属性)：来源 a=1 → 实际写出 unreal_landscape_spline_control_point_raise_terrain=1，a 被移除。\n示例(数值)：直接设置 unreal_landscape_spline_control_point_raise_terrain=1。\n结果：控制点是否启用 Raise Terrain 属性。\nOwner：Point/Vertex。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_raise_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_cp_raise"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_cp_raise == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "owner_cp_raise" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_form_mode_raise"
+                label   "CP Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_cp_raise == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_form_mode_raise" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_raise_from_pt"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_cp_raise == 0 } { owner_cp_raise != point } { cp_form_mode_raise != attrib }"
+                hidewhen "{ owner_cp_raise != point }"
+                menutoggle {
+                    [ " opmenu -l -a attribute ptdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_raise_from_pt" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_raise_from_vtx"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_cp_raise == 0 } { owner_cp_raise != vertex } { cp_form_mode_raise != attrib }"
+                hidewhen "{ owner_cp_raise != vertex }"
+                menutoggle {
+                    [ " opmenu -l -a attribute vtxdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_raise_from_vtx" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_raise_val"
+                label   "Value"
+                type    toggle
+                default { "0" }
+                disablewhen "{ en_cp_raise == 0 } { cp_form_mode_raise != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_raise_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_cp_endfalloff"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+            parmtag { "import_token" "en_cp_endfalloff" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_cp_endfalloff"
+            label   "End Falloff"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+            grouptag { "import_token" "grp_cp_endfalloff:End Falloff" }
+            parmtag { "sidefx::header_toggle" "en_cp_endfalloff" }
+
+            parm {
+                name    "cp_endfalloff_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_end_falloff" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_endfalloff_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "cp_endfalloff_help"
+                label   "Help"
+                type    label
+                default { "说明：可从来源浮点属性重命名为 unreal_landscape_spline_end_falloff，或直接指定数值。\n示例(属性)：来源 a=256.0 → 实际写出 unreal_landscape_spline_end_falloff=256.0，a 被移除。\n示例(数值)：直接设置 unreal_landscape_spline_end_falloff=256.0。\n结果：指定样条端点的 Falloff 距离。\nOwner：Point/Vertex。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_endfalloff_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_cp_endfalloff"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_cp_endfalloff == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "owner_cp_endfalloff" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_form_mode_endfalloff"
+                label   "CP Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_cp_endfalloff == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_form_mode_endfalloff" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_endfalloff_from_pt"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_cp_endfalloff == 0 } { owner_cp_endfalloff != point } { cp_form_mode_endfalloff != attrib }"
+                hidewhen "{ owner_cp_endfalloff != point }"
+                menutoggle {
+                    [ " opmenu -l -a attribute ptdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_endfalloff_from_pt" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_endfalloff_from_vtx"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_cp_endfalloff == 0 } { owner_cp_endfalloff != vertex } { cp_form_mode_endfalloff != attrib }"
+                hidewhen "{ owner_cp_endfalloff != vertex }"
+                menutoggle {
+                    [ " opmenu -l -a attribute vtxdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_endfalloff_from_vtx" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_endfalloff_val"
+                label   "Falloff"
+                type    float
+                default { "256" }
+                disablewhen "{ en_cp_endfalloff == 0 } { cp_form_mode_endfalloff != value }"
+                range   { 0! 10000 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_endfalloff_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_cp_halfwidth"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+            parmtag { "import_token" "en_cp_halfwidth" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_cp_halfwidth"
+            label   "Half Width"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+            grouptag { "import_token" "grp_cp_halfwidth:Half Width" }
+            parmtag { "sidefx::header_toggle" "en_cp_halfwidth" }
+
+            parm {
+                name    "cp_halfwidth_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_half_width" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_halfwidth_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "cp_halfwidth_help"
+                label   "Help"
+                type    label
+                default { "说明：可从来源浮点属性重命名为 unreal_landscape_spline_half_width，或直接指定数值。\n示例(属性)：来源 a=200.0 → 实际写出 unreal_landscape_spline_half_width=200.0，a 被移除。\n示例(数值)：直接设置 unreal_landscape_spline_half_width=200.0。\n结果：指定样条半宽度。\nOwner：Point/Vertex。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_halfwidth_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_cp_halfwidth"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_cp_halfwidth == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "owner_cp_halfwidth" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_form_mode_halfwidth"
+                label   "CP Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_cp_halfwidth == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_form_mode_halfwidth" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_halfwidth_from_pt"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_cp_halfwidth == 0 } { owner_cp_halfwidth != point } { cp_form_mode_halfwidth != attrib }"
+                hidewhen "{ owner_cp_halfwidth != point }"
+                menutoggle {
+                    [ " opmenu -l -a attribute ptdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_halfwidth_from_pt" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_halfwidth_from_vtx"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_cp_halfwidth == 0 } { owner_cp_halfwidth != vertex } { cp_form_mode_halfwidth != attrib }"
+                hidewhen "{ owner_cp_halfwidth != vertex }"
+                menutoggle {
+                    [ " opmenu -l -a attribute vtxdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_halfwidth_from_vtx" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_halfwidth_val"
+                label   "Half Width"
+                type    float
+                default { "200" }
+                disablewhen "{ en_cp_halfwidth == 0 } { cp_form_mode_halfwidth != value }"
+                range   { 0! 10000 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_halfwidth_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_cp_sidefalloff"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+            parmtag { "import_token" "en_cp_sidefalloff" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_cp_sidefalloff"
+            label   "Side Falloff"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+            grouptag { "import_token" "grp_cp_sidefalloff:Side Falloff" }
+            parmtag { "sidefx::header_toggle" "en_cp_sidefalloff" }
+
+            parm {
+                name    "cp_sidefalloff_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_side_falloff" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_sidefalloff_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "cp_sidefalloff_help"
+                label   "Help"
+                type    label
+                default { "说明：可从来源浮点属性重命名为 unreal_landscape_spline_side_falloff，或直接指定数值。\n示例(属性)：来源 a=128.0 → 实际写出 unreal_landscape_spline_side_falloff=128.0，a 被移除。\n示例(数值)：直接设置 unreal_landscape_spline_side_falloff=128.0。\n结果：指定样条的 Side Falloff 范围。\nOwner：Point/Vertex。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_sidefalloff_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_cp_sidefalloff"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_cp_sidefalloff == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "owner_cp_sidefalloff" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_form_mode_sidefalloff"
+                label   "CP Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_cp_sidefalloff == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_form_mode_sidefalloff" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_sidefalloff_from_pt"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_cp_sidefalloff == 0 } { owner_cp_sidefalloff != point } { cp_form_mode_sidefalloff != attrib }"
+                hidewhen "{ owner_cp_sidefalloff != point }"
+                menutoggle {
+                    [ " opmenu -l -a attribute ptdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_sidefalloff_from_pt" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_sidefalloff_from_vtx"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_cp_sidefalloff == 0 } { owner_cp_sidefalloff != vertex } { cp_form_mode_sidefalloff != attrib }"
+                hidewhen "{ owner_cp_sidefalloff != vertex }"
+                menutoggle {
+                    [ " opmenu -l -a attribute vtxdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_sidefalloff_from_vtx" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "cp_sidefalloff_val"
+                label   "Falloff"
+                type    float
+                default { "128" }
+                disablewhen "{ en_cp_sidefalloff == 0 } { cp_form_mode_sidefalloff != value }"
+                range   { 0! 10000 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.3_Landscape_Splines_ControlPoint.ds" }
+                parmtag { "import_token" "cp_sidefalloff_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+    group {
+        name    "folder3_4"
+        label   "Splines_Segment"
+        tabbreak
+        grouptag { "import_enable" "1" }
+        grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+
+        parm {
+            name    "en_seg_edit_name"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+            parmtag { "import_token" "en_seg_edit_name" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_seg_edit_name"
+            label   "Segment EditLayer Name"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+            grouptag { "import_token" "grp_seg_edit_name:Segment EditLayer Name" }
+            parmtag { "sidefx::header_parm" "seg_edit_name_str" }
+            parmtag { "sidefx::header_toggle" "en_seg_edit_name" }
+
+            parm {
+                name    "seg_edit_name_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_editlayer_name" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_edit_name_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "seg_edit_name_help"
+                label   "Help"
+                type    label
+                default { "说明：指定创建并应用 Segment 的目标 Edit Layer 名称。\n示例(属性)：来源 layer=RoadSeg → 写出 unreal_landscape_editlayer_name=RoadSeg，layer 被移除。\n示例(数值)：直接设置 unreal_landscape_editlayer_name=RoadSeg。\n结果：Spline Segment 将写入该 Edit Layer。\nOwner：Point/Vertex/Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_edit_name_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_seg_edit_name"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_seg_edit_name == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                    "prim"      "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "owner_seg_edit_name" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "seg_edit_name_str"
+                label   "Layer Name"
+                type    string
+                default { "Spline_Layer" }
+                disablewhen "{ en_seg_edit_name == 0 }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_edit_name_str" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_seg_edit_clear"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+            parmtag { "import_token" "en_seg_edit_clear" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_seg_edit_clear"
+            label   "Segment Clear EditLayer"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+            grouptag { "import_token" "grp_seg_edit_clear:Segment Clear EditLayer" }
+            parmtag { "sidefx::header_toggle" "en_seg_edit_clear" }
+
+            parm {
+                name    "seg_edit_clear_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_editlayer_clear" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_edit_clear_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "seg_edit_clear_help"
+                label   "Help"
+                type    label
+                default { "说明：Segment 第一次写入 Edit Layer 时是否清空该层。\n示例：1 → 写出 unreal_landscape_editlayer_clear=1。\n结果：避免旧内容影响新的 Segment 应用效果。\nOwner：Point/Vertex/Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_edit_clear_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_seg_edit_clear"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                default { "prim" }
+                disablewhen "{ en_seg_edit_clear == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                    "prim"      "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "owner_seg_edit_clear" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_seg_edit_after"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+            parmtag { "import_token" "en_seg_edit_after" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_seg_edit_after"
+            label   "Segment EditLayer After"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+            grouptag { "import_token" "grp_seg_edit_after:Segment EditLayer After" }
+            parmtag { "sidefx::header_parm" "seg_edit_after_str" }
+            parmtag { "sidefx::header_toggle" "en_seg_edit_after" }
+
+            parm {
+                name    "seg_edit_after_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_editlayer_after" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_edit_after_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "seg_edit_after_help"
+                label   "Help"
+                type    label
+                default { "说明：控制 Edit Layer 在堆栈中的顺序，将 unreal_landscape_editlayer_name 指定的层移动到该层之后。\n示例：Base → 写出 unreal_landscape_editlayer_after=Base。\n结果：Segment 写入的 Edit Layer 会位于 Base 之后。\nOwner：Point/Vertex/Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_edit_after_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_seg_edit_after"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_seg_edit_after == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                    "prim"      "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "owner_seg_edit_after" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "seg_edit_after_str"
+                label   "After Layer"
+                type    string
+                default { "Base" }
+                disablewhen "{ en_seg_edit_after == 0 }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_edit_after_str" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_seg_conn"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+            parmtag { "import_token" "en_seg_conn" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_seg_conn"
+            label   "Segment Connections"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+            grouptag { "import_token" "grp_seg_conn:Segment Connections" }
+            parmtag { "sidefx::header_toggle" "en_seg_conn" }
+
+            parm {
+                name    "seg_conn_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_segment_connectionX" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_conn_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "seg_conn_help"
+                label   "Help"
+                type    label
+                default { "说明：定义 Segment 两端的连接信息。X=0/1 对应两端。\n每端包含 SocketName 和 TangentLength。\n示例(属性)：来源 arr[0]=Start, arr[1]=500 → 实际写出 unreal_landscape_spline_segment_connection0_socket_name=Start, unreal_landscape_spline_segment_connection0_tangent_length=500。\n示例(数值)：直接指定 SocketName=Start, TangentLength=500。\n结果：Segment 在该端点的连接和切线长度。\n要求：当选择属性模式时，来源必须为数组属性：arr[0]=SocketName (string)，arr[1]=TangentLength (float)。\nOwner：Point/Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_conn_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_seg_conn"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_seg_conn == 0 }"
+                menu {
+                    "point" "Point"
+                    "prim"  "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "owner_seg_conn" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "seg_form_mode_conn"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_seg_conn == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_form_mode_conn" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "seg_conn0_socket"
+                label   "Conn0 SocketName"
+                type    string
+                default { "" }
+                disablewhen "{ en_seg_conn == 0 } { seg_form_mode_conn != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_conn0_socket" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "seg_conn0_tangent"
+                label   "Conn0 TangentLength"
+                type    float
+                default { "500" }
+                disablewhen "{ en_seg_conn == 0 } { seg_form_mode_conn != value }"
+                range   { 0! 10000 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_conn0_tangent" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "seg_conn0_from"
+                label   "Conn0 Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_seg_conn == 0 } { seg_form_mode_conn != attrib }"
+                menutoggle {
+                    [ " opmenu -l -a attribute ptdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_conn0_from" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "seg_conn1_socket"
+                label   "Conn1 SocketName"
+                type    string
+                default { "" }
+                disablewhen "{ en_seg_conn == 0 } { seg_form_mode_conn != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_conn1_socket" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "seg_conn1_tangent"
+                label   "Conn1 TangentLength"
+                type    float
+                default { "500" }
+                disablewhen "{ en_seg_conn == 0 } { seg_form_mode_conn != value }"
+                range   { 0! 10000 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_conn1_tangent" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "seg_conn1_from"
+                label   "Conn1 Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_seg_conn == 0 } { seg_form_mode_conn != attrib }"
+                menutoggle {
+                    [ " opmenu -l -a attribute ptdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_conn1_from" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_seg_lower"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+            parmtag { "import_token" "en_seg_lower" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_seg_lower"
+            label   "Lower Terrain"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+            grouptag { "import_token" "grp_seg_lower:Lower Terrain" }
+            parmtag { "sidefx::header_toggle" "en_seg_lower" }
+
+            parm {
+                name    "seg_lower_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_segment_lower_terrain" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_lower_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "seg_lower_help"
+                label   "Help"
+                type    label
+                default { "说明：是否在应用样条时降低地形。\n示例：1 → 写出 unreal_landscape_spline_segment_lower_terrain=1。\n结果：Spline Segment 区域的地形被压低。\nOwner：Point/Vertex/Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_lower_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_seg_lower"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                default { "prim" }
+                disablewhen "{ en_seg_lower == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                    "prim"      "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "owner_seg_lower" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_seg_mesh"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+            parmtag { "import_token" "en_seg_mesh" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_seg_mesh"
+            label   "Segment Meshes"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+            grouptag { "import_token" "grp_seg_mesh:Segment Meshes" }
+            parmtag { "sidefx::header_toggle" "en_seg_mesh" }
+
+            parm {
+                name    "seg_mesh_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_segment_meshX" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_mesh_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "seg_mesh_help"
+                label   "Help"
+                type    label
+                default { "说明：为 Segment 指定一个静态网格和多个材质覆盖。\n- 属性模式：从数组属性读取，第一个元素是 Mesh 路径，后续是材质覆盖路径。\n- 数值模式：直接指定 Mesh 路径，并可添加多个材质覆盖。\n示例(属性)：来源 arr=[/Game/SM_Road, /Game/MI_Asphalt, /Game/MI_RoadEdge] →\n  unreal_landscape_spline_segment_mesh0=/Game/SM_Road\n  unreal_landscape_spline_segment_mesh0_material_override0=/Game/MI_Asphalt\n  unreal_landscape_spline_segment_mesh0_material_override1=/Game/MI_RoadEdge\n示例(数值)：Mesh=/Game/SM_Road + Overrides=/Game/MI_Asphalt。\n结果：Segment 使用指定 Mesh，并用材质覆盖替换槽。\nOwner：Point/Vertex/Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_mesh_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_seg_mesh"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_seg_mesh == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                    "prim"      "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "owner_seg_mesh" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "seg_form_mode_mesh"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_seg_mesh == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_form_mode_mesh" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "seg_mesh_from_pt"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_seg_mesh == 0 } { owner_seg_mesh != point } { seg_form_mode_mesh != attrib }"
+                hidewhen "{ owner_seg_mesh != point }"
+                menutoggle {
+                    [ " opmenu -l -a attribute ptdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_mesh_from_pt" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "seg_mesh_from_vtx"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_seg_mesh == 0 } { owner_seg_mesh != vertex } { seg_form_mode_mesh != attrib }"
+                hidewhen "{ owner_seg_mesh != vertex }"
+                menutoggle {
+                    [ " opmenu -l -a attribute vtxdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_mesh_from_vtx" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "seg_mesh_from_prim"
+                label   "Attribute From"
+                type    string
+                default { "" }
+                disablewhen "{ en_seg_mesh == 0 } { owner_seg_mesh != prim } { seg_form_mode_mesh != attrib }"
+                hidewhen "{ owner_seg_mesh != prim }"
+                menutoggle {
+                    [ " opmenu -l -a attribute primdel " ]
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_mesh_from_prim" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "seg_mesh_val"
+                label   "Mesh Path"
+                type    string
+                default { "/Game/SM_Road" }
+                disablewhen "{ en_seg_mesh == 0 } { seg_form_mode_mesh != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_mesh_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+            multiparm {
+                name    "seg_mesh_matovr_count"
+                label    "Material Overrides"
+                disablewhen "{ en_seg_mesh == 0 } { seg_form_mode_mesh != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_mesh_matovr_count" }
+
+                parm {
+                    name    "seg_mesh_matovr_val#"
+                    label   "Material Path"
+                    type    string
+                    default { "/Game/MI_Asphalt" }
+                    disablewhen "{ en_seg_mesh == 0 } { seg_form_mode_mesh != value }"
+                    parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                    parmtag { "import_token" "seg_mesh_matovr_val#" }
+                    parmtag { "script_callback_language" "python" }
+                }
+            }
+
+        }
+
+        parm {
+            name    "en_seg_paint"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+            parmtag { "import_token" "en_seg_paint" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_seg_paint"
+            label   "Paint Layer Name"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+            grouptag { "import_token" "grp_seg_paint:Paint Layer Name" }
+            parmtag { "sidefx::header_parm" "seg_paint_str" }
+            parmtag { "sidefx::header_toggle" "en_seg_paint" }
+
+            parm {
+                name    "seg_paint_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_segment_paint_layer_name" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_paint_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "seg_paint_help"
+                label   "Help"
+                type    label
+                default { "说明：指定 Segment 绘制到的 Paint Layer 名称。\n示例(属性)：来源 paint=Road → 写出 unreal_landscape_spline_segment_paint_layer_name=Road，paint 被移除。\n示例(数值)：直接设置 unreal_landscape_spline_segment_paint_layer_name=Road。\n结果：Spline Segment 会在 UE 中绘制到指定图层。\nOwner：Point/Vertex/Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_paint_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_seg_paint"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_seg_paint == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                    "prim"      "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "owner_seg_paint" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "seg_paint_str"
+                label   "Layer Name"
+                type    string
+                default { "Road" }
+                disablewhen "{ en_seg_paint == 0 }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_paint_str" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_seg_raise"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+            parmtag { "import_token" "en_seg_raise" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_seg_raise"
+            label   "Raise Terrain"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+            grouptag { "import_token" "grp_seg_raise:Raise Terrain" }
+            parmtag { "sidefx::header_toggle" "en_seg_raise" }
+
+            parm {
+                name    "seg_raise_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_segment_raise_terrain" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_raise_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "seg_raise_help"
+                label   "Help"
+                type    label
+                default { "说明：是否在应用样条时抬高地形。\n示例：1 → 写出 unreal_landscape_spline_segment_raise_terrain=1。\n结果：Spline Segment 区域的地形被抬高。\nOwner：Point/Vertex/Prim。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "seg_raise_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_seg_raise"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                default { "prim" }
+                disablewhen "{ en_seg_raise == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                    "prim"      "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/4.4_Landscape_Splines_Segment.ds" }
+                parmtag { "import_token" "owner_seg_raise" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+
+}

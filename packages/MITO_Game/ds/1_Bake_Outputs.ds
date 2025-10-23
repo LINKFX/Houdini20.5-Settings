@@ -1,0 +1,777 @@
+{
+    name	selectedparms
+
+    group {
+        name    "folder5"
+        label   "1_Bake_Outputs"
+        grouptag { "import_enable" "1" }
+        grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/MITO_UE_Attrbute_Bridge_RF.cleaned.ds" }
+        grouptag { "import_token" "folder5:1_Bake_Outputs" }
+
+        parm {
+            name    "en_tag_generic"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            parmtag { "import_token" "en_tag_generic" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_tag_generic"
+            label   "Generic Tag"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            grouptag { "import_token" "grp_tag_generic:Generic Tag" }
+            parmtag { "sidefx::header_parm" "tag_generic_csv" }
+            parmtag { "sidefx::header_toggle" "en_tag_generic" }
+
+            parm {
+                name    "tag_generic_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_uproperty_tag_*" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "tag_generic_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "tag_generic_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：为 Actor/组件写入通用 Tags（CSV 展开为数组），用于运行时检索与过滤。 \n示例：Gameplay,Generated → 实际写出 unreal_uproperty_tag_0=Gameplay，unreal_uproperty_tag_1=Generated。 \n结果：Bake 后对象（Actor/组件）将带有这些通用标签，便于蓝图/关卡过滤。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "tag_generic_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_tag_generic"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_tag_generic == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "owner_tag_generic" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "tag_generic_csv"
+                label   "Tags (CSV)"
+                type    string
+                default { "Gameplay,Generated" }
+                disablewhen "{ en_tag_generic == 0 }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "tag_generic_csv" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_tag_actor"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            parmtag { "import_token" "en_tag_actor" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_tag_actor"
+            label   "Actor Tag"
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            grouptag { "import_token" "grp_tag_actor:Actor Tag" }
+            parmtag { "sidefx::header_parm" "tag_actor_csv" }
+            parmtag { "sidefx::header_toggle" "en_tag_actor" }
+
+            parm {
+                name    "tag_actor_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_uproperty_actorTag_*" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "tag_actor_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "tag_actor_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：仅给 Actor 本体添加 Tags（CSV 展开为数组），用于关卡/脚本中的 Actor 级过滤。 \n示例：Boss,Quest → 实际写出 unreal_uproperty_actorTag_0=Boss，unreal_uproperty_actorTag_1=Quest。 \n结果：Bake 的 Actor 自身拥有这些标签。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "tag_actor_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_tag_actor"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_tag_actor == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "owner_tag_actor" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "tag_actor_csv"
+                label   "Tags (CSV)"
+                type    string
+                default { "Boss,Quest" }
+                disablewhen "{ en_tag_actor == 0 }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "tag_actor_csv" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_tag_comp"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            parmtag { "import_token" "en_tag_comp" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_tag_comp"
+            label   "Component Tag"
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            grouptag { "import_token" "grp_tag_comp:Component Tag" }
+            parmtag { "sidefx::header_parm" "tag_comp_csv" }
+            parmtag { "sidefx::header_toggle" "en_tag_comp" }
+
+            parm {
+                name    "tag_comp_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_uproperty_componentTag_*" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "tag_comp_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "tag_comp_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：为所有组件添加 Tags（不含 Actor 本体），CSV 展开为数组。 \n示例：LOD,Proxy → 实际写出 unreal_uproperty_componentTag_0=LOD，unreal_uproperty_componentTag_1=Proxy。 \n结果：Bake 后每个组件带有这些标签，便于组件级过滤或自动化脚本。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "tag_comp_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_tag_comp"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_tag_comp == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "owner_tag_comp" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "tag_comp_csv"
+                label   "Tags (CSV)"
+                type    string
+                default { "LOD,Proxy" }
+                disablewhen "{ en_tag_comp == 0 }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "tag_comp_csv" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_tag_main"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            parmtag { "import_token" "en_tag_main" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_tag_main"
+            label   "Main Component Tag"
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            grouptag { "import_token" "grp_tag_main:Main Component Tag" }
+            parmtag { "sidefx::header_parm" "tag_main_csv" }
+            parmtag { "sidefx::header_toggle" "en_tag_main" }
+
+            parm {
+                name    "tag_main_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_uproperty_mainComponentTag_*" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "tag_main_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "tag_main_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：仅给主组件（Root/Main Component）添加 Tags，CSV 展开为数组。 \n示例：RootOnly → 实际写出 unreal_uproperty_mainComponentTag_0=RootOnly。 \n结果：仅在根组件设置标签，便于对根组件识别与过滤。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "tag_main_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_tag_main"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_tag_main == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "owner_tag_main" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "tag_main_csv"
+                label   "Tags (CSV)"
+                type    string
+                default { "RootOnly" }
+                disablewhen "{ en_tag_main == 0 }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "tag_main_csv" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_curve"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            parmtag { "import_token" "en_curve" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_curve"
+            label   "Curve"
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            grouptag { "import_token" "grp_curve:Curve" }
+            parmtag { "sidefx::header_toggle" "en_curve" }
+
+            parm {
+                name    "curve_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_output_curve" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "curve_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "curve_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：将对应 Prim 作为曲线输出（SplineComponent）。 \n示例：启用 → 实际写出 unreal_output_curve=1。 \n结果：Bake 为 SplineComponent，用于道路/轨迹等样条资产。 \nOwner：Prim。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "curve_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_curve"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                default { "prim" }
+                disablewhen "{ en_curve == 0 }"
+                menu {
+                    "prim"  "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "owner_curve" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_curve_lin"
+            label   "Enable"
+            type    toggle
+            default { "ch(\"en_curve\")" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            parmtag { "import_token" "en_curve_lin" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_curve_lin"
+            label   "Curve Linear"
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            grouptag { "import_token" "grp_curve_lin:Curve Linear" }
+            parmtag { "sidefx::header_toggle" "en_curve_lin" }
+
+            parm {
+                name    "curve_lin_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_output_curve_linear" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "curve_lin_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "curve_lin_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：将样条插值设为线性段（非平滑样条）。 \n示例：启用 → 实际写出 unreal_output_curve_linear=1。 \n结果：样条以折线段插值。 \nOwner：Prim。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "curve_lin_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_curve_lin"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                default { "prim" }
+                disablewhen "{ en_curve_lin == 0 }"
+                menu {
+                    "prim"  "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "owner_curve_lin" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_curve_closed"
+            label   "Enable"
+            type    toggle
+            default { "ch(\"en_curve\")" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            parmtag { "import_token" "en_curve_closed" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_curve_closed"
+            label   "Curve Closed"
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            grouptag { "import_token" "grp_curve_closed:Curve Closed" }
+            parmtag { "sidefx::header_toggle" "en_curve_closed" }
+
+            parm {
+                name    "curve_closed_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_output_curve_closed" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "curve_closed_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "curve_closed_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：将样条设为闭合（首尾相连）。 \n示例：启用 → 实际写出 unreal_output_curve_closed=1。 \n结果：用于环路/围栏等闭合结构。 \nOwner：Prim。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "curve_closed_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_curve_closed"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                default { "prim" }
+                disablewhen "{ en_curve_closed == 0 }"
+                menu {
+                    "prim"  "Prim"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "owner_curve_closed" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_level_path"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            parmtag { "import_token" "en_level_path" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_level_path"
+            label   "Level Path"
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            grouptag { "import_token" "grp_level_path:Level Path" }
+            parmtag { "sidefx::header_parm" "level_path_str" }
+            parmtag { "sidefx::header_toggle" "en_level_path" }
+
+            parm {
+                name    "level_path_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_level_path" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "level_path_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "level_path_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：指定 Bake 的目标关卡路径；Meshes/Instancers/Foliage/Landscape 将烘焙到该 Level。支持字符串 Token（如 {world}，在运行时替换为当前世界名）。 \n示例：{world}/SubLevels/Generated → 实际写出 unreal_level_path={world}/SubLevels/Generated。 \n结果：Bake 输出被写入到指定子关卡（若不存在可按工具逻辑创建/引用）。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "level_path_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_level_path"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_level_path == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "owner_level_path" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "level_path_str"
+                label   "Level Path"
+                type    string
+                default { "{world}/SubLevels/Generated" }
+                disablewhen "{ en_level_path == 0 }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "level_path_str" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_bake_folder"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            parmtag { "import_token" "en_bake_folder" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_bake_folder"
+            label   "Bake Folder"
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            grouptag { "import_token" "grp_bake_folder:Bake Folder" }
+            parmtag { "sidefx::header_parm" "bake_folder_str" }
+            parmtag { "sidefx::header_toggle" "en_bake_folder" }
+
+            parm {
+                name    "bake_folder_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_bake_folder" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "bake_folder_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "bake_folder_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：覆盖默认 Bake 的内容浏览器文件夹路径（Content Path）。支持字符串 Token（如 {bake}，在项目中统一到 Bake 根）。 \n示例：/Game/Bake/Generated → 实际写出 unreal_bake_folder=/Game/Bake/Generated。 \n结果：烘焙生成/归档的资源被写入该内容目录。 \nOwner：Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "bake_folder_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_bake_folder"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ en_bake_folder == 0 }"
+                menu {
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "owner_bake_folder" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "bake_folder_str"
+                label   "Content Path"
+                type    string
+                default { "/Game/Bake/Generated" }
+                disablewhen "{ en_bake_folder == 0 }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "bake_folder_str" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_bake_name"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            parmtag { "import_token" "en_bake_name" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_bake_name"
+            label   "Bake Name (deprecated)"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            grouptag { "import_token" "grp_bake_name:Bake Name (deprecated)" }
+            parmtag { "sidefx::header_toggle" "en_bake_name" }
+
+            parm {
+                name    "bake_name_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_bake_name" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "bake_name_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "bake_name_help_heading"
+                label   "Help"
+                type    label
+                default { "弃用：请改用统一命名 unreal_output_name（见顶部Output_Name）。\n说明：早期用于指定 Bake 名称。\n示例：SM_Legacy_01 → 现在应写 unreal_output_name=SM_Legacy_01。\n结果：通过统一命名控制 Actor/资源/图层等输出名字。\nOwner：Point/Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "bake_name_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+        }
+
+        parm {
+            name    "en_bake_actor"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            parmtag { "import_token" "en_bake_actor" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_bake_actor"
+            label   "Bake Actor"
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            grouptag { "import_token" "grp_bake_actor:Bake Actor" }
+            parmtag { "sidefx::header_parm" "bake_actor_str" }
+            parmtag { "sidefx::header_toggle" "en_bake_actor" }
+
+            parm {
+                name    "bake_actor_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_bake_actor" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "bake_actor_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "bake_actor_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：指定将被创建/复用的 Actor 路径。 \n示例：/Game/Maps/Actors/MyBakedActor → 实际写出 unreal_bake_actor=/Game/Maps/Actors/MyBakedActor。 \n结果：Bake 时若目标 Actor 不存在则创建，存在则复用。支持 Token（如 {actor}）。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "bake_actor_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_bake_actor"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_bake_actor == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "owner_bake_actor" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "bake_actor_str"
+                label   "Actor Path"
+                type    string
+                default { "/Game/Maps/Actors/MyBakedActor" }
+                disablewhen "{ en_bake_actor == 0 }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "bake_actor_str" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_bake_actor_class"
+            label   "Enable"
+            type    toggle
+            default { "ch(\"en_bake_actor\")" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            parmtag { "import_token" "en_bake_actor_class" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_bake_actor_class"
+            label   "Bake Actor Class"
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            grouptag { "import_token" "grp_bake_actor_class:Bake Actor Class" }
+            parmtag { "sidefx::header_parm" "bake_actor_class_str" }
+            parmtag { "sidefx::header_toggle" "en_bake_actor_class" }
+
+            parm {
+                name    "bake_actor_class_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_bake_actor_class" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "bake_actor_class_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "bake_actor_class_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：指定用于生成/替换 Actor 的 UClass 路径（可为蓝图类或原生类）。 \n示例：Blueprint'/Game/BP/BP_CustomActor.BP_CustomActor_C' → 实际写出 unreal_bake_actor_class=Blueprint'/Game/BP/BP_CustomActor.BP_CustomActor_C'。 \n结果：Bake 按该类来创建 Actor 类型（为空则使用默认 Actor 类）。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "bake_actor_class_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_bake_actor_class"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_bake_actor_class == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "owner_bake_actor_class" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "bake_actor_class_str"
+                label   "Actor Class Path"
+                type    string
+                default { "Blueprint'/Game/BP/BP_CustomActor.BP_CustomActor_C'" }
+                disablewhen "{ en_bake_actor_class == 0 }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "bake_actor_class_str" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_bake_outliner_folder"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            parmtag { "import_token" "en_bake_outliner_folder" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_bake_outliner_folder"
+            label   "Outliner Folder"
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+            grouptag { "import_token" "grp_bake_outliner_folder:Outliner Folder" }
+            parmtag { "sidefx::header_parm" "bake_outliner_folder_str" }
+            parmtag { "sidefx::header_toggle" "en_bake_outliner_folder" }
+
+            parm {
+                name    "bake_outliner_folder_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_bake_outliner_folder" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "bake_outliner_folder_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "bake_outliner_folder_help_heading"
+                label   "Help"
+                type    label
+                default { "说明：指定 World Outliner 的文件夹路径（场景大纲层级）。 \n示例：Generated/Foliage → 实际写出 unreal_bake_outliner_folder=Generated/Foliage。 \n结果：Bake 后 Actor/组件归到该 Outliner 文件夹，便于场景组织。 \nOwner：Point/Prim/Detail。 " }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "bake_outliner_folder_help_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_bake_outliner_folder"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_bake_outliner_folder == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "owner_bake_outliner_folder" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "bake_outliner_folder_str"
+                label   "Outliner Path"
+                type    string
+                default { "Generated/Foliage" }
+                disablewhen "{ en_bake_outliner_folder == 0 }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/1_Bake_Outputs.ds" }
+                parmtag { "import_token" "bake_outliner_folder_str" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+
+}

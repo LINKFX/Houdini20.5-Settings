@@ -1,0 +1,86 @@
+{
+    name	selectedparms
+
+    parm {
+        name    "en_mesh_socket"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "folder6"
+        label   "Mesh Sockets"
+        parmtag { "sidefx::header_toggle" "en_mesh_socket" }
+
+        parm {
+            name    "owner_socket_actor2"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ en_socket_actor == 0 }"
+            menu {
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        multiparm {
+            name    "num_sockets"
+            label    "Number of Mesh Sockets"
+
+            parm {
+                name    "socket_pos#"
+                label   "Socket Position"
+                type    float
+                size    3
+                default { "0" "0" "0" }
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "socket_rot#"
+                label   "Socket Rotation (Quat)"
+                type    float
+                size    4
+                default { "0" "0" "0" "1" }
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "socket_scale#"
+                label   "Socket Scale"
+                type    float
+                size    3
+                default { "1" "1" "1" }
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "socket_name#"
+                label   "Socket Name"
+                type    string
+                default { "Socket_#" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "socket_tag#"
+                label   "Socket Tag"
+                type    string
+                default { "Gameplay" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "socket_actor#"
+                label   "Socket Actor"
+                type    string
+                default { "Blueprint'/Game/Actor/BP_SocketActor.BP_SocketActor_C'" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+
+}

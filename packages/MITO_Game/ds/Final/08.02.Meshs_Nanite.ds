@@ -1,0 +1,503 @@
+{
+    name	selectedparms
+
+    group {
+        name    "folder0_1"
+        label   "Nanite"
+        grouptag { "import_enable" "1" }
+        grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.00.Meshes.ds" }
+        grouptag { "import_token" "folder_meshes:Meshes Nanite" }
+
+        parm {
+            name    "nanite_help"
+            label   "Nanite Settings Help"
+            type    label
+            default { "（仅限UE5）插件可以通过以下属性控制HDA输出中网格的Nanite设置。拥有这些属性中的任何一个会自动在生成的静态网格上启用Nanite。这仅适用于精炼网格，因为Houdini代理网格不支持Nanite。" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+            parmtag { "import_token" "nanite_help" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "en_mesh_nanite_position_precision"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+            parmtag { "import_token" "en_mesh_nanite_position_precision" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_mesh_nanite_position_precision"
+            label   "Nanite Position Precision"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+            grouptag { "import_token" "grp_mesh_nanite_position_precision:Nanite Position Precision" }
+            parmtag { "sidefx::header_toggle" "en_mesh_nanite_position_precision" }
+
+            parm {
+                name    "mesh_nanite_position_precision_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_nanite_position_precision" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "mesh_nanite_position_precision_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "mesh_nanite_position_precision_help"
+                label   "Help"
+                type    label
+                default { "用于Nanite网格的位置精度属性（UE5）。这决定了Nanite网格中顶点位置的精度级别，影响内存使用和性能。更高的值会增加精度，但可能提高GPU内存和磁盘占用。\n说明：Nanite网格的位置精度属性。可通过Attribute或数值指定。负值如-1可能对应自动模式（Auto），允许引擎根据网格大小自动选择精度；0为默认精度；正值如1-10表示更高精度级别，用于需要精确位置的复杂网格。\n示例(Attribute)：来源attr=2 → 写出unreal_nanite_position_precision=2。在UE中，这会提高顶点位置精度，减少远距离渲染时的抖动或失真，但增加内存消耗。\n示例(数值)：直接设置=-1 → 使用自动精度，引擎优化平衡性能和质量。\n结果：在UE中，控制Nanite网格的顶点位置准确性，避免大场景中精度不足导致的视觉artifact，同时解释负值用于特殊或自动设置，以防用户困惑。\nOwner：Any。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "mesh_nanite_position_precision_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_mesh_nanite_position_precision"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "detail" }
+                disablewhen "{ en_mesh_nanite_position_precision == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "vertex"    "Vertex"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "owner_mesh_nanite_position_precision" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_mesh_nanite_position_precision"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_mesh_nanite_position_precision == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "form_mode_mesh_nanite_position_precision" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "mesh_nanite_position_precision_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_nanite_position_precision" }
+                disablewhen "{ en_mesh_nanite_position_precision == 0 } { form_mode_mesh_nanite_position_precision != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_mesh_nanite_position_precision\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "mesh_nanite_position_precision_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_mesh_nanite_position_precision')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "mesh_nanite_position_precision_val"
+                label   "Position Precision"
+                type    integer
+                default { "0" }
+                disablewhen "{ en_mesh_nanite_position_precision == 0 } { form_mode_mesh_nanite_position_precision != value }"
+                range   { -10 10 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "mesh_nanite_position_precision_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_mesh_nanite_percent_triangles"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+            parmtag { "import_token" "en_mesh_nanite_percent_triangles" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_mesh_nanite_percent_triangles"
+            label   "Nanite Percent Triangles"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+            grouptag { "import_token" "grp_mesh_nanite_percent_triangles:Nanite Percent Triangles" }
+            parmtag { "sidefx::header_toggle" "en_mesh_nanite_percent_triangles" }
+
+            parm {
+                name    "mesh_nanite_percent_triangles_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_nanite_percent_triangles" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "mesh_nanite_percent_triangles_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "mesh_nanite_percent_triangles_help"
+                label   "Help"
+                type    label
+                default { "Nanite网格保留三角形的百分比，默认0（无三角形）。这控制了后备网格中保留多少原始网格细节。\n说明：Nanite网格保留三角形百分比。可通过Attribute或数值指定。值范围0-100，较高百分比保留更多原始网格细节。\n示例(Attribute)：来源attr=50 → 写出unreal_nanite_percent_triangles=50。在UE中，这会使Nanite网格的后备版本保留50%的三角形，提高非Nanite兼容设备上的细节显示，但增加文件大小。\n示例(数值)：直接设置=0 → 无三角形保留，仅使用Nanite集群，优化性能但后备可能低质。\n结果：在UE中，影响Nanite网格的简化级别，确保在不同距离或硬件上保持适当细节，避免过度简化导致的视觉损失。\nOwner：Any。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "mesh_nanite_percent_triangles_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_mesh_nanite_percent_triangles"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "detail" }
+                disablewhen "{ en_mesh_nanite_percent_triangles == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "vertex"    "Vertex"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "owner_mesh_nanite_percent_triangles" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_mesh_nanite_percent_triangles"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_mesh_nanite_percent_triangles == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "form_mode_mesh_nanite_percent_triangles" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "mesh_nanite_percent_triangles_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_nanite_percent_triangles" }
+                disablewhen "{ en_mesh_nanite_percent_triangles == 0 } { form_mode_mesh_nanite_percent_triangles != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_mesh_nanite_percent_triangles\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "mesh_nanite_percent_triangles_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_mesh_nanite_percent_triangles')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "mesh_nanite_percent_triangles_val"
+                label   "Percent Triangles"
+                type    integer
+                default { "0" }
+                disablewhen "{ en_mesh_nanite_percent_triangles == 0 } { form_mode_mesh_nanite_percent_triangles != value }"
+                range   { 0 100 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "mesh_nanite_percent_triangles_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_mesh_nanite_fallback_relative_error"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+            parmtag { "import_token" "en_mesh_nanite_fallback_relative_error" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_mesh_nanite_fallback_relative_error"
+            label   "Nanite Fallback Relative Error"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+            grouptag { "import_token" "grp_mesh_nanite_fallback_relative_error:Nanite Fallback Relative Error" }
+            parmtag { "sidefx::header_toggle" "en_mesh_nanite_fallback_relative_error" }
+
+            parm {
+                name    "mesh_nanite_fallback_relative_error_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_nanite_fallback_relative_error" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "mesh_nanite_fallback_relative_error_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "mesh_nanite_fallback_relative_error_help"
+                label   "Help"
+                type    label
+                default { "后备相对误差 - 设置移除源网格细节时允许的最大相对误差量。此相对误差值无单位大小，并相对于网格大小。\n说明：后备相对误差 - 移除源网格细节时允许的最大误差。可通过Attribute或数值指定。较低值产生更高细节的后备网格。\n示例(Attribute)：来源attr=0.001 → 写出unreal_nanite_fallback_relative_error=0.001。在UE中，这会使后备网格更接近原始Nanite网格，提高阴影和非Nanite渲染的准确性，但增加三角形数量和性能开销。\n示例(数值)：直接设置=0.01 → 默认值，平衡质量和性能。\n结果：在UE中，改善Nanite禁用时的网格质量，避免低聚后备导致的丑陋阴影或细节丢失。\nOwner：Any。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "mesh_nanite_fallback_relative_error_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_mesh_nanite_fallback_relative_error"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "detail" }
+                disablewhen "{ en_mesh_nanite_fallback_relative_error == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "vertex"    "Vertex"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "owner_mesh_nanite_fallback_relative_error" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_mesh_nanite_fallback_relative_error"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_mesh_nanite_fallback_relative_error == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "form_mode_mesh_nanite_fallback_relative_error" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "mesh_nanite_fallback_relative_error_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_nanite_fallback_relative_error" }
+                disablewhen "{ en_mesh_nanite_fallback_relative_error == 0 } { form_mode_mesh_nanite_fallback_relative_error != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_mesh_nanite_fallback_relative_error\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "mesh_nanite_fallback_relative_error_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_mesh_nanite_fallback_relative_error')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "mesh_nanite_fallback_relative_error_val"
+                label   "Fallback Relative Error"
+                type    float
+                default { "0.01" }
+                disablewhen "{ en_mesh_nanite_fallback_relative_error == 0 } { form_mode_mesh_nanite_fallback_relative_error != value }"
+                range   { 0 1 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "mesh_nanite_fallback_relative_error_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_mesh_nanite_trim_relative_error"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+            parmtag { "import_token" "en_mesh_nanite_trim_relative_error" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_mesh_nanite_trim_relative_error"
+            label   "Nanite Trim Relative Error"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+            grouptag { "import_token" "grp_mesh_nanite_trim_relative_error:Nanite Trim Relative Error" }
+            parmtag { "sidefx::header_toggle" "en_mesh_nanite_trim_relative_error" }
+
+            parm {
+                name    "mesh_nanite_trim_relative_error_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_nanite_trim_relative_error" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "mesh_nanite_trim_relative_error_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "mesh_nanite_trim_relative_error_help"
+                label   "Help"
+                type    label
+                default { "修剪相对误差 - 移除源网格中视觉影响小于此相对误差量的所有细节。此相对误差值无单位大小，并相对于网格大小。\n说明：修剪相对误差 - 移除视觉影响小于此误差的源网格细节。可通过Attribute或数值指定。较低值保留更多细节，提高压缩效率。\n示例(Attribute)：来源attr=0.0001 → 写出unreal_nanite_trim_relative_error=0.0001。在UE中，这会移除微小细节，减少Nanite数据大小，同时保持整体视觉质量，适合优化大网格。\n示例(数值)：直接设置=0.001 → 默认值，平衡细节保留和文件大小。\n结果：在UE中，优化Nanite网格的存储和加载速度，避免不必要的细节导致的内存浪费，提高整体性能。\nOwner：Any。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "mesh_nanite_trim_relative_error_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_mesh_nanite_trim_relative_error"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "detail" }
+                disablewhen "{ en_mesh_nanite_trim_relative_error == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "vertex"    "Vertex"
+                    "detail"    "Detail"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "owner_mesh_nanite_trim_relative_error" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_mesh_nanite_trim_relative_error"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_mesh_nanite_trim_relative_error == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "form_mode_mesh_nanite_trim_relative_error" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "mesh_nanite_trim_relative_error_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_nanite_trim_relative_error" }
+                disablewhen "{ en_mesh_nanite_trim_relative_error == 0 } { form_mode_mesh_nanite_trim_relative_error != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_mesh_nanite_trim_relative_error\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "mesh_nanite_trim_relative_error_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_mesh_nanite_trim_relative_error')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "mesh_nanite_trim_relative_error_val"
+                label   "Trim Relative Error"
+                type    float
+                default { "0.001" }
+                disablewhen "{ en_mesh_nanite_trim_relative_error == 0 } { form_mode_mesh_nanite_trim_relative_error != value }"
+                range   { 0 1 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/08.02.Meshs_Nanite.ds" }
+                parmtag { "import_token" "mesh_nanite_trim_relative_error_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+
+}

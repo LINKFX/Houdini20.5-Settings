@@ -1,0 +1,105 @@
+{
+    name	selectedparms
+
+    parm {
+        name    "en_inst_foliage_dist"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_inst_foliage_dist"
+        label   "Unreal Foliage Attachment Distance"
+        parmtag { "sidefx::header_toggle" "en_inst_foliage_dist" }
+
+        parm {
+            name    "inst_foliage_dist_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_foliage_attachment_distance" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "inst_foliage_dist_help"
+            label   "Help"
+            type    label
+            default { "说明：设置植被附着时的垂直搜索距离。可通过 Attribute 或数值指定。\n示例(Attribute)：来源 attr=500 → 写出 unreal_foliage_attachment_distance=500。\n示例(数值)：直接输入 1000 → UE 中按 1000cm 搜索。\n结果：控制植被系统在附着时的垂直范围。\nOwner：Point。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_inst_foliage_dist"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "point" }
+            disablewhen "{ en_inst_foliage_dist == 0 }"
+            menu {
+                "point" "Point"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_inst_foliage_dist"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_inst_foliage_dist == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "inst_foliage_dist_from"
+            label   "Attribute From"
+            type    string
+            default { "unreal_foliage_attachment_distance" }
+            disablewhen "{ en_inst_foliage_dist == 0 } { form_mode_inst_foliage_dist != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_inst_foliage_dist\").evalAsString()" ]
+                [ "" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_inst_foliage_dist')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "inst_foliage_dist_val"
+            label   "Attachment Distance"
+            type    float
+            default { "1000" }
+            disablewhen "{ en_inst_foliage_dist == 0 } { form_mode_inst_foliage_dist != value }"
+            range   { 0 10000 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+
+}

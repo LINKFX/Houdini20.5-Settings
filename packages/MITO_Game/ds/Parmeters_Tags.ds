@@ -1,0 +1,123 @@
+{
+    name    selectedparms
+
+    ########################################################################
+    # unreal_ref
+    ########################################################################
+    groupcollapsible {
+        name    "grp_unreal_ref"
+        label   "Unreal Ref"
+        parmtag { "sidefx::header_parm" "unreal_ref_preview" }
+
+        parm {
+            name    "help_unreal_ref"
+            label   "Help"
+            type    label
+            default { "说明：将 string 参数变为 Unreal 中的 Asset Picker（资产选择器）。\n示例：parmtag { \"unreal_ref\" \"1\" }\n结果：在 UE 界面中显示资源选择框，选择的资产路径会自动写入字符串参数。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "unreal_ref_preview"
+            label   "Copy Unreal Ref Tag"
+            type    string
+            size    2
+            default { "unreal_ref" "1" }
+        }
+    }
+
+    ########################################################################
+    # unreal_ref_class
+    ########################################################################
+    groupcollapsible {
+        name    "grp_unreal_ref_class"
+        label   "Unreal Ref Class"
+        parmtag { "sidefx::header_parm" "unreal_ref_class_preview" }
+
+        parm {
+            name    "help_unreal_ref_class"
+            label   "Help"
+            type    label
+            default { "说明：与 unreal_ref 搭配使用，用于限制 Asset Picker 的筛选类别。\n示例：parmtag { \"unreal_ref_class\" \"Material\" }\n结果：在 UE 中只能选择特定类型的资源（如 Material）。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "unreal_ref_class_preview"
+            label   "Copy Unreal Ref Class Tag"
+            type    string
+            size    2
+            default { "unreal_ref_class" "Material" }
+        }
+    }
+
+    ########################################################################
+    # hengine_noswap
+    ########################################################################
+    groupcollapsible {
+        name    "grp_hengine_noswap"
+        label   "HEngine NoSwap"
+        parmtag { "sidefx::header_parm" "hengine_noswap_preview" }
+
+        parm {
+            name    "help_hengine_noswap"
+            label   "Help"
+            type    label
+            default { "说明：应用于 Float3（tuple3），控制 Houdini → Unreal 的坐标转换。\n示例：parmtag { \"hengine_noswap\" \"1\" }\n结果：默认 Houdini 会交换 Y/Z 轴，启用该标记后保持原始坐标，不进行 Y/Z 对调。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "hengine_noswap_preview"
+            label   "Copy HEngine NoSwap Tag"
+            type    string
+            size    2
+            default { "hengine_noswap" "1" }
+        }
+    }
+
+    ########################################################################
+    # filechooser_mode
+    ########################################################################
+    groupcollapsible {
+        name    "grp_filechooser_mode"
+        label   "Filechooser Mode"
+        parmtag { "sidefx::header_parm" "filechooser_mode_preview" }
+
+        parm {
+            name    "help_filechooser_mode"
+            label   "Help"
+            type    label
+            default { "说明：应用于 File 参数，用于设置文件选择器的模式。\n示例：parmtag { \"filechooser_mode\" \"read\" }\n结果：文件参数变为只读模式，只能选择文件，不能修改或保存。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "filechooser_mode_preview"
+            label   "Copy Filechooser Mode Tag"
+            type    string
+            size    2
+            default { "filechooser_mode" "read" }
+        }
+    }
+
+    ########################################################################
+    # default_dir
+    ########################################################################
+    groupcollapsible {
+        name    "grp_default_dir"
+        label   "Default Dir"
+        parmtag { "sidefx::header_parm" "default_dir_preview" }
+
+        parm {
+            name    "help_default_dir"
+            label   "Help"
+            type    label
+            default { "说明：应用于 File 参数，指定文件选择器的初始目录。\n示例：parmtag { \"default_dir\" \"C:/Projects/Textures\" }\n结果：打开文件选择框时，自动定位到设定目录，提升使用效率。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "default_dir_preview"
+            label   "Copy Default Dir Tag"
+            type    string
+            size    2
+            default { "default_dir" "C:/Projects/Textures" }
+        }
+    }
+}

@@ -1,0 +1,101 @@
+{
+    name	selectedparms
+
+    parm {
+        name    "en_lodxscreensize"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_lodxscreensize"
+        label   "LOD X ScreenSize"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_lodxscreensize" }
+
+        parm {
+            name    "lodxscreensize_heading"
+            label   "Heading"
+            type    label
+            default { "lodX_screensize" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "lodxscreensize_help"
+            label   "Help"
+            type    label
+            default { "说明：为每个 LODX 设置屏幕占比大小。X 为 LOD 等级编号（如 0,1,2）。可从来源浮点属性重命名为 lodX_screensize，或直接输入数值。\n示例(属性)：a=0.8 → 写出 lod0_screensize=0.8，a 被移除。\n示例(数值)：直接设置 lod1_screensize=0.5。\n结果：在Unreal Engine中，当对象在屏幕上的大小低于此值时，切换到下一个LOD。作用：精细控制LOD切换阈值，平衡视觉质量和性能，例如为LOD0设置较高值以保持细节，为更高LOD设置较低值以优化远处渲染。\nOwner：Detail。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_lodxscreensize"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "detail" }
+            disablewhen "{ en_lodxscreensize == 0 }"
+            menu {
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "form_mode_lodxscreensize"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_lodxscreensize == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "lodxscreensize_from"
+            label   "Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_lodxscreensize == 0 } { form_mode_lodxscreensize != attrib }"
+            menureplace {
+                [ "node = hou.pwd()" ]
+                [ "owner = node.parm(\"owner_lodxscreensize\").evalAsString()" ]
+                [ "in_node = node.node(\"IN\")" ]
+                [ "if not in_node:" ]
+                [ "    return []" ]
+                [ "geo = in_node.geometry()" ]
+                [ "attrs = []" ]
+                [ "if owner == \"point\":" ]
+                [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                [ "elif owner == \"prim\":" ]
+                [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                [ "elif owner == \"vertex\":" ]
+                [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                [ "elif owner == \"detail\":" ]
+                [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                [ "menu = []" ]
+                [ "for a in attrs:" ]
+                [ "    menu += [a, a]" ]
+                [ "return menu" ]
+                language python
+            }
+            parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_lodxscreensize')" }
+            parmtag { "menu_script_language" "python" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "lodxscreensize_val"
+            label   "Screen Size"
+            type    float
+            default { "1" }
+            disablewhen "{ en_lodxscreensize == 0 } { form_mode_lodxscreensize != value }"
+            range   { 0! 1 }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+    }
+
+}

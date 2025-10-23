@@ -1,0 +1,154 @@
+{
+    name	selectedparms
+
+    parm {
+        name    "ssd_enable"
+        label   "Size Specific Data"
+        type    toggle
+        default { "0" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupcollapsible {
+        name    "grp_ssd"
+        label   "Size Specific Data"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "ssd_enable" }
+
+        parm {
+            name    "ssd_heading"
+            label   "Heading"
+            type    label
+            default { "Size Specific Data for Collisions" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "ssd_help"
+            label   "Help"
+            type    label
+            default { "说明：配置多个Size Specific Data，用于不同尺寸碎片的碰撞设置。通过多参数块定义列表形式的值，每个实例对应一个Size Specific Data配置，结果形成数组属性，用于Chaos模拟中的分级碰撞行为。\n\n参数含义：\n- Max Size: 指定该Size Specific Data适用的最大尺寸阈值，用于分级碰撞设置。\n- Damage Threshold: 该尺寸下碰撞破坏阈值，值越小碎片越易破裂。\n- Collision Type: 碰撞类型，0=Level Set, 1=Particles，用于定义碰撞计算方式。\n- Implicit Type: 隐式碰撞形状类型，0=None, 1=Box, 2=Sphere, 3=Capsule, 4=Level Set, 5=Convex，用于简化碰撞检测。\n- Min Level Set Resolution: 最小水平集分辨率，用于Level Set碰撞的网格精度下限。\n- Max Level Set Resolution: 最大水平集分辨率，用于Level Set碰撞的网格精度上限。\n- Min Cluster Level Set Resolution: 最小聚类水平集分辨率，用于聚类碎片的碰撞精度下限。\n- Max Cluster Level Set Resolution: 最大聚类水平集分辨率，用于聚类碎片的碰撞精度上限。\n- Collision Object Reduction Percentage: 碰撞物体简化百分比，用于减少碰撞复杂度，提高性能。\n- Collision Particles Fraction: 碰撞粒子分数，用于粒子碰撞的采样比例。\n- Maximum Collision Particles: 最大碰撞粒子数，用于限制粒子碰撞的数量。\n\n示例：为每个实例设置上述值，结果在Detail属性中形成数组。\nOwner：Detail。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "owner_gc_max_level2"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            default { "detail" }
+            disablewhen "{ ssd_enable == 0 }"
+            menu {
+                "detail"    "Detail"
+            }
+            parmtag { "script_callback_language" "python" }
+        }
+        multiparm {
+            name    "ssd_count"
+            label    "Number of Entries"
+            disablewhen "{ ssd_enable == 0 }"
+            parmtag { "multistartoffset" "0" }
+
+            parm {
+                name    "ssd_max_size#"
+                label   "Max Size"
+                type    float
+                default { "100" }
+                range   { 0 10000 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "ssd_damage_threshold#"
+                label   "Damage Threshold"
+                type    integer
+                default { "50" }
+                range   { 0 1000 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "ssd_collision_type#"
+                label   "Collision Type"
+                type    integer
+                default { "0" }
+                menu {
+                    "0" "Level Set"
+                    "1" "Particles"
+                }
+                range   { 0 1 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "ssd_implicit_type#"
+                label   "Implicit Type"
+                type    integer
+                default { "1" }
+                menu {
+                    "0" "None"
+                    "1" "Box"
+                    "2" "Sphere"
+                    "3" "Capsule"
+                    "4" "Level Set"
+                    "5" "Convex"
+                }
+                range   { 0 5 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "ssd_min_level_set_resolution#"
+                label   "Min Level Set Resolution"
+                type    integer
+                default { "10" }
+                range   { 1 100 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "ssd_max_level_set_resolution#"
+                label   "Max Level Set Resolution"
+                type    integer
+                default { "20" }
+                range   { 1 100 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "ssd_min_cluster_level_set_resolution#"
+                label   "Min Cluster Level Set Resolution"
+                type    integer
+                default { "5" }
+                range   { 1 100 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "ssd_max_cluster_level_set_resolution#"
+                label   "Max Cluster Level Set Resolution"
+                type    integer
+                default { "10" }
+                range   { 1 100 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "ssd_collision_object_reduction_percentage#"
+                label   "Collision Object Reduction Percentage"
+                type    float
+                default { "0.5" }
+                range   { 0 1 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "ssd_collision_particles_fraction#"
+                label   "Collision Particles Fraction"
+                type    float
+                default { "0.1" }
+                range   { 0 1 }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "ssd_maximum_collision_particles#"
+                label   "Maximum Collision Particles"
+                type    integer
+                default { "50" }
+                range   { 0 1000 }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+
+}

@@ -1,0 +1,1310 @@
+{
+    name	selectedparms
+
+    group {
+        name    "folder3_3"
+        label   "Splines_ControlPoint"
+        parmtag { "group_default" "0" }
+        grouptag { "import_enable" "1" }
+        grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.Landscape.ds" }
+        grouptag { "import_token" "folder3:Splines_Segment" }
+
+        parm {
+            name    "en_rot"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+            parmtag { "import_token" "en_rot" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_rot"
+            label   "Rotation"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+            grouptag { "import_token" "grp_rot:Rotation" }
+            parmtag { "sidefx::header_toggle" "en_rot" }
+
+            parm {
+                name    "rot_heading"
+                label   "Heading"
+                type    label
+                default { "rot" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "rot_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "rot_help"
+                label   "Help"
+                type    label
+                default { "说明：控制点的旋转，单位为度。可通过 Attribute 传入旋转向量 (x y z)，或直接输入数值。\n示例(Attribute)：来源 attr=rot → rot=(0,90,0)。\n示例(Value)：直接输入 0 90 0。\n结果：Bake 时会设置该控制点的旋转。\nOwner：Point/Vertex。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "rot_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_rot"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_rot == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "owner_rot" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_rot"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_rot == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "form_mode_rot" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "rot_from"
+                label   "Attribute From"
+                type    string
+                default { "rot" }
+                disablewhen "{ en_rot == 0 } { form_mode_rot != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_rot\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "rot_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_rot')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "rot_val"
+                label   "Rotation Value"
+                type    vector
+                size    3
+                default { "0" "0" "0" }
+                disablewhen "{ en_rot == 0 } { form_mode_rot != value }"
+                range   { -1 1 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "rot_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_unreal_landscape_spline_control_point_id"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+            parmtag { "import_token" "en_unreal_landscape_spline_control_point_id" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_unreal_landscape_spline_control_point_id"
+            label   "Control Point ID"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+            grouptag { "import_token" "grp_unreal_landscape_spline_control_point_id:Control Point ID" }
+            parmtag { "sidefx::header_toggle" "en_unreal_landscape_spline_control_point_id" }
+
+            parm {
+                name    "unreal_landscape_spline_control_point_id_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_control_point_id" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_id_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "unreal_landscape_spline_control_point_id_help"
+                label   "Help"
+                type    label
+                default { "说明：控制点的唯一 ID，用于识别和匹配。\n示例(Attribute)：来源 attr=id → 写出 1001。\n示例(Value)：直接输入 1001。\n结果：Bake 时会为该控制点指定唯一编号。\nOwner：Point/Vertex。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_id_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_unreal_landscape_spline_control_point_id"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_id == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "owner_unreal_landscape_spline_control_point_id" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_unreal_landscape_spline_control_point_id"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_id == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "form_mode_unreal_landscape_spline_control_point_id" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "unreal_landscape_spline_control_point_id_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_landscape_spline_control_point_id" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_id == 0 } { form_mode_unreal_landscape_spline_control_point_id != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_unreal_landscape_spline_control_point_id\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_id_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_unreal_landscape_spline_control_point_id')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "unreal_landscape_spline_control_point_id_val"
+                label   "Control Point ID Value"
+                type    integer
+                default { "0" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_id == 0 } { form_mode_unreal_landscape_spline_control_point_id != value }"
+                range   { 0 10 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_id_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_unreal_landscape_spline_control_point_lower_terrain"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+            parmtag { "import_token" "en_unreal_landscape_spline_control_point_lower_terrain" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_unreal_landscape_spline_control_point_lower_terrain"
+            label   "Lower Terrain"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+            grouptag { "import_token" "grp_unreal_landscape_spline_control_point_lower_terrain:Lower Terrain" }
+            parmtag { "sidefx::header_toggle" "en_unreal_landscape_spline_control_point_lower_terrain" }
+
+            parm {
+                name    "unreal_landscape_spline_control_point_lower_terrain_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_control_point_lower_terrain" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_lower_terrain_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "unreal_landscape_spline_control_point_lower_terrain_help"
+                label   "Help"
+                type    label
+                default { "说明：是否压低控制点所在位置的地形。\n示例(Attribute)：来源 attr=lower_terrain → 1。\n示例(Value)：勾选启用。\n结果：Bake 时会将该控制点位置的地形下压。\nOwner：Point/Vertex。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_lower_terrain_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_unreal_landscape_spline_control_point_lower_terrain"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_lower_terrain == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "owner_unreal_landscape_spline_control_point_lower_terrain" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_unreal_landscape_spline_control_point_lower_terrain"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_lower_terrain == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "form_mode_unreal_landscape_spline_control_point_lower_terrain" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "unreal_landscape_spline_control_point_lower_terrain_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_landscape_spline_control_point_lower_terrain" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_lower_terrain == 0 } { form_mode_unreal_landscape_spline_control_point_lower_terrain != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_unreal_landscape_spline_control_point_lower_terrain\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_lower_terrain_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_unreal_landscape_spline_control_point_lower_terrain')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "unreal_landscape_spline_control_point_lower_terrain_val"
+                label   "Lower Terrain Value"
+                type    toggle
+                default { "0" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_lower_terrain == 0 } { form_mode_unreal_landscape_spline_control_point_lower_terrain != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_lower_terrain_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_unreal_landscape_spline_control_point_mesh"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+            parmtag { "import_token" "en_unreal_landscape_spline_control_point_mesh" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_unreal_landscape_spline_control_point_mesh"
+            label   "Control Point Mesh"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+            grouptag { "import_token" "grp_unreal_landscape_spline_control_point_mesh:Control Point Mesh" }
+            parmtag { "sidefx::header_toggle" "en_unreal_landscape_spline_control_point_mesh" }
+
+            parm {
+                name    "unreal_landscape_spline_control_point_mesh_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_control_point_mesh" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_mesh_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "unreal_landscape_spline_control_point_mesh_help"
+                label   "Help"
+                type    label
+                default { "说明：指定控制点使用的静态网格路径。\n示例(Attribute)：来源 attr=mesh → /Game/Props/SM_Rock。\n示例(Value)：直接输入 /Game/Props/SM_Rock。\n结果：Bake 时会在该控制点生成对应网格。\nOwner：Point/Vertex。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_mesh_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_unreal_landscape_spline_control_point_mesh"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_mesh == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "owner_unreal_landscape_spline_control_point_mesh" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_unreal_landscape_spline_control_point_mesh"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_mesh == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "form_mode_unreal_landscape_spline_control_point_mesh" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "unreal_landscape_spline_control_point_mesh_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_landscape_spline_control_point_mesh" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_mesh == 0 } { form_mode_unreal_landscape_spline_control_point_mesh != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_unreal_landscape_spline_control_point_mesh\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_mesh_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_unreal_landscape_spline_control_point_mesh')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "unreal_landscape_spline_control_point_mesh_val"
+                label   "Control Point Mesh Value"
+                type    string
+                default { "" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_mesh == 0 } { form_mode_unreal_landscape_spline_control_point_mesh != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_mesh_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_unreal_landscape_spline_control_point_mesh_material_overrideX"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+            parmtag { "import_token" "en_unreal_landscape_spline_control_point_mesh_material_overrideX" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_unreal_landscape_spline_control_point_mesh_material_overrideX"
+            label   "Control Point Mesh Material Override"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+            grouptag { "import_token" "grp_unreal_landscape_spline_control_point_mesh_material_overrideX:Control Point Mesh Material Override" }
+            parmtag { "sidefx::header_toggle" "en_unreal_landscape_spline_control_point_mesh_material_overrideX" }
+
+            parm {
+                name    "unreal_landscape_spline_control_point_mesh_material_overrideX_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_control_point_mesh_material_overrideX" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_mesh_material_overrideX_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "unreal_landscape_spline_control_point_mesh_material_overrideX_help"
+                label   "Help"
+                type    label
+                default { "说明：覆盖控制点使用网格的材质。\n示例(Attribute)：来源 attr=mat_override → /Game/Materials/M_Rock。\n示例(Value)：直接输入 /Game/Materials/M_Rock。\n结果：Bake 时会用指定材质替换默认材质。\nOwner：Point/Vertex。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_mesh_material_overrideX_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_unreal_landscape_spline_control_point_mesh_material_overrideX"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_mesh_material_overrideX == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "owner_unreal_landscape_spline_control_point_mesh_material_overrideX" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_unreal_landscape_spline_control_point_mesh_material_overrideX"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_mesh_material_overrideX == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "form_mode_unreal_landscape_spline_control_point_mesh_material_overrideX" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "unreal_landscape_spline_control_point_mesh_material_overrideX_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_landscape_spline_control_point_mesh_material_overrideX" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_mesh_material_overrideX == 0 } { form_mode_unreal_landscape_spline_control_point_mesh_material_overrideX != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_unreal_landscape_spline_control_point_mesh_material_overrideX\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_mesh_material_overrideX_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_unreal_landscape_spline_control_point_mesh_material_overrideX')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "unreal_landscape_spline_control_point_mesh_material_overrideX_val"
+                label   "Control Point Mesh Material Override Value"
+                type    string
+                default { "" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_mesh_material_overrideX == 0 } { form_mode_unreal_landscape_spline_control_point_mesh_material_overrideX != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_mesh_material_overrideX_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_unreal_landscape_spline_control_point_mesh_scale"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+            parmtag { "import_token" "en_unreal_landscape_spline_control_point_mesh_scale" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_unreal_landscape_spline_control_point_mesh_scale"
+            label   "Control Point Mesh Scale"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+            grouptag { "import_token" "grp_unreal_landscape_spline_control_point_mesh_scale:Control Point Mesh Scale" }
+            parmtag { "sidefx::header_toggle" "en_unreal_landscape_spline_control_point_mesh_scale" }
+
+            parm {
+                name    "unreal_landscape_spline_control_point_mesh_scale_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_control_point_mesh_scale" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_mesh_scale_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "unreal_landscape_spline_control_point_mesh_scale_help"
+                label   "Help"
+                type    label
+                default { "说明：设置控制点网格的缩放比例 (x y z)。\n示例(Attribute)：来源 attr=mesh_scale → (1,2,1)。\n示例(Value)：直接输入 1 2 1。\n结果：Bake 时网格会按指定比例缩放。\nOwner：Point/Vertex。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_mesh_scale_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_unreal_landscape_spline_control_point_mesh_scale"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_mesh_scale == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "owner_unreal_landscape_spline_control_point_mesh_scale" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_unreal_landscape_spline_control_point_mesh_scale"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_mesh_scale == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "form_mode_unreal_landscape_spline_control_point_mesh_scale" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "unreal_landscape_spline_control_point_mesh_scale_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_landscape_spline_control_point_mesh_scale" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_mesh_scale == 0 } { form_mode_unreal_landscape_spline_control_point_mesh_scale != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_unreal_landscape_spline_control_point_mesh_scale\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_mesh_scale_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_unreal_landscape_spline_control_point_mesh_scale')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "unreal_landscape_spline_control_point_mesh_scale_val"
+                label   "Control Point Mesh Scale Value"
+                type    vector
+                size    3
+                default { "0 0 0" "0" "0" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_mesh_scale == 0 } { form_mode_unreal_landscape_spline_control_point_mesh_scale != value }"
+                range   { -1 1 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_mesh_scale_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_unreal_landscape_spline_control_point_paint_layer_name"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+            parmtag { "import_token" "en_unreal_landscape_spline_control_point_paint_layer_name" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_unreal_landscape_spline_control_point_paint_layer_name"
+            label   "Paint Layer Name"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+            grouptag { "import_token" "grp_unreal_landscape_spline_control_point_paint_layer_name:Paint Layer Name" }
+            parmtag { "sidefx::header_toggle" "en_unreal_landscape_spline_control_point_paint_layer_name" }
+
+            parm {
+                name    "unreal_landscape_spline_control_point_paint_layer_name_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_control_point_paint_layer_name" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_paint_layer_name_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "unreal_landscape_spline_control_point_paint_layer_name_help"
+                label   "Help"
+                type    label
+                default { "说明：指定应用于该控制点的地形绘制图层。\n示例(Attribute)：来源 attr=paint_layer → Grass。\n示例(Value)：直接输入 Grass。\n结果：Bake 时会在控制点范围内绘制该图层。\nOwner：Point/Vertex。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_paint_layer_name_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_unreal_landscape_spline_control_point_paint_layer_name"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_paint_layer_name == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "owner_unreal_landscape_spline_control_point_paint_layer_name" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_unreal_landscape_spline_control_point_paint_layer_name"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_paint_layer_name == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "form_mode_unreal_landscape_spline_control_point_paint_layer_name" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "unreal_landscape_spline_control_point_paint_layer_name_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_landscape_spline_control_point_paint_layer_name" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_paint_layer_name == 0 } { form_mode_unreal_landscape_spline_control_point_paint_layer_name != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_unreal_landscape_spline_control_point_paint_layer_name\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_paint_layer_name_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_unreal_landscape_spline_control_point_paint_layer_name')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "unreal_landscape_spline_control_point_paint_layer_name_val"
+                label   "Paint Layer Name Value"
+                type    string
+                default { "" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_paint_layer_name == 0 } { form_mode_unreal_landscape_spline_control_point_paint_layer_name != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_paint_layer_name_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_unreal_landscape_spline_control_point_raise_terrain"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+            parmtag { "import_token" "en_unreal_landscape_spline_control_point_raise_terrain" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_unreal_landscape_spline_control_point_raise_terrain"
+            label   "Raise Terrain"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+            grouptag { "import_token" "grp_unreal_landscape_spline_control_point_raise_terrain:Raise Terrain" }
+            parmtag { "sidefx::header_toggle" "en_unreal_landscape_spline_control_point_raise_terrain" }
+
+            parm {
+                name    "unreal_landscape_spline_control_point_raise_terrain_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_control_point_raise_terrain" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_raise_terrain_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "unreal_landscape_spline_control_point_raise_terrain_help"
+                label   "Help"
+                type    label
+                default { "说明：是否抬高控制点所在位置的地形。\n示例(Attribute)：来源 attr=raise_terrain → 1。\n示例(Value)：勾选启用。\n结果：Bake 时会将该控制点位置的地形抬高。\nOwner：Point/Vertex。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_raise_terrain_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_unreal_landscape_spline_control_point_raise_terrain"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_raise_terrain == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "owner_unreal_landscape_spline_control_point_raise_terrain" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_unreal_landscape_spline_control_point_raise_terrain"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_raise_terrain == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "form_mode_unreal_landscape_spline_control_point_raise_terrain" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "unreal_landscape_spline_control_point_raise_terrain_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_landscape_spline_control_point_raise_terrain" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_raise_terrain == 0 } { form_mode_unreal_landscape_spline_control_point_raise_terrain != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_unreal_landscape_spline_control_point_raise_terrain\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_raise_terrain_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_unreal_landscape_spline_control_point_raise_terrain')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "unreal_landscape_spline_control_point_raise_terrain_val"
+                label   "Raise Terrain Value"
+                type    toggle
+                default { "0" }
+                disablewhen "{ en_unreal_landscape_spline_control_point_raise_terrain == 0 } { form_mode_unreal_landscape_spline_control_point_raise_terrain != value }"
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_control_point_raise_terrain_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_unreal_landscape_spline_end_falloff"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+            parmtag { "import_token" "en_unreal_landscape_spline_end_falloff" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_unreal_landscape_spline_end_falloff"
+            label   "End Falloff"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+            grouptag { "import_token" "grp_unreal_landscape_spline_end_falloff:End Falloff" }
+            parmtag { "sidefx::header_toggle" "en_unreal_landscape_spline_end_falloff" }
+
+            parm {
+                name    "unreal_landscape_spline_end_falloff_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_end_falloff" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_end_falloff_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "unreal_landscape_spline_end_falloff_help"
+                label   "Help"
+                type    label
+                default { "说明：设置控制点末端衰减范围。\n示例(Attribute)：来源 attr=end_falloff → 200。\n示例(Value)：直接输入 200。\n结果：Bake 时控制点末端的影响范围为 200。\nOwner：Point/Vertex。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_end_falloff_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_unreal_landscape_spline_end_falloff"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_unreal_landscape_spline_end_falloff == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "owner_unreal_landscape_spline_end_falloff" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_unreal_landscape_spline_end_falloff"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_unreal_landscape_spline_end_falloff == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "form_mode_unreal_landscape_spline_end_falloff" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "unreal_landscape_spline_end_falloff_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_landscape_spline_end_falloff" }
+                disablewhen "{ en_unreal_landscape_spline_end_falloff == 0 } { form_mode_unreal_landscape_spline_end_falloff != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_unreal_landscape_spline_end_falloff\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_end_falloff_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_unreal_landscape_spline_end_falloff')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "unreal_landscape_spline_end_falloff_val"
+                label   "End Falloff Value"
+                type    float
+                default { "0" }
+                disablewhen "{ en_unreal_landscape_spline_end_falloff == 0 } { form_mode_unreal_landscape_spline_end_falloff != value }"
+                range   { 0 10 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_end_falloff_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_unreal_landscape_spline_half_width"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+            parmtag { "import_token" "en_unreal_landscape_spline_half_width" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_unreal_landscape_spline_half_width"
+            label   "Half Width"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+            grouptag { "import_token" "grp_unreal_landscape_spline_half_width:Half Width" }
+            parmtag { "sidefx::header_toggle" "en_unreal_landscape_spline_half_width" }
+
+            parm {
+                name    "unreal_landscape_spline_half_width_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_half_width" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_half_width_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "unreal_landscape_spline_half_width_help"
+                label   "Help"
+                type    label
+                default { "说明：设置控制点半宽度。\n示例(Attribute)：来源 attr=half_width → 100。\n示例(Value)：直接输入 100。\n结果：Bake 时控制点影响范围横向半宽为 100。\nOwner：Point/Vertex。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_half_width_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_unreal_landscape_spline_half_width"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_unreal_landscape_spline_half_width == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "owner_unreal_landscape_spline_half_width" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_unreal_landscape_spline_half_width"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_unreal_landscape_spline_half_width == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "form_mode_unreal_landscape_spline_half_width" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "unreal_landscape_spline_half_width_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_landscape_spline_half_width" }
+                disablewhen "{ en_unreal_landscape_spline_half_width == 0 } { form_mode_unreal_landscape_spline_half_width != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_unreal_landscape_spline_half_width\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_half_width_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_unreal_landscape_spline_half_width')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "unreal_landscape_spline_half_width_val"
+                label   "Half Width Value"
+                type    float
+                default { "0" }
+                disablewhen "{ en_unreal_landscape_spline_half_width == 0 } { form_mode_unreal_landscape_spline_half_width != value }"
+                range   { 0 10 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_half_width_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "en_unreal_landscape_spline_side_falloff"
+            label   "Enable"
+            type    toggle
+            default { "0" }
+            parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+            parmtag { "import_token" "en_unreal_landscape_spline_side_falloff" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_unreal_landscape_spline_side_falloff"
+            label   "Side Falloff"
+            parmtag { "group_default" "0" }
+            grouptag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+            grouptag { "import_token" "grp_unreal_landscape_spline_side_falloff:Side Falloff" }
+            parmtag { "sidefx::header_toggle" "en_unreal_landscape_spline_side_falloff" }
+
+            parm {
+                name    "unreal_landscape_spline_side_falloff_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_landscape_spline_side_falloff" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_side_falloff_heading" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "unreal_landscape_spline_side_falloff_help"
+                label   "Help"
+                type    label
+                default { "说明：设置控制点侧向衰减范围。\n示例(Attribute)：来源 attr=side_falloff → 50。\n示例(Value)：直接输入 50。\n结果：Bake 时控制点侧边影响范围为 50。\nOwner：Point/Vertex。" }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_side_falloff_help" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_unreal_landscape_spline_side_falloff"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "point" }
+                disablewhen "{ en_unreal_landscape_spline_side_falloff == 0 }"
+                menu {
+                    "point"     "Point"
+                    "vertex"    "Vertex"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "owner_unreal_landscape_spline_side_falloff" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_unreal_landscape_spline_side_falloff"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ en_unreal_landscape_spline_side_falloff == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "form_mode_unreal_landscape_spline_side_falloff" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "unreal_landscape_spline_side_falloff_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_landscape_spline_side_falloff" }
+                disablewhen "{ en_unreal_landscape_spline_side_falloff == 0 } { form_mode_unreal_landscape_spline_side_falloff != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_unreal_landscape_spline_side_falloff\").evalAsString()" ]
+                    [ "" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_side_falloff_from" }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_unreal_landscape_spline_side_falloff')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "unreal_landscape_spline_side_falloff_val"
+                label   "Side Falloff Value"
+                type    float
+                default { "0" }
+                disablewhen "{ en_unreal_landscape_spline_side_falloff == 0 } { form_mode_unreal_landscape_spline_side_falloff != value }"
+                range   { 0 10 }
+                parmtag { "import_source" "$HOUDINI_USER_PREF_DIR/packages/MITO_Game/ds/Final/05.04.Landscape_SplineControlPoint.ds" }
+                parmtag { "import_token" "unreal_landscape_spline_side_falloff_val" }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+
+}

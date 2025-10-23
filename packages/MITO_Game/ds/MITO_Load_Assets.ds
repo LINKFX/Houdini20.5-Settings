@@ -1,0 +1,247 @@
+{
+    name	selectedparms
+
+    parm {
+        name    "env_path"
+        label   "Environments Path"
+        type    directory
+        default { "$ASSETS_PATH" }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "update"
+        label   "Update Folder"
+        type    button
+        nolabel
+        joinnext
+        default { "0" }
+        parmtag { "button_icon" "" }
+        parmtag { "script_callback" "hou.phm().update_get_menu_json(kwargs)" }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "root"
+        label   "Root"
+        type    oplist
+        joinnext
+        default { "None" }
+        menu {
+            [ "hou.phm().build_layer_menu(kwargs)" ]
+            language python
+        }
+        parmtag { "import_enable" "1" }
+        parmtag { "oprelative" "/" }
+        parmtag { "script_callback" "" }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "level_1"
+        label   "Level 1"
+        type    oplist
+        joinnext
+        default { "None" }
+        disablewhen "{ root == None }"
+        menu {
+            [ "hou.phm().build_layer1_menu(kwargs)" ]
+            language python
+        }
+        parmtag { "oprelative" "/" }
+        parmtag { "script_callback" "" }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "level_2"
+        label   "Level 2"
+        type    oplist
+        joinnext
+        default { "None" }
+        disablewhen "{ root == None } { level_1 == None }"
+        menu {
+            [ "hou.phm().build_layer2_menu(kwargs)" ]
+            language python
+        }
+        parmtag { "oprelative" "/" }
+        parmtag { "script_callback" "" }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "level_3"
+        label   "Level 3"
+        type    oplist
+        joinnext
+        default { "None" }
+        disablewhen "{ root == None } { level_1 == None } { level_2 == None }"
+        menu {
+            [ "hou.phm().build_layer3_menu(kwargs)" ]
+            language python
+        }
+        parmtag { "oprelative" "/" }
+        parmtag { "script_callback" "" }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "level_4"
+        label   "Level 4"
+        type    oplist
+        default { "None" }
+        disablewhen "{ root == None } { level_1 == None } { level_2 == None } { level_3 == None }"
+        menu {
+            [ "hou.phm().build_layer4_menu(kwargs)" ]
+            language python
+        }
+        parmtag { "oprelative" "/" }
+        parmtag { "script_callback" "" }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "openbasedir"
+        label   "Open Directory"
+        type    button
+        nolabel
+        joinnext
+        default { "0" }
+        parmtag { "button_icon" "BUTTONS_folder" }
+        parmtag { "script_callback" "hou.phm().openPath(kwargs)" }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "labelparm"
+        label   "Message"
+        type    label
+        default { "Assets Load Path: `chs(\"full_path\")`" }
+        parmtag { "sidefx::look" "block" }
+    }
+    parm {
+        name    "sepparm2"
+        label   "Separator"
+        type    separator
+        default { "" }
+    }
+    parm {
+        name    "load_assets"
+        label   "Load Assets"
+        type    button
+        joinnext
+        default { "0" }
+        parmtag { "script_callback" "hou.phm().load_assets(kwargs) " }
+        parmtag { "script_callback_language" "python" }
+    }
+    parm {
+        name    "reload"
+        label   "Reload Geometry"
+        type    button
+        default { "0" }
+        parmtag { "autoscope" "0000000000000000" }
+        parmtag { "button_icon" "" }
+        parmtag { "script_callback_language" "python" }
+    }
+    groupsimple {
+        name    "preview_folder"
+        label   "Preview"
+
+        parm {
+            name    "preview"
+            label   "Preview"
+            type    toggle
+            joinnext
+            default { "1" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "display_name"
+            label   "Display Name"
+            type    toggle
+            default { "1" }
+            disablewhen "{ preview == 0 }"
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "auto_output"
+            label   "Output OneByOne"
+            type    button
+            default { "0" }
+            parmtag { "script_callback" "hou.phm().output_onebyone(kwargs)" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+    parm {
+        name    "sepparm"
+        label   "Separator"
+        type    separator
+        default { "" }
+    }
+    multiparm {
+        name    "asset"
+        label    "Asset List"
+
+        parm {
+            name    "asset_file#"
+            label   "Asset File"
+            type    geometry
+            default { "default.bgeo" }
+            parmtag { "autoscope" "0000000000000000" }
+            parmtag { "filechooser_mode" "read_and_write" }
+        }
+    }
+
+    group {
+        name    "folder0"
+        label   "temp"
+        invisibletab
+
+        parm {
+            name    "root_path"
+            label   "Root Path"
+            type    string
+            default { [ "'' if hou.evalParm(\"root\") == 'None' else hou.evalParm(\"root\").rstrip('/') + '/'" python ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "level_1_path"
+            label   "Level 1 Path"
+            type    string
+            default { [ "'' if hou.evalParm(\"root_path\") == \"\" or hou.evalParm(\"level_1\") == \"None\" else hou.evalParm(\"level_1\").rstrip('/') + '/'" python ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "level_2_path"
+            label   "Level 2 Path"
+            type    string
+            default { [ "'' if hou.evalParm(\"level_1_path\") == \"\" or hou.evalParm(\"level_2\") == \"None\" else hou.evalParm(\"level_2\").rstrip('/') + '/'" python ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "level_3_path"
+            label   "Level 3 Path"
+            type    string
+            default { [ "'' if hou.evalParm(\"level_2_path\") == \"\" or hou.evalParm(\"level_3\") == \"None\" else hou.evalParm(\"level_3\").rstrip('/') + '/'" python ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "level_4_path"
+            label   "Level 4 Path"
+            type    string
+            default { [ "'' if hou.evalParm(\"level_3_path\") == \"\" or hou.evalParm(\"level_4\") == \"None\" else hou.evalParm(\"level_4\").rstrip('/') + '/'" python ] }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "full_path"
+            label   "Full Path"
+            type    string
+            default { "`chs(\"env_path\")``chs(\"root_path\")``chs(\"level_1_path\")``chs(\"level_2_path\")``chs(\"level_3_path\")``chs(\"level_4_path\")`" }
+            parmtag { "script_callback_language" "python" }
+        }
+        parm {
+            name    "get_menu"
+            label   "Get Menu"
+            type    string
+            default { "" }
+            parmtag { "editor" "1" }
+            parmtag { "editorlines" "5" }
+            parmtag { "script_callback_language" "python" }
+        }
+    }
+
+
+}

@@ -1,0 +1,117 @@
+{
+    name    selectedparms
+
+    ########################################################################
+    # Segment Connections
+    ########################################################################
+    parm {
+        name    "en_seg_conn"
+        label   "Enable"
+        type    toggle
+        default { "0" }
+    }
+    groupcollapsible {
+        name    "grp_seg_conn"
+        label   "Segment Connections"
+        parmtag { "group_default" "0" }
+        parmtag { "sidefx::header_toggle" "en_seg_conn" }
+
+        parm {
+            name    "seg_conn_heading"
+            label   "Heading"
+            type    label
+            default { "unreal_landscape_spline_segment_connectionX" }
+            parmtag { "sidefx::look" "heading" }
+        }
+        parm {
+            name    "seg_conn_help"
+            label   "Help"
+            type    label
+            default { "说明：定义 Segment 两端的连接信息。X=0/1 对应两端。\n每端包含 SocketName 和 TangentLength。\n示例(属性)：来源 arr[0]=Start, arr[1]=500 → 实际写出 unreal_landscape_spline_segment_connection0_socket_name=Start, unreal_landscape_spline_segment_connection0_tangent_length=500。\n示例(数值)：直接指定 SocketName=Start, TangentLength=500。\n结果：Segment 在该端点的连接和切线长度。\n要求：当选择属性模式时，来源必须为数组属性：arr[0]=SocketName (string)，arr[1]=TangentLength (float)。\nOwner：Point/Prim。" }
+            parmtag { "sidefx::look" "heading" }
+        }
+
+        parm {
+            name    "owner_seg_conn"
+            label   "Attribute Owner"
+            type    ordinal
+            nolabel
+            joinnext
+            default { "prim" }
+            disablewhen "{ en_seg_conn == 0 }"
+            menu {
+                "point"     "Point"
+                "prim"      "Prim"
+            }
+        }
+
+        parm {
+            name    "seg_form_mode_conn"
+            label   "Form Mode"
+            type    ordinal
+            nolabel
+            default { "value" }
+            disablewhen "{ en_seg_conn == 0 }"
+            menu {
+                "attrib"    "Attribute"
+                "value"     "Value"
+            }
+        }
+
+        ####################################################################
+        # Connection 0
+        ####################################################################
+        parm {
+            name    "seg_conn0_socket"
+            label   "Conn0 SocketName"
+            type    string
+            default { "" }
+            disablewhen "{ en_seg_conn == 0 } { seg_form_mode_conn != value }"
+        }
+        parm {
+            name    "seg_conn0_tangent"
+            label   "Conn0 TangentLength"
+            type    float
+            default { "500.0" }
+            disablewhen "{ en_seg_conn == 0 } { seg_form_mode_conn != value }"
+            range   { 0! 10000 }
+        }
+
+        parm {
+            name    "seg_conn0_from"
+            label   "Conn0 Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_seg_conn == 0 } { seg_form_mode_conn != attrib }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+        }
+
+        ####################################################################
+        # Connection 1
+        ####################################################################
+        parm {
+            name    "seg_conn1_socket"
+            label   "Conn1 SocketName"
+            type    string
+            default { "" }
+            disablewhen "{ en_seg_conn == 0 } { seg_form_mode_conn != value }"
+        }
+        parm {
+            name    "seg_conn1_tangent"
+            label   "Conn1 TangentLength"
+            type    float
+            default { "500.0" }
+            disablewhen "{ en_seg_conn == 0 } { seg_form_mode_conn != value }"
+            range   { 0! 10000 }
+        }
+
+        parm {
+            name    "seg_conn1_from"
+            label   "Conn1 Attribute From"
+            type    string
+            default { "" }
+            disablewhen "{ en_seg_conn == 0 } { seg_form_mode_conn != attrib }"
+            menutoggle { [ " opmenu -l -a attribute ptdel " ] }
+        }
+    }
+}

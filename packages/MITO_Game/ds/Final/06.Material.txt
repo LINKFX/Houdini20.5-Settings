@@ -1,0 +1,595 @@
+{
+    name	selectedparms
+
+    group {
+        name    "materials"
+        label   "Materials"
+
+        parm {
+            name    "material_enable"
+            label   "Material"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_material"
+            label   "Material"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_toggle" "material_enable" }
+
+            parm {
+                name    "material_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_material" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "material_help"
+                label   "Help"
+                type    label
+                default { "说明：指定要应用到输出几何体上的Material资产的Unreal路径。您可以使用槽号前缀（如[0]）来指定材质应应用到哪个材质槽中。如果未指定槽号，则材质将应用到默认槽（通常是槽0）。\n示例(Attribute)：unreal_material=[0]/Game/Materials/MyMaterial\n示例(Value)：[0]/Game/Materials/MyMaterial\n结果：在Unreal Engine中，此属性会将指定的材质资产应用到静态网格或几何体集合的对应材质槽上，从而控制对象的外观，包括纹理、着色器和表面属性等。作用：允许在Houdini中预定义材质分配，在UE中直接渲染正确的视觉效果，而无需手动调整，提高工作流效率并确保一致性。\nOwner：Any。" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_material"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ material_enable == 0 }"
+                menu {
+                    "point"     "Point"
+                    "prim"      "Prim"
+                    "vertex"    "Vertex"
+                    "detail"    "Detail"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_material"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ material_enable == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "material_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_material" }
+                disablewhen "{ material_enable == 0 } { form_mode_material != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_material\").evalAsString()" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_material')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "material_val"
+                label   "Material Path"
+                type    string
+                default { "" }
+                disablewhen "{ material_enable == 0 } { form_mode_material != value }"
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "physical_material_enable"
+            label   "Physical Material"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_physical_material"
+            label   "Physical Material"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_toggle" "physical_material_enable" }
+
+            parm {
+                name    "physical_material_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_physical_material" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "physical_material_help"
+                label   "Help"
+                type    label
+                default { "说明：指定要用于输出几何体作为Physical Material的PhysicalMaterial资产的Unreal路径。此属性定义了对象的物理行为，如摩擦、弹性和密度。\n示例(Attribute)：unreal_physical_material=/Game/PhysicalMaterials/MyPhysMat\n示例(Value)：/Game/PhysicalMaterials/MyPhysMat\n结果：在Unreal Engine中，此属性会将指定的物理材质应用到对象上，影响其在物理模拟中的交互，例如碰撞响应、滑动摩擦和反弹效果。作用：确保对象在UE中的物理表现符合设计意图，例如使金属表面更滑或橡胶更具弹性，提高模拟的真实性和游戏性。\nOwner：Prim, Detail。" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_physical_material"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ physical_material_enable == 0 }"
+                menu {
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_physical_material"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ physical_material_enable == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "physical_material_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_physical_material" }
+                disablewhen "{ physical_material_enable == 0 } { form_mode_physical_material != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_physical_material\").evalAsString()" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_physical_material')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "physical_material_val"
+                label   "Physical Material Path"
+                type    string
+                default { "" }
+                disablewhen "{ physical_material_enable == 0 } { form_mode_physical_material != value }"
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "simple_physical_material_enable"
+            label   "Simple Physical Material"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_simple_physical_material"
+            label   "Simple Physical Material"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_toggle" "simple_physical_material_enable" }
+
+            parm {
+                name    "simple_physical_material_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_simple_physical_material" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "simple_physical_material_help"
+                label   "Help"
+                type    label
+                default { "说明：指定用于Simple Unreal Collisions的PhysicalMaterial资产的Unreal路径。此属性针对简单碰撞场景定义物理行为。\n示例(Attribute)：unreal_simple_physical_material=/Game/PhysicalMaterials/MySimplePhysMat\n示例(Value)：/Game/PhysicalMaterials/MySimplePhysMat\n结果：在Unreal Engine中，此属性会应用到简单碰撞几何体上，影响其基本物理交互，如摩擦和碰撞响应，而不涉及复杂模拟。作用：优化性能较低的设备或场景，确保简单对象（如静态道具）在UE中的物理表现高效且一致，减少计算开销同时保持真实感。\nOwner：Prim, Detail。" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_simple_physical_material"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ simple_physical_material_enable == 0 }"
+                menu {
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_simple_physical_material"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ simple_physical_material_enable == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "simple_physical_material_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_simple_physical_material" }
+                disablewhen "{ simple_physical_material_enable == 0 } { form_mode_simple_physical_material != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_simple_physical_material\").evalAsString()" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_simple_physical_material')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "simple_physical_material_val"
+                label   "Simple Physical Material Path"
+                type    string
+                default { "" }
+                disablewhen "{ simple_physical_material_enable == 0 } { form_mode_simple_physical_material != value }"
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "face_smoothing_mask_enable"
+            label   "Face Smoothing Mask"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_face_smoothing_mask"
+            label   "Face Smoothing Mask"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_toggle" "face_smoothing_mask_enable" }
+
+            parm {
+                name    "face_smoothing_mask_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_face_smoothing_mask" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "face_smoothing_mask_help"
+                label   "Help"
+                type    label
+                default { "说明：指定网格的面平滑掩码数据。该值是一个整数掩码，用于控制哪些面组应该应用平滑渲染。每个位可以代表不同的平滑组，允许精细控制网格的平滑行为。\n示例(Attribute)：unreal_face_smoothing_mask=1\n示例(Value)：1\n结果：在Unreal Engine中，此属性会应用到静态网格的面组上，影响法线计算和光影渲染。作用：通过定义平滑组，可以创建硬边或软边效果，例如在立方体上创建锐利的边缘（硬边）或平滑的曲面过渡（软边），从而提升模型的视觉质量和真实感，避免默认平滑导致的渲染伪影。\nOwner：Prim。" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_face_smoothing_mask"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ face_smoothing_mask_enable == 0 }"
+                menu {
+                    "prim"  "Prim"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_face_smoothing_mask"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ face_smoothing_mask_enable == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "face_smoothing_mask_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_face_smoothing_mask" }
+                disablewhen "{ face_smoothing_mask_enable == 0 } { form_mode_face_smoothing_mask != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_face_smoothing_mask\").evalAsString()" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_face_smoothing_mask')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "face_smoothing_mask_val"
+                label   "Mask Value"
+                type    integer
+                default { "0" }
+                disablewhen "{ face_smoothing_mask_enable == 0 } { form_mode_face_smoothing_mask != value }"
+                range   { 0 10 }
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+    group {
+        name    "materials_1"
+        label   "Material Instances"
+
+        parm {
+            name    "material_instance_enable"
+            label   "Material Instance"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_material_instance"
+            label   "Material Instance"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_toggle" "material_instance_enable" }
+
+            parm {
+                name    "material_instance_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_material_instance" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "material_instance_help"
+                label   "Help"
+                type    label
+                default { "说明：指定要创建实例的Material资产的Unreal路径。此路径指向母材质，Houdini会基于此生成材质实例。\n示例(Attribute)：unreal_material_instance=/Game/Materials/MyMat\n示例(Value)：/Game/Materials/MyMat\n结果：在Unreal Engine中，此属性会生成一个材质实例，并应用到对象上，允许动态调整参数而无需修改母材质。作用：便于在UE中实现材质变体，例如不同颜色的相同材质，提高资产复用性和自定义能力，支持蓝图或运行时修改。\nOwner：Prim, Detail。" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_material_instance"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ material_instance_enable == 0 }"
+                menu {
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_material_instance"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ material_instance_enable == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "material_instance_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_material_instance" }
+                disablewhen "{ material_instance_enable == 0 } { form_mode_material_instance != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_material_instance\").evalAsString()" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_material_instance')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "material_instance_val"
+                label   "Material Instance Path"
+                type    string
+                default { "" }
+                disablewhen "{ material_instance_enable == 0 } { form_mode_material_instance != value }"
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+        parm {
+            name    "material_hole_instance_enable"
+            label   "Material Hole Instance"
+            type    toggle
+            default { "0" }
+            parmtag { "script_callback_language" "python" }
+        }
+        groupcollapsible {
+            name    "grp_material_hole_instance"
+            label   "Material Hole Instance"
+            parmtag { "group_default" "0" }
+            parmtag { "sidefx::header_toggle" "material_hole_instance_enable" }
+
+            parm {
+                name    "material_hole_instance_heading"
+                label   "Heading"
+                type    label
+                default { "unreal_material_hole_instance" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "material_hole_instance_help"
+                label   "Help"
+                type    label
+                default { "说明：指定用于Landscape holes创建实例的Material资产的Unreal路径。此路径指向母材质，用于生成景观孔的材质实例。\n示例(Attribute)：unreal_material_hole_instance=/Game/Materials/MyHoleMat\n示例(Value)：/Game/Materials/MyHoleMat\n结果：在Unreal Engine中，此属性会生成一个专用于景观孔的材质实例，并应用到地形上的孔洞区域。作用：控制景观孔的外观，例如透明度或边缘效果，在UE中实现无缝的地形编辑和渲染，支持动态景观修改，如挖掘或填充孔洞时保持视觉一致性。\nOwner：Prim, Detail。" }
+                parmtag { "sidefx::look" "heading" }
+            }
+            parm {
+                name    "owner_material_hole_instance"
+                label   "Attribute Owner"
+                type    ordinal
+                nolabel
+                joinnext
+                default { "prim" }
+                disablewhen "{ material_hole_instance_enable == 0 }"
+                menu {
+                    "prim"      "Prim"
+                    "detail"    "Detail"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "form_mode_material_hole_instance"
+                label   "Form Mode"
+                type    ordinal
+                nolabel
+                default { "value" }
+                disablewhen "{ material_hole_instance_enable == 0 }"
+                menu {
+                    "attrib"    "Attribute"
+                    "value"     "Value"
+                }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "material_hole_instance_from"
+                label   "Attribute From"
+                type    string
+                default { "unreal_material_hole_instance" }
+                disablewhen "{ material_hole_instance_enable == 0 } { form_mode_material_hole_instance != attrib }"
+                menureplace {
+                    [ "node = hou.pwd()" ]
+                    [ "owner = node.parm(\"owner_material_hole_instance\").evalAsString()" ]
+                    [ "in_node = node.node(\"IN\")" ]
+                    [ "if not in_node:" ]
+                    [ "    return []" ]
+                    [ "geo = in_node.geometry()" ]
+                    [ "attrs = []" ]
+                    [ "if owner == \"point\":" ]
+                    [ "    attrs = [a.name() for a in geo.pointAttribs()]" ]
+                    [ "elif owner == \"prim\":" ]
+                    [ "    attrs = [a.name() for a in geo.primAttribs()]" ]
+                    [ "elif owner == \"vertex\":" ]
+                    [ "    attrs = [a.name() for a in geo.vertexAttribs()]" ]
+                    [ "elif owner == \"detail\":" ]
+                    [ "    attrs = [a.name() for a in geo.globalAttribs()]" ]
+                    [ "menu = []" ]
+                    [ "for a in attrs:" ]
+                    [ "    menu += [a, a]" ]
+                    [ "return menu" ]
+                    language python
+                }
+                parmtag { "menu_script" "return hou.phm().attr_from_menu(kwargs, 'owner_material_hole_instance')" }
+                parmtag { "menu_script_language" "python" }
+                parmtag { "script_callback_language" "python" }
+            }
+            parm {
+                name    "material_hole_instance_val"
+                label   "Hole Instance Path"
+                type    string
+                default { "" }
+                disablewhen "{ material_hole_instance_enable == 0 } { form_mode_material_hole_instance != value }"
+                parmtag { "script_callback_language" "python" }
+            }
+        }
+
+    }
+
+
+}
