@@ -1,0 +1,10 @@
+{
+    "env": [
+        {
+            "OPS": "Z:/Openworld_System/Houdini/Projects/Environments"
+        },
+        {
+            "JYASSETS_PATH": "Z:/Openworld_System/Assets"
+        }
+    ]
+} 
