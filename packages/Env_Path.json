@@ -1,7 +1,10 @@
 {
     "env": [
         {
-            "ASSETS_PATH": "Z:/JinYong_TA/Data"
+            "ASSETS_PATH": "//10.130.67.26/千图共享盘/JinYong_TA/Data"
+        },
+        {
+            "LOCAL_ASSETS_PATH": "E:/Projects/COMPANY_GAME/Assets"
         }
     ]
-} 
+}
