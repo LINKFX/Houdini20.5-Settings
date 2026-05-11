@@ -43,3 +43,6 @@
 
 # 5) 明确忽略（根目录）
 /jump.pref
+packages/OpenWorld_System/hip/ProceduralCourtyard_Relic_v1.hip
+packages/OpenWorld_System/hip/Landscape_A_H21_v12.hip
+packages/ZJF/Hip/HDA开发-Scatter-植被分布工具.hip
